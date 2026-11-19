@@ -10,6 +10,8 @@ GitHub authentication required. Artifacts expire after 30 days.
 
 ## Generations
 
+- Generation 0008: Energetics — `energetics.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/energetics.yml); verification pending)
+
 - Generation 0007: Three-dimensional circulation — `circulation.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/circulation.yml); verification pending)
 
 - Generation 0006: Volumetric emergence — `volume.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/volume.yml); verified)
