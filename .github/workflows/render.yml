@@ -1,6 +1,11 @@
 name: Render universe
 on:
   push:
+    paths:
+      - render.py
+      - experiments/0001.json
+      - requirements.txt
+      - .github/workflows/render.yml
   workflow_dispatch:
 permissions:
   contents: read
