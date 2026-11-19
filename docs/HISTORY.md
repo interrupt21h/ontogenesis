@@ -1,8 +1,10 @@
 # Ontogenesis — experimental history
 
-This is a retrospective engineering and scientific record of generations 0001–0018. Each generation is a separate reproducible experiment, not a continuation from a checkpoint. Source code is normative. Recorded values are single-seed observations from successful CI runs; hypotheses and limitations are explicitly separated. Parameters are dimensionless and the time step is one. L denotes the periodic nearest-neighbor discrete Laplacian. Active chemical coverage is the fraction of cells above 0.1; structural coverage uses M > 0.2. All runs use seed 42. Artifact links require GitHub authentication and expire; workflow links remain the durable regeneration path.
+This is a retrospective engineering and scientific record of generations 0001–0019. Each generation is a separate reproducible experiment, not a continuation from a checkpoint. Source code is normative. Recorded values are single-seed observations from successful CI runs; hypotheses and limitations are explicitly separated. Parameters are dimensionless and the time step is one. L denotes the periodic nearest-neighbor discrete Laplacian. Active chemical coverage is the fraction of cells above 0.1; structural coverage uses M > 0.2. All runs use seed 42. Artifact links require GitHub authentication and expire; workflow links remain the durable regeneration path.
 
 ## Contents
+
+- [0019 — Compartmentalization](#generation-0019--compartmentalization)
 
 - [0018 — Morphogenesis](#generation-0018--morphogenesis)
 
@@ -707,6 +709,43 @@ Longer runtime, turnover and permeability change together; compare matched-durat
 - [Source](../morphogenesis.py) · [Workflow](../.github/workflows/morphogenesis.yml)
 - Run from repository root: `python morphogenesis.py` with Python 3.12, requirements.txt and scipy==1.15.3.
 - Actual CI metrics and MP4 link pending.
+
+
+
+## Generation 0019 — Compartmentalization
+
+Status: committed; CI pending.
+
+### Research question and parent
+Can structural material enclose localized regions, and how do those regions relate to population activity, energy and genetic diversity? Retain all G0018 physical equations, initialization, 24^4 periodic lattice, seed 42 and 4,800 integration steps. Only diagnostic and rendering cadence changes (six to four steps); no new dynamic fields.
+
+### Mathematical model
+
+Define the complement of the structural mask:
+
+```math
+C=\{i:M_i\leq0.2\}
+```
+
+Label face-connected components of C in the chosen rectangular fundamental domain. Retain components with at least eight cells that touch none of its eight boundary faces. This is a conservative enclosure candidate test, not full toroidal homology: regions crossing the coordinate cut are omitted.
+
+```math
+\begin{gathered}
+f_C=\frac{\sum_{j\in J}|C_j|}{24^4}\\
+\overline E_C=\frac{\sum_{i\in C_*} E_i}{|C_*|},\quad C_*=\bigcup_{j\in J}C_j
+\end{gathered}
+```
+
+Report candidate count, largest candidate, coverage and mean V/W/E inside candidates (null when empty). Retain G0018 matrix threshold sweep, boundary face count, genotype and lineage diagnostics.
+
+### Visualization and outputs
+Replace lower identity timeline panel with three fixed-scale time-series panels: active V/W/matrix coverage, pooled genotype entropy (0–3 bits), candidate coverage (0–1). Retain live entity list, recent events and two rotating sections. All charts include observations through current frame, on a fixed full-run time axis. 1,201 unique frames at 24 fps, expected duration 50.042 s, 1280×720, raw H.264 MP4 and separate diagnostics archive. FFprobe records actual output properties.
+
+### Verified results
+Pending. Do not infer valid compartments from topology alone. Candidate detection depends on threshold, minimum size and chosen domain cut; no wrap-invariant cavity detection or functional membrane proof. G0018 is still running at commit time. Increased rendering cadence may increase runtime; 90-minute timeout retained.
+
+### Reproduction
+[Source](../compartmentalization.py) · [Workflow](../.github/workflows/compartmentalization.yml). Python 3.12, requirements.txt, scipy==1.15.3; run from root.
 
 
 
