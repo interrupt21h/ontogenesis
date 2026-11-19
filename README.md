@@ -2,9 +2,9 @@
 
 An experiment in computational emergence. Each generation preserves its rules, seed, metrics and render.
 
-## Latest verified animation — Generation 0016: Genetics
+## Latest verified animation — Generation 0017: Ecosystem
 
-[Download evolution.mp4 directly](https://github.com/interrupt21h/ontogenesis/actions/runs/44592781876/artifacts/14563813752) (337 KiB, no ZIP) · [Workflow runs](https://github.com/interrupt21h/ontogenesis/actions/workflows/genetics.yml)
+[Download evolution.mp4 directly](https://github.com/interrupt21h/ontogenesis/actions/runs/44616522872/artifacts/14575716178) (334.5 KiB, no ZIP) · [Workflow runs](https://github.com/interrupt21h/ontogenesis/actions/workflows/ecosystem.yml)
 
 GitHub authentication required. Artifacts expire after 30 days.
 
@@ -32,7 +32,8 @@ Ontogenesis investigates emergence in continuous, periodic reaction–diffusion 
 | 0014 | [Observatory](docs/generations/0014.md) | [Python](observatory.py) | [Runs](.github/workflows/observatory.yml) · Verified |
 | 0015 | [Evolution](docs/generations/0015.md) | [Python](evolution.py) | [Runs](.github/workflows/evolution.yml) · Verified |
 | 0016 | [Genetics](docs/generations/0016.md) | [Python](genetics.py) | [Runs](.github/workflows/genetics.yml) · Verified |
-| 0017 | [Ecosystem](docs/generations/0017.md) | [Python](ecosystem.py) | [Runs](.github/workflows/ecosystem.yml) · Pending verification |
+| 0017 | [Ecosystem](docs/generations/0017.md) | [Python](ecosystem.py) | [Runs](.github/workflows/ecosystem.yml) · Verified |
+| 0018 | [Morphogenesis](docs/generations/0018.md) | [Python](morphogenesis.py) | [Runs](.github/workflows/morphogenesis.yml) · Pending verification |
 
 ## Reproduce locally
 
