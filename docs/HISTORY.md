@@ -32,9 +32,15 @@ Gray–Scott chemistry on a 256×256 periodic lattice; 4,000 steps, seed 42, cen
 
 ### Mathematical model
 
-```text
-R=UV²; ΔU=0.16 L(U)-R+0.035(1-U); ΔV=0.08 L(V)+R-0.097V.
+```math
+\begin{gathered}
+R=UV^2\\
+\Delta U=0.16L(U)-R+0.035(1-U)\\
+\Delta V=0.08L(V)+R-0.097V
+\end{gathered}
 ```
+
+
 
 ### Visualization and observed results
 
@@ -60,9 +66,16 @@ Adds W, twelve randomly located 12×12 colonies alternating species, 6,000 steps
 
 ### Mathematical model
 
-```text
-A=UV²; B=UW²; ΔU=0.16 L(U)-A-B+0.035(1-U); ΔV=0.08 L(V)+A-0.097V; ΔW=0.065 L(W)+B-0.094W.
+```math
+\begin{gathered}
+A=UV^2,\quad B=UW^2\\
+\Delta U=0.16L(U)-A-B+0.035(1-U)\\
+\Delta V=0.08L(V)+A-0.097V\\
+\Delta W=0.065L(W)+B-0.094W
+\end{gathered}
 ```
+
+Definitions: $A$ and $B$ are replication contributions.
 
 ### Visualization and observed results
 
@@ -89,9 +102,15 @@ Adds fixed periodic habitat H=(sin x+cos y+0.5 sin(2x-y))/2.5. 8,000 steps; samp
 
 ### Mathematical model
 
-```text
-Replace V decay with 0.097+0.009H and W decay with 0.094-0.009H, keeping G0002 chemistry.
+```math
+\begin{gathered}
+H=\frac{\sin x+\cos y+0.5\sin(2x-y)}{2.5}\\
+\lambda_V=0.097+0.009H\\
+\lambda_W=0.094-0.009H
+\end{gathered}
 ```
+
+The remaining chemistry is unchanged.
 
 ### Visualization and observed results
 
@@ -118,9 +137,17 @@ Adds prescribed time-dependent streamfunction and conservative first-order upwin
 
 ### Mathematical model
 
-```text
-ψ=2[sin(x+0.002t)sin y+0.5cos(2x-y-0.002t)]; face velocities v_x=d_yψ, v_y=-d_xψ. Flux in axis i is max(v_i,0)A+min(v_i,0)roll(A,-1,i); update A by incoming minus outgoing flux.
+```math
+\begin{gathered}
+\psi=2[\sin(x+0.002t)\sin y\\
+\qquad+0.5\cos(2x-y-0.002t)]\\
+v_x=d_y\psi,\quad v_y=-d_x\psi\\
+F_i=\max(v_i,0)A+\min(v_i,0)A_{+i}\\
+A'=A+\sum_i(F_{-i}-F_i)
+\end{gathered}
 ```
+
+Here $A_{+i}$ is the adjacent cell value in the positive direction.
 
 ### Visualization and observed results
 
@@ -146,9 +173,15 @@ Adds relaxing feedback field Q sourced by species imbalance; adds Q to streamfun
 
 ### Mathematical model
 
-```text
-ΔQ=0.12L(Q)+0.025(V-W-Q); ψ=ψ_external+0.8Q; scale velocities if conservative CFL bound exceeds 0.8.
+```math
+\begin{gathered}
+\Delta Q=0.12L(Q)+0.025(V-W-Q)\\
+\psi=\psi_{\mathrm{external}}+0.8Q\\
+\mathbf v'=\mathbf v\min(1,0.8/\mathrm{CFL})
+\end{gathered}
 ```
+
+CFL denotes the conservative face-speed bound.
 
 ### Visualization and observed results
 
@@ -175,9 +208,15 @@ Feedback is designed, not a fluid momentum equation; external forcing persists.
 
 ### Mathematical model
 
-```text
-ψ=0.8Q+0.6sin(x+0.003t)sin y cos z; v_z=0, other velocities from discrete curl; Q relaxes toward V-W at 0.025.
+```math
+\begin{gathered}
+\Delta Q=0.10L(Q)+0.025(V-W-Q)\\
+\psi=0.8Q+0.6\sin(x+0.003t)\sin y\cos z\\
+v_x=d_y\psi,\quad v_y=-d_x\psi,\quad v_z=0
+\end{gathered}
 ```
+
+Transport is confined to the xy plane.
 
 ### Visualization and observed results
 
@@ -204,9 +243,16 @@ Three-dimensional lattice but no z advection; dimensionality, resolution and kin
 
 ### Mathematical model
 
-```text
-A_z=0.8Q+0.45sin(x+0.003t)sin y; A_y=0.6Q+0.45sin(z-0.002t)cos x; A_x=-0.5Q+0.45cos(y+0.002t)sin z; velocity=curl A with commuting backward differences.
+```math
+\begin{gathered}
+A_z=0.8Q+0.45\sin(x+0.003t)\sin y\\
+A_y=0.6Q+0.45\sin(z-0.002t)\cos x\\
+A_x=-0.5Q+0.45\cos(y+0.002t)\sin z\\
+\mathbf v=\nabla_d\times\mathbf A,\quad \nabla_d\cdot\mathbf v=0
+\end{gathered}
 ```
+
+The discrete curl uses backward differences.
 
 ### Visualization and observed results
 
@@ -233,9 +279,15 @@ Adds advected energy field E initialized to 1. Spatial supply S=0.012+0.008(H+1)
 
 ### Mathematical model
 
-```text
-A=UV²E; B=UW²E; ΔE=0.10L(E)+S(1-E)-0.10(A+B).
+```math
+\begin{gathered}
+A=UV^2E,\quad B=UW^2E\\
+S=0.012+0.008(H+1)/2\\
+\Delta E=0.10L(E)+S(1-E)-0.10(A+B)
+\end{gathered}
 ```
+
+$S$ denotes local energy supply.
 
 ### Visualization and observed results
 
@@ -262,9 +314,15 @@ Adds stationary matrix M, initialized to zero; matrix reduces local chemical dif
 
 ### Mathematical model
 
-```text
-ΔM=0.025L(M)+0.12(A+B)(1-M)-0.003M; mobility=1/(1+5M). Detect M>0.2 connected components, merging labels across periodic faces.
+```math
+\begin{gathered}
+\Delta M=0.025L(M)+0.12(A+B)(1-M)-0.003M\\
+\eta=\frac{1}{1+5M}\\
+D_{i+1/2}=\frac{D_i+D_{i+1}}{2}
+\end{gathered}
 ```
+
+$\eta$ multiplies the chemical diffusivities.
 
 ### Visualization and observed results
 
@@ -291,9 +349,21 @@ Adds pulse P and recovery R, initialized to zero with central high-P seed. Signa
 
 ### Mathematical model
 
-```text
-T=0.18+0.65R; excitation=P(1-P)max(P-T,0); inhibition=P max(T-P,0); stimulus=0.08clip(4(V+W-0.18),0,1); ΔP=diffuse(P,0.12(0.25+0.75M))+0.35(excitation-inhibition)+stimulus(1-P)-0.015P; ΔR=0.025(P-R). Multiply A by 1+0.12P and B by 1-0.12P.
+```math
+\begin{gathered}
+T=0.18+0.65R\\
+X=P(1-P)\max(P-T,0)\\
+I=P\max(T-P,0)\\
+J=0.08\operatorname{clip}(4(V+W-0.18),0,1)\\
+\Delta P=\mathcal D(P,0.12(0.25+0.75M))\\
+\quad+0.35(X-I)+J(1-P)-0.015P\\
+\Delta R=0.025(P-R)\\
+A=UV^2E(1+0.12P)\\
+B=UW^2E(1-0.12P)
+\end{gathered}
 ```
+
+Here $\mathcal D$ denotes heterogeneous diffusion.
 
 ### Visualization and observed results
 
@@ -320,9 +390,18 @@ Adds continuous trait T initialized to 0.5; relaxes toward a function of energy,
 
 ### Mathematical model
 
-```text
-target=clip(0.5+0.45(P-R)+0.5(E-0.9)+0.6(V-W),0,1); ΔT=0.015L(T)+0.008(target-T); advantage=0.24(2T-1), added to V replication multiplier and subtracted from W.
+```math
+\begin{gathered}
+T_*=\operatorname{clip}(0.5+0.45(P-R)\\
+\quad+0.5(E-0.9)+0.6(V-W),0,1)\\
+\Delta T=0.015L(T)+0.008(T_*-T)\\
+a=0.24(2T-1)\\
+A=UV^2E(1+0.12P+a)\\
+B=UW^2E(1-0.12P-a)
+\end{gathered}
 ```
+
+$a$ is local competitive advantage.
 
 ### Visualization and observed results
 
@@ -349,9 +428,17 @@ Environmental memory is not heredity. Empty/empty Jaccard is reported as zero by
 
 ### Mathematical model
 
-```text
-For each axis pair i<j, define A_ij=0.35Q+0.25sin(x_i+0.003t)cos(x_j-0.002t); add d_j A_ij to velocity i and subtract d_i A_ij from velocity j. Commuting differences cancel divergence.
+```math
+\begin{gathered}
+A_{ij}=0.35Q+0.25\sin(x_i+0.003t)\\
+\quad\times\cos(x_j-0.002t),\quad i<j\\
+v_i\gets v_i+d_jA_{ij}\\
+v_j\gets v_j-d_iA_{ij}\\
+\sum_i d_i v_i=0
+\end{gathered}
 ```
+
+Each axis pair contributes to velocity; $d_i$ denotes a backward difference.
 
 ### Visualization and observed results
 
@@ -378,9 +465,16 @@ Retains G0012 equations. Label M>0.2 using face connectivity and union-find acro
 
 ### Mathematical model
 
-```text
-IoU=|A∩B|/|A∪B|. Circular centroid per axis: z=mean(exp(2πix/N)); coordinate=N arg(z)/(2π) modulo N; null if |z|<0.05.
+```math
+\begin{gathered}
+\mathrm{IoU}(A,B)=\frac{|A\cap B|}{|A\cup B|}\\
+\frac{|A\cap B|}{\min(|A|,|B|)}\ge0.1\\
+z=\frac1n\sum_{k=1}^{n}e^{2\pi\mathrm{i}x_k/N}\\
+c=\frac{N}{2\pi}\arg(z)\pmod N
+\end{gathered}
 ```
+
+The centroid is undefined for $|z|<0.05$.
 
 ### Visualization and observed results
 
@@ -407,9 +501,7 @@ Preserves physical equations and tracking. Two simultaneous 3D slices separated 
 
 ### Mathematical model
 
-```text
 No new physical equation; emission–absorption compositing with identity color blending. Identity timeline displays sampled presence of up to eight longest-observed IDs.
-```
 
 ### Visualization and observed results
 
@@ -436,9 +528,18 @@ Two variant masses Gv/Gw initialized to half each species; advected and diffused
 
 ### Mathematical model
 
-```text
-Replication multipliers 1±s; mutation μ uniform 0.001–0.009 per site per step; variant-1 birth R1(1-μ)+R0μ. Assert variant mass nonnegative and <= total.
+```math
+\begin{gathered}
+p_v=\frac{G_v}{\max(V,10^{-12})},\quad p_w=\frac{G_w}{\max(W,10^{-12})}\\
+s=0.22(2E-1)-0.18P-0.12\\
+f_0=1-s,\quad f_1=1+s\\
+\mu\sim\mathcal U(0.001,0.009)\\
+B_1=R_1(1-\mu)+R_0\mu\\
+D=2p(1-p)
+\end{gathered}
 ```
+
+Diversity uses pooled local frequency.
 
 ### Visualization and observed results
 
@@ -465,9 +566,35 @@ Three binary genes C/K/S for catalytic throughput, energy economy and signal res
 
 ### Mathematical model
 
-```text
-Fitness=(1+0.16(2C-1))(1+0.18(2K-1)(1-E))(1+0.20(2S-1)(2P-1)); energy cost=0.085+0.035C-0.025K. Mutation B'_g=(1-3μ)B_g+μ Σ_j B_(g xor 2^j), conserving births.
+**Reproductive fitness**
+
+```math
+\begin{gathered}
+F_g=[1+0.16(2C_g-1)]\\
+\quad\times[1+0.18(2K_g-1)(1-E)]\\
+\quad\times[1+0.20(2S_g-1)(2P-1)]
+\end{gathered}
 ```
+
+**Energy cost**
+
+```math
+Q_g=0.085+0.035C_g-0.025K_g
+```
+
+**Mutation operator**
+
+```math
+B'_g=(1-3\mu)B_g+\mu\sum_{j=0}^{2}B_{g\oplus 2^j}
+```
+
+**Genetic entropy**
+
+```math
+H=-\sum_{g=0}^{7}p_g\log_2 p_g
+```
+
+The three genes are binary; $p_g$ is pooled genotype frequency, and XOR flips one bit.
 
 ### Visualization and observed results
 
@@ -494,9 +621,20 @@ Adds two transported metabolites Xv/Xw. Opposite-species metabolite boosts genot
 
 ### Mathematical model
 
-```text
-bonus=0.45 X/(0.12+X)(0.35+0.65K); replication multiplied by 1+bonus. ΔXv=0.06L(Xv)+0.18A-0.025Xv-min(0.12 uptake_W,0.25Xv); reciprocal for Xw. Matrix deposition Σ births_g(0.045+0.065S_g); decay (0.008+0.012P)M.
+```math
+\begin{gathered}
+b_g(X)=0.45\frac{X}{0.12+X}(0.35+0.65K_g)\\
+\Delta X_v=0.06L(X_v)+0.18A-0.025X_v\\
+\quad-\min(0.12U_w,0.25X_v)\\
+\Delta X_w=0.06L(X_w)+0.18B-0.025X_w\\
+\quad-\min(0.12U_v,0.25X_w)\\
+d_g=0.045+0.065S_g\\
+\Delta M=0.025L(M)+\left(\sum_g B_gd_g\right)(1-M)\\
+\quad-(0.008+0.012P)M
+\end{gathered}
 ```
+
+Uptake terms $U_v,U_w$ represent bonus-attributed contributions; deposition sums births across both species. Metabolites are also advected.
 
 ### Visualization and observed results
 
