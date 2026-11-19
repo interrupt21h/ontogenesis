@@ -76,6 +76,7 @@ Different kinetics favor W; no symmetric control or seed ensemble.
 
 - [Source](../diversification.py) · [Workflow](../.github/workflows/diversification.yml)
 - [Successful CI run](https://github.com/interrupt21h/ontogenesis/actions/runs/44457866021)
+- [Standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44457866021/artifacts/14498143557) (184,246 bytes)
 - Run from repository root: `python diversification.py` after installing dependencies specified by the corresponding workflow.
 
 ## Generation 0003 — Symmetry breaking
@@ -104,6 +105,7 @@ Duration also changed relative to G0002; no causal isolation of habitat effect.
 
 - [Source](../symmetry.py) · [Workflow](../.github/workflows/symmetry.yml)
 - [Successful CI run](https://github.com/interrupt21h/ontogenesis/actions/runs/44457870135)
+- [Standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44457870135/artifacts/14499105302) (443,751 bytes)
 - Run from repository root: `python symmetry.py` after installing dependencies specified by the corresponding workflow.
 
 ## Generation 0004 — Dynamics
@@ -131,8 +133,7 @@ Flow is externally prescribed; upwind scheme introduces numerical diffusion.
 ### Reproduction and provenance
 
 - [Source](../dynamics.py) · [Workflow](../.github/workflows/dynamics.yml)
-- [Successful CI run](https://github.com/interrupt21h/ontogenesis/actions/runs/44457031645)
-- [Original video archive](https://github.com/interrupt21h/ontogenesis/actions/runs/44457031645/artifacts/14497588149)
+- [Successful CI run](https://github.com/interrupt21h/ontogenesis/actions/runs/44457866021)
 - Run from repository root: `python dynamics.py` after installing dependencies specified by the corresponding workflow.
 
 ## Generation 0005 — Feedback
