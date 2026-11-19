@@ -1,0 +1,41 @@
+name: Generation 0006
+on:
+  push:
+    paths:
+      - volume.py
+      - requirements.txt
+      - .github/workflows/volume.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - run: python volume.py
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: ffmpeg -y -framerate 24 -pattern_type glob -i 'gallery/0006/[0-9]*.png' -vf scale=512:512:flags=neighbor -c:v libx264 -pix_fmt yuv420p -crf 25 -movflags +faststart gallery/0006/evolution.mp4
+      - uses: actions/upload-artifact@v7
+        with:
+          name: generation-0006
+          path: |
+            gallery/0006/metrics.json
+            gallery/0006/01800.png
+          retention-days: 30
+          if-no-files-found: error
+      - name: Upload standalone MP4
+        id: video
+        uses: actions/upload-artifact@v7
+        with:
+          path: gallery/0006/evolution.mp4
+          archive: false
+          retention-days: 30
+          if-no-files-found: error
+      - name: Link animation
+        run: echo '[Download MP4 directly](${{ steps.video.outputs.artifact-url }})' >> "$GITHUB_STEP_SUMMARY"
