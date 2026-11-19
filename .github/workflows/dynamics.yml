@@ -22,13 +22,22 @@ jobs:
       - run: python dynamics.py
       - run: sudo apt-get update && sudo apt-get install -y ffmpeg
       - run: ffmpeg -y -framerate 24 -pattern_type glob -i 'gallery/0004/[0-9]*.png' -vf scale=512:512:flags=neighbor -c:v libx264 -pix_fmt yuv420p -crf 25 -movflags +faststart gallery/0004/evolution.mp4
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: generation-0004
           path: |
-            gallery/0004/evolution.mp4
             gallery/0004/metrics.json
             gallery/0004/habitat.png
             gallery/0004/08000.png
           retention-days: 30
           if-no-files-found: error
+      - name: Upload standalone MP4
+        id: video
+        uses: actions/upload-artifact@v7
+        with:
+          path: gallery/0004/evolution.mp4
+          archive: false
+          retention-days: 30
+          if-no-files-found: error
+      - name: Link animation
+        run: echo '[Download MP4 directly](${{ steps.video.outputs.artifact-url }})' >> "$GITHUB_STEP_SUMMARY"
