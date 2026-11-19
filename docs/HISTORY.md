@@ -1,8 +1,10 @@
 # Ontogenesis — experimental history
 
-This is a retrospective engineering and scientific record of generations 0001–0017. Each generation is a separate reproducible experiment, not a continuation from a checkpoint. Source code is normative. Recorded values are single-seed observations from successful CI runs; hypotheses and limitations are explicitly separated. Parameters are dimensionless and the time step is one. L denotes the periodic nearest-neighbor discrete Laplacian. Active chemical coverage is the fraction of cells above 0.1; structural coverage uses M > 0.2. All runs use seed 42. Artifact links require GitHub authentication and expire; workflow links remain the durable regeneration path.
+This is a retrospective engineering and scientific record of generations 0001–0018. Each generation is a separate reproducible experiment, not a continuation from a checkpoint. Source code is normative. Recorded values are single-seed observations from successful CI runs; hypotheses and limitations are explicitly separated. Parameters are dimensionless and the time step is one. L denotes the periodic nearest-neighbor discrete Laplacian. Active chemical coverage is the fraction of cells above 0.1; structural coverage uses M > 0.2. All runs use seed 42. Artifact links require GitHub authentication and expire; workflow links remain the durable regeneration path.
 
 ## Contents
+
+- [0018 — Morphogenesis](#generation-0018--morphogenesis)
 
 - [0001 — Differentiation](#generation-0001--differentiation)
 - [0002 — Diversification](#generation-0002--diversification)
@@ -638,7 +640,7 @@ Uptake terms $U_v,U_w$ represent bonus-attributed contributions; deposition sums
 
 ### Visualization and observed results
 
-25 independent fields, 8,294,400 scalar values; observer maps summed metabolites. Logs include metabolite means and overlap. CI in progress when this history was authored.
+25 independent fields, 8,294,400 scalar values; observer maps summed metabolites. Logs include metabolite means and overlap. Verified CI run 44616522872: V active 15.3974%, W active 59.6969%; mean metabolites V/W 0.03118446/0.10123751, overlap 0.01251270; energy mean 0.88738347; genotype entropy 1.44840634 bits; matrix mean 0.11090862, only one cell above 0.2; 25 lineage events. Both species active at endpoint, but coexistence stability and causality untested. [Raw MP4 (342,498 bytes)](https://github.com/interrupt21h/ontogenesis/actions/runs/44616522872/artifacts/14575716178) · [Diagnostics](https://github.com/interrupt21h/ontogenesis/actions/runs/44616522872/artifacts/14575711099).
 
 ### Interpretation and limitations
 
@@ -647,8 +649,66 @@ Cross-feeding and turnover changed together; no mass-conserving chemical network
 ### Reproduction and provenance
 
 - [Source](../ecosystem.py) · [Workflow](../.github/workflows/ecosystem.yml)
-- [Pending CI run](https://github.com/interrupt21h/ontogenesis/actions/runs/44616522872)
+- [Successful CI run](https://github.com/interrupt21h/ontogenesis/actions/runs/44616522872)
 - Run from repository root: `python ecosystem.py` after installing dependencies specified by the corresponding workflow.
+
+## Generation 0018 — Morphogenesis
+
+Status: committed; CI verification pending.
+
+### Research question
+
+Can intermediate matrix turnover and selective diffusion across structural gradients support persistent differentiated regions? Parent: G0017. Retain sixteen genotype concentrations, reciprocal metabolites, energy, signal, recovery, adaptation and four-dimensional curl transport. No new independent fields.
+
+### Implementation and parameters
+
+24^4 periodic lattice, seed 42, 4,800 unit steps instead of 1,200; frame every six steps including zero. Matrix decay coefficients reduced from 0.008/0.012 to 0.005/0.006. Conservative face diffusion is attenuated by matrix differences, more strongly for chemical populations than substrate.
+
+### Mathematical model
+
+**Matrix turnover**
+
+```math
+\Delta M=0.025L(M)+(M_v+M_w)(1-M)-(0.005+0.006P)M
+```
+
+**Selective face permeability**
+
+```math
+\begin{gathered}
+\eta_i=(1+5M_i)^{-1}\\
+D_{ij}=\frac{D_i+D_j}{2}\exp(-\kappa|M_j-M_i|)\\
+F_{ij}=D_{ij}(a_j-a_i)
+\end{gathered}
+```
+
+Here $D_i=D_0\eta_i$, with $\kappa=4$ for genotype concentrations and $\kappa=1$ for substrate. Face fluxes cancel pairwise. Advection and metabolite diffusion remain unchanged, so this is selective diffusion, not an impermeable membrane.
+
+**Four-dimensional boundary measurement**
+
+```math
+\begin{gathered}
+I_i=\mathbf 1[M_i>0.2]\\
+S=\sum_i\sum_{k=1}^{4}|I_i-I_{i+\hat e_k}|\\
+V=\sum_i I_i,\qquad r=S/\max(V,1)
+\end{gathered}
+```
+
+### Visualization and observed results
+
+Pending. 801 unique simulated frames at 24 fps (33.375 seconds), 1280×720, H.264 CRF 27, two full camera orbits and four fourth-axis traversals. FFprobe records actual duration, dimensions and frame count. Raw MP4 uploaded separately. Diagnostics include boundary-face count, boundary per occupied cell, and matrix coverage at thresholds 0.1, 0.15, 0.2, 0.25 and 0.3 alongside existing genetic and lineage metrics.
+
+### Interpretation and limitations
+
+Longer runtime, turnover and permeability change together; compare matched-duration controls before causal claims. Matrix threshold boundaries are not enclosed cavities or functional membranes. No cavity detection implemented. Preserved advection can cross interfaces. A zero boundary count can mean either empty or fully occupied domain; inspect coverage jointly. Runtime budget 90 minutes; actual performance unverified.
+
+### Reproduction and provenance
+
+- [Source](../morphogenesis.py) · [Workflow](../.github/workflows/morphogenesis.yml)
+- Run from repository root: `python morphogenesis.py` with Python 3.12, requirements.txt and scipy==1.15.3.
+- Actual CI metrics and MP4 link pending.
+
+
 
 ## Research priorities
 
