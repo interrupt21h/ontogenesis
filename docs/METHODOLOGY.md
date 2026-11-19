@@ -25,3 +25,7 @@ See [generation template](GENERATION_TEMPLATE.md). Individual records are the pr
 ## Future experiments
 
 Use matched-seed ensembles, ablations, stability checks, resolution tests, mass-budget diagnostics and quantitative topology. For cross-feeding, compare both directions disabled, each direction independently enabled and both enabled. For structural development, distinguish connected masks from bounded functional compartments.
+
+## Mathematical typography
+
+Use GitHub native LaTeX math blocks (fenced `math` or double-dollar delimiters) for display equations and single-dollar delimiters for inline notation. Break long equations across lines, define symbols, and use separate descriptive headings for distinct equations. Do not place mathematical models in plain-text code fences. See [GitHub mathematical expressions](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions).
