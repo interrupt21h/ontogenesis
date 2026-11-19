@@ -2,17 +2,19 @@
 
 An experiment in computational emergence. Each generation preserves its rules, seed, metrics and render.
 
-## Latest verified animation — Generation 0006: Volumetric emergence
+## Latest verified animation — Generation 0008: Energetics
 
-[Download evolution.mp4 directly](https://github.com/interrupt21h/ontogenesis/actions/runs/44557622978/artifacts/14545049041) (219 KiB, no ZIP) · [Workflow runs](https://github.com/interrupt21h/ontogenesis/actions/workflows/volume.yml)
+[Download evolution.mp4 directly](https://github.com/interrupt21h/ontogenesis/actions/runs/44558657774/artifacts/14545968389) (357 KiB, no ZIP) · [Workflow runs](https://github.com/interrupt21h/ontogenesis/actions/workflows/energetics.yml)
 
 GitHub authentication required. Artifacts expire after 30 days.
 
 ## Generations
 
-- Generation 0008: Energetics — `energetics.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/energetics.yml); verification pending)
+- Generation 0009: Organization — `organization.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/organization.yml); verification pending)
 
-- Generation 0007: Three-dimensional circulation — `circulation.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/circulation.yml); verification pending)
+- Generation 0008: Energetics — `energetics.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/energetics.yml); verified)
+
+- Generation 0007: Three-dimensional circulation — `circulation.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/circulation.yml); verified)
 
 - Generation 0006: Volumetric emergence — `volume.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/volume.yml); verified)
 
