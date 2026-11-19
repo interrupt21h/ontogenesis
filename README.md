@@ -2,15 +2,17 @@
 
 An experiment in computational emergence. Each generation preserves its rules, seed, metrics and render.
 
-## Latest verified animation — Generation 0015: Evolution
+## Latest verified animation — Generation 0016: Genetics
 
-[Download evolution.mp4 directly](https://github.com/interrupt21h/ontogenesis/actions/runs/44578335666/artifacts/14557248243) (324 KiB, no ZIP) · [Workflow runs](https://github.com/interrupt21h/ontogenesis/actions/workflows/evolution.yml)
+[Download evolution.mp4 directly](https://github.com/interrupt21h/ontogenesis/actions/runs/44592781876/artifacts/14563813752) (337 KiB, no ZIP) · [Workflow runs](https://github.com/interrupt21h/ontogenesis/actions/workflows/genetics.yml)
 
 GitHub authentication required. Artifacts expire after 30 days.
 
 ## Generations
 
-- Generation 0016: Genetics — `genetics.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/genetics.yml); verification pending)
+- Generation 0017: Ecosystem — `ecosystem.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/ecosystem.yml); verification pending)
+
+- Generation 0016: Genetics — `genetics.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/genetics.yml); verified)
 
 - Generation 0015: Evolution — `evolution.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/evolution.yml); verified)
 
