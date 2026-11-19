@@ -2,15 +2,17 @@
 
 An experiment in computational emergence. Each generation preserves its rules, seed, metrics and render.
 
-## Latest verified animation — Generation 0012: Hypervolume
+## Latest verified animation — Generation 0013: Entities
 
-[Download evolution.mp4 directly](https://github.com/interrupt21h/ontogenesis/actions/runs/44564906262/artifacts/14551264078) (202 KiB, no ZIP) · [Workflow runs](https://github.com/interrupt21h/ontogenesis/actions/workflows/hypervolume.yml)
+[Download evolution.mp4 directly](https://github.com/interrupt21h/ontogenesis/actions/runs/44566223782/artifacts/14552097868) (202 KiB, no ZIP) · [Workflow runs](https://github.com/interrupt21h/ontogenesis/actions/workflows/entities.yml)
 
 GitHub authentication required. Artifacts expire after 30 days.
 
 ## Generations
 
-- Generation 0013: Entities — `entities.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/entities.yml); verification pending)
+- Generation 0014: Observatory — `observatory.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/observatory.yml); verification pending)
+
+- Generation 0013: Entities — `entities.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/entities.yml); verified)
 
 - Generation 0012: Hypervolume — `hypervolume.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/hypervolume.yml); verified)
 
