@@ -87,7 +87,7 @@ def main():
         velocities=tuple(a*scale for a in velocities)
         divergence=sum(d(a,i) for i,a in enumerate(velocities))
         assert float(np.abs(divergence).max())<1e-5
-        u,v,w=(transport(a,velocities) for a in (u,v,w))
+        u,v,w,e=(transport(a,velocities) for a in (u,v,w,e))
         # Energy gates autocatalysis; consumption is proportional to reaction flux.
         a=u*v*v*e
         b=u*w*w*e
