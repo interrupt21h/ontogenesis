@@ -1,0 +1,41 @@
+name: Generation 0012
+on:
+  push:
+    paths:
+      - hypervolume.py
+      - requirements.txt
+      - .github/workflows/hypervolume.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt scipy==1.15.3
+      - run: python hypervolume.py
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: ffmpeg -y -framerate 24 -pattern_type glob -i 'gallery/0012/[0-9]*.png' -vf scale=640:640 -c:v libx264 -pix_fmt yuv420p -crf 25 -movflags +faststart gallery/0012/evolution.mp4
+      - uses: actions/upload-artifact@v7
+        with:
+          name: generation-0012
+          path: |
+            gallery/0012/metrics.json
+            gallery/0012/01200.png
+          retention-days: 30
+          if-no-files-found: error
+      - name: Upload standalone MP4
+        id: video
+        uses: actions/upload-artifact@v7
+        with:
+          path: gallery/0012/evolution.mp4
+          archive: false
+          retention-days: 30
+          if-no-files-found: error
+      - name: Link animation
+        run: echo '[Download MP4 directly](${{ steps.video.outputs.artifact-url }})' >> "$GITHUB_STEP_SUMMARY"
