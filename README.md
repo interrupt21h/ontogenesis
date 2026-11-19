@@ -2,15 +2,17 @@
 
 An experiment in computational emergence. Each generation preserves its rules, seed, metrics and render.
 
-## Latest verified animation — Generation 0008: Energetics
+## Latest verified animation — Generation 0009: Organization
 
-[Download evolution.mp4 directly](https://github.com/interrupt21h/ontogenesis/actions/runs/44558657774/artifacts/14545968389) (357 KiB, no ZIP) · [Workflow runs](https://github.com/interrupt21h/ontogenesis/actions/workflows/energetics.yml)
+[Download evolution.mp4 directly](https://github.com/interrupt21h/ontogenesis/actions/runs/44560478967/artifacts/14548862348) (341 KiB, no ZIP) · [Workflow runs](https://github.com/interrupt21h/ontogenesis/actions/workflows/organization.yml)
 
 GitHub authentication required. Artifacts expire after 30 days.
 
 ## Generations
 
-- Generation 0009: Organization — `organization.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/organization.yml); verification pending)
+- Generation 0010: Communication — `communication.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/communication.yml); verification pending)
+
+- Generation 0009: Organization — `organization.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/organization.yml); verified)
 
 - Generation 0008: Energetics — `energetics.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/energetics.yml); verified)
 
