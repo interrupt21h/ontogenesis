@@ -10,6 +10,8 @@ Extract `evolution.mp4` from the ZIP. GitHub authentication is required; artifac
 
 ## Generations
 
+- Generation 0005: Matter-driven flow feedback — `feedback.py` ([CI renders and MP4](https://github.com/interrupt21h/ontogenesis/actions/workflows/feedback.yml); verification pending)
+
 - Generation 0004: Dynamic transport — `dynamics.py`
 - Generation 0003: Spatial niches — `symmetry.py`
 - Generation 0002: Competing species — `diversification.py`
