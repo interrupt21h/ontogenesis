@@ -2,15 +2,17 @@
 
 An experiment in computational emergence. Each generation preserves its rules, seed, metrics and render.
 
-## Latest verified animation — Generation 0010: Communication
+## Latest verified animation — Generation 0011: Adaptation
 
-[Download evolution.mp4 directly](https://github.com/interrupt21h/ontogenesis/actions/runs/44561683503/artifacts/14550566760) (500 KiB, no ZIP) · [Workflow runs](https://github.com/interrupt21h/ontogenesis/actions/workflows/communication.yml)
+[Download evolution.mp4 directly](https://github.com/interrupt21h/ontogenesis/actions/runs/44563259888/artifacts/14550583575) (493 KiB, no ZIP) · [Workflow runs](https://github.com/interrupt21h/ontogenesis/actions/workflows/adaptation.yml)
 
 GitHub authentication required. Artifacts expire after 30 days.
 
 ## Generations
 
-- Generation 0011: Adaptation — `adaptation.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/adaptation.yml); verification pending)
+- Generation 0012: Hypervolume — `hypervolume.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/hypervolume.yml); verification pending)
+
+- Generation 0011: Adaptation — `adaptation.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/adaptation.yml); verified)
 
 - Generation 0010: Communication — `communication.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/communication.yml); verified)
 
