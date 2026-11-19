@@ -2,15 +2,17 @@
 
 An experiment in computational emergence. Each generation preserves its rules, seed, metrics and render.
 
-## Latest animation — Generation 0004: Dynamics
+## Latest verified animation — Generation 0005: Feedback
 
-[Download latest MP4 (inside artifact ZIP)](https://github.com/interrupt21h/ontogenesis/actions/runs/44457031645/artifacts/14497588149) · [Latest Dynamics workflow runs](https://github.com/interrupt21h/ontogenesis/actions/workflows/dynamics.yml)
+[Download evolution.mp4 directly](https://github.com/interrupt21h/ontogenesis/actions/runs/44457878072/artifacts/14498178731) (1.04 MiB, no ZIP) · [Workflow runs](https://github.com/interrupt21h/ontogenesis/actions/workflows/feedback.yml)
 
-Extract `evolution.mp4` from the ZIP. GitHub authentication is required; artifacts expire after 30 days. The workflow page provides newer successful runs.
+GitHub authentication required. Artifacts expire after 30 days.
 
 ## Generations
 
-- Generation 0005: Matter-driven flow feedback — `feedback.py` ([CI renders and MP4](https://github.com/interrupt21h/ontogenesis/actions/workflows/feedback.yml); verification pending)
+- Generation 0006: Volumetric emergence — `volume.py` ([CI renders](https://github.com/interrupt21h/ontogenesis/actions/workflows/volume.yml); verification pending)
+
+- Generation 0005: Matter-driven flow feedback — `feedback.py` ([CI renders and MP4](https://github.com/interrupt21h/ontogenesis/actions/workflows/feedback.yml); verified)
 
 - Generation 0004: Dynamic transport — `dynamics.py`
 - Generation 0003: Spatial niches — `symmetry.py`
