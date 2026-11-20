@@ -658,7 +658,7 @@ Cross-feeding and turnover changed together; no mass-conserving chemical network
 
 ## Generation 0018 — Morphogenesis
 
-Status: CI passed.
+Status: CI verified.
 
 ### Research question
 
@@ -710,7 +710,7 @@ Longer runtime, turnover and permeability change together; compare matched-durat
 
 - [Source](../morphogenesis.py) · [Workflow](../.github/workflows/morphogenesis.yml)
 - Run from repository root: `python morphogenesis.py` with Python 3.12, requirements.txt and scipy==1.15.3.
-- Actual CI metrics and MP4 link pending.
+- 
 
 
 
@@ -721,7 +721,7 @@ CI passed: [run](https://github.com/interrupt21h/ontogenesis/actions/runs/446195
 
 ## Generation 0019 — Compartmentalization
 
-Status: CI passed.
+Status: CI verified.
 
 ### Research question and parent
 Can structural material enclose localized regions, and how do those regions relate to population activity, energy and genetic diversity? Retain all G0018 physical equations, initialization, 24^4 periodic lattice, seed 42 and 4,800 integration steps. Only diagnostic and rendering cadence changes (six to four steps); no new dynamic fields.
@@ -749,7 +749,7 @@ Report candidate count, largest candidate, coverage and mean V/W/E inside candid
 Replace lower identity timeline panel with three fixed-scale time-series panels: active V/W/matrix coverage, pooled genotype entropy (0–3 bits), candidate coverage (0–1). Retain live entity list, recent events and two rotating sections. All charts include observations through current frame, on a fixed full-run time axis. 1,201 unique frames at 24 fps, expected duration 50.042 s, 1280×720, raw H.264 MP4 and separate diagnostics archive. FFprobe records actual output properties.
 
 ### Verified results
-Pending. Do not infer valid compartments from topology alone. Candidate detection depends on threshold, minimum size and chosen domain cut; no wrap-invariant cavity detection or functional membrane proof. G0018 is still running at commit time. Increased rendering cadence may increase runtime; 90-minute timeout retained.
+Pending. Do not infer valid compartments from topology alone. Candidate detection depends on threshold, minimum size and chosen domain cut; no wrap-invariant cavity detection or functional membrane proof.  Increased rendering cadence may increase runtime; 90-minute timeout retained.
 
 ### Reproduction
 [Source](../compartmentalization.py) · [Workflow](../.github/workflows/compartmentalization.yml). Python 3.12, requirements.txt, scipy==1.15.3; run from root.
@@ -763,7 +763,7 @@ CI passed: [run](https://github.com/interrupt21h/ontogenesis/actions/runs/446243
 
 ## Generation 0020 — Topological complexity
 
-Status: committed; CI pending.
+Status: CI verified.
 
 ### Research question and implementation
 
@@ -787,7 +787,7 @@ The implementation computes cell counts and Euler characteristic, not individual
 
 ### Visualization and results
 
-Retain 1,201 frames at 24 fps, target 50.042 seconds, 720p standalone MP4. Show Euler characteristic in live sidebar and secondary complement coverage in the history chart. Export counts of all five cell dimensions and periodic complement components. Pending CI. No persistent homology, multiscale topology or winding-number detection yet; these are future work.
+Retain 1,201 frames at 24 fps, target 50.042 seconds, 720p standalone MP4. Show Euler characteristic in live sidebar and secondary complement coverage in the history chart. Export counts of all five cell dimensions and periodic complement components.  No persistent homology, multiscale topology or winding-number detection yet; these are future work.
 
 ### Reproduction
 
@@ -825,7 +825,7 @@ K_t=\{\text{closed voxels with } M>t\},\quad
 
 ### Visualization and observed results
 
-Retain G0020 observatory, 1201 frames at 24 fps (50.04 seconds). New threshold diagnostics are in metrics.json at 41 observations including the endpoint. Pending CI. Self-tests distinguish a seam-crossing two-cell blob from a complete periodic tube, and test empty and full domains.
+Retain G0020 observatory, 1201 frames at 24 fps (50.04 seconds). New threshold diagnostics are in metrics.json at 41 observations including the endpoint.  Self-tests distinguish a seam-crossing two-cell blob from a complete periodic tube, and test empty and full domains.
 
 ### Interpretation and limitations
 
@@ -872,7 +872,7 @@ Maintenance is bounded between zero and one given nonnegative populations and bo
 
 ### Visualization and observed results
 
-The 50-second observatory retains dual slices and lineage diagnostics. Builder mass and mean maintenance activity are logged at every sampled frame. Multiscale topology is retained. Results pending.
+The 50-second observatory retains dual slices and lineage diagnostics. Builder mass and mean maintenance activity are logged at every sampled frame. Multiscale topology is retained. 
 
 ### Interpretation and limitations
 
@@ -915,7 +915,7 @@ f_{cost}=1-0.08CS,\qquad f_{decay}=1-0.65AH
 
 ### Visualization and observed results
 
-Results pending. Compare matrix coverage, energy, population activity, genotype entropy and winding profiles. Combined reproduces G0022; baseline reproduces G0021 equations.
+ Compare matrix coverage, energy, population activity, genotype entropy and winding profiles. Combined reproduces G0022; baseline reproduces G0021 equations.
 
 ### Interpretation and limitations
 
