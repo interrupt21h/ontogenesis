@@ -73,13 +73,15 @@ def main():
     ax[0].set_title("Repository growth through the documented milestone");ax[1].set_xlabel("UTC")
     chart("repository-growth",fig)
     rr=[x for x in runs if window(x["created_at"])]
-    fig,ax=plt.subplots(figsize=(9, max(3,min(12,len(rr)*.13))),layout="constrained")
+    fig,ax=plt.subplots(figsize=(10, max(4,len(set(x["name"] for x in rr))*.27)),layout="constrained")
     names=sorted(set(x["name"] for x in rr))
     colors={"success":"#398873","failure":"#b65349","cancelled":"#a79065","skipped":"#999999"}
     for x in rr:
         a=date(x["created_at"]);b=min(date(x["updated_at"]),date(END))
         if b>a: ax.barh(names.index(x["name"]),md.date2num(b)-md.date2num(a),left=md.date2num(a),height=.6,alpha=.55,color=colors.get(x["conclusion"],"#5686aa"))
-    ax.set_yticks(range(len(names)),names,fontsize=7);ax.xaxis.set_major_formatter(md.DateFormatter("%d %H:%M",tz=dt.timezone.utc));ax.set_title("CI run envelopes (overlap permitted; not billed time)")
+    ax.set_yticks(range(len(names)),names,fontsize=11);ax.xaxis.set_major_formatter(md.DateFormatter("%d %H:%M",tz=dt.timezone.utc));ax.set_title("CI run envelopes (overlap permitted; not billed time)")
+    from matplotlib.patches import Patch
+    ax.legend(handles=[Patch(color=c,label=k) for k,c in colors.items()]+[Patch(color="#5686aa",label="other")],loc="upper center",bbox_to_anchor=(.5,-.08),ncol=5,fontsize=9,frameon=False)
     if not rr: ax.text(.5,.5,"CI metadata unavailable",transform=ax.transAxes,ha="center")
     chart("execution-timeline",fig)
     fig,ax=plt.subplots(1,2,figsize=(9,4),layout="constrained")
@@ -90,17 +92,17 @@ def main():
         if a.get("created_at") and a["created_at"]<=END: sizes[a["workflow"]]+=a["size_in_bytes"] or 0
     top=sizes.most_common(12);ax[1].barh([x[0] for x in top],[x[1]/1048576 for x in top],color="#398873");ax[1].tick_params(axis="y",labelsize=7);ax[1].set_xlabel("MiB");ax[1].set_title("Retained artifact metadata (top 12)")
     chart("artifact-production",fig)
-    fig,ax=plt.subplots(figsize=(9,6),layout="constrained");ax.axis("off")
+    fig,ax=plt.subplots(figsize=(10,9),layout="constrained");ax.axis("off")
     upstream=[g for g in graph if g["upstream"]]
     ax.text(.03,.96,"Experiment completion sources",weight="bold",transform=ax.transAxes)
     ax.text(.68,.96,"Publication workflows",weight="bold",transform=ax.transAxes)
     allsrc=sorted(set(n for g in upstream for n in g["upstream"]))
     for i,n in enumerate(allsrc):
         y=.9-i*.8/max(1,len(allsrc)-1)
-        ax.text(.03,y,n,fontsize=6,transform=ax.transAxes,va="center")
+        ax.text(.03,y,n,fontsize=11,transform=ax.transAxes,va="center")
         for j,g in enumerate(upstream):
-            if n in g["upstream"]: ax.plot([.35,.66],[y,.75-j*.35],color="#5686aa",alpha=.2,transform=ax.transAxes)
-    for j,g in enumerate(upstream): ax.text(.68,.75-j*.35,g["name"],fontsize=9,weight="bold",transform=ax.transAxes)
+            if n in g["upstream"]: ax.plot([.35,.66],[y,.75-j*.35],color="#5686aa",alpha=.55,linewidth=.8,transform=ax.transAxes)
+    for j,g in enumerate(upstream): ax.text(.68,.75-j*.35,g["name"],fontsize=11,weight="bold",transform=ax.transAxes)
     ax.text(.03,.025,"Declarative workflow_run edges only; CLI dispatch and push paths are discussed separately.",fontsize=8,transform=ax.transAxes)
     chart("workflow-topology",fig)
     seconds=sum(max(0,(min(date(j["completed_at"]),date(END))-max(date(j["started_at"]),date(START))).total_seconds()) for j in jobs if j["started_at"] and j["completed_at"])
