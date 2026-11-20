@@ -21,7 +21,7 @@ As the artifacts became more complex, the report acquired a separate build pipel
 
 ## Resource management and publication
 
-The simulation jobs for G0024 and G0025 were changed to manual dispatch to avoid expensive reruns caused by changes to observational code. The report uses concurrency cancellation to discard superseded builds; the film serializes publication. Frame caches and persistent release assets reduce reliance on temporary artifacts. These policies trade immediate recomputation for explicit control over numerical expense.
+The simulation jobs for G0024 and G0025 were changed to manual dispatch (subsequently allowing workflow-file changes to trigger deliberate refreshes) to avoid expensive reruns caused by changes to observational code. The report uses concurrency cancellation to discard superseded builds; the film serializes publication. Frame caches and persistent release assets reduce reliance on temporary artifacts. These policies trade immediate recomputation for explicit control over numerical expense.
 
 A successful experiment is not equivalent to successful downstream publication. Release files may lag source changes, and artifact expiry can prevent historical reconstruction. Publication therefore depends on preserved source data, not solely on workflow success. The workflow topology illustration records declarative completion triggers; explicit CLI dispatches and path-filtered push triggers are additional edges described in the source.
 
@@ -43,3 +43,7 @@ The FFmpeg defect is documented by the [failed film run](https://github.com/inte
 The recorded milestone window begins with the first numerical workflow at 04:06:58 UTC on November 19 and ends with film integration at 16:09:07 UTC on November 20. It spans 36 hours, 2 minutes and 9 seconds. The charts distinguish source growth, run envelopes, completed-job overlap and observable artifact storage. They do not measure human effort, billed runner time, mathematical sophistication or scientific validity.
 
 I regard this infrastructure as a principal outcome of the creative experiment. My ability to direct an increasingly complex production process extended beyond my independent ability to implement and validate all of its components. The limits of the infrastructure and the mathematical models are therefore part of the record.
+
+## Topology presentation refresh
+
+Generations 0020–0025 now share a threshold-sensitive topology dashboard. It preserves the original secondary complement measurement, presents absolute component sizes and adaptive cell-count scaling, and shows coverage at matrix thresholds 0.10, 0.15 and 0.20. Successful refreshed runs are reconciled into the video manifest and generation records before report regeneration. Historical videos remain historical until replacement runs succeed. No numerical equations were modified.
