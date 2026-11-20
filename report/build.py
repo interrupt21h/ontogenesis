@@ -41,7 +41,7 @@ def frame_section(n):
         return r"\includegraphics[width="+width+",height="+height+r",keepaspectratio]{"+path+"}"
     def caption(i):
         return labels[i]+" --- frame "+str(meta["indices"][i]+1)
-    provenance=r"\par\smallskip{\footnotesize Source animation artifact "+str(artifact)+r". Playback indices, not integration steps. \par}"
+    provenance=r"\par\smallskip{\footnotesize Source animation artifact "+str(artifact)+r". Frame numbers refer to playback order, not integration steps. \par}"
     if int(n)<14:
         panels=[r"\begin{minipage}[t]{.48\linewidth}\centering "+picture(paths[i],r"\linewidth",r".25\textheight")+r"\par\small "+caption(i)+r"\end{minipage}" for i in (0,1)]
         block=r"\par\Needspace{.68\textheight}\AtlasPlateHeading{"+n+r"}{Development sequence}{"+str(meta["count"])+r" total}\noindent "+r"\hfill ".join(panels)+r"\par\medskip\begin{center}"+picture(paths[2],r".76\linewidth",r".32\textheight")+r"\par\small "+caption(2)+r"\end{center}"+provenance
@@ -50,8 +50,8 @@ def frame_section(n):
     # One chronological context plate and a full-width endpoint detail plate.
     rows=[]
     for i in (0,1):
-        rows.append(r"\begin{center}"+picture(paths[i],r"\linewidth",r".22\textheight")+r"\par\small "+caption(i)+r"\end{center}")
-    rows.append(r"\begin{center}"+picture(paths[2],r"\linewidth",r".22\textheight")+r"\par\small "+caption(2)+r"\end{center}")
+        rows.append(r"\begin{center}"+picture(paths[i],r"\linewidth",r".255\textheight")+r"\par\small "+caption(i)+r"\end{center}")
+    rows.append(r"\begin{center}"+picture(paths[2],r"\linewidth",r".255\textheight")+r"\par\small "+caption(2)+r"\end{center}")
     context=raw_latex(r"\clearpage\AtlasPlateHeading{"+n+r"}{Development sequence}{"+str(meta["count"])+r" total}"+"".join(rows)+provenance)
     with Image.open(out/paths[2]) as im:
         if im.size!=(1280,720):
@@ -60,7 +60,7 @@ def frame_section(n):
         for tag,rect,label in (("chemistry",(14,110,495,575),"Chemistry section"),("identity",(510,110,985,575),"Identity section")):
             detail=Path(paths[2]).with_name("final-"+tag+".png")
             im.crop(rect).save(out/detail)
-            panels.append(r"\begin{center}"+picture(str(detail),r".83\linewidth",r".32\textheight")+r"\par\small "+label+r"\end{center}")
+            panels.append(r"\begin{center}"+picture(str(detail),r".95\linewidth",r".36\textheight")+r"\par\small "+label+r"\end{center}")
     return context+raw_latex(r"\clearpage\AtlasPlateHeading{"+n+r"}{Final spatial sections}{"+str(meta["indices"][2]+1)+r"}"+"".join(panels)+r"\par\small Distinct fourth-coordinate sections, enlarged without interpolation of new scientific detail."+provenance)
 
 def research_plate(name,heading,caption):
@@ -80,7 +80,7 @@ for n,title,record in records:
             p=out/"frames"/f"{key}-{manifest.get(key)}"/"2.jpg"
             if p.exists():
                 images.append(r"\begin{minipage}[t]{.47\linewidth}\centering\includegraphics[width=\linewidth,height=.23\textheight,keepaspectratio]{"+str(p.relative_to(out))+r"}\par\small Generation "+key+r"\end{minipage}")
-        rows=[r"\noindent"+r"\hfill".join(images[i:i+2])+r"\par\medskip" for i in range(0,min(len(images),6),2)]
+        rows=[(r"\noindent"+r"\hfill".join(images[i:i+2]) if len(images[i:i+2])==2 else r"\noindent\hfill"+images[i]+r"\hfill\null")+r"\par\medskip" for i in range(0,min(len(images),6),2)]
         body.append(raw_latex(r"\clearpage\part{"+groups[int(n)]+"}"+r"\par{\sffamily\large Generations "+n+"--"+f"{phase_end:04d}"+r"}\par\medskip "+phase_text[int(n)]+r"\par\bigskip "+ "\n".join(rows)+r"\par{\small Final sampled frames from verified animations.\par}\clearpage"))
     record = re.sub(r"(?ms)^### Reproduction and provenance\n(.*?)(?=^### |\Z)", lambda m: "\n\n**Experiment sources:** " + " · ".join(line.strip()[2:] for line in m[1].splitlines() if line.strip().startswith("- ") and "Run from repository" not in line) + "\n\n", record)
     record = re.sub(r"(?m)^[-*] Run from repository root:.*\n?", "", record)
@@ -104,7 +104,7 @@ for n,title,record in records:
     atlas=out / "atlas" / f"{n}-atlas.svg"
     if atlas.exists():
         subprocess.run(["rsvg-convert","-f","pdf","-o",str(atlas.with_suffix(".pdf")),str(atlas)],check=True)
-        body.append(raw_latex(r"\par\Needspace{.31\textheight}\section{Analytical plate}\begin{center}\includegraphics[width=\linewidth,height=.32\textheight,keepaspectratio]{atlas/"+n+r"-atlas.pdf}\end{center}"))
+        body.append(raw_latex(r"\par\Needspace{.38\textheight}\section{Analytical plate}\begin{center}\includegraphics[width=\linewidth,height=.48\textheight,keepaspectratio]{atlas/"+n+r"-atlas.pdf}\end{center}"))
     if n=="0012":
         body.append(research_plate("spatial-sections","Observing four spatial dimensions","The periodic fourth coordinate indexes three-dimensional sections. The two observatory views introduced in Generation 0014 are separated by half the domain; they need not depict the same structures."))
     if n=="0021":
