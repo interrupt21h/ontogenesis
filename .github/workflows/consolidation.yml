@@ -1,0 +1,26 @@
+name: Generation 0026 consolidation
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [consolidation.py, .github/workflows/consolidation.yml]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - {n: 12, steps: 240}
+          - {n: 24, steps: 4800}
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install numpy==2.2.6
+      - run: python -u consolidation.py --verify --n ${{ matrix.n }} --steps ${{ matrix.steps }} --out result.json
+      - uses: actions/upload-artifact@v7
+        with:
+          name: observer-${{ matrix.n }}
+          path: result.json
