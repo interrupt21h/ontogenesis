@@ -15,7 +15,7 @@ def save(fig,n,title,note):
     fig.suptitle(f"ONTOGENESIS / {n:04d}   |   {title}",x=.06,ha="left",fontsize=15,fontweight="bold")
     fig.text(.06,.025,note,fontsize=8,color="#526575")
     fig.tight_layout(rect=(.03,.09,.98,.88))
-    fig.savefig(OUT/f"{n:04d}-atlas.svg")
+    fig.savefig(OUT/f"{n:04d}-atlas.svg",bbox_inches="tight",pad_inches=.12)
     plt.close(fig)
 
 u,v=np.meshgrid(np.linspace(0,1,81),np.linspace(0,.5,81))
@@ -41,7 +41,7 @@ for a,z,title in zip(ax,(.097+.009*h,.094-.009*h),("Species V decay","Species W 
     fig.colorbar(im,ax=a,shrink=.8)
 save(fig,3,"Spatial symmetry breaking","Analytical decay landscapes from the prescribed spatial bias; not simulation observations.")
 
-fig,ax=plt.subplots(figsize=(9,4))
+fig,ax=plt.subplots(figsize=(7,5.5))
 x=np.linspace(0,2*np.pi,160); X,Y=np.meshgrid(x,x)
 psi=2*(np.sin(X)*np.sin(Y)+.5*np.cos(2*X-Y))
 vx=2*(np.sin(X)*np.cos(Y)+.5*np.sin(2*X-Y))
@@ -49,7 +49,8 @@ vy=-2*(np.cos(X)*np.sin(Y)-np.sin(2*X-Y))
 im=ax.contourf(X,Y,psi,levels=24,cmap="RdBu_r")
 ax.streamplot(x,x,vx,vy,color="#19334a",density=1.1,linewidth=.65)
 ax.set(xlabel="x (radians)",ylabel="y (radians)",aspect="equal",title="Streamfunction and continuum velocity")
-fig.colorbar(im,ax=ax,label="Streamfunction")
+fig.colorbar(im,ax=ax,label="Streamfunction",shrink=.82)
+ax.set_anchor("C")
 save(fig,4,"Prescribed circulation","Analytical zero-phase continuum analogue; simulation uses discrete conservative fluxes.")
 
 m=np.linspace(0,1,200)
