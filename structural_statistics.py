@@ -30,8 +30,13 @@ def structural(m):
 original=consolidation.measure
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument("--n",type=int,default=24);p.add_argument("--steps",type=int,default=4800);p.add_argument("--seed",type=int,default=42);p.add_argument("--out",type=Path,required=True);a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument("--n",type=int,default=24);p.add_argument("--steps",type=int,default=4800);p.add_argument("--seed",type=int,default=42);p.add_argument("--verify",action="store_true");p.add_argument("--out",type=Path,required=True);a=p.parse_args()
     consolidation.measure=structural
     result=consolidation.run(a.seed,a.n,a.steps,120,"baseline",True)
+    if a.verify:
+        consolidation.measure=original
+        reference=consolidation.run(a.seed,a.n,a.steps,120,"baseline",False)
+        result["observer_verification"]={"same_process":True,"matching_checkpoints":sum(reference["hashes"].get(k)==v for k,v in result["hashes"].items()),"total":len(result["hashes"])}
+        assert reference["hashes"]==result["hashes"],"Structural observer changed state"
     a.out.parent.mkdir(parents=True,exist_ok=True);a.out.write_text(json.dumps(result,indent=2,allow_nan=False))
 if __name__=="__main__":main()
