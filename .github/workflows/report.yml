@@ -36,6 +36,17 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install numpy==2.2.6 matplotlib==3.10.3 pymupdf==1.26.0
+      - name: Retrieve archived numerical observations
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p report/build/numerical/0024
+          gh release view atlas-media --json assets > /tmp/atlas-assets.json
+          if python -c 'import json,sys; sys.exit(not any(a["name"]=="field-state-0024.tar.gz" for a in json.load(open("/tmp/atlas-assets.json"))["assets"]))'; then
+            gh release download atlas-media -p field-state-0024.tar.gz -D /tmp
+            tar -xzf /tmp/field-state-0024.tar.gz -C report/build/numerical/0024
+            python report/field_atlas.py report/build/numerical/0024/fields report/build/atlas
+          fi
       - name: Validate report generator syntax
         run: python3 -m compileall -q report
       - run: python3 report/build.py
