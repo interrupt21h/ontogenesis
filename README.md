@@ -2,15 +2,15 @@
 
 An experiment in computational emergence. Each generation preserves its rules, seed, metrics and render.
 
-## Latest verified animation — Generation 0019: Compartmentalization
+## Latest verified animation — Generation 0020: Topological complexity
 
-[Download standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44624382551/artifacts/14583640908) (2.30 MiB) · [Workflow](https://github.com/interrupt21h/ontogenesis/actions/workflows/compartmentalization.yml)
+[Download standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44651857629/artifacts/14592383068) (2.31 MiB) · [Workflow](https://github.com/interrupt21h/ontogenesis/actions/workflows/topology.yml)
 
 Authentication required; artifacts expire after 30 days.
 
 ## Scientific and engineering monograph
 
-**[Download current verified PDF](https://github.com/interrupt21h/ontogenesis/actions/runs/44654319303/artifacts/14593095794)** · [Latest successful report build](https://github.com/interrupt21h/ontogenesis/actions/workflows/report.yml?query=is%3Asuccess)** · [Report source](report/) · [All report builds](https://github.com/interrupt21h/ontogenesis/actions/workflows/report.yml)
+**[Download current verified PDF](https://github.com/interrupt21h/ontogenesis/actions/runs/44656089473/artifacts/14592809506)** · [Latest successful report build](https://github.com/interrupt21h/ontogenesis/actions/workflows/report.yml?query=is%3Asuccess)** · [Report source](report/) · [All report builds](https://github.com/interrupt21h/ontogenesis/actions/workflows/report.yml)
 
 Open the newest successful run and select the standalone `ontogenesis.pdf` artifact. The report samples early, middle and final frames from indexed MP4 artifacts when available. The independent LaTeX pipeline automatically rebuilds on documentation changes; the generated TeX is also archived separately. To reproduce locally, install Pandoc, latexmk, TeX Live (latex-extra, pictures, fonts-recommended) and run `python3 report/build.py`.
 
@@ -41,7 +41,8 @@ Ontogenesis investigates emergence in continuous, periodic reaction–diffusion 
 | 0017 | [Ecosystem](docs/generations/0017.md) | [Python](ecosystem.py) | [Runs](.github/workflows/ecosystem.yml) · Verified |
 | 0018 | [Morphogenesis](docs/generations/0018.md) | [Python](morphogenesis.py) | [Runs](.github/workflows/morphogenesis.yml) · Verified |
 | 0019 | [Compartmentalization](docs/generations/0019.md) | [Python](compartmentalization.py) | [Runs](.github/workflows/compartmentalization.yml) · Verified |
-| 0020 | [Topological complexity](docs/generations/0020.md) | [Python](topology.py) | [Runs](.github/workflows/topology.yml) · Pending verification |
+| 0020 | [Topological complexity](docs/generations/0020.md) | [Python](topology.py) | [Runs](.github/workflows/topology.yml) · Verified |
+| 0021 | [Multiscale topological persistence](docs/generations/0021.md) | [Python](persistence.py) | [Runs](.github/workflows/persistence.yml) · Pending verification |
 
 ## Reproduce locally
 
