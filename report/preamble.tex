@@ -55,3 +55,10 @@
   \vspace{3pt}{\sffamily\small\color{ontoblue} Playback frame #3\par}
   \vspace{6pt}{\color{ontogreen}\hrule}\vspace{10pt}}
 \titleformat{\chapter}[display]{\normalfont\huge\bfseries\color{ontoink}}{\sffamily\large\color{ontogreen} GENERATION \thechapter}{8pt}{}[\vspace{6pt}{\color{ontogreen}\titlerule}]
+
+% Distinguish editorial chapters from simulation identifiers.
+\titleformat{\chapter}[display]{\normalfont\huge\bfseries\color{ontoink}}{}{0pt}{}[\vspace{6pt}{\color{ontogreen}\titlerule}]
+\titleformat{name=\chapter,numberless}[display]{\normalfont\huge\bfseries\color{ontoink}}{}{0pt}{}[\vspace{6pt}{\color{ontogreen}\titlerule}]
+\usepackage{needspace}
+\let\AtlasOriginalSection\section
+\renewcommand{\section}{\Needspace{4\baselineskip}\AtlasOriginalSection}
