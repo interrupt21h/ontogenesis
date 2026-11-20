@@ -2,6 +2,22 @@
 
 *An artist’s statement on human intention, machine intelligence and computational emergence.*
 
+## A two-day experiment in delegated complexity
+
+Ontogenesis began with a deliberately modest intention: to brainstorm a complicated computational system that I could evolve through successive experiments, generate interesting visual artifacts from, and use to explore the capabilities of continuous integration (CI). I wanted a project in which numerical execution, testing, rendering, artifact retention and publication could become parts of a single iterative creative process. I did not begin with a research hypothesis in mathematical biology or a plan to construct a scientifically validated model of life.
+
+The initial creative experiment unfolded across November 19–20, 2026, over approximately two days. The first recorded [numerical workflow](https://github.com/interrupt21h/ontogenesis/actions/runs/44456063725) began at 04:06:58 UTC on November 19. By [16:09:07 UTC on November 20](https://github.com/interrupt21h/ontogenesis/commit/ad9e3d270ecb403c696a99dad7ef0ce2452426bf), the automated film publication pipeline and its repository links had been committed. These two recorded milestones are separated by 36 hours, 2 minutes and 9 seconds. They bound a documented portion of the development process, not the entirety of the experiment or a measurement of human labor.
+
+My direct effort in evolving the numerical system was deliberately minimal. I generally supplied brief conceptual directions, asked for further iterations and evaluated the resulting artifacts. Most of my own attention was spent on aesthetics: the quality of the animations, the presentation of numerical information, the visual character of the monograph and the intelligibility of the evolving world. The AI performed much of the mathematical formulation, coding, debugging, experimental instrumentation and documentation, while CI performed the computational execution and generated the deliverables.
+
+I intentionally allowed the mathematical complexity to extend beyond my own understanding. Although I brought substantial software engineering and scientific visualization experience to the process, I did not independently derive or fully understand every mathematical mechanism that was introduced. I wanted to discover how far iterative development could extend beyond my own capabilities as a developer when I delegated not only implementation but also portions of mathematical reasoning, experimental design and critical interpretation.
+
+This is an essential condition of the artwork, not a claim that I acquired expertise in all of the disciplines represented by the resulting code. My capacity to direct further development exceeded my capacity to independently validate every component. That asymmetry is part of what the experiment investigates. A successful CI run verifies execution and whatever assertions were actually tested; it does not validate an entire model, establish biological significance or turn AI-generated reasoning into independently established knowledge.
+
+I did not record active working hours, prompt duration or a formal allocation of my time. My description of minimal direct development effort and predominant attention to aesthetics is a qualitative account of my participation, not a measured productivity benchmark. Wall-clock time, human attention, AI inference, queued CI jobs and aggregate computational runtime are different quantities; parallel execution makes them particularly inappropriate to add together as a measure of labor.
+
+The two-day edition is therefore a time-bounded record of exploratory creation. Its numerical models, software history, CI artifacts, film and monograph are complementary expressions of that experiment. Unfinished verification and unresolved questions belong to the record rather than being concealed to make it appear more complete.
+
 ## The process as medium
 
 Ontogenesis is both an artificial world and an investigation into how such a world can be created. Its subject is emergence: the appearance of organized behavior through the interaction of comparatively simple local rules. Its medium, however, extends beyond numerical simulation. The work is constructed through an iterative exchange between human intention, generative artificial intelligence and the observable consequences of computational experiments.
@@ -81,9 +97,9 @@ My technical literacy, mathematical interests and aesthetic judgment shape which
 
 Consequently, the project distinguishes proposed mechanisms from executed experiments and verified measurements from interpretations. Historical models and recorded outcomes establish the actual trajectory of the work; planned capabilities should not be mistaken for completed results.
 
-## An open-ended artwork
+## A bounded edition of an open-ended artwork
 
-Ontogenesis has no necessary terminal form. A new mechanism can generate new behavior, new behavior can demand new instruments, and new instruments can transform the questions that guide subsequent generations. The work is not directed toward an inevitable increase in complexity or toward a predetermined definition of life.
+The mathematical inquiry has no necessary terminal form, but I intend to preserve the approximately two-day creative experiment as a distinct published edition. Subsequent validation or development can be identified separately rather than silently extending the original timeframe. A new mechanism can generate new behavior, new behavior can demand new instruments, and new instruments can transform the questions that guide subsequent generations. The work is not directed toward an inevitable increase in complexity or toward a predetermined definition of life.
 
 My artistic proposition is that the capacity to construct computational worlds can become an extension of curiosity itself. By delegating substantial implementation complexity while retaining critical and aesthetic direction, I investigate not only what can emerge from mathematical rules, but also what can emerge from a recursive relationship between human imagination and machine intelligence.
 
