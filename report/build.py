@@ -45,13 +45,15 @@ def frame_section(n):
                 with Image.open(out/path) as im:
                     if im.size==(1280,720):
                         for tag,rect,caption in (
-                            ("charts",(14,578,990,720),"Time-series detail"),
+                            ("coverage",(14,578,345,720),"Active coverage"),
+                            ("entropy",(340,578,665,720),"Genetic entropy"),
+                            ("complement",(660,578,990,720),"Complement coverage"),
                             ("records",(990,78,1280,580),"Entity and event record"),
                         ):
                             detail=Path(path).with_name(f"{i}-{tag}.png")
                             im.crop(rect).save(out/detail)
-                            if tag=="charts":
-                                result.append(r"\noindent{\sffamily\bfseries\color{ontoblue} "+caption+r"}\par\smallskip\noindent\includegraphics[width=\linewidth]{"+str(detail)+r"}\par\medskip")
+                            if tag!="records":
+                                result.append((r"\clearpage\AtlasPlateHeading{"+n+r"}{Dashboard details}{"+str(meta["indices"][i]+1)+r"}" if tag=="coverage" else "")+r"\noindent{\sffamily\bfseries\color{ontoblue} "+caption+r"}\par\smallskip\noindent\includegraphics[width=.72\linewidth]{"+str(detail)+r"}\par\medskip")
                             else:
                                 result.append(r"\noindent{\sffamily\bfseries\color{ontoblue} "+caption+r"}\par\smallskip\noindent\includegraphics[height=.24\textheight,keepaspectratio]{"+str(detail)+r"}\par")
         result.append(f"[Source animation artifact {artifact}](https://github.com/interrupt21h/ontogenesis/actions/artifacts/{artifact}). Original frame followed by labeled crops where supported; no reconstructed data. Playback indices, not integration steps.")
