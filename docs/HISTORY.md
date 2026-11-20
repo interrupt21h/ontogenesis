@@ -1,6 +1,6 @@
 # Ontogenesis — experimental history
 
-This is a retrospective engineering and scientific record of generations 0001–0024. Each generation is a separate reproducible experiment, not a continuation from a checkpoint. Source code is normative. Recorded values are single-seed observations from successful CI runs; hypotheses and limitations are explicitly separated. Parameters are dimensionless and the time step is one. L denotes the periodic nearest-neighbor discrete Laplacian. Active chemical coverage is the fraction of cells above 0.1; structural coverage uses M > 0.2. All runs use seed 42. Artifact links require GitHub authentication and expire; workflow links remain the durable regeneration path.
+This is a retrospective engineering and scientific record of generations 0001–0026. Each generation is a separate reproducible experiment, not a continuation from a checkpoint. Source code is normative. Recorded values are single-seed observations from successful CI runs; hypotheses and limitations are explicitly separated. Parameters are dimensionless and the time step is one. L denotes the periodic nearest-neighbor discrete Laplacian. Active chemical coverage is the fraction of cells above 0.1; structural coverage uses M > 0.2. All runs use seed 42. Artifact links require GitHub authentication and expire; workflow links remain the durable regeneration path.
 
 ## Contents
 
@@ -166,7 +166,7 @@ Flow is externally prescribed; upwind scheme introduces numerical diffusion.
 ### Reproduction and provenance
 
 - [Source](../dynamics.py) · [Workflow](../.github/workflows/dynamics.yml)
-- [Successful CI run](https://github.com/interrupt21h/ontogenesis/actions/runs/44457866021)
+- [Successful CI run](https://github.com/interrupt21h/ontogenesis/actions/runs/44457874425)
 - Run from repository root: `python dynamics.py` after installing dependencies specified by the corresponding workflow.
 
 ## Generation 0005 — Feedback
@@ -700,7 +700,7 @@ V=\sum_i I_i,\qquad r=S/\max(V,1)
 
 ### Visualization and observed results
 
-Pending. 801 unique simulated frames at 24 fps (33.375 seconds), 1280×720, H.264 CRF 27, two full camera orbits and four fourth-axis traversals. FFprobe records actual duration, dimensions and frame count. Raw MP4 uploaded separately. Diagnostics include boundary-face count, boundary per occupied cell, and matrix coverage at thresholds 0.1, 0.15, 0.2, 0.25 and 0.3 alongside existing genetic and lineage metrics.
+801 unique simulated frames at 24 fps (33.375 seconds), 1280×720, H.264 CRF 27, two full camera orbits and four fourth-axis traversals. FFprobe records actual duration, dimensions and frame count. Raw MP4 uploaded separately. Diagnostics include boundary-face count, boundary per occupied cell, and matrix coverage at thresholds 0.1, 0.15, 0.2, 0.25 and 0.3 alongside existing genetic and lineage metrics.
 
 ### Interpretation and limitations
 
@@ -749,7 +749,7 @@ Report candidate count, largest candidate, coverage and mean V/W/E inside candid
 Replace lower identity timeline panel with three fixed-scale time-series panels: active V/W/matrix coverage, pooled genotype entropy (0–3 bits), candidate coverage (0–1). Retain live entity list, recent events and two rotating sections. All charts include observations through current frame, on a fixed full-run time axis. 1,201 unique frames at 24 fps, expected duration 50.042 s, 1280×720, raw H.264 MP4 and separate diagnostics archive. FFprobe records actual output properties.
 
 ### Verified results
-Pending. Do not infer valid compartments from topology alone. Candidate detection depends on threshold, minimum size and chosen domain cut; no wrap-invariant cavity detection or functional membrane proof.  Increased rendering cadence may increase runtime; 90-minute timeout retained.
+Do not infer valid compartments from topology alone. Candidate detection depends on threshold, minimum size and chosen domain cut; no wrap-invariant cavity detection or functional membrane proof.  Increased rendering cadence may increase runtime; 90-minute timeout retained.
 
 ### Reproduction
 [Source](../compartmentalization.py) · [Workflow](../.github/workflows/compartmentalization.yml). Python 3.12, requirements.txt, scipy==1.15.3; run from root.
@@ -1037,6 +1037,8 @@ Morphogenesis: investigate selective permeability, localized metabolism and comp
 
 ## Generation 0025 — Energy-funded structural maintenance
 
+Status: CI verified — successful numerical execution.
+
 **Research question:** Can structural construction persist when maintenance draws on shared local energy?
 
 ### Implementation and parameters
@@ -1121,7 +1123,7 @@ Single matched seed; shared resource debit, not genotype-specific expenditure. N
 
 ## Generation 0026 — Consolidation and observer independence
 
-Status: committed; experimental verification pending.
+Status: short observer verification passed; full-resolution verification in progress.
 
 Parent: G0023 baseline. The numerical update block is retained unchanged; the headless driver parameterizes seed, lattice size, duration and factorial arm. No new physical mechanism is introduced.
 
@@ -1131,4 +1133,4 @@ Report matrix mean, standard deviation, coefficient of variation, periodic forwa
 
 [Source](../consolidation.py) · [Workflow](../.github/workflows/consolidation.yml).
 
-Results remain pending until CI completes. Upcoming matched factorial ensembles use the same headless driver; domain-size and discretization studies are distinct.
+[CI run 44751157353, attempt 2](https://github.com/interrupt21h/ontogenesis/actions/runs/44751157353): the 12^4, 240-step smoke test passed; the 24^4, 4800-step job was running when inspected. [Short-test artifact](https://github.com/interrupt21h/ontogenesis/actions/runs/44751157353/artifacts/14641755145). Full-resolution results remain unverified. Upcoming matched factorial ensembles use the same headless driver; domain-size and discretization studies are distinct.
