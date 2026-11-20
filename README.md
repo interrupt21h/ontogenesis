@@ -2,6 +2,12 @@
 
 An experiment in computational emergence. Each generation preserves its rules, seed, metrics and render.
 
+## Artistic vision and creative methodology
+
+Ontogenesis investigates emergence both within a simulated world and within the recursive human–AI process that constructs it. Scott Muller directs the artistic inquiry while AI participates extensively in mathematical synthesis, software implementation, interpretation and documentation. The delegation of complexity is itself part of the medium.
+
+**[Recursive creation: human intention, machine intelligence and computational emergence](docs/RECURSIVE_CREATION.md)** — an essay on the artistic method, distributed authorship and the relationship between simulated evolution and creative development.
+
 ## Latest verified animation — Generation 0023: Factorial niche controls
 
 [Download standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44687054986/artifacts/14609910431) (2.03 MiB) · [Workflow](https://github.com/interrupt21h/ontogenesis/actions/workflows/niche.yml)
