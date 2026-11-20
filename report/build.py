@@ -43,8 +43,8 @@ def frame_section(n):
         return labels[i]+" --- frame "+str(meta["indices"][i]+1)
     provenance=r"\par\smallskip{\footnotesize Source animation artifact "+str(artifact)+r". Frame numbers refer to playback order, not integration steps. \par}"
     if int(n)<14:
-        panels=[r"\begin{minipage}[t]{.48\linewidth}\centering "+picture(paths[i],r"\linewidth",r".25\textheight")+r"\par\small "+caption(i)+r"\end{minipage}" for i in (0,1)]
-        block=r"\par\Needspace{.68\textheight}\AtlasPlateHeading{"+n+r"}{Development sequence}{"+str(meta["count"])+r" frames}\noindent "+r"\hfill ".join(panels)+r"\par\medskip\begin{center}"+picture(paths[2],r".76\linewidth",r".32\textheight")+r"\par\small "+caption(2)+r"\end{center}"+provenance
+        panels=[r"\begin{minipage}[t]{.48\linewidth}\centering "+picture(paths[i],r"\linewidth",r".29\textheight")+r"\par\small "+caption(i)+r"\end{minipage}" for i in (0,1)]
+        block=r"\clearpage\AtlasPlateHeading{"+n+r"}{Development sequence}{"+str(meta["count"])+r" frames in animation}\noindent "+r"\hfill ".join(panels)+r"\par\medskip\begin{center}"+picture(paths[2],r".88\linewidth",r".36\textheight")+r"\par\small "+caption(2)+r"\end{center}"+provenance
         return raw_latex(block)
     from PIL import Image
     # One chronological context plate and a full-width endpoint detail plate.
@@ -52,7 +52,7 @@ def frame_section(n):
     for i in (0,1):
         rows.append(r"\begin{minipage}{\linewidth}\centering "+picture(paths[i],r"\linewidth",r".195\textheight")+r"\par\small "+caption(i)+r"\end{minipage}\par\smallskip")
     rows.append(r"\begin{minipage}{\linewidth}\centering "+picture(paths[2],r"\linewidth",r".195\textheight")+r"\par\small "+caption(2)+r"\end{minipage}\par\smallskip")
-    context=raw_latex(r"\clearpage\AtlasPlateHeading{"+n+r"}{Development sequence}{"+str(meta["count"])+r" total}"+"".join(rows)+provenance)
+    context=raw_latex(r"\clearpage\AtlasPlateHeading{"+n+r"}{Development sequence}{"+str(meta["count"])+r" frames in animation}"+"".join(rows)+provenance)
     with Image.open(out/paths[2]) as im:
         if im.size!=(1280,720):
             return context
@@ -61,7 +61,7 @@ def frame_section(n):
             detail=Path(paths[2]).with_name("final-"+tag+".png")
             im.crop(rect).save(out/detail)
             panels.append(r"\begin{center}"+picture(str(detail),r".95\linewidth",r".32\textheight")+r"\par\small "+label+r"\end{center}")
-    return context+raw_latex(r"\clearpage\AtlasPlateHeading{"+n+r"}{Final spatial sections}{"+str(meta["indices"][2]+1)+r"}"+"".join(panels)+r"\par\small Distinct fourth-coordinate sections, enlarged without interpolation of new scientific detail."+provenance)
+    return context+raw_latex(r"\clearpage\AtlasPlateHeading{"+n+r"}{Final spatial sections}{"+"Frame "+str(meta["indices"][2]+1)+r"}"+"".join(panels)+r"\par\small Distinct fourth-coordinate sections, enlarged without interpolation of new scientific detail."+provenance)
 
 def research_plate(name,heading,caption):
     return raw_latex(r"\par\Needspace{.43\textheight}\section*{"+heading+r"}\begin{center}\includegraphics[width=\linewidth,height=.48\textheight,keepaspectratio]{atlas/"+name+r".pdf}\end{center}\noindent "+caption+r"\par")
@@ -73,7 +73,7 @@ body = [re.sub(r"(?m)^## (.+)$",r"## \1 {.unnumbered}",intro.replace("# Vision a
 essay = (ROOT / "docs/RECURSIVE_CREATION.md").read_text()
 essay = essay.replace("# Recursive creation: human intention, machine intelligence and computational emergence", "# Recursive creation",1)
 essay = re.sub(r"(?m)^(#{1,2} .+)$", r"\1 {.unnumbered}", essay)
-essay = essay.replace("## The process as medium", raw_latex(r"\noindent\includegraphics[width=\linewidth,height=.30\textheight,keepaspectratio]{phase_art/8.png}\par\medskip")+"## The process as medium",1)
+essay = essay.replace("## The process as medium", raw_latex(r"\begin{center}\includegraphics[width=.96\linewidth,height=.30\textheight,keepaspectratio]{phase_art/8.png}\end{center}")+"## The process as medium",1)
 essay = essay.replace("Three distinct processes provide the conceptual structure of the work.", "Three distinct processes provide the conceptual structure of the work."+raw_latex(r"""\begin{center}
 \begin{tikzpicture}[every node/.style={font=\sffamily\small,align=left}]
 \fill[phaseI!9,rounded corners=4pt] (0,0) rectangle (12.6,5.1);
@@ -101,6 +101,8 @@ essay = essay.replace("The development cycle can be described in six stages.", "
 \end{tikzpicture}
 \end{center}"""),1)
 body.append(essay)
+body.append(raw_latex(r"\clearpage"))
+body.append((ROOT/"docs/AUTHOR.md").read_text().replace("# About the artist","# About the artist {.unnumbered}",1))
 body.append(research_plate("research-genealogy","The genealogy of the investigation","Each revision inherits or extends a computational model. Amber marks revisions concentrated on instruments or controls. This chronology is not a biological genealogy."))
 for n,title,record in records:
     if int(n) in groups:
@@ -118,7 +120,7 @@ for n,title,record in records:
         pieces[i] = re.sub(r"(?<![\w$])(\d+)\^([234])(?![\w$])",lambda m: "$"+m[1]+"^{"+m[2]+"}$",pieces[i])
     record = "".join(pieces)
     if "Verified CI outcome" in record or "Verified factorial outcome" in record or "Verified outcome" in record:
-        record = re.sub(r"(?im)^Status: (?:CI )?pending[^\n]*$", "Status: verified outcome recorded below.", record)
+        record = re.sub(r"(?im)^Status: (?:committed; )?(?:CI )?pending[^\n]*$", "Status: verified outcome recorded below.", record)
     atlas=out / "atlas" / f"{n}-atlas.svg"
     if atlas.exists():
         subprocess.run(["rsvg-convert","-f","pdf","-o",str(atlas.with_suffix(".pdf")),str(atlas)],check=True)
@@ -182,6 +184,7 @@ custom=r"""\begin{titlepage}
 \node[anchor=north west,text=white,font=\sffamily\Large] at ([xshift=25mm,yshift=-60mm]current page.north west) {Computational emergence};
 \node[anchor=south west,text=white,font=\sffamily\large] at ([xshift=25mm,yshift=30mm]current page.south west) {Scott Muller};
 \node[anchor=south west,text=white,font=\sffamily\small] at ([xshift=25mm,yshift=23mm]current page.south west) {Living experimental monograph};
+\node[anchor=south west,text=white,font=\sffamily\small] at ([xshift=25mm,yshift=16mm]current page.south west) {scott@21h.io};
 \end{tikzpicture}\null
 \end{titlepage}"""
 preamble,marker,document=raw.partition(r"\begin{document}")
