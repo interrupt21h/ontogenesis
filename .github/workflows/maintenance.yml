@@ -1,5 +1,9 @@
 name: Generation 0025
 on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/maintenance.yml
   workflow_dispatch:
 permissions:
   contents: write
