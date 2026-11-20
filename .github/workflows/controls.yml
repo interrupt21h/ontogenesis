@@ -1,0 +1,53 @@
+name: Generation 0023
+on:
+  push:
+    paths:
+      - controls.py
+      - requirements.txt
+      - .github/workflows/controls.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        arm: [baseline, cost, maintenance, combined]
+    env:
+      ONTO_ARM: ${{ matrix.arm }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt scipy==1.15.3
+      - run: python controls.py
+      - if: matrix.arm == 'combined'
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - if: matrix.arm == 'combined'
+        run: ffmpeg -y -framerate 24 -pattern_type glob -i 'gallery/0023/${{ matrix.arm }}/[0-9]*.png' -vf scale=1280:720 -c:v libx264 -pix_fmt yuv420p -crf 27 -movflags +faststart gallery/0023/${{ matrix.arm }}/evolution.mp4
+      - if: matrix.arm == 'combined'
+        run: ffprobe -v error -show_entries format=duration,size -show_entries stream=width,height,nb_frames -of json gallery/0023/${{ matrix.arm }}/evolution.mp4
+      - uses: actions/upload-artifact@v7
+        with:
+          name: generation-0023-${{ matrix.arm }}
+          path: |
+            gallery/0023/${{ matrix.arm }}/metrics.json
+            gallery/0023/${{ matrix.arm }}/lineages.json
+          retention-days: 30
+          if-no-files-found: error
+      - if: matrix.arm == 'combined'
+        name: Upload standalone MP4
+        id: video
+        uses: actions/upload-artifact@v7
+        with:
+          path: gallery/0023/${{ matrix.arm }}/evolution.mp4
+          archive: false
+          retention-days: 30
+          if-no-files-found: error
+      - if: matrix.arm == 'combined'
+        name: Link animation
+        run: echo '[Download MP4 directly](${{ steps.video.outputs.artifact-url }})' >> "$GITHUB_STEP_SUMMARY"
