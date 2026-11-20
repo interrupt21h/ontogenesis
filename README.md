@@ -18,6 +18,12 @@ Ontogenesis investigates emergence both within a simulated world and within the 
 
 **[Recursive creation: human intention, machine intelligence and computational emergence](docs/RECURSIVE_CREATION.md)** — an essay on the artistic method, distributed authorship and the relationship between simulated evolution and creative development.
 
+## G0028 cinematic replacement — spatial artificial-life film
+
+The new artistic pipeline uses [recorded three-dimensional numeric volumes](disturbance_cinematic.py) from a fixed-omega hyperplane of the 4D universe and a separate [voxel-based cinematic renderer](disturbance_cinematic_render.py). The camera traverses a rotating 3D field; luminous glyphs encode actual sampled matrix, species, excitation and resource data. A five-phase visual narrative moves from formation to disturbance and aftermath. See the [cinematic workflow](.github/workflows/disturbance-cinematic.yml) and [render-only workflow](.github/workflows/disturbance-cinematic-rerender.yml).
+
+The small-domain cinematic preview tests the pipeline and is not evidence of a mature ecosystem: on 12⁴, the underlying populations dissipate early. The 24⁴ / 4800-step, 60-second cinematic master is independently gated to avoid recurring costly GitHub Actions jobs. Native observations and artistic rendering remain separate; camera motion, adaptive luminosity and temporal blending are visualization techniques, not additional simulation states. The original evidence-only panel movie is preserved below for comparison.
+
 ## Latest verified matched-control pilot — Generation 0028
 
 [Download corrected pilot MP4 and measured evidence](https://github.com/interrupt21h/ontogenesis/actions/runs/44824014028/artifacts/14673655018) · [Generation study](docs/generations/0028.md).
@@ -83,7 +89,7 @@ Ontogenesis investigates emergence in continuous, periodic reaction–diffusion 
 | 0025 | [Energy-funded structural maintenance](docs/generations/0025.md) | [Python](maintenance.py) | [Runs](.github/workflows/maintenance.yml) · Verified |
 | 0026 | [Observer independence](docs/generations/0026.md) | [Python](consolidation.py) | [Runs](.github/workflows/consolidation.yml) · Verified |
 | 0027 | [Structural statistics](docs/generations/0027.md) | [Python](structural_statistics.py) | [Runs](.github/workflows/structural-statistics.yml) · Verified execution; cross-run hashes differ |
-| 0028 | [Localized disturbance and recovery](docs/generations/0028.md) | [Python](disturbance.py) · [Renderer](disturbance_render.py) | [Refined MP4 + pilot passed](https://github.com/interrupt21h/ontogenesis/actions/runs/44824014028/artifacts/14673655018) · Full manual |
+| 0028 | [Localized disturbance and recovery](docs/generations/0028.md) | [Evidence](disturbance.py) · [Cinematic capture](disturbance_cinematic.py) · [Renderer](disturbance_cinematic_render.py) | [Refined MP4 + pilot passed](https://github.com/interrupt21h/ontogenesis/actions/runs/44824014028/artifacts/14673655018) · Full manual |
 
 ## Reproduce locally
 

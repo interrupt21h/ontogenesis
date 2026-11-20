@@ -28,3 +28,28 @@ The owner-approved direction is G0028 environmental disturbances and recovery; G
 
 ## Infrastructure isolation and execution budget
 Use standard GitHub-hosted CPU Actions runners only; do not use employer systems, local GPU infrastructure, self-hosted runners, external compute services or work credentials. Use explicit CPU/memory/time budgets, smoke-test gates, bounded parameter pilots, manual dispatch for expensive jobs, and conservative matrix parallelism. Profile before increasing domain size or duration; favor vectorized float32 operations where numerically validated, bounded archives, and render-only workflows from retained data. Avoid redundant simulation runs from documentation edits. Larger domains are optional and contingent on measured runner resource requirements; never assume GPU access. Keep native provenance and numerical controls. Where feasible publish standalone cinematic, scientific observatory and matched-control MP4s, with documented fixed and adaptive sampling. Integrate successful results into the report, README and cumulative film; distinguish schematics from actual observations. Do not silently reduce scientific controls to meet budget: document any reduced scope.
+
+
+## Artistic priority and visual acceptance standard (G0028 onwards)
+Ontogenesis is primarily an evolving, distinctive work of computational art. Its
+featured films must communicate *dynamic artificial-life behavior*, not just
+animate diagnostic graphs. The canonical artistic artifact is a standalone,
+cinematically edited MP4 with actual changing simulated fields and an intelligible
+temporal arc; charts, readouts and matched-control movies are secondary evidence.
+Present a spatially expressive view (sections, measured volumetric projections,
+traced field structures, or comparable nontrivial modes), meaningful motion,
+coherent color direction, and clear development before and after each event.
+Use longer pre-event development and avoid showcasing early transient collapse as
+mature ecological activity. Inspect actual rendered frames: CI passing and
+encoding success alone do NOT establish artistic merit.
+
+Keep the art scientifically attributable: spatial/temporal interpolation,
+adaptive exposure, voxel glyphs, contour lines, camera motion and symbolic
+event markers are permitted *presentation operations*, explicitly distinguished
+from numerically evolved concentrations. Never fabricate organism structures,
+invent unavailable 4D observations or imply that renderer camera motion is a
+physical current. Preserve raw numeric observations and source provenance so
+the visual language can evolve independently. A low-domain smoke video is a
+technical preview; do not silently promote it as full-domain evidence. Never
+replace a verified featured video with a worse test render; keep the older
+artifact accessible until the new visual has been inspected and approved.

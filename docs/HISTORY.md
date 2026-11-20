@@ -1364,3 +1364,19 @@ The G0026 full-resolution workflow was also moved behind manual dispatch; prior 
 **G0028 presentation verification:** [Refined pilot run 44824014028](https://github.com/interrupt21h/ontogenesis/actions/runs/44824014028) · [artifact 14673655018](https://github.com/interrupt21h/ontogenesis/actions/runs/44824014028/artifacts/14673655018) completed a 92-frame, 7.666667-second H.264 film and corrected six-panel visualization. The sampled numerical frames and hashes matched the original pilot exactly; revised video holds repeat measured frames rather than interpolate states. Visual layout was inspected; documentation and monograph use original measured values. The current full-resolution G0025 movie remains separately identified.
 
 **Interpretation safeguard:** In the verified 12⁴ pilot, the unperturbed matrix core was only about 0.005535 at the event and declined to about 0.002087 by the endpoint; shocked matrix ended near 0.001724. Attenuating the paired difference does not mean the structural matrix returned to its pre-event level, and the 240-step pilot is an early transient rather than a mature-universe resilience test. Full 24⁴ execution remains pending.
+
+
+**G0028 cinematic development (artistic priority):** The previous six-panel
+pilot movie proved matched numerical observation but was not visually compelling
+enough for the project. It remains as archived evidence. The new cinematic branch
+records five fields as native 3D fixed-omega volumes from the inherited 4D
+simulation, then renders orbiting voxel glyphs, field-derived light, an authentic
+2D z-section inset and independent camera movement. Temporal and spatial
+interpolation are explicitly artistic transformations. The automatic 12⁴
+preview is software verification only; observed dissolution of the reduced
+domain's early chemistry is a limitation, not falsely described as rich,
+mature artificial life. A one-universe 24⁴/4800-step cinematic master is
+separately gated and remains unverified until execution and inspection.
+[Capture](../disturbance_cinematic.py) ·
+[Renderer](../disturbance_cinematic_render.py) ·
+[Workflow](../.github/workflows/disturbance-cinematic.yml).

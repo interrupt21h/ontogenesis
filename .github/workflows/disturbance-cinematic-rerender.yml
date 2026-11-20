@@ -1,0 +1,51 @@
+name: G0028 cinematic rerender from archived fields
+on:
+  workflow_dispatch:
+    inputs:
+      edition:
+        description: 'Which previously published G0028 field archive to use'
+        required: true
+        type: choice
+        options: [preview, full]
+        default: preview
+      seconds:
+        description: 'Desired movie duration in seconds, 6-180'
+        type: number
+        default: 60
+permissions:
+  contents: read
+jobs:
+  rerender:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install numpy==2.2.6 pillow==11.2.1
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-dejavu-core
+      - name: Retrieve durable numerical observations (no simulation)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EDITION: ${{ inputs.edition }}
+        run: |
+          mkdir -p inputs
+          gh release download atlas-media -p "cinematic-${EDITION}.npz" -p "cinematic-${EDITION}.json" -D inputs
+      - name: Check archive provenance and render
+        env:
+          EDITION: ${{ inputs.edition }}
+          DURATION: ${{ inputs.seconds }}
+        run: |
+          if [ "$EDITION" = "full" ]; then SIZE='1280 720'; else SIZE='960 540'; fi
+          read WIDTH HEIGHT <<< "$SIZE"
+          python -u disturbance_cinematic_render.py --input "inputs/cinematic-${EDITION}.npz" --metadata "inputs/cinematic-${EDITION}.json" --movie ontogenesis-0028-rerender.mp4 --poster ontogenesis-0028-rerender.png --seconds "$DURATION" --fps 24 --width "$WIDTH" --height "$HEIGHT"
+          ffmpeg -v error -xerror -i ontogenesis-0028-rerender.mp4 -f null -
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0028-cinematic-rerender-${{ inputs.edition }}
+          path: |
+            ontogenesis-0028-rerender.mp4
+            ontogenesis-0028-rerender.png
+          if-no-files-found: error
+          retention-days: 30
