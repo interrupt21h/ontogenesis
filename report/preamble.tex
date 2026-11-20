@@ -52,7 +52,7 @@
 \newcommand{\AtlasPlateHeading}[3]{%
   {\sffamily\small\bfseries\color{ontogreen} GENERATION #1 \quad / \quad SIMULATION PLATE\par}
   \vspace{4pt}{\sffamily\LARGE\bfseries\color{ontoink} #2\par}
-  \vspace{3pt}{\sffamily\small\color{ontoblue} Playback frame #3\par}
+  \vspace{3pt}{\sffamily\small\color{ontoblue} #3\par}
   \vspace{6pt}{\color{ontogreen}\hrule}\vspace{10pt}}
 \titleformat{\chapter}[display]{\normalfont\huge\bfseries\color{ontoink}}{\sffamily\large\color{ontogreen} GENERATION \thechapter}{8pt}{}[\vspace{6pt}{\color{ontogreen}\titlerule}]
 
@@ -85,4 +85,4 @@
 \renewcommand{\AtlasPlateHeading}[3]{%
  \noindent\colorbox{phaseaccent}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\sffamily\bfseries\color{white}\small GENERATION #1 \hfill SIMULATION PLATE}}\par
  \medskip{\sffamily\LARGE\bfseries\color{ontoink} #2\par}
- {\sffamily\small\color{phaseaccent} Playback frame #3\par}\medskip}
+ {\sffamily\small\color{phaseaccent} #3\par}\medskip}
