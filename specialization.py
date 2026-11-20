@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 import numpy as np
 from PIL import Image
+from field_archive import save_snapshot
 
 ARM='combined'
 assert ARM in ('baseline','cost','maintenance','combined')
@@ -372,6 +373,9 @@ def main():
             metrics[-1]['builder_mass']=float(builders.sum(dtype=np.float64))
             if step%120==0:
                 metrics[-1]['multiscale_topology']=multiscale_topology(m)
+            if step in (0,1200,2400,3600,STEPS):
+                save_snapshot(out/"fields",step,STEPS,dict(u=u,v=v,w=w,q=q,e=e,m=m,pulse=pulse,
+                    recovery=recovery,trait=trait,xv=xv,xw=xw,gv=gv,gw=gw,identities=identities))
             if ARM=='combined': observatory((v,w,e,m,pulse,allele),identities,tracker,step,slice_position,out/f"{step:05d}.png",metrics)
         if step==STEPS: break
         q+=.075*lap(q)+.025*(v-w-q)
