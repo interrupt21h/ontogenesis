@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 545" role="img" aria-label="Model ancestry diagram G0023 splits into construction specialization G0024 and G0025, and G0026 instrumentation leading to G0027 measurement and G0028 shock; rendering workflows are distinct from numerical model revisions.">
+<defs><marker id="tip" markerWidth="11" markerHeight="11" refX="10" refY="5.5" orient="auto"><path d="M0 0L10 5.5L0 11" stroke="#316789" stroke-width="1.3" fill="none"/></marker></defs>
+<rect width="1240" height="545" rx="16" fill="#f3f8fa"/>
+<g font-family="DejaVu Sans, sans-serif">
+<text x="40" y="48" font-size="26" font-weight="bold" fill="#16334b">LATE EXPERIMENTS  /  MODEL AND OBSERVER BRANCHES</text>
+<text x="40" y="80" font-size="16" fill="#537183">Arrows identify inherited implementation lineage, not an organism's genealogy.</text>
+<rect x="45" y="212" width="210" height="120" rx="13" stroke="#29877e" stroke-width="2" fill="#def1ea"/>
+<text x="64" y="249" font-size="22" font-weight="bold" fill="#176a60">G0023</text>
+<text x="64" y="278" font-size="17" fill="#193f4e">Factorial baseline</text>
+<text x="64" y="301" font-size="15" fill="#426978">Model + matched controls</text>
+
+<rect x="386" y="111" width="250" height="113" rx="13" stroke="#29877e" stroke-width="2" fill="#def1ea"/>
+<text x="408" y="147" font-size="22" font-weight="bold" fill="#176a60">G0024</text>
+<text x="408" y="177" font-size="17" fill="#193f4e">Independent construction</text>
+<text x="408" y="200" font-size="15" fill="#426978">Genotype specialization</text>
+
+<rect x="791" y="111" width="366" height="113" rx="13" stroke="#29877e" stroke-width="2" fill="#def1ea"/>
+<text x="816" y="147" font-size="22" font-weight="bold" fill="#176a60">G0025</text>
+<text x="816" y="177" font-size="17" fill="#193f4e">Energy-funded maintenance</text>
+<text x="816" y="201" font-size="15" fill="#426978">96-cubed ray-marched imagery</text>
+
+<rect x="386" y="318" width="250" height="118" rx="13" stroke="#ad763b" stroke-width="2" fill="#f9ead9"/>
+<text x="408" y="356" font-size="22" font-weight="bold" fill="#a2672d">G0026</text>
+<text x="408" y="385" font-size="17" fill="#654524">Headless consolidation</text>
+<text x="408" y="409" font-size="15" fill="#805c38">Observer noninterference</text>
+
+<rect x="791" y="278" width="366" height="95" rx="13" stroke="#ad763b" stroke-width="2" fill="#f9ead9"/>
+<text x="816" y="311" font-size="22" font-weight="bold" fill="#a2672d">G0027</text>
+<text x="816" y="338" font-size="17" fill="#654524">Structural statistics</text>
+<text x="816" y="359" font-size="15" fill="#805c38">No new physical update equations</text>
+
+<rect x="791" y="402" width="366" height="96" rx="13" stroke="#29877e" stroke-width="2" fill="#e6f0ee"/>
+<text x="816" y="435" font-size="22" font-weight="bold" fill="#176a60">G0028</text>
+<text x="816" y="462" font-size="17" fill="#193f4e">Externally imposed shock</text>
+<text x="816" y="483" font-size="15" fill="#426978">Evidence vs separate cinematic archive</text>
+
+<path d="M255 249H321V168H377" fill="none" stroke="#316789" stroke-width="3" marker-end="url(#tip)"/>
+<path d="M636 168H783" fill="none" stroke="#316789" stroke-width="3" marker-end="url(#tip)"/>
+<path d="M255 294H321V377H377" fill="none" stroke="#316789" stroke-width="3" marker-end="url(#tip)"/>
+<path d="M636 377H707V328H783" fill="none" stroke="#316789" stroke-width="3" marker-end="url(#tip)"/>
+<path d="M707 377V449H783" fill="none" stroke="#316789" stroke-width="3" marker-end="url(#tip)"/>
+
+<rect x="48" y="461" width="282" height="51" rx="7" fill="#e3ebf1"/>
+<text x="64" y="483" font-size="14" font-weight="bold" fill="#2f5f78">Cinema is a separate observation</text>
+<text x="64" y="502" font-size="13" fill="#56778a">No mutation of the numerical model</text>
+<text x="44" y="533" font-size="12" fill="#516b79">Original G0025 volumetric technique is reused for G0028 fidelity; this is a renderer relationship, not a model-inheritance arrow.</text>
+</g></svg>
