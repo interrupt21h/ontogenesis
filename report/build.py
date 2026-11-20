@@ -163,7 +163,7 @@ for n,title,record in records:
             ("field-evolution","Numerical development","Native x-y sections at fixed fourth and third coordinates; color scales are fixed over all archived steps for each field."),
             ("field-projections","Projected chemical environment","Mean concentrations over the fourth and third axes. These projections are not individual spatial sections."),
             ("trait-landscape","Spatial distribution of heredity","Local population-weighted allele fractions; cells with negligible total population are undefined."),
-            ("structural-volume","Structural occupancy in three dimensions","Native cell centers above matrix threshold 0.20 in two fourth-coordinate sections. The rectangular cut does not reveal all periodic connections."),
+            ("structural-volume","Matrix concentration, spatial contrast and occupancy","The native section is selected by maximum occupied count at threshold 0.20, or maximum concentration when global occupancy is zero; z intersects the section maximum. Absolute and mean-relative views share the same coordinates. The histogram covers the entire four-dimensional lattice. The final panel shows occupancy across every fourth-coordinate section, or global threshold sensitivity when no cells exceed 0.20. Relative contrast does not by itself establish functional structure."),
             ("field-metrics","Measured developmental trajectories","Global coverage and allele frequencies independently recomputed from archived numerical states. Connecting lines guide the eye between samples.")]:
             body.append(research_plate(n+"-"+suffix,heading,caption))
     body.append(frame_section(n))
