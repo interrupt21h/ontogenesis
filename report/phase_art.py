@@ -9,6 +9,7 @@ x,y=np.meshgrid(np.linspace(-1.65,1.65,1500),np.linspace(-1,1,900))
 r=np.hypot(x,y); a=np.arctan2(y,x)
 palettes=[((38,196,215),(244,104,81)),((69,147,245),(112,224,205)),((66,211,157),(234,191,92)),((175,138,244),(74,213,224)),((234,119,112),(239,192,107)),((238,173,74),(114,199,222)),((75,190,209),(199,135,242))]
 palettes.append(((57,207,221),(236,119,105)))
+palettes.append(((74,182,204),(232,159,96)))
 for i,(c1,c2) in enumerate(palettes,1):
     if i==1:
         f=np.sin(9*x+3*np.sin(5*y))+np.cos(10*y+3*np.sin(4*x))
@@ -22,6 +23,8 @@ for i,(c1,c2) in enumerate(palettes,1):
         f=13*y+4*np.sin(7*x)+2*np.sin(9*y+5*x)
     elif i==6:
         f=7*(np.cos(4*x)+np.cos(5*y)+np.sin(4*x+5*y))
+    elif i==9:
+        f=9*np.sqrt((x+.22*np.sin(3*y))**2+2*y*y)+2*np.sin(6*a+3*r)+1.5*np.cos(5*x-4*y)
     elif i==8:
         f=15*r+3*np.sin(5*a-4*r)+2*np.cos(9*a+7*r)+1.4*np.sin(12*x*y)
     else:
