@@ -17,7 +17,8 @@ def render(folder,out):
     if not paths: raise ValueError("No numerical snapshots")
     states=[load_snapshot(p) for p in paths]
     meta=states[-1][0]
-    assert [m["step"] for m,f in states]==[0,1200,2400,3600,4800]
+    assert states[0][0]["step"]==0 and meta["step"]==meta["total_steps"]
+    assert all(a[0]["step"]<b[0]["step"] for a,b in zip(states,states[1:]))
     assert all(m["generation"]==meta["generation"] and m["revision"]==meta["revision"] and m["shape"]==meta["shape"] for m,f in states)
     out=Path(out);out.mkdir(parents=True,exist_ok=True)
     gen=meta["generation"]
@@ -28,7 +29,7 @@ def render(folder,out):
     fields=[("v","Species V","magma"),("w","Species W","viridis"),("m","Matrix","cividis"),("e","Energy","viridis"),("pulse","Signal","plasma")]
     # Fixed native lattice section across time: no moving camera or changing cut.
     omega,z,y,x=[n//2 for n in meta["shape"]]
-    fig,axs=plt.subplots(len(fields),len(states),figsize=(10,10),layout="constrained")
+    fig,axs=plt.subplots(len(fields),len(states),figsize=(max(10,1.7*len(states)),10),layout="constrained")
     for i,(key,title,cmap) in enumerate(fields):
         maximum=1 if key in ("e","pulse","m") else max(float(f[key].max()) for _,f in states)
         for j,(m,f) in enumerate(states):
