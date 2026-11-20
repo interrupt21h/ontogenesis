@@ -1,0 +1,66 @@
+name: Generation 0025
+on:
+  push:
+    paths:
+      - maintenance.py
+      - requirements.txt
+      - field_archive.py
+      - report/field_atlas.py
+      - .github/workflows/maintenance.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt scipy==1.15.3
+      - run: python -u maintenance.py
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: ffmpeg -y -framerate 24 -pattern_type glob -i 'gallery/0025/[0-9]*.png' -vf scale=1280:720 -c:v libx264 -pix_fmt yuv420p -crf 27 -movflags +faststart gallery/0025/evolution.mp4
+      - run: ffprobe -v error -show_entries format=duration,size -show_entries stream=width,height,nb_frames -of json gallery/0025/evolution.mp4
+      - uses: actions/upload-artifact@v7
+        with:
+          name: generation-0025
+          path: |
+            gallery/0025/metrics.json
+            gallery/0025/lineages.json
+            gallery/0025/04800.png
+          retention-days: 30
+          if-no-files-found: error
+      - name: Generate independent numerical atlas
+        run: |
+          pip install matplotlib==3.10.3
+          python report/field_atlas.py gallery/0025/fields gallery/0025/field-atlas
+      - uses: actions/upload-artifact@v7
+        with:
+          name: generation-0025-numerical-state
+          path: |
+            gallery/0025/fields
+            gallery/0025/field-atlas
+          if-no-files-found: error
+          retention-days: 30
+      - name: Upload standalone MP4
+        id: video
+        uses: actions/upload-artifact@v7
+        with:
+          path: gallery/0025/evolution.mp4
+          archive: false
+          retention-days: 30
+          if-no-files-found: error
+      - name: Link animation
+        run: echo '[Download MP4 directly](${{ steps.video.outputs.artifact-url }})' >> "$GITHUB_STEP_SUMMARY"
+      - name: Publish numerical observation archive
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view atlas-media >/dev/null 2>&1 || gh release create atlas-media --title "Scientific atlas archive" --notes "Verified scientific observations." --prerelease
+          tar -C gallery/0025 -czf field-state-0025.tar.gz fields
+          gh release upload atlas-media field-state-0025.tar.gz --clobber
+          gh workflow run report.yml --ref main
