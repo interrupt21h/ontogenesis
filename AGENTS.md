@@ -18,3 +18,6 @@ Every generation must include a mechanism-specific SVG under docs/figures/NNNN.s
 
 ## Atlas publication layout
 Use navy, teal and amber accents, serif scientific text and sans-serif plate labels. For dashboard generations use full-text-width original frames without a restrictive height cap. Provide labeled individual native-pixel subplot crops on dedicated detail pages when the layout is known; never infer measurements from crops. Verify pagination and legibility visually before describing an edition as publication-ready.
+
+## Numerical observation policy
+Preserve native numerical fields for new model revisions at documented steps. Include axis order, shape, dtype, seed, source revision, field semantics and threshold definitions. Adapt the archive schema for different genotype counts rather than mislabeling fields. Publish verified observations separately from MP4s. Generate quantitative plates from archived values; explicitly distinguish sections, projections and interpolated views. Never reconstruct missing concentrations from video colors. Observation archives are not restart checkpoints unless integrator and RNG state are also preserved and restart equivalence is tested.
