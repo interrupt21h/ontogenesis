@@ -1315,7 +1315,7 @@ Single matched seed; shared resource debit, not genotype-specific expenditure. N
 
 ## Generation 0026 — Consolidation and observer independence
 
-Status: short observer verification passed; full-resolution verification in progress.
+Status: CI verified — smoke and full-resolution observer checks passed.
 
 Parent: G0023 baseline. The numerical update block is retained unchanged; the headless driver parameterizes seed, lattice size, duration and factorial arm. No new physical mechanism is introduced.
 
@@ -1325,4 +1325,4 @@ Report matrix mean, standard deviation, coefficient of variation, periodic forwa
 
 [Source](../consolidation.py) · [Workflow](../.github/workflows/consolidation.yml).
 
-[CI run 44751157353, attempt 2](https://github.com/interrupt21h/ontogenesis/actions/runs/44751157353): the 12^4, 240-step smoke test passed; the 24^4, 4800-step job was running when inspected. [Short-test artifact](https://github.com/interrupt21h/ontogenesis/actions/runs/44751157353/artifacts/14641755145). Full-resolution results remain unverified. Upcoming matched factorial ensembles use the same headless driver; domain-size and discretization studies are distinct.
+[CI run 44751157353, attempt 2](https://github.com/interrupt21h/ontogenesis/actions/runs/44751157353) succeeded at both scales. [Full-resolution artifact](https://github.com/interrupt21h/ontogenesis/actions/runs/44751157353/artifacts/14651386328) confirms equality of all 13 field hashes at 41 checkpoints for headless and stride-4/6 observations. Final matrix mean 0.147089481, standard deviation 0.0409239273, CV 0.278224704, gradient energy 0.000328072869; dominant mode wavelength 24 cells. Coverage at thresholds 0.10, 0.15, 0.20, 0.25, 0.30: 0.839786482, 0.501708984, 0.105040750, 0, 0. V and W active fractions: 0.0361237703 and 0.682785976. The dominant mode is domain-scale, not evidence of an intrinsic length. Equivalence applies only to tested checkpoints and observers. The reference artifact retains final statistics but not the candidate observation histories.
