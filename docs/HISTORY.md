@@ -1084,6 +1084,55 @@ At this seed, the bundled costs eliminated matrix above threshold 0.20 in both c
 
 [Combined animation](https://github.com/interrupt21h/ontogenesis/actions/runs/44687054986/artifacts/14609910431).
 
+<!-- AUTO-CI-BEGIN -->
+
+### Automated CI verification
+
+[Successful run](https://github.com/interrupt21h/ontogenesis/actions/runs/44779065490) · [Standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44779065490/artifacts/14653313017) · [Diagnostics](https://github.com/interrupt21h/ontogenesis/actions/runs/44779065490/artifacts/14654750295). Source revision: `092362b1e550c64e850e0a71085611d7e6ed5f1e`.
+
+| Final metric | Value |
+|---|---:|
+| step | 4800 |
+| slice position | 0 |
+| v mean | 0.146076211 |
+| w mean | 0.0553124302 |
+| v active | 0.650499132 |
+| w active | 0.217158565 |
+| feedback rms | 0.169542655 |
+| energy mean | 0.880461158 |
+| energy min | 0.828315081 |
+| energy depleted | 0 |
+| structure mean | 0.123340924 |
+| structure active | 0 |
+| signal mean | 0.625207141 |
+| signal active | 0.733871648 |
+| recovery mean | 0.497645259 |
+| trait mean | 0.558707307 |
+| trait std | 0.0773434053 |
+| trait min | 0.330564601 |
+| trait max | 0.667420687 |
+| structure jaccard | 0 |
+| boundary faces | 0 |
+| boundary per cell | 0 |
+| metabolite v mean | 0.102047634 |
+| metabolite w mean | 0.0364125495 |
+| metabolite overlap | 0.0160797238 |
+| genotype entropy | 1.11981789 |
+| structure components | 0 |
+| largest structure | 0 |
+| oldest entity | 0 |
+| lineage events | 205 |
+| cavity candidates | 0 |
+| cavity fraction | 0 |
+| largest cavity | 0 |
+| complement components | 1 |
+| euler characteristic | 0 |
+| maintenance mean | 0.219252373 |
+| builder mass | 9777.46343 |
+
+<!-- AUTO-CI-END -->
+
+
 ## Generation 0024 — Independent construction specialization
 
 Status: CI verified — archival execution successful.
