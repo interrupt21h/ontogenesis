@@ -11,3 +11,7 @@ Use GitHub native LaTeX math blocks (fenced `math` or double-dollar delimiters) 
 Keep report/introduction.md mechanism map and analytical or measured illustrations current; report/build.py regenerates the complete LaTeX monograph from docs/HISTORY.md. Verify scientific-report CI, retain the standalone PDF, and update the README with the newest verified direct PDF artifact link when available. Label diagrams as conceptual or measured; do not invent simulation images. Preserve the durable report workflow link.
 
 For each newly verified standalone MP4, add its artifact ID to report/videos.json. The report workflow extracts three actual playback frames; verify availability and compilation before changing the README direct PDF link. Cached frames are an optimization, not permanent archival storage. Never substitute conceptual imagery for missing frames.
+
+## Visual editorial standard
+
+Every generation must include a mechanism-specific SVG under docs/figures/NNNN.svg, embedded in its descriptive Markdown page and reused by the report compiler. Clearly distinguish mechanism schematics, analytical plots and actual simulation frames. Preserve existing equations and provenance. Add measured charts and representative real frame images wherever available. Verify PDF compilation and inspect layout when possible; do not claim visual verification from CI alone. Local report builds require librsvg2-bin in addition to existing dependencies.
