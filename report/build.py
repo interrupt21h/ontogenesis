@@ -50,8 +50,8 @@ def frame_section(n):
     # One chronological context plate and a full-width endpoint detail plate.
     rows=[]
     for i in (0,1):
-        rows.append(r"\begin{center}"+picture(paths[i],r"\linewidth",r".26\textheight")+r"\par\small "+caption(i)+r"\end{center}")
-    rows.append(r"\begin{center}"+picture(paths[2],r"\linewidth",r".26\textheight")+r"\par\small "+caption(2)+r"\end{center}")
+        rows.append(r"\begin{center}"+picture(paths[i],r"\linewidth",r".22\textheight")+r"\par\small "+caption(i)+r"\end{center}")
+    rows.append(r"\begin{center}"+picture(paths[2],r"\linewidth",r".22\textheight")+r"\par\small "+caption(2)+r"\end{center}")
     context=raw_latex(r"\clearpage\AtlasPlateHeading{"+n+r"}{Development sequence}{"+str(meta["count"])+r" total}"+"".join(rows)+provenance)
     with Image.open(out/paths[2]) as im:
         if im.size!=(1280,720):
@@ -60,7 +60,7 @@ def frame_section(n):
         for tag,rect,label in (("chemistry",(14,110,495,575),"Chemistry section"),("identity",(510,110,985,575),"Identity section")):
             detail=Path(paths[2]).with_name("final-"+tag+".png")
             im.crop(rect).save(out/detail)
-            panels.append(r"\begin{center}"+picture(str(detail),r".83\linewidth",r".36\textheight")+r"\par\small "+label+r"\end{center}")
+            panels.append(r"\begin{center}"+picture(str(detail),r".83\linewidth",r".32\textheight")+r"\par\small "+label+r"\end{center}")
     return context+raw_latex(r"\clearpage\AtlasPlateHeading{"+n+r"}{Final spatial sections}{"+str(meta["indices"][2]+1)+r"}"+"".join(panels)+r"\par\small Distinct fourth-coordinate sections, enlarged without interpolation of new scientific detail."+provenance)
 
 def research_plate(name,heading,caption):
