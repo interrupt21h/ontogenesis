@@ -19,6 +19,8 @@ jobs:
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
       - name: Install LaTeX and Pandoc
         run: |
           sudo apt-get update
@@ -35,7 +37,7 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
-      - run: pip install numpy==2.2.6 matplotlib==3.10.3 pymupdf==1.26.0
+      - run: pip install numpy==2.2.6 matplotlib==3.10.3 pymupdf==1.26.0 pyyaml==6.0.2
       - name: Retrieve archived numerical observations
         env:
           GH_TOKEN: ${{ github.token }}
@@ -51,13 +53,18 @@ jobs:
           done
       - name: Validate report generator syntax
         run: python3 -m compileall -q report
+      - name: Collect engineering atlas
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 report/engineering_metrics.py
       - run: python3 report/build.py
       - name: Verify PDF
         run: |
           pdfinfo report/build/ontogenesis.pdf
           pdftotext report/build/ontogenesis.pdf report/build/verified.txt
           test -s report/build/atlas/0024-field-evolution.pdf
-          grep -q '19.2948' report/build/verified.txt
+          grep -q 'Evolution of the computational production framework' report/build/verified.txt
+          for plate in repository-growth execution-timeline artifact-production workflow-topology; do test -s "report/build/engineering/$plate.pdf"; done
           grep -q 'Generation 0024' report/build/verified.txt
           grep -q 'Generation 0001' report/build/verified.txt
           grep -q 'The genealogy of the investigation' report/build/verified.txt
@@ -87,6 +94,7 @@ jobs:
             report/build/cover.png
             report/build/layout-audit.json
             report/build/contact-sheet.jpg
+            report/build/engineering
       - name: Archive verified report and native frame samples
         env:
           GH_TOKEN: ${{ github.token }}
