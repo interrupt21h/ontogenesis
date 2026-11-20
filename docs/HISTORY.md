@@ -802,7 +802,7 @@ Retain 1,201 frames at 24 fps, target 50.042 seconds, 720p standalone MP4. Show 
 
 ## Generation 0021 — Multiscale topological persistence
 
-Status: committed; CI pending.
+Status: CI verified.
 
 ### Research question and implementation
 
@@ -852,7 +852,7 @@ This is a multiscale Euler and winding profile, not persistent homology: no feat
 
 ## Generation 0022 — Structural heredity
 
-Status: CI pending.
+Status: CI verified.
 
 ### Research question and implementation
 
@@ -891,7 +891,7 @@ This is a phenomenological niche-construction mechanism, not evidence of autonom
 
 ## Generation 0023 — Factorial niche construction controls
 
-Status: CI pending.
+Status: CI verified.
 
 ### Research question and implementation
 
@@ -943,7 +943,7 @@ At this seed, the bundled costs eliminated matrix above threshold 0.20 in both c
 
 ## Generation 0024 — Independent construction specialization
 
-Status: CI pending.
+Status: CI verified — archival execution successful.
 
 ### Mechanism
 
@@ -957,9 +957,31 @@ Mutation conserves total births; runtime assertion checks this. Seed 42, periodi
 
 ### Interpretation
 
-Results pending. Independent loci and reduced costs change simultaneously, so this experiment cannot attribute outcomes to either alone. No claim of cooperation or functional compartment formation.
+Independent loci and reduced costs change simultaneously, so this experiment cannot attribute outcomes to either alone. No claim of cooperation or functional compartment formation.
 
 [Source](../specialization.py) · [CI](../.github/workflows/specialization.yml)
+
+### Verified outcome
+
+[Successful archival CI run](https://github.com/interrupt21h/ontogenesis/actions/runs/44702101025) · [Standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44702101025/artifacts/14621170429) · [Diagnostics](https://github.com/interrupt21h/ontogenesis/actions/runs/44702101025/artifacts/14619729689) · [Native field archive](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/field-state-0024.tar.gz). Source revision `8b287c19b643c9054a9255be408e4c258ae9f38c`. All job steps passed. Video: 1201 frames, 50.041667 seconds, 2483095 bytes.
+
+| Final observable (step 4800) | Value |
+|---|---:|
+| V active | 6.2310% |
+| W active | 78.1334% |
+| Mean energy | 0.884224 |
+| Mean matrix | 0.146020 |
+| Matrix coverage above 0.20 | 0.001206% (4 cells) |
+| Matrix face components | 2 |
+| Largest component | 3 cells |
+| Genotype entropy | 2.267334 bits |
+| Construction allele frequency | 19.2948% |
+| Mean maintenance | 0.284941 |
+| Builder mass | 13621.017917 |
+| Matrix coverage above 0.15 | 50.0377% |
+
+The matrix remains widespread at lower thresholds but almost disappears at 0.20. The construction allele persists at reduced frequency relative to its uniform initial 50%; this single experiment does not isolate the effect of independent loci from reduced costs. Values transcribed from the final CI metrics; coverage and allele fractions converted to percentages.
+
 
 ## Research priorities
 
