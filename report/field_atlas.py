@@ -7,8 +7,6 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.colors import Normalize
-from matplotlib.lines import Line2D
-from scipy.ndimage import label
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from field_archive import load_snapshot
@@ -43,8 +41,6 @@ def render(folder,out):
     save(fig,"field-evolution")
     m,f=states[-1]
     fig,axs=plt.subplots(2,3,figsize=(9,6),layout="constrained")
-    for ax,(a,b,title) in zip(axs.flat,[("xv","xw","Metabolites"),("m","e","Matrix and energy"),("v","w","Species concentrations")]*2):
-        pass
     for ax,key,cmap in zip(axs.flat,["u","xv","xw","m","pulse","e"],["viridis","magma","magma","cividis","plasma","viridis"]):
         # Average over fourth axis then z: explicitly a projection, not a slice.
         im=ax.imshow(f[key].mean(axis=(0,1),dtype=np.float64),origin="lower",interpolation="nearest",cmap=cmap)
