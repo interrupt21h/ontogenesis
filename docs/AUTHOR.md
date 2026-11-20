@@ -1,9 +1,11 @@
 # About the artist
 
-Scott Muller is a software engineer and technologist whose interests span computational systems, scientific inquiry, generative art and artificial intelligence. His work brings together software architecture, automation, visualization and the design of instruments for understanding complex systems.
+Scott Muller is a multidisciplinary technologist with over three decades of experience spanning scientific visualization, systems engineering, open-source software and advanced security research.
 
-In Ontogenesis, Muller approaches engineering as a creative practice. Rather than specifying an image in advance, he establishes questions and conditions from which visual forms can emerge. The project explores the relationship between mathematical rules, observation and the recursive development of an artificial world through human-directed, AI-assisted experimentation.
+His professional work includes leading international deployments of NOAA’s Science On a Sphere platform and developing real-time scientific visualization systems used by institutions across North America, Europe, Asia and Latin America, including NASA and NOAA. His broader technical practice encompasses embedded systems, geospatial visualization, scientific middleware, research infrastructure and artificial intelligence.
 
-**Contact:** [scott@21h.io](mailto:scott@21h.io)
+A recurring theme throughout his work is the translation of complex, otherwise inaccessible phenomena into forms that can be observed, explored and understood. Ontogenesis extends this intellectual and technical foundation into computational art, treating mathematical systems not only as instruments of analysis but as creative media.
 
-**Reading the atlas.** The early generations explore pattern formation and competing chemical fields. Subsequent phases introduce transport, resources and environmental feedback, followed by four-dimensional observation, inherited variation and structural construction. The experimental plates show selected moments in playback; numerical plots and fixed-coordinate sections provide complementary evidence. Read the chapters as a sequence of evolving questions rather than as steps toward a predetermined endpoint.
+Through human-directed, AI-assisted experimentation, Muller investigates the intersection of emergence, higher-dimensional geometry, artificial life and recursive creation. His approach considers engineering itself an artistic practice, in which the construction of systems and the discovery of their behavior become inseparable aspects of the work.
+
+**Correspondence:** [scott@21h.io](mailto:scott@21h.io)
