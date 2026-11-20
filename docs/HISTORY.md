@@ -1383,3 +1383,20 @@ separately gated and remains unverified until execution and inspection.
 
 
 **G0028 cinematic preview verified (2026-11-20):** [Workflow run 44829195043](https://github.com/interrupt21h/ontogenesis/actions/runs/44829195043) completed the new observer/archival integrity and full-bleed artistic preview at source revision `f9fb2a79da09f0bfc741b84d6a5c9429b36e9bd6`. [18-second MP4, 432 frames, poster and metadata](https://github.com/interrupt21h/ontogenesis/actions/runs/44829195043/artifacts/14675921895) and [native float16 fixed-omega 3D field archive](https://github.com/interrupt21h/ontogenesis/actions/runs/44829195043/artifacts/14673923851) were retained; release copies support render-only reproduction. Visual inspection confirms rotating voxel geometry and staged shock marker, **not** restored chemistry in the 12⁴ transient. The marked 24⁴ cinematic master is executing as a separate job in the same run; do not mark it verified until completed and inspected.
+
+
+**G0028 G0025-fidelity revision (2026-11-20):** The cinematic observer was
+extended from five fields / one omega hyperplane / stride 30 to seven
+fields / four omega hyperplanes / stride 4. The full edition records
+eight complete float32 four-dimensional field keyframes and restores
+G0025-style 96³ trilinear emission/absorption ray integration. The 12⁴
+fidelity pilot passed numerical-invariance, archive, video and poster
+checks; frame review revealed a homogeneous matrix glow that was
+corrected by measured spatial-gradient visibility and a concentration
+gate. The pilot's chemical extinction limits interpretation; no
+mature-life claim is made. The 24⁴ master is explicitly gated on GitHub
+Actions and must be checked before publication. Earlier film and
+matched-control evidence remain accessible.
+[Capture](../disturbance_cinematic_fidelity.py) ·
+[Ray renderer](../disturbance_fidelity_render.py) ·
+[CI](../.github/workflows/disturbance-fidelity.yml).

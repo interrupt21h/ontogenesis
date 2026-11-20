@@ -75,3 +75,27 @@ preserved as durable release assets and can be rerendered in a manual
 render-only job without recomputing the underlying experiment. Visual
 improvement is assessed separately from scientific validation and full
 master results remain pending until its Actions execution finishes.
+
+
+## Protecting the visual fidelity benchmark
+The G0028 cinema review established a numerical and artistic reference:
+G0025 generated full 24⁴ simulations at a four-step native observation
+cadence and used 96³ 3D orthographic ray integration. The initial G0028
+cinematic branch reduced the archived temporal cadence to 30 steps,
+recorded one 3D omega hyperplane and replaced volume integration with
+a stylized voxel cloud. Its encodings succeeded, but the small-domain
+preview could not show a mature ecosystem and did not match the prior
+rendering sophistication.
+
+The independent [fidelity archive](../disturbance_cinematic_fidelity.py)
+records four spatially distinct omega sections per observed state,
+seven changing numerical fields, every-four-step samples and eight
+full-precision 4D source keyframes (not complete restart state).
+Its companion [renderer](../disturbance_fidelity_render.py) restores
+G0025-class 96³ trilinear volume integration, with spatially measured
+matrix-gradient illumination and an extinction-aware exposure gate.
+Camera and time/omega interpolation remain declared visualization
+operations rather than new differential updates. The old matched
+control experiment and 12⁴ cinematic preview retain their historical
+provenance; no higher-quality output is declared published until
+CI and visual inspection justify the promotion.

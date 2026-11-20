@@ -18,6 +18,39 @@ Ontogenesis investigates emergence both within a simulated world and within the 
 
 **[Recursive creation: human intention, machine intelligence and computational emergence](docs/RECURSIVE_CREATION.md)** — an essay on the artistic method, distributed authorship and the relationship between simulated evolution and creative development.
 
+
+### High-fidelity G0028 edition — G0025 visual baseline preserved
+
+The [high-fidelity numerical capture](disturbance_cinematic_fidelity.py) and
+[emission/absorption volume renderer](disturbance_fidelity_render.py) now
+preserve the **96³ volumetric ray-sampling technique used in G0025** while
+making the numerical observation substantially richer than the initial G0028
+cinematic pilot. The full fidelity configuration retains:
+
+- A genuine 24⁴ floating-point numerical universe integrated for 4,800 steps.
+- **Four distinct measured fourth-coordinate hyperplanes** per observation.
+- **Seven channels** (matrix, V, W, pulse, energy, trait, recovery).
+- Recorded states every **four** steps, matching the G0025 temporal cadence,
+  plus observations immediately surrounding the intervention.
+- **Eight complete native float32 4D keyframes**, preserving values that the
+  frequently sampled float16 playback archive quantizes.
+- An independently rerenderable 1280 × 720 / 24-fps / 60-second film using
+  96³ orthographic volumetric emission/absorption with camera orbit,
+  field-derived spatial-gradient illumination, and a cinematic temporal arc.
+
+The volumetric camera and interpolation are artistic operations, not extra
+numerical integration steps. Frame contrast is spatially relative but gated
+by absolute concentration so chemically inactive areas cannot be turned
+into fictitious organisms. Full-precision snapshots are **observations, not
+restartable integrator checkpoints**. The [fidelity workflow](.github/workflows/disturbance-fidelity.yml)
+is validated first with a reduced 12⁴ smoke universe; its
+[render-only variant](.github/workflows/disturbance-fidelity-rerender.yml)
+reuses persisted numeric fields. The full mathematical version is
+explicitly one-time gated, rather than recomputed on every documentation
+push. The earlier voxel cinematic and quantitative matched-control
+artifacts remain available and are not overwritten until the fidelity
+master is actually verified and artistically inspected.
+
 ## G0028 cinematic replacement — spatial artificial-life film
 
 The new artistic pipeline uses [recorded three-dimensional numeric volumes](disturbance_cinematic.py) from a fixed-omega hyperplane of the 4D universe and a separate [voxel-based cinematic renderer](disturbance_cinematic_render.py). The camera traverses a rotating 3D field; luminous glyphs encode actual sampled matrix, species, excitation and resource data. A five-phase visual narrative moves from formation to disturbance and aftermath. See the [cinematic workflow](.github/workflows/disturbance-cinematic.yml) and [render-only workflow](.github/workflows/disturbance-cinematic-rerender.yml).

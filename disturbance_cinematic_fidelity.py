@@ -59,6 +59,11 @@ def create_fidelity_archive(out, metadata, *, seed=42, n=12, steps=320,
     full_key_bytes=len(dense_steps)*len(CHANNELS)*n**4*4
     if (raw_bytes+full_key_bytes)>max_raw_mib*(1024**2):
         raise ValueError("Raw capture exceeds selected CPU-runner archive budget")
+    print(f"Numerical observation budget: {len(schedule)} times x "
+          f"{omega_planes} omega planes x {len(CHANNELS)} channels; "
+          f"float16 visual raw={raw_bytes/(1024**2):.1f} MiB; "
+          f"float32 native 4D keyframes={full_key_bytes/(1024**2):.1f} MiB; "
+          f"cap={max_raw_mib} MiB",flush=True)
 
     mask,core=periodic_gaussian(n)
     metric_rows=[]

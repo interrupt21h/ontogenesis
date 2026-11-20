@@ -53,3 +53,24 @@ the visual language can evolve independently. A low-domain smoke video is a
 technical preview; do not silently promote it as full-domain evidence. Never
 replace a verified featured video with a worse test render; keep the older
 artifact accessible until the new visual has been inspected and approved.
+
+
+## G0025 baseline for future cinematic visual fidelity
+G0025 is the minimum reference standard, not a discarded old render.
+New featured films should match or exceed the prior full 24⁴ lattice,
+4,800-step simulation, four-step native observation cadence and
+96³ 3D orthographic ray-integrated light rendering where applicable.
+Use multiple observed omega positions rather than silently collapsing
+a 4D world to one unchanging fixed section. Do not confuse 1280×720
+encoded pixels with numerical spatial resolution; record sample counts,
+ray-grid dimensions, physical field channels and numerical precision.
+Retain full-precision native field observations when affordable while
+using bounded float16 visual archives if explicitly identified.
+
+Do not promote a technically passing movie unless visual inspection
+reveals actual spatial structure and temporal evolution. Inspect contact
+sheets across early formation, disturbance and late response, and
+preserve earlier verified featured art if a new candidate looks worse.
+Dynamic exposure must be documented and must not turn homogeneous
+extinct chemistry into artificial organisms. The cost of fidelity
+is subject to the independent GitHub-hosted CPU runner budget.
