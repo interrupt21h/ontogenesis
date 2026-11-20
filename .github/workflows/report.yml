@@ -8,7 +8,7 @@ on:
       - 'docs/**'
       - '.github/workflows/report.yml'
 permissions:
-  contents: read
+  contents: write
   actions: read
 concurrency:
   group: scientific-report
@@ -26,7 +26,7 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: report/build/frames
-          key: report-frames-v1-${{ hashFiles('report/videos.json') }}
+          key: report-frames-v2-${{ hashFiles('report/videos.json') }}
           restore-keys: report-frames-v1-
       - name: Extract verified animation frames
         env:
@@ -66,6 +66,13 @@ jobs:
             report/build/cover.png
             report/build/layout-audit.json
             report/build/contact-sheet.jpg
+      - name: Archive verified report and native frame samples
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view atlas-media >/dev/null 2>&1 || gh release create atlas-media --title "Scientific atlas archive" --notes "Verified report and provenance-labelled frame samples." --prerelease
+          python3 report/archive.py
+          gh release upload atlas-media report/build/ontogenesis.pdf --clobber
       - name: Link report
         run: echo '[Download standalone PDF](${{ steps.pdf.outputs.artifact-url }})' >> "$GITHUB_STEP_SUMMARY"
       - name: Preserve compilation diagnostics on failure
