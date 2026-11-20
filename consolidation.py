@@ -1,0 +1,164 @@
+"""G0026 consolidation: unchanged G0023 integrator, independent observers."""
+import argparse,json,hashlib
+from pathlib import Path
+import numpy as np
+def lap(a):
+    return sum(np.roll(a,s,axis=i) for i in range(a.ndim) for s in (-1,1))-2*a.ndim*a
+
+def transport(a, velocities):
+    result=a.copy()
+    for axis, velocity in enumerate(velocities):
+        flux=np.maximum(velocity,0)*a+np.minimum(velocity,0)*np.roll(a,-1,axis=axis)
+        result+=np.roll(flux,1,axis=axis)-flux
+    return result
+
+def diffuse(a,coefficient,barrier=None):
+    result=np.zeros_like(a)
+    for axis in range(a.ndim):
+        face=.5*(coefficient+np.roll(coefficient,-1,axis=axis))
+        if barrier is not None:
+            face=face*np.exp(-barrier[0]*np.abs(np.roll(barrier[1],-1,axis=axis)-barrier[1]))
+        flux=face*(np.roll(a,-1,axis=axis)-a)
+        result+=flux-np.roll(flux,1,axis=axis)
+    return result
+
+
+def measure(m):
+    x=m.astype(np.float64); mean=float(x.mean()); std=float(x.std())
+    hist,edges=np.histogram(x,bins=100,range=(0,1))
+    centered=x-mean
+    power=np.abs(np.fft.rfftn(centered))**2
+    power.flat[0]=0
+    peak=np.unravel_index(power.argmax(),power.shape)
+    freq=[np.fft.fftfreq(n)[i] if j<3 else np.fft.rfftfreq(n)[i] for j,(n,i) in enumerate(zip(x.shape,peak))]
+    radial=float(np.linalg.norm(freq))
+    return dict(matrix_mean=mean,matrix_std=std,matrix_cv=std/max(mean,1e-12),gradient_energy=sum(float(np.mean((np.roll(x,1,axis=j)-x)**2)) for j in range(4)),histogram=hist.tolist(),histogram_edges=edges.tolist(),dominant_mode_wavelength_cells=1/radial if radial and std>0 else None,quantiles=np.quantile(x,[.05,.25,.5,.75,.95]).tolist(),coverage={str(t):float((x>t).mean()) for t in (.1,.15,.2,.25,.3)})
+def run(seed=42,n=24,steps=4800,stride=4,arm="baseline",observe=True):
+    N=n;STEPS=steps
+    COST=float(arm in ("cost","combined")); MAINT=float(arm in ("maintenance","combined"))
+    rng=np.random.default_rng(seed)
+    omega,z,y,x=np.mgrid[:N,:N,:N,:N].astype(np.float32)*(2*np.pi/N)
+    h=(np.sin(x)+np.cos(y)+np.sin(z)+np.cos(omega))/4
+    u=np.ones_like(h)
+    v=rng.uniform(0,.003,h.shape).astype(np.float32)
+    w=rng.uniform(0,.003,h.shape).astype(np.float32)
+    q=np.zeros_like(u)
+    e=np.ones_like(u)
+    m=np.zeros_like(u)
+    pulse=np.zeros_like(u)
+    recovery=np.zeros_like(u)
+    trait=np.full_like(u,.5)
+    previous_mask=None
+    xv=np.zeros_like(u)
+    xw=np.zeros_like(u)
+
+    supply=.012+.008*(h+1)/2
+    for i in range(20):
+        d,a,b,c=rng.integers(3,N-3,4)
+        sl=np.s_[d-2:d+2,a-2:a+2,b-2:b+2,c-2:c+2]
+        u[sl]=.5
+        (v if i%2 else w)[sl]=.25
+    bits=np.array([[(g>>i)&1 for i in range(3)] for g in range(8)])
+    gv=np.stack([v/8 for _ in bits])
+    gw=np.stack([w/8 for _ in bits])
+    pulse[(slice(N//2-2,N//2+2),)*4]=.95
+
+    hashes={}; rows=[]
+    for step in range(STEPS+1):
+        if step%120==0 or step==STEPS:
+            hashes[str(step)]=hashlib.sha256(b"".join(np.ascontiguousarray(a).tobytes() for a in (u,v,w,q,e,m,pulse,recovery,trait,xv,xw,gv,gw))).hexdigest()
+        if observe and (step%stride==0 or step==STEPS):
+            # Observer receives a read-only copy, never the integrator's arrays.
+            snapshot=m.copy();snapshot.flags.writeable=False
+            row=measure(snapshot) if step%120==0 or step==STEPS else {"matrix_mean":float(snapshot.mean())}
+            rows.append(dict(step=step,**row))
+        if step==STEPS: break
+        q+=.075*lap(q)+.025*(v-w-q)
+        # Backward differences commute, so the discrete face divergence of curl is zero.
+        def d(a,axis):
+            return a-np.roll(a,1,axis=axis)
+        # Antisymmetric face potential on all six coordinate planes.
+        coordinates=(omega,z,y,x)
+        velocities=[np.zeros_like(q) for _ in range(4)]
+        for i in range(4):
+            for j in range(i+1,4):
+                potential=.35*q+.25*np.sin(coordinates[i]+step*.003)*np.cos(coordinates[j]-step*.002)
+                velocities[i]+=d(potential,j)
+                velocities[j]-=d(potential,i)
+        outgoing=sum(np.maximum(a,0)+np.maximum(-np.roll(a,1,axis=i),0) for i,a in enumerate(velocities))
+        scale=min(1.,.8/max(float(outgoing.max()),1e-8))
+        velocities=tuple(a*scale for a in velocities)
+        divergence=sum(d(a,i) for i,a in enumerate(velocities))
+        assert float(np.abs(divergence).max())<1e-5
+        u,e,xv,xw=(transport(a,velocities) for a in (u,e,xv,xw))
+        gv=np.stack([transport(a,velocities) for a in gv])
+        gw=np.stack([transport(a,velocities) for a in gw])
+        v,w=gv.sum(axis=0),gw.sum(axis=0)
+        # Energy gates autocatalysis; consumption is proportional to reaction flux.
+        # Bounded excitable activator and slow refractory recovery.
+        stimulus=.08*np.clip((v+w-.18)*4,0,1)
+        excitation=pulse*(1-pulse)*np.maximum(pulse-.18-.65*recovery,0)
+        inhibition=pulse*np.maximum(.18+.65*recovery-pulse,0)
+        pulse=pulse+diffuse(pulse,.08*(.25+.75*m))+.35*(excitation-inhibition)+stimulus*(1-pulse)-.015*pulse
+        recovery+=.025*(pulse-recovery)
+        assert np.isfinite(pulse).all() and pulse.min()>=-1e-6 and pulse.max()<=1.00001
+        assert np.isfinite(recovery).all() and recovery.min()>=-1e-6 and recovery.max()<=1.00001
+        # Signals modulate chemistry without creating substrate.
+        # Slow environmental memory trades off catalytic advantage between species.
+        target=np.clip(.5+.45*(pulse-recovery)+.5*(e-.9)+.6*(v-w),0,1)
+        trait=trait+.015*lap(trait)+.008*(target-trait)
+        assert np.isfinite(trait).all() and trait.min()>=-1e-6 and trait.max()<=1.00001
+        advantage=.24*(2*trait-1)
+        # Linked binary genes: catalytic throughput, energy economy, signal response.
+        mutation=rng.uniform(.001,.009,v.shape).astype(np.float32)
+        def reproduce(pop,total,base,donor):
+            births=[]
+            uptake=[]
+            for g,(c,k,s) in enumerate(bits):
+                fitness=(1+.16*(2*c-1))*(1+.18*(2*k-1)*(1-e))*(1+.20*(2*s-1)*(2*pulse-1))
+                cost=(.085+.035*c-.025*k)
+                bonus=.45*donor/(.12+donor)*(.35+.65*k)
+                rate=base*pop[g]/np.maximum(total,1e-30)*fitness*(1+bonus)*(1-.08*s*COST)
+                uptake.append(rate*bonus/(1+bonus))
+                births.append(rate)
+            raw=np.stack(births)
+            mutated=raw*(1-3*mutation)
+            for g in range(8):
+                for bit in (1,2,4):
+                    mutated[g]+=mutation*raw[g^bit]
+            consumption=sum(raw[g]*(.085+.035*c-.025*k+.02*s*COST) for g,(c,k,s) in enumerate(bits))
+            matrix=sum(raw[g]*(.045+.065*s) for g,(c,k,s) in enumerate(bits))
+            return mutated,raw.sum(axis=0),consumption,matrix,sum(uptake)
+        bv,a,cv,mv,uv=reproduce(gv,v,u*v*v*e*(1+.12*pulse+advantage),xw)
+        bw,b,cw,mw,uw=reproduce(gw,w,u*w*w*e*(1-.12*pulse-advantage),xv)
+        # Secreted metabolites diffuse, decay and are consumed by the other species.
+        xv=xv+.06*lap(xv)+.18*a-.025*xv-np.minimum(.12*uw,.25*xv)
+        xw=xw+.06*lap(xw)+.18*b-.025*xw-np.minimum(.12*uv,.25*xw)
+        assert all(np.isfinite(z).all() and z.min()>=-1e-6 for z in (xv,xw))
+        e=e+.075*lap(e)+supply*(1-e)-cv-cw
+        assert np.isfinite(e).all() and e.min()>=-1e-6 and e.max()<=1.00001
+        # Activity deposits a slowly relaxing structural field; structure impedes diffusion.
+        deposit=mv+mw
+        builders=(gv[4:].sum(axis=0)+gw[4:].sum(axis=0))
+        maintenance=builders/(.08+builders)*e
+        m=m+.025*lap(m)+deposit*(1-m)-(.005+.006*pulse)*(1-.65*maintenance*MAINT)*m
+        assert np.isfinite(m).all() and m.min()>=-1e-6 and m.max()<=1.00001
+        mobility=1/(1+5*m)
+        gv=np.stack([g+diffuse(g,.045*mobility,(4.,m))+born-(.097+.009*h)*g for g,born in zip(gv,bv)])
+        gw=np.stack([g+diffuse(g,.0375*mobility,(4.,m))+born-(.094-.009*h)*g for g,born in zip(gw,bw)])
+        u=u+diffuse(u,.085*mobility,(1.,m))-a-b+.035*(1-u)
+        v,w=gv.sum(axis=0),gw.sum(axis=0)
+        assert np.isfinite(gv).all() and np.isfinite(gw).all()
+        assert gv.min()>=-1e-6 and gw.min()>=-1e-6
+
+    return dict(seed=seed,n=n,steps=steps,arm=arm,hashes=hashes,observations=rows,final=dict(**measure(m),v_active=float((v>.1).mean()),w_active=float((w>.1).mean())))
+def main():
+    p=argparse.ArgumentParser();p.add_argument("--seed",type=int,default=42);p.add_argument("--n",type=int,default=24);p.add_argument("--steps",type=int,default=4800);p.add_argument("--arm",choices=["baseline","cost","maintenance","combined"],default="baseline");p.add_argument("--verify",action="store_true");p.add_argument("--out",type=Path,required=True);a=p.parse_args()
+    ref=run(a.seed,a.n,a.steps,4,a.arm,False)
+    if a.verify:
+        for stride in (4,6):
+            candidate=run(a.seed,a.n,a.steps,stride,a.arm,True)
+            assert candidate["hashes"]==ref["hashes"],f"Observer divergence stride {stride}"
+        ref["observer_verification"]="passed at recorded checkpoints (strides 4 and 6)"
+    a.out.parent.mkdir(parents=True,exist_ok=True);a.out.write_text(json.dumps(ref,indent=2))
+if __name__=="__main__":main()
