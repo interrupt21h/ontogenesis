@@ -342,7 +342,7 @@ def main():
     gv=np.stack([v/16 for _ in bits])
     gw=np.stack([w/16 for _ in bits])
     pulse[(slice(N//2-2,N//2+2),)*4]=.95
-    out=Path("gallery/0024") / ARM
+    out=Path("gallery/0024")
     out.mkdir(parents=True,exist_ok=True)
     metrics=[]
     tracker=Tracker()
@@ -427,6 +427,7 @@ def main():
             for g in range(16):
                 for bit in (1,2,4,8):
                     mutated[g]+=mutation*raw[g^bit]
+            assert np.allclose(mutated.sum(axis=0),raw.sum(axis=0),rtol=2e-6,atol=1e-8)
             consumption=sum(raw[g]*(.085+.035*c-.025*k+.005*b*COST) for g,(c,k,s,b) in enumerate(bits))
             matrix=sum(raw[g]*(.045+.065*b) for g,(c,k,s,b) in enumerate(bits))
             return mutated,raw.sum(axis=0),consumption,matrix,sum(uptake)
