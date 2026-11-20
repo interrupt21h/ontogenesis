@@ -35,7 +35,9 @@ def frame_section(n):
     if not (folder/"frames.json").exists():
         return ""
     meta=json.loads((folder/"frames.json").read_text())
-    labels=("Early development","Intermediate development","Final development")
+    labels=("Initialization","Intermediate development","Final development") if meta["indices"][0]==0 else ("Early development","Intermediate development","Final development")
+    if n=="0024" and meta["indices"]==[0,152,1200]:
+        labels=("Initialization (step 0)","Peak structural coverage (step 608)","Final observation (step 4800)")
     paths=[f"frames/{n}-{artifact}/{i}.jpg" for i in range(3)]
     def picture(path,width,height):
         return r"\includegraphics[width="+width+",height="+height+r",keepaspectratio]{"+path+"}"
@@ -158,11 +160,11 @@ for n,title,record in records:
         body.append(research_plate("genetic-architecture","Independent inherited traits","Sixteen genotypes per species form a four-dimensional binary mutation graph. Independence here means separate encoded loci, not statistically independent allele frequencies."))
     if (out/f"atlas/{n}-field-evolution.pdf").exists():
         for suffix,heading,caption in [
-            ("field-evolution","Numerical development","Native x-y sections at fixed fourth and third coordinates; color scales are fixed over all five sampled steps for each field."),
+            ("field-evolution","Numerical development","Native x-y sections at fixed fourth and third coordinates; color scales are fixed over all archived steps for each field."),
             ("field-projections","Projected chemical environment","Mean concentrations over the fourth and third axes. These projections are not individual spatial sections."),
             ("trait-landscape","Spatial distribution of heredity","Local population-weighted allele fractions; cells with negligible total population are undefined."),
             ("structural-volume","Structural occupancy in three dimensions","Native cell centers above matrix threshold 0.20 in two fourth-coordinate sections. The rectangular cut does not reveal all periodic connections."),
-            ("field-metrics","Measured developmental trajectories","Global coverage and allele frequencies independently recomputed from five archived numerical states. Connecting lines guide the eye between samples.")]:
+            ("field-metrics","Measured developmental trajectories","Global coverage and allele frequencies independently recomputed from archived numerical states. Connecting lines guide the eye between samples.")]:
             body.append(research_plate(n+"-"+suffix,heading,caption))
     body.append(frame_section(n))
 body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontogreen}"))
