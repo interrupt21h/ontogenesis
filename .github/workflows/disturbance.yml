@@ -1,0 +1,74 @@
+name: Generation 0028 disturbance and recovery
+on:
+  workflow_dispatch:
+    inputs:
+      full_resolution:
+        description: 'Run costly 24^4 4800-step matched controls (two universes)'
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+    paths:
+      - consolidation.py
+      - disturbance.py
+      - disturbance_render.py
+      - .github/workflows/disturbance.yml
+permissions:
+  contents: read
+concurrency:
+  group: generation-0028
+  cancel-in-progress: false
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install numpy==2.2.6 matplotlib==3.10.3
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: python -u disturbance.py --n 12 --steps 240 --stride 12 --out result.json
+      - run: python disturbance_render.py --input result.json --movie disturbance-pilot.mp4 --plate disturbance-pilot.png
+      - run: |
+          test -s result.json
+          test -s disturbance-pilot.mp4
+          test -s disturbance-pilot.png
+          ffprobe -v error -show_entries format=duration,size -of json disturbance-pilot.mp4
+          python -c 'import json; r=json.load(open("result.json")); assert r["n"]==12 and r["event_step"]==120 and len(r["arms"]["control"]["frames"])>=20'
+      - uses: actions/upload-artifact@v7
+        with:
+          name: generation-0028-pilot
+          path: |
+            result.json
+            disturbance-pilot.mp4
+            disturbance-pilot.png
+          retention-days: 30
+          if-no-files-found: error
+  full:
+    if: github.event_name == 'workflow_dispatch' && inputs.full_resolution
+    needs: smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install numpy==2.2.6 matplotlib==3.10.3
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: python -c "import numpy as np; np.show_runtime()"
+      - run: lscpu
+      - run: /usr/bin/time -v python -u disturbance.py --n 24 --steps 4800 --stride 40 --out result.json
+      - run: python disturbance_render.py --input result.json --movie disturbance-full.mp4 --plate disturbance-full.png
+      - run: ffprobe -v error -show_entries format=duration,size -of json disturbance-full.mp4
+      - uses: actions/upload-artifact@v7
+        with:
+          name: generation-0028-full
+          path: |
+            result.json
+            disturbance-full.mp4
+            disturbance-full.png
+          retention-days: 30
+          if-no-files-found: error

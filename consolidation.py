@@ -33,7 +33,7 @@ def measure(m):
     freq=[np.fft.fftfreq(n)[i] if j<3 else np.fft.rfftfreq(n)[i] for j,(n,i) in enumerate(zip(x.shape,peak))]
     radial=float(np.linalg.norm(freq))
     return dict(matrix_mean=mean,matrix_std=std,matrix_cv=std/max(mean,1e-12),gradient_energy=sum(float(np.mean((np.roll(x,1,axis=j)-x)**2)) for j in range(4)),histogram=hist.tolist(),histogram_edges=edges.tolist(),dominant_mode_wavelength_cells=1/radial if radial and std>0 else None,quantiles=np.quantile(x,[.05,.25,.5,.75,.95]).tolist(),coverage={str(t):float((x>t).mean()) for t in (.1,.15,.2,.25,.3)})
-def run(seed=42,n=24,steps=4800,stride=4,arm="baseline",observe=True):
+def run(seed=42,n=24,steps=4800,stride=4,arm="baseline",observe=True,intervention=None,observer=None):
     N=n;STEPS=steps
     COST=float(arm in ("cost","combined")); MAINT=float(arm in ("maintenance","combined"))
     rng=np.random.default_rng(seed)
@@ -65,6 +65,14 @@ def run(seed=42,n=24,steps=4800,stride=4,arm="baseline",observe=True):
 
     hashes={}; rows=[]
     for step in range(STEPS+1):
+        # Inert for historical runs; G0028 applies a deterministic experiment.
+        if intervention is not None:
+            intervention(step,e,m)
+        if observer is not None:
+            frozen=tuple(field.view() for field in (e,m,v,w))
+            for field in frozen:
+                field.flags.writeable=False
+            observer(step,*frozen)
         if step%120==0 or step==STEPS:
             hashes[str(step)]=hashlib.sha256(b"".join(np.ascontiguousarray(a).tobytes() for a in (u,v,w,q,e,m,pulse,recovery,trait,xv,xw,gv,gw))).hexdigest()
         if observe and (step%stride==0 or step==STEPS):
