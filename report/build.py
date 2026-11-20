@@ -64,7 +64,7 @@ def frame_section(n):
     return context+raw_latex(r"\clearpage\AtlasPlateHeading{"+n+r"}{Final spatial sections}{"+str(meta["indices"][2]+1)+r"}"+"".join(panels)+r"\par\small Distinct fourth-coordinate sections, enlarged without interpolation of new scientific detail."+provenance)
 
 def research_plate(name,heading,caption):
-    return raw_latex(r"\clearpage\section*{"+heading+r"}\begin{center}\includegraphics[width=\linewidth,height=.72\textheight,keepaspectratio]{atlas/"+name+r".pdf}\end{center}\noindent "+caption+r"\par")
+    return raw_latex(r"\par\Needspace{.43\textheight}\section*{"+heading+r"}\begin{center}\includegraphics[width=\linewidth,height=.48\textheight,keepaspectratio]{atlas/"+name+r".pdf}\end{center}\noindent "+caption+r"\par")
 
 subprocess.run([os.sys.executable, str(ROOT / 'report/atlas.py')],check=True)
 subprocess.run([os.sys.executable,str(ROOT/'report/research_atlas.py')],check=True)
@@ -82,19 +82,21 @@ for n,title,record in records:
             p=out/"frames"/f"{key}-{manifest.get(key)}"/"2.jpg"
             if p.exists():
                 images.append((key,str(p.relative_to(out)),records[g-1][1]))
-        def tile(item,width,height):
-            key,path,title=item
-            return (r"\begin{minipage}[t]{"+width+r"}\centering"
-                    +r"\colorbox{phaseblack}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\centering "
-                    +r"\includegraphics[width=\linewidth,height="+height+r",keepaspectratio]{"+path+r"}}}"
-                    +r"\par\smallskip{\sffamily\small\bfseries\color{phaseaccent} "+key+r"}\quad{\sffamily\small "+title+r"}\end{minipage}")
+        # A full-page dark editorial opening, with independent conceptual and empirical panels.
+        concepts={1:("LOCAL REACTIONS", "Spatial differentiation", "Competition for substrate"),4:("CONSERVATIVE FLUX", "Transport across faces", "Feedback from chemistry"),8:("LOCAL ENVIRONMENT", "Energy and matrix", "Excitation and memory"),12:("SPATIAL SECTIONS", "Fourth-axis sampling", "Identity across observations"),15:("INHERITED VARIATION", "Mutation and selection", "Metabolic exchange"),18:("STRUCTURAL GEOMETRY", "Selective permeability", "Periodic connectivity"),21:("NICHE CONSTRUCTION", "Inherited construction", "Matched experimental controls")}
+        tag,left,right=concepts[int(n)]
+        concept=r"\begin{tikzpicture}[x=1cm,y=1cm]\draw[phaseaccent,line width=1.5pt] (0,0) -- (12,0);"
+        for j,label in enumerate((left,right)):
+            x=3+6*j
+            concept+=r"\node[draw=phaseaccent,rounded corners=3pt,minimum width=5.5cm,minimum height=1.2cm,text=white,font=\sffamily\small,align=center] at ("+str(x)+r",0) {"+label+r"};"
+        concept+=r"\end{tikzpicture}"
         rows=[]
-        if len(images)%2:
-            rows.append(r"\noindent"+tile(images[-1],r"\linewidth",r".27\textheight")+r"\par\medskip")
-            images=images[:-1]
         for i in range(0,len(images),2):
-            rows.append(r"\noindent"+r"\hfill".join(tile(item,r".485\linewidth",r".22\textheight") for item in images[i:i+2])+r"\par\medskip")
-        body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{phase"+roman+r"}\PhaseBand{"+roman+"}{"+n+"--"+f"{phase_end:04d}"+r"}\part{"+groups[int(n)]+r"}\noindent{\sffamily\large\color{ontoink} "+phase_text[int(n)]+r"\par}\bigskip"+ "\n".join(rows)+r"\par{\small\sffamily Final sampled frames from verified animations.\par}\vfill\noindent{\color{phaseaccent}\rule{\linewidth}{3pt}}\clearpage"))
+            tiles=[]
+            for key,path,title in images[i:i+2]:
+                tiles.append(r"\begin{minipage}[t]{.48\linewidth}\centering\includegraphics[width=\linewidth,height=.175\textheight,keepaspectratio]{"+path+r"}\par{\sffamily\small\bfseries\color{white} "+key+r" / "+title+r"}\end{minipage}")
+            rows.append(r"\noindent\hfill"+r"\hfill".join(tiles)+r"\hfill\null\par\medskip")
+        body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{phase"+roman+r"}\pagecolor{phaseblack}\color{white}\thispagestyle{empty}\refstepcounter{part}\addcontentsline{toc}{part}{\thepart\quad "+groups[int(n)]+r"}\PhaseBand{"+roman+"}{"+n+"--"+f"{phase_end:04d}"+r"}{\sffamily\bfseries\fontsize{32}{36}\selectfont "+groups[int(n)]+r"\par}\medskip{\sffamily\large "+phase_text[int(n)]+r"\par}\vfill{\sffamily\bfseries\small "+tag+r" / CONCEPTUAL RELATIONSHIP\par}\medskip\noindent\hfill"+concept+r"\hfill\null\par\vfill"+"\n".join(rows)+r"{\sffamily\footnotesize Sampled experimental frames.\par}\clearpage\nopagecolor\color{black}"))
     record = re.sub(r"(?ms)^### Reproduction and provenance\n(.*?)(?=^### |\Z)", lambda m: "\n\n**Experiment sources:** " + " · ".join(line.strip()[2:] for line in m[1].splitlines() if line.strip().startswith("- ") and "Run from repository" not in line) + "\n\n", record)
     record = re.sub(r"(?m)^[-*] Run from repository root:.*\n?", "", record)
     # Only normalize plain prose, never existing math or code.
