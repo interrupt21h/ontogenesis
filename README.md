@@ -10,9 +10,9 @@ Authentication required; artifacts expire after 30 days.
 
 ## Scientific and engineering monograph
 
-**[Download current verified PDF](https://github.com/interrupt21h/ontogenesis/actions/runs/44680266238/artifacts/14603079409)** · [Latest successful report build](https://github.com/interrupt21h/ontogenesis/actions/workflows/report.yml?query=is%3Asuccess) · [Report source](report/) · [All report builds](https://github.com/interrupt21h/ontogenesis/actions/workflows/report.yml)
+**[Download current verified PDF](https://github.com/interrupt21h/ontogenesis/actions/runs/44687130080/artifacts/14607106736)** · [Latest successful report build](https://github.com/interrupt21h/ontogenesis/actions/workflows/report.yml?query=is%3Asuccess) · [Report source](report/) · [All report builds](https://github.com/interrupt21h/ontogenesis/actions/workflows/report.yml)
 
-Open the newest successful run and select the standalone `ontogenesis.pdf` artifact. The report samples early, middle and final frames from indexed MP4 artifacts when available. The independent LaTeX pipeline automatically rebuilds on documentation changes; the generated TeX is also archived separately. To reproduce locally, install Pandoc, latexmk, TeX Live (latex-extra, pictures, fonts-recommended) and librsvg2-bin, then run `python3 report/build.py`.
+Open the newest successful run and select the standalone `ontogenesis.pdf` artifact. The report samples early, middle and final frames from indexed MP4 artifacts when available. The independent LaTeX pipeline automatically rebuilds on documentation changes; the generated TeX is also archived separately. To reproduce locally, install Pandoc, latexmk, TeX Live (latex-extra, pictures, fonts-recommended) and librsvg2-bin, install NumPy and Matplotlib, then run `python3 report/build.py`.
 
 ## Experimental history
 
