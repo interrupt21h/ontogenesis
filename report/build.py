@@ -22,9 +22,6 @@ def convert(text):
 
 revision = subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip()
 intro = (ROOT / "report/introduction.md").read_text()
-method = (ROOT / "docs/METHODOLOGY.md").read_text()
-method = method.replace("# Experimental methodology and documentation policy","## Repository methodology",1)
-method = method.replace("](HISTORY.md)","]("+base+"docs/HISTORY.md)").replace("](GENERATION_TEMPLATE.md)","]("+base+"docs/GENERATION_TEMPLATE.md)")
 def raw_latex(code):
     return "\n\n" + chr(96)*3 + "{=latex}\n" + code + "\n" + chr(96)*3 + "\n\n"
 
@@ -32,10 +29,10 @@ def frame_section(n):
     manifest=json.loads((ROOT/"report/videos.json").read_text())
     artifact=manifest.get(n)
     if artifact is None:
-        return "## Simulation frames\n\nNo verified MP4 is indexed for this generation."
+        return ""
     folder=out/"frames"/f"{n}-{artifact}"
     if not (folder/"frames.json").exists():
-        return "## Simulation frames\n\nVerified video indexed, but frame extraction was unavailable."
+        return ""
     meta=json.loads((folder/"frames.json").read_text())
     labels=("Early development","Intermediate development","Final development")
     paths=[f"frames/{n}-{artifact}/{i}.jpg" for i in range(3)]
@@ -45,8 +42,8 @@ def frame_section(n):
         return labels[i]+" --- frame "+str(meta["indices"][i]+1)
     provenance=r"\par\smallskip{\footnotesize Source animation artifact "+str(artifact)+r". Playback indices, not integration steps. \par}"
     if int(n)<14:
-        panels=[r"\begin{minipage}[t]{.48\linewidth}\centering "+picture(paths[i],r"\linewidth",r".24\textheight")+r"\par\small "+caption(i)+r"\end{minipage}" for i in (0,1)]
-        block=r"\clearpage\AtlasPlateHeading{"+n+r"}{Development sequence}{"+str(meta["count"])+r" total}\begin{center}"+picture(paths[2],r".76\linewidth",r".32\textheight")+r"\par\small "+caption(2)+r"\end{center}\noindent "+r"\hfill ".join(panels)+provenance
+        panels=[r"\begin{minipage}[t]{.48\linewidth}\centering "+picture(paths[i],r"\linewidth",r".27\textheight")+r"\par\small "+caption(i)+r"\end{minipage}" for i in (0,1)]
+        block=r"\par\Needspace{.72\textheight}\AtlasPlateHeading{"+n+r"}{Development sequence}{"+str(meta["count"])+r" total}\begin{center}"+picture(paths[2],r".76\linewidth",r".34\textheight")+r"\par\small "+caption(2)+r"\end{center}\noindent "+r"\hfill ".join(panels)+provenance
         return raw_latex(block)
     from PIL import Image
     result=[]
@@ -59,12 +56,12 @@ def frame_section(n):
                     detail=Path(path).with_name(f"{i}-{tag}.png")
                     im.crop(rect).save(out/detail)
                     panels.append(r"\begin{minipage}[t]{.48\linewidth}\centering "+picture(str(detail),r"\linewidth",r".30\textheight")+r"\par\small "+caption_text+r"\end{minipage}")
-                block+=r"\noindent "+r"\hfill ".join(panels)+r"\par\smallskip{\footnotesize Detail views cropped from the dashboard above.\par}"
+                block+=r"\noindent "+r"\hfill ".join(panels)+r"\par\smallskip{\footnotesize Detail views show distinct spatial sections; identity colors denote tracked structural components.\par}"
         result.append(raw_latex(block+provenance))
     return "\n".join(result)
 
 subprocess.run([os.sys.executable, str(ROOT / 'report/atlas.py')],check=True)
-body = [intro.replace("# Project overview","# Project overview {.unnumbered}",1),convert(method)]
+body = [intro.replace("# Vision and method","# Vision and method {.unnumbered}",1)]
 for n,title,record in records:
     if int(n) in groups:
         phase_end=next((k-1 for k in groups if k>int(n)),len(records))
@@ -77,6 +74,9 @@ for n,title,record in records:
                 images.append(r"\begin{minipage}[t]{.47\linewidth}\centering\includegraphics[width=\linewidth,height=.19\textheight,keepaspectratio]{"+str(p.relative_to(out))+r"}\par\small Generation "+key+r"\end{minipage}")
         rows=[r"\noindent"+r"\hfill".join(images[i:i+2])+r"\par\medskip" for i in range(0,min(len(images),6),2)]
         body.append(raw_latex(r"\clearpage\part{"+groups[int(n)]+"}"+r"\par{\sffamily\large Generations "+n+"--"+f"{phase_end:04d}"+r"}\par\medskip"+ "\n".join(rows)+r"\par{\small Final sampled frames from verified animations.\par}\clearpage"))
+    record = re.sub(r"(?ms)^### Reproduction and provenance\n(.*?)(?=^### |\Z)", lambda m: "\n\n**Experiment sources:** " + " · ".join(line.strip()[2:] for line in m[1].splitlines() if line.strip().startswith("- ") and "Run from repository" not in line) + "\n\n", record)
+    record = re.sub(r"(?m)^[-*] Run from repository root:.*\n?", "", record)
+    record = re.sub(r"(?<![\w$])(\d+)\^([234])(?![\w$])",lambda m: "$"+m[1]+"^{"+m[2]+"}$",record)
     if "Verified CI outcome" in record or "Verified factorial outcome" in record or "Verified outcome" in record:
         record = re.sub(r"(?im)^Status: (?:CI )?pending[^\n]*$", "Status: verified outcome recorded below.", record)
     body.append("\\setcounter{chapter}{"+str(int(n)-1)+"}\n\n# Generation "+n+" — "+title+"\n\n"+convert(re.sub(r"^### ","## ",record,flags=re.M)))
@@ -94,8 +94,8 @@ for n,title,record in records:
         subprocess.run(["rsvg-convert","-f","pdf","-o",str(atlas.with_suffix(".pdf")),str(atlas)],check=True)
         body.append("## Analytical plate\n\n"+r"\begin{center}\includegraphics[width=.98\linewidth]{atlas/"+n+r"-atlas.pdf}\end{center}")
     body.append(frame_section(n))
-body.append("# Research agenda {.unnumbered}\n\n"+history.split("## Research priorities",1)[-1])
-body.append("# Provenance {.unnumbered}\n\nSource revision: `"+revision+"`. Historical records may contain original pending statements followed by verified outcomes; later verified outcomes supersede those statements. Source code remains normative. The illustrations are analytical or illustrative unless identified as measured data.")
+body.append((ROOT/"report/synthesis.md").read_text())
+body.append("# Provenance {.unnumbered}\n\nSource revision: `"+revision+"`. The source revision identifies the published model and experimental records. Numerical results refer to the configurations described in each chapter. Analytical diagrams describe model relationships; simulation views depict sampled numerical states.")
 (out/"report.md").write_text("\n\n".join(body))
 subprocess.run(["pandoc",str(out/"report.md"),"--standalone","--toc","--toc-depth=1","--number-sections","--top-level-division=chapter","--metadata","documentclass=report","--metadata","title=Ontogenesis: Computational Emergence","--metadata","subtitle=Living scientific and engineering monograph","--metadata","author=Scott Muller — Ontogenesis Project","--variable","geometry:margin=25mm","--variable","fontsize=11pt","--include-in-header=report/preamble.tex","-o",str(out/"ontogenesis.tex")],check=True)
 tex=out/"ontogenesis.tex"
