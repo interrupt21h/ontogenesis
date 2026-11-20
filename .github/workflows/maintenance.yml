@@ -1,12 +1,5 @@
 name: Generation 0025
 on:
-  push:
-    paths:
-      - maintenance.py
-      - requirements.txt
-      - field_archive.py
-      - report/field_atlas.py
-      - .github/workflows/maintenance.yml
   workflow_dispatch:
 permissions:
   contents: write
