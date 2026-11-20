@@ -30,7 +30,7 @@ jobs:
       - run: pip install numpy==2.2.6 matplotlib==3.10.3
       - run: sudo apt-get update && sudo apt-get install -y ffmpeg
       - run: python -u disturbance.py --n 12 --steps 240 --stride 12 --out result.json
-      - run: python disturbance_render.py --input result.json --movie disturbance-pilot.mp4 --plate disturbance-pilot.png
+      - run: python disturbance_render.py --input result.json --movie disturbance-pilot.mp4 --plate disturbance-pilot.png --hold 4
       - run: |
           test -s result.json
           test -s disturbance-pilot.mp4
@@ -61,7 +61,7 @@ jobs:
       - run: python -c "import numpy as np; np.show_runtime()"
       - run: lscpu
       - run: /usr/bin/time -v python -u disturbance.py --n 24 --steps 4800 --stride 40 --out result.json
-      - run: python disturbance_render.py --input result.json --movie disturbance-full.mp4 --plate disturbance-full.png
+      - run: python disturbance_render.py --input result.json --movie disturbance-full.mp4 --plate disturbance-full.png --hold 2
       - run: ffprobe -v error -show_entries format=duration,size -of json disturbance-full.mp4
       - uses: actions/upload-artifact@v7
         with:
