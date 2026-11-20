@@ -75,6 +75,8 @@ Ontogenesis investigates emergence in continuous, periodic reaction–diffusion 
 | 0023 | [Factorial niche controls](docs/generations/0023.md) | [Python](controls.py) | [Runs](.github/workflows/controls.yml) · Verified |
 | 0024 | [Independent construction specialization](docs/generations/0024.md) | [Python](specialization.py) | [Runs](.github/workflows/specialization.yml) · Verified |
 | 0025 | [Energy-funded structural maintenance](docs/generations/0025.md) | [Python](maintenance.py) | [Runs](.github/workflows/maintenance.yml) · Verified |
+| 0026 | [Observer independence](docs/generations/0026.md) | [Python](consolidation.py) | [Runs](.github/workflows/consolidation.yml) · Verified |
+| 0027 | [Structural statistics](docs/generations/0027.md) | [Python](structural_statistics.py) | [Runs](.github/workflows/structural-statistics.yml) · Pending verification |
 
 ## Reproduce locally
 
