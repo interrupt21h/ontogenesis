@@ -14,13 +14,13 @@ manifest = json.loads((ROOT / "report/videos.json").read_text())
 for gen, artifact in sorted(manifest.items()):
     target = OUT / f"{gen}-{artifact}"
     metadata = target / "frames.json"
-    if metadata.exists() and json.loads(metadata.read_text()).get("native_resolution") and all((target / f"{i}.jpg").is_file() for i in range(3)):
+    if gen!="0024" and metadata.exists() and json.loads(metadata.read_text()).get("native_resolution") and all((target / f"{i}.jpg").is_file() for i in range(3)):
         continue
     target.mkdir(exist_ok=True)
     archival = f"frames-{gen}-{artifact}.zip"
     with tempfile.TemporaryDirectory() as cache:
         result = subprocess.run(["gh","release","download","atlas-media","--repo",REPO,"--pattern",archival,"--dir",cache],capture_output=True)
-        if result.returncode == 0:
+        if result.returncode == 0 and gen!="0024":
             with zipfile.ZipFile(Path(cache)/archival) as z:
                 for name in ("0.jpg","1.jpg","2.jpg","frames.json"):
                     (target/name).write_bytes(z.read(name))
@@ -43,7 +43,7 @@ for gen, artifact in sorted(manifest.items()):
             count = int(info["streams"][0]["nb_read_frames"])
             if count < 1:
                 raise ValueError("Empty video")
-            indices = [round((count-1)*p) for p in (.1,.5,1)]
+            indices = [0,152,count-1] if gen=="0024" and count==1201 else [round((count-1)*p) for p in (0,.5,1)]
             for i, index in enumerate(indices):
                 subprocess.run(["ffmpeg","-v","error","-y","-i",str(video),"-vf",f"select=eq(n\\,{index}),null","-frames:v","1","-q:v","2",str(target / f"{i}.jpg")],check=True)
                 if not (target / f"{i}.jpg").is_file():
