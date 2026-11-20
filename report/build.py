@@ -37,7 +37,7 @@ def frame_section(n):
     result = ["## Simulation frames"]
     for i, label in enumerate(("Early development", "Intermediate development", "Final development")):
         path = f"frames/{n}-{artifact}/{i}.jpg"
-        result.append(r"\begin{center}" + "\n" + r"\includegraphics[width=.78\linewidth,height=.26\textheight,keepaspectratio]{" + path + "}\n\n" + label + f" --- frame {meta['indices'][i]+1} of {meta['count']}.\n" + r"\end{center}")
+        result.append(r"\begin{center}" + "\n" + r"\includegraphics[width=.98\linewidth,height=.36\textheight,keepaspectratio]{" + path + "}\n\n" + label + f" --- frame {meta['indices'][i]+1} of {meta['count']}.\n" + r"\end{center}")
     result.append(f"[Source animation artifact {artifact}](https://github.com/interrupt21h/ontogenesis/actions/artifacts/{artifact}). Frames are sampled by playback index, not inferred integration step.")
     return "\n\n".join(result)
 
@@ -45,13 +45,16 @@ body = [intro,convert(method)]
 for n,title,record in records:
     if int(n) in groups:
         body.append("\\part{"+groups[int(n)]+"}")
-    body.append("# Generation "+n+" — "+title+"\n\n"+convert(re.sub(r"^### ","## ",record,flags=re.M)))
+    body.append("\\setcounter{chapter}{"+str(int(n)-1)+"}\n\n# Generation "+n+" — "+title+"\n\n"+convert(re.sub(r"^### ","## ",record,flags=re.M)))
     figure=ROOT / 'docs' / 'figures' / f'{n}.svg'
     if figure.exists():
         target=out / "mechanisms"
         target.mkdir(exist_ok=True)
         subprocess.run(["rsvg-convert","-f","pdf","-o",str(target / f"{n}.pdf"),str(figure)],check=True)
         body.append('## Mechanism illustration\n\n'+r'\begin{center}\includegraphics[width=.92\linewidth]{mechanisms/'+n+r'.pdf}\end{center}')
+    plot=ROOT / "report" / "plots" / f"{n}.tex"
+    if plot.exists():
+        body.append("## Quantitative atlas\n\n"+plot.read_text())
     body.append(frame_section(n))
 body.append("# Research agenda\n\n"+history.split("## Research priorities",1)[-1])
 body.append("# Provenance\n\nSource revision: `"+revision+"`. Historical records may contain original pending statements followed by verified outcomes; later verified outcomes supersede those statements. Source code remains normative. The illustrations are analytical or illustrative unless identified as measured data.")
