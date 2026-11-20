@@ -30,9 +30,11 @@ def structural(m):
 original=consolidation.measure
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument("--n",type=int,default=24);p.add_argument("--steps",type=int,default=4800);p.add_argument("--seed",type=int,default=42);p.add_argument("--verify",action="store_true");p.add_argument("--out",type=Path,required=True);a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument("--n",type=int,default=24);p.add_argument("--steps",type=int,default=4800);p.add_argument("--seed",type=int,default=42);p.add_argument("--verify",action="store_true");p.add_argument("--observe-stride",type=int,default=120);p.add_argument("--out",type=Path,required=True);a=p.parse_args()
+    if a.observe_stride<1 or a.steps<1 or a.n<8:
+        p.error("observe-stride and steps must be positive; n must be at least 8")
     consolidation.measure=structural
-    result=consolidation.run(a.seed,a.n,a.steps,120,"baseline",True)
+    result=consolidation.run(a.seed,a.n,a.steps,a.observe_stride,"baseline",True)
     if a.verify:
         consolidation.measure=original
         reference=consolidation.run(a.seed,a.n,a.steps,120,"baseline",False)
