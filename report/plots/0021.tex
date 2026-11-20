@@ -1,0 +1,15 @@
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[width=.92\linewidth,height=6cm,xlabel={Matrix threshold},ylabel={Coverage (\%)},xmin=.09,xmax=.31,ymin=0,ymax=100,grid=major,grid style={gray!20},axis line style={ontoblue},title={Final structural coverage},xtick={.1,.15,.2,.25,.3}]
+\addplot[ontoblue,very thick,mark=*,mark size=2.8pt] coordinates {(.1,83.9783) (.15,50.1706) (.2,10.5038) (.25,0) (.3,0)};
+\end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\begin{axis}[width=.92\linewidth,height=6cm,xlabel={Matrix threshold},ylabel={Euler characteristic},xmin=.09,xmax=.31,ymin=-25,ymax=10,grid=major,grid style={gray!20},axis line style={ontoblue},title={Topology across thresholds},xtick={.1,.15,.2,.25,.3}]
+\addplot[ontogreen,very thick,mark=square*] coordinates {(.1,5) (.15,-19) (.2,0) (.25,0) (.3,0)};
+\end{axis}
+\end{tikzpicture}
+
+\small Measured endpoint, generation 0021, step 4800. Lines guide the eye between sampled thresholds.
+\end{center}
