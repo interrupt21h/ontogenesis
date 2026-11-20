@@ -1010,10 +1010,62 @@ D is inherited matrix deposition. Maintenance protection uses pre-payment H; pay
 
 ### Visualization and observed results
 
-Pending CI. Retains observatory, native field archives and topology diagnostics; adds cumulative maintenance energy debit.
+Verified CI results are recorded below. Retains observatory, native field archives and topology diagnostics; adds cumulative maintenance energy debit.
 
 ### Interpretation and limitations
 
 Single matched seed; shared resource debit, not genotype-specific expenditure. No demonstrated cooperation.
 
 [Source](../maintenance.py) · [Workflow](../.github/workflows/maintenance.yml)
+
+<!-- AUTO-CI-BEGIN -->
+
+### Automated CI verification
+
+[Successful run](https://github.com/interrupt21h/ontogenesis/actions/runs/44720533337) · [Standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44720533337/artifacts/14627835931) · [Diagnostics](https://github.com/interrupt21h/ontogenesis/actions/runs/44720533337/artifacts/14627286753). Source revision: `d75b3b703cd98502cd2c8031c1b13f4f92ddac76`.
+
+| Final metric | Value |
+|---|---:|
+| step | 4800 |
+| slice position | 0 |
+| v mean | 0.0152641537 |
+| w mean | 0.164327522 |
+| v active | 0.0450544946 |
+| w active | 0.636875482 |
+| feedback rms | 0.171268761 |
+| energy mean | 0.867089328 |
+| energy min | 0.800645805 |
+| energy depleted | 0 |
+| structure mean | 0.134487794 |
+| structure active | 0 |
+| signal mean | 0.337665778 |
+| signal active | 0.324179567 |
+| recovery mean | 0.387603492 |
+| trait mean | 0.395086735 |
+| trait std | 0.0627212502 |
+| trait min | 0.266877926 |
+| trait max | 0.657750458 |
+| structure jaccard | 0 |
+| boundary faces | 0 |
+| boundary per cell | 0 |
+| metabolite v mean | 0.00965807918 |
+| metabolite w mean | 0.108133173 |
+| metabolite overlap | 0.00528596544 |
+| genotype entropy | 2.20345784 |
+| structure components | 0 |
+| largest structure | 0 |
+| oldest entity | 0 |
+| lineage events | 2174 |
+| cavity candidates | 0 |
+| cavity fraction | 0 |
+| largest cavity | 0 |
+| complement components | 1 |
+| euler characteristic | 0 |
+| maintenance mean | 0.236367475 |
+| maintenance energy last | 169.838383 |
+| maintenance energy cumulative | 880655.223 |
+| builder mass | 11498.1487 |
+
+<!-- AUTO-CI-END -->
+
+
