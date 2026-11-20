@@ -18,7 +18,7 @@ phase_text = {1:"The initial experiments establish the visual language of the wo
 base = "https://github.com/interrupt21h/ontogenesis/blob/main/"
 def convert(text):
     text = re.sub(r"```math\n(.*?)\n```", lambda m: "$$\n"+m[1]+"\n$$", text, flags=re.S)
-    text = re.sub(r"\]\(\.\./([^\s)]+)\)", lambda m: "]("+base+m[1]+")", text)
+    text = re.sub(r"\]\((?:\.\./)+([^\s)]+)\)", lambda m: "]("+base+m[1]+")", text)
     return text
 
 revision = subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip()
@@ -67,7 +67,7 @@ def frame_section(n):
     return "".join(blocks)
 
 def research_plate(name,heading,caption):
-    return raw_latex(r"\par\Needspace{.43\textheight}\section*{"+heading+r"}\begin{center}\includegraphics[width=\linewidth,height=.48\textheight,keepaspectratio]{atlas/"+name+r".pdf}\end{center}\noindent "+caption+r"\par")
+    return raw_latex(r"\par\Needspace{.43\textheight}\section*{"+heading+r"}\begin{center}\includegraphics[width=\linewidth,height=.62\textheight,keepaspectratio]{atlas/"+name+r".pdf}\end{center}\noindent "+caption+r"\par")
 
 subprocess.run([os.sys.executable, str(ROOT / 'report/atlas.py')],check=True)
 subprocess.run([os.sys.executable,str(ROOT/'report/research_atlas.py')],check=True)
@@ -76,7 +76,7 @@ body = [re.sub(r"(?m)^## (.+)$",r"## \1 {.unnumbered}",intro.replace("# Vision a
 essay = (ROOT / "docs/RECURSIVE_CREATION.md").read_text()
 essay = essay.replace("# Recursive creation: human intention, machine intelligence and computational emergence", "# Recursive creation",1)
 essay = re.sub(r"(?m)^(#{1,2} .+)$", r"\1 {.unnumbered}", essay)
-essay = essay.replace("## The process as medium", raw_latex(r"\begin{center}\includegraphics[width=.96\linewidth,height=.30\textheight,keepaspectratio]{phase_art/8.png}\end{center}")+"## The process as medium",1)
+essay = essay.replace("## The process as medium", raw_latex(r"\begin{center}\includegraphics[width=.96\linewidth,height=.20\textheight,keepaspectratio]{phase_art/8.png}\end{center}")+"## The process as medium",1)
 essay = essay.replace("Three distinct processes provide the conceptual structure of the work.", "Three distinct processes provide the conceptual structure of the work."+raw_latex(r"""\begin{center}
 \begin{tikzpicture}[every node/.style={font=\sffamily\small,align=left}]
 \fill[phaseI!9,rounded corners=4pt] (0,0) rectangle (12.6,5.1);
@@ -108,7 +108,7 @@ engineering = (ROOT/"report/engineering.md").read_text()
 body.append(re.sub(r"(?m)^(#{1,2} .+)$",r"\1 {.unnumbered}",engineering))
 engineering_dir=out/"engineering"
 if (engineering_dir/"summary.md").exists():
-    body.append((engineering_dir/"summary.md").read_text())
+    body.append((engineering_dir/"summary.md").read_text().replace("## Recorded engineering metrics","## Recorded engineering metrics {.unnumbered}"))
     for filename,heading,caption in [
         ("repository-growth","Repository evolution","Tracked Python bytes and documented generations; not mathematical complexity."),
         ("execution-timeline","Parallel execution chronology","Run envelopes clipped at the milestone; overlapping runs are not additive wall time."),
@@ -140,7 +140,7 @@ for n,title,record in records:
     atlas=out / "atlas" / f"{n}-atlas.svg"
     if atlas.exists():
         subprocess.run(["rsvg-convert","-f","pdf","-o",str(atlas.with_suffix(".pdf")),str(atlas)],check=True)
-        analytical=raw_latex(r"\par\section{Analytical plate}\nopagebreak\begin{center}\includegraphics[width=\linewidth,height=.27\textheight,keepaspectratio]{atlas/"+n+r"-atlas.pdf}\end{center}")
+        analytical=raw_latex(r"\par\section{Analytical plate}\nopagebreak\begin{center}\includegraphics[width=\linewidth,height=.40\textheight,keepaspectratio]{atlas/"+n+r"-atlas.pdf}\end{center}")
     else:
         analytical=""
     chapter=convert(re.sub(r"^### ","## ",record,flags=re.M))
@@ -183,14 +183,13 @@ for n,title,record in records:
             body.append(research_plate(n+"-"+suffix,heading,caption))
     body.append(frame_section(n))
 body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontogreen}"))
-body.append((ROOT/"report/synthesis.md").read_text().replace("## What the experiments establish","## What the experiments establish {.unnumbered}").replace("## The limits of observation","## The limits of observation {.unnumbered}").replace("## Continuing the inquiry","## Continuing the inquiry {.unnumbered}"))
+body.append((ROOT/"report/synthesis.md").read_text().replace("## The original experiment revisited","## The original experiment revisited {.unnumbered}").replace("## What the experiments establish","## What the experiments establish {.unnumbered}").replace("## The limits of observation","## The limits of observation {.unnumbered}").replace("## Continuing the inquiry","## Continuing the inquiry {.unnumbered}"))
 body.append(research_plate("comparative-endpoints","Comparative experimental evidence","Upper: descriptive historical endpoints, not a controlled contrast. Lower: four matched-seed G0023 arms; the cost treatment bundles two penalties. All matrix values use threshold 0.20."))
-body.append("## Provenance {.unnumbered}\n\nSource revision: `"+revision+"`. The source revision identifies the published model and experimental records. Numerical results refer to the configurations described in each chapter. Editorial artwork accompanies thematic introductions and the creative essay. Analytical diagrams describe model relationships; simulation views depict sampled numerical states.")
+body.append(raw_latex(r"\clearpage")+ "## Provenance {.unnumbered}\n\nSource revision: `"+revision+"`. The source revision identifies the published model and experimental records. Numerical results refer to the configurations described in each chapter. Editorial artwork accompanies thematic introductions and the creative essay. Analytical diagrams describe model relationships; simulation views depict sampled numerical states.")
 author = (ROOT/"docs/AUTHOR.md").read_text()
 author = author.replace("# About the artist", "# About the artist {.unnumbered}",1)
 author = author.replace("I am",raw_latex(r"\begin{center}\includegraphics[width=\linewidth,height=.19\textheight,keepaspectratio]{phase_art/9.png}\end{center}{\sffamily\bfseries\LARGE\color{ontoink} Scott Muller\par}{\sffamily\small\color{ontoblue} Scientific visualization / Systems engineering / Computational art\par}\medskip")+"I am",1)
-body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontogreen}"))
-body.append(author)
+body.append(author.replace("# About the artist {.unnumbered}", "## About the artist {.unnumbered}"))
 (out/"report.md").write_text("\n\n".join(body))
 subprocess.run(["pandoc",str(out/"report.md"),"--standalone","--toc","--toc-depth=1","--number-sections","--top-level-division=chapter","--metadata","documentclass=report","--metadata","title=Ontogenesis: Computational Emergence","--metadata","subtitle=Living scientific and engineering monograph","--metadata","author=Scott Muller — Ontogenesis Project","--variable","geometry:margin=25mm","--variable","fontsize=11pt","--include-in-header=report/preamble.tex","-o",str(out/"ontogenesis.tex")],check=True)
 tex=out/"ontogenesis.tex"
