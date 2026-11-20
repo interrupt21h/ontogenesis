@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: [report/film.py, .github/workflows/film.yml]
+    paths: [report/film.py, report/videos.json, .github/workflows/film.yml]
   workflow_run:
     workflows: [Render universe, Generation 0002, Generation 0003, Generation 0004, Generation 0005, Generation 0006, Generation 0007, Generation 0008, Generation 0009, Generation 0010, Generation 0011, Generation 0012, Generation 0013, Generation 0014, Generation 0015, Generation 0016, Generation 0017, Generation 0018, Generation 0019, Generation 0020, Generation 0021, Generation 0022, Generation 0023, Generation 0024, Generation 0025]
     types: [completed]
