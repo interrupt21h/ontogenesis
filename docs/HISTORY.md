@@ -1,6 +1,6 @@
 # Ontogenesis — experimental history
 
-This is a retrospective engineering and scientific record of generations 0001–0021. Each generation is a separate reproducible experiment, not a continuation from a checkpoint. Source code is normative. Recorded values are single-seed observations from successful CI runs; hypotheses and limitations are explicitly separated. Parameters are dimensionless and the time step is one. L denotes the periodic nearest-neighbor discrete Laplacian. Active chemical coverage is the fraction of cells above 0.1; structural coverage uses M > 0.2. All runs use seed 42. Artifact links require GitHub authentication and expire; workflow links remain the durable regeneration path.
+This is a retrospective engineering and scientific record of generations 0001–0022. Each generation is a separate reproducible experiment, not a continuation from a checkpoint. Source code is normative. Recorded values are single-seed observations from successful CI runs; hypotheses and limitations are explicitly separated. Parameters are dimensionless and the time step is one. L denotes the periodic nearest-neighbor discrete Laplacian. Active chemical coverage is the fraction of cells above 0.1; structural coverage uses M > 0.2. All runs use seed 42. Artifact links require GitHub authentication and expire; workflow links remain the durable regeneration path.
 
 ## Contents
 
@@ -834,6 +834,53 @@ This is a multiscale Euler and winding profile, not persistent homology: no feat
 ### Reproduction and provenance
 
 [Source](../persistence.py) · [Workflow](../.github/workflows/persistence.yml). Python 3.12 and existing dependencies.
+
+
+
+
+### Verified outcome
+
+[Successful CI](https://github.com/interrupt21h/ontogenesis/actions/runs/44658944680) · [Standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44658944680/artifacts/14598000801). Self-tests passed. Final threshold profile:
+
+| Threshold | Coverage | Euler | Components | Winding axes (omega,z,y,x) |
+|---|---:|---:|---:|---|
+| 0.10 | 83.978% | 5 | 1 | omega,z,y,x |
+| 0.15 | 50.171% | -19 | 2 | omega,z,y,x |
+| 0.20 | 10.504% | 0 | 2 | omega,z |
+| 0.25 | 0% | 0 | 0 | none |
+| 0.30 | 0% | 0 | 0 | none |
+
+## Generation 0022 — Structural heredity
+
+Status: CI pending.
+
+### Research question and implementation
+
+Can a costly inherited maintenance trait sustain the matrix that modifies local diffusion? Preserve G0021's lattice, seed, integration and diagnostics. Reuse the existing signal-response bit S as a pleiotropic builder trait, not a new independent gene. Builders pay an 8 percent birth-rate penalty and an additional 0.02 energy cost per birth.
+
+### Mathematical model
+
+```math
+B=\sum_{g:S_g=1}(V_g+W_g),\qquad H=E\frac{B}{0.08+B}
+```
+
+```math
+M^{n+1}=M^n+0.025\Delta M^n+D(1-M^n)-(0.005+0.006P)(1-0.65H)M^n
+```
+
+Maintenance is bounded between zero and one given nonnegative populations and bounded energy; the degradation multiplier is between 0.35 and 1. Deposit D and selective diffusion remain as in G0021. The birth penalty multiplies the previous fitness by 1-0.08 S.
+
+### Visualization and observed results
+
+The 50-second observatory retains dual slices and lineage diagnostics. Builder mass and mean maintenance activity are logged at every sampled frame. Multiscale topology is retained. Results pending.
+
+### Interpretation and limitations
+
+This is a phenomenological niche-construction mechanism, not evidence of autonomous reproduction of organisms. The signal response and maintenance traits are linked by design. Compare with G0021 but separate penalty-only and maintenance-only controls are required for causal inference.
+
+### Reproduction and provenance
+
+[Source](../niche.py) · [Workflow](../.github/workflows/niche.yml).
 
 
 
