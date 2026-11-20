@@ -22,6 +22,8 @@ jobs:
           python-version: '3.12'
       - run: pip install -r requirements.txt scipy==1.15.3
       - run: python -u maintenance.py
+        env:
+          FIXED_OBSERVER: "1"
       - run: sudo apt-get update && sudo apt-get install -y ffmpeg
       - run: ffmpeg -y -framerate 24 -pattern_type glob -i 'gallery/0025/[0-9]*.png' -vf scale=1280:720 -c:v libx264 -pix_fmt yuv420p -crf 27 -movflags +faststart gallery/0025/evolution.mp4
       - run: ffprobe -v error -show_entries format=duration,size -show_entries stream=width,height,nb_frames -of json gallery/0025/evolution.mp4
@@ -33,6 +35,19 @@ jobs:
             gallery/0025/lineages.json
             gallery/0025/04800.png
           retention-days: 30
+          if-no-files-found: error
+      - name: Render complementary observation films
+        run: |
+          python report/temporal.py gallery/0025/metrics.json gallery/0025/evolution.mp4 gallery/0025/temporal
+          ffmpeg -v error -y -framerate 24 -pattern_type glob -i "gallery/0025/fixed/*.png" -c:v libx264 -pix_fmt yuv420p -movflags +faststart gallery/0025/fixed.mp4
+      - uses: actions/upload-artifact@v7
+        with:
+          name: generation-0025-observation
+          path: |
+            gallery/0025/temporal
+            gallery/0025/fixed.mp4
+            gallery/0025/peak-fields
+            gallery/0025/events.json
           if-no-files-found: error
       - name: Generate independent numerical atlas
         run: |
