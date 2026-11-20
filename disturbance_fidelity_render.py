@@ -121,27 +121,41 @@ def volumetric_ray(volume,metadata,progress,rays=96):
                              mode="constant",cval=0,prefilter=False)
             for i in range(len(CHANNELS))]
     matrix,v,w,pulse,energy,trait,recovery=fields
-    m=scale_field(matrix,metadata,"matrix",.0035)
+    # A near-uniform, chemically extinct world must NOT be rendered as a
+    # luminous opaque box. Relative matrix contrast preserves measured
+    # spatial differences, then an absolute concentration gate suppresses
+    # numeric ghosts when all concentrations diminish.
+    matrix_native=volume[0].astype(np.float32)
+    lower,upper=np.percentile(matrix_native,(35,99.5))
+    m=np.clip((matrix-lower)/max(upper-lower,.002),0,1)
+    m*=min(1.,float(upper)/.005)
+    # Use the actual discrete matrix gradient to illuminate interfaces.
+    gradients=np.gradient(matrix_native)
+    edge_native=np.sqrt(sum(g*g for g in gradients))
+    edge=map_coordinates(edge_native,coords,order=1,mode="constant",
+                         cval=0,prefilter=False)
+    edge/=max(float(np.percentile(edge_native,99.0)),.001)
+    edge=np.clip(edge,0,1)*min(1.,float(matrix_native.max())/.012)
     a=scale_field(v,metadata,"species_v",.012)
     b=scale_field(w,metadata,"species_w",.012)
     p=scale_field(pulse,metadata,"pulse",.05)
-    t=np.clip(np.abs(trait-.5)/.25,0,1)
+    t=np.clip(np.abs(trait-.5)/.25,0,1)*inside
     r=scale_field(recovery,metadata,"recovery",.05)
     scar=np.clip((1-energy-.003)/.20,0,1)*inside
     energy=np.clip(energy,0,1)
 
     rgb=np.zeros((rays,rays,3),np.float32)
     trans=np.ones((rays,rays),np.float32)
-    palette=np.array(((.96,.61,.85), (1.,.25,.08), (.09,.73,1.),
-                      (.36,1.,.35), (.96,.22,.28),(.55,.40,1.),
-                      (1.,.12,.05)),dtype=np.float32)
+    palette=np.array(((.96,.47,.73), (1.,.32,.08), (.07,.71,1.),
+                      (.32,1.,.48), (.96,.24,.25),(.56,.38,1.),
+                      (1.,.13,.05),(.22,.92,.91)),dtype=np.float32)
     for k in range(rays):
         # Uses measured concentrations, after documented artistic exposure.
         # Per-step alpha is bounded so a uniformly faint field does not
         # completely conceal the internal volume.
         components=np.stack((
-            .43*m[k], .85*a[k], .85*b[k], .32*p[k],
-            .23*r[k], .18*t[k], .93*scar[k]))
+            .42*m[k], .96*a[k], .96*b[k], .35*p[k],
+            .23*r[k], .18*t[k], .93*scar[k], .63*edge[k]))
         density=components.sum(axis=0)
         opacity=(1-np.exp(-.11*density))*inside[k]
         weight=np.maximum(density,1e-7)
@@ -270,6 +284,7 @@ def render(archive,manifest,movie,poster,*,seconds=60,fps=24,
         "temporal_and_omega_interpolation":"for-display only; not mathematical integration",
         "frame_motion_samples":len(set(motion)),
         "numerical_precision":"float32 stepped dynamics; float16 visual archive; float32 full-4D keyframes",
+        "render_contrast":"Spatial matrix p35 to p995 contrast with absolute signal gate and measured 3D matrix gradients (not a change to simulated concentrations)",
     }
     movie.with_suffix(".render.json").write_text(json.dumps(provenance,indent=2)+"\n")
     print(json.dumps({"movie":str(movie),"poster":str(poster),

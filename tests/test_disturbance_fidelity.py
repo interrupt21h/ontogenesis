@@ -60,6 +60,22 @@ class FidelityTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,"SHA-256"):
                 read_fidelity_archive(data,metadata)
 
+    def test_uniform_chemically_extinct_volume_does_not_glow(self):
+        with tempfile.TemporaryDirectory() as folder:
+            p=Path(folder)
+            source=p/"fields.npz"
+            meta=p/"fields.json"
+            create_fidelity_archive(source,meta,n=8,steps=12,
+                                    shock_step=6,sample_every=4,
+                                    omega_planes=2,max_raw_mib=15)
+            info=json.loads(meta.read_text())
+            volume=np.zeros((7,8,8,8),dtype=np.float32)
+            volume[0]=.003
+            volume[4]=1.
+            volume[5]=.5
+            dark=volumetric_ray(volume,info,.25,rays=24)
+            self.assertLess(max(max(c) for c in dark.getdata()),2)
+
     def test_archive_memory_budget(self):
         with tempfile.TemporaryDirectory() as temp:
             path=Path(temp)
