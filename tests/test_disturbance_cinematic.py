@@ -17,7 +17,8 @@ class CinematicTest(unittest.TestCase):
         observed_steps = set()
         def inspect(step, fields):
             self.assertEqual(set(fields),
-                             {"energy", "matrix", "species_v", "species_w", "pulse"})
+                             {"energy", "matrix", "species_v", "species_w", "pulse",
+                              "trait", "recovery"})
             self.assertTrue(all(not array.flags.writeable for array in fields.values()))
             self.assertTrue(all(array.shape == (8, 8, 8, 8) for array in fields.values()))
             observed_steps.add(step)

@@ -78,7 +78,8 @@ def run(seed=42,n=24,steps=4800,stride=4,arm="baseline",observe=True,interventio
             # temporary; the consumer must snapshot the requested sections.
             fields = {"energy": e.view(), "matrix": m.view(),
                       "species_v": v.view(), "species_w": w.view(),
-                      "pulse": pulse.view()}
+                      "pulse": pulse.view(), "trait": trait.view(),
+                      "recovery": recovery.view()}
             for field in fields.values():
                 field.flags.writeable = False
             cinematic_observer(step, fields)
