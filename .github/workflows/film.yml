@@ -1,6 +1,12 @@
 name: Evolution film
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [report/film.py, .github/workflows/film.yml]
+  workflow_run:
+    workflows: [Render universe, Generation 0002, Generation 0003, Generation 0004, Generation 0005, Generation 0006, Generation 0007, Generation 0008, Generation 0009, Generation 0010, Generation 0011, Generation 0012, Generation 0013, Generation 0014, Generation 0015, Generation 0016, Generation 0017, Generation 0018, Generation 0019, Generation 0020, Generation 0021, Generation 0022, Generation 0023, Generation 0024, Generation 0025, Generation 0026 consolidation]
+    types: [completed]
 permissions:
   contents: write
   actions: read
@@ -9,14 +15,23 @@ concurrency:
   cancel-in-progress: false
 jobs:
   film:
+    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.head_repository.full_name == github.repository)
     runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
       GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: main
       - run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-dejavu-core
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install matplotlib==3.10.3
       - run: python3 report/film.py
+      - name: Verify complete decodability
+        run: ffmpeg -v error -xerror -i report/build/film/ontogenesis-evolution.mp4 -f null -
       - uses: actions/upload-artifact@v7
         with:
           path: report/build/film/ontogenesis-evolution.mp4
