@@ -1,6 +1,6 @@
 # Ontogenesis — experimental history
 
-This is a retrospective engineering and scientific record of generations 0001–0020. Each generation is a separate reproducible experiment, not a continuation from a checkpoint. Source code is normative. Recorded values are single-seed observations from successful CI runs; hypotheses and limitations are explicitly separated. Parameters are dimensionless and the time step is one. L denotes the periodic nearest-neighbor discrete Laplacian. Active chemical coverage is the fraction of cells above 0.1; structural coverage uses M > 0.2. All runs use seed 42. Artifact links require GitHub authentication and expire; workflow links remain the durable regeneration path.
+This is a retrospective engineering and scientific record of generations 0001–0021. Each generation is a separate reproducible experiment, not a continuation from a checkpoint. Source code is normative. Recorded values are single-seed observations from successful CI runs; hypotheses and limitations are explicitly separated. Parameters are dimensionless and the time step is one. L denotes the periodic nearest-neighbor discrete Laplacian. Active chemical coverage is the fraction of cells above 0.1; structural coverage uses M > 0.2. All runs use seed 42. Artifact links require GitHub authentication and expire; workflow links remain the durable regeneration path.
 
 ## Contents
 
@@ -792,6 +792,48 @@ Retain 1,201 frames at 24 fps, target 50.042 seconds, 720p standalone MP4. Show 
 ### Reproduction
 
 [Source](../topology.py) · [Workflow](../.github/workflows/topology.yml). Python 3.12, requirements.txt and scipy==1.15.3. Run from root.
+
+
+
+
+### Verified CI outcome
+
+[Successful run](https://github.com/interrupt21h/ontogenesis/actions/runs/44651857629), [MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44651857629/artifacts/14592383068). Final Euler characteristic 0; cell counts [56148, 200178, 266887, 157706, 34849]; two structural components, one complement component, zero secondary complement candidates, 856 lineage events, entropy 1.572855 bits. Analytic self-tests passed.
+
+## Generation 0021 — Multiscale topological persistence
+
+Status: committed; CI pending.
+
+### Research question and implementation
+
+Do structural features survive changes in the concentration threshold, and do face-connected components wind around the periodic domain? Preserve G0020 physics, seed 42, 24^4 grid, 4800 steps and stride 4. Every 120 integration steps evaluate five thresholds (0.10, 0.15, 0.20, 0.25, 0.30). Label cut-box face components and link opposite faces by directed integer tile translations.
+
+### Mathematical model
+
+For a seam edge from component i to j assign an integer tile displacement. A spanning traversal assigns offsets; nonzero residuals on visited edges identify winding cycles.
+
+```math
+r_{ij}=p_i+d_{ij}-p_j\in\mathbb Z^4
+```
+
+An axis winds if some cycle residual has a nonzero coordinate on that axis. Record occupied coverage, Euler characteristic, number of face-connected components, winding component count, union of winding axes, and nonwinding complement sizes. The threshold profile is
+
+```math
+K_t=\{\text{closed voxels with } M>t\},\quad
+\chi(K_t)=\sum_{k=0}^4(-1)^k n_k(t)
+```
+
+### Visualization and observed results
+
+Retain G0020 observatory, 1201 frames at 24 fps (50.04 seconds). New threshold diagnostics are in metrics.json at 41 observations including the endpoint. Pending CI. Self-tests distinguish a seam-crossing two-cell blob from a complete periodic tube, and test empty and full domains.
+
+### Interpretation and limitations
+
+This is a multiscale Euler and winding profile, not persistent homology: no feature matching across thresholds, winding subgroup rank or individual Betti numbers are computed. Nonwinding complement components need not be contractible or functional membranes. Closed-cube Euler connectivity differs from face connectivity. No new physical mechanisms are introduced.
+
+### Reproduction and provenance
+
+[Source](../persistence.py) · [Workflow](../.github/workflows/persistence.yml). Python 3.12 and existing dependencies.
 
 
 
