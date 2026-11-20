@@ -1,0 +1,11 @@
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[width=.94\linewidth,height=7cm,xlabel={Builder concentration $B$},ylabel={Relative degradation},xmin=0,xmax=.8,ymin=.3,ymax=1.05,grid=major,grid style={gray!20},legend pos=north east,title={Energy-dependent matrix protection},domain=0:.8,samples=101]
+\addplot[ontoblue,very thick]{1-.65*x/(.08+x)};\addlegendentry{$E=1$}
+\addplot[ontogreen,very thick,dashed]{1-.325*x/(.08+x)};\addlegendentry{$E=0.5$}
+\addplot[ontoamber,thick,dotted]{1};\addlegendentry{$E=0$}
+\end{axis}
+\end{tikzpicture}
+
+\small Analytical response curves, not measured simulation results.
+\end{center}
