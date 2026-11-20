@@ -47,22 +47,29 @@ def frame_section(n):
         block=r"\par\Needspace{.68\textheight}\AtlasPlateHeading{"+n+r"}{Development sequence}{"+str(meta["count"])+r" total}\noindent "+r"\hfill ".join(panels)+r"\par\medskip\begin{center}"+picture(paths[2],r".76\linewidth",r".32\textheight")+r"\par\small "+caption(2)+r"\end{center}"+provenance
         return raw_latex(block)
     from PIL import Image
-    result=[]
-    for i,path in enumerate(paths):
-        block=r"\clearpage\AtlasPlateHeading{"+n+"}{"+labels[i]+"}{"+str(meta["indices"][i]+1)+" / "+str(meta["count"])+r"}\noindent "+picture(path,r"\linewidth",r".36\textheight")+r"\par\medskip "
-        with Image.open(out/path) as im:
-            if im.size==(1280,720):
-                panels=[]
-                for tag,rect,caption_text in (("chemistry",(14,110,495,575),"A. Chemistry view"),("identity",(510,110,985,575),"B. Identity view")):
-                    detail=Path(path).with_name(f"{i}-{tag}.png")
-                    im.crop(rect).save(out/detail)
-                    panels.append(r"\begin{minipage}[t]{.48\linewidth}\centering "+picture(str(detail),r"\linewidth",r".30\textheight")+r"\par\small "+caption_text+r"\end{minipage}")
-                block+=r"\noindent "+r"\hfill ".join(panels)+r"\par\smallskip{\footnotesize Detail views show distinct spatial sections; identity colors denote tracked structural components.\par}"
-        result.append(raw_latex(block+provenance))
-    return "\n".join(result)
+    # One chronological context plate and a full-width endpoint detail plate.
+    rows=[]
+    for i in (0,1):
+        rows.append(r"\begin{center}"+picture(paths[i],r"\linewidth",r".26\textheight")+r"\par\small "+caption(i)+r"\end{center}")
+    rows.append(r"\begin{center}"+picture(paths[2],r"\linewidth",r".26\textheight")+r"\par\small "+caption(2)+r"\end{center}")
+    context=raw_latex(r"\clearpage\AtlasPlateHeading{"+n+r"}{Development sequence}{"+str(meta["count"])+r" total}"+"".join(rows)+provenance)
+    with Image.open(out/paths[2]) as im:
+        if im.size!=(1280,720):
+            return context
+        panels=[]
+        for tag,rect,label in (("chemistry",(14,110,495,575),"Chemistry section"),("identity",(510,110,985,575),"Identity section")):
+            detail=Path(paths[2]).with_name("final-"+tag+".png")
+            im.crop(rect).save(out/detail)
+            panels.append(r"\begin{center}"+picture(str(detail),r".83\linewidth",r".36\textheight")+r"\par\small "+label+r"\end{center}")
+    return context+raw_latex(r"\clearpage\AtlasPlateHeading{"+n+r"}{Final spatial sections}{"+str(meta["indices"][2]+1)+r"}"+"".join(panels)+r"\par\small Distinct fourth-coordinate sections, enlarged without interpolation of new scientific detail."+provenance)
+
+def research_plate(name,heading,caption):
+    return raw_latex(r"\clearpage\section*{"+heading+r"}\begin{center}\includegraphics[width=\linewidth,height=.72\textheight,keepaspectratio]{atlas/"+name+r".pdf}\end{center}\noindent "+caption+r"\par")
 
 subprocess.run([os.sys.executable, str(ROOT / 'report/atlas.py')],check=True)
+subprocess.run([os.sys.executable,str(ROOT/'report/research_atlas.py')],check=True)
 body = [re.sub(r"(?m)^## (.+)$",r"## \1 {.unnumbered}",intro.replace("# Vision and method","# Vision and method {.unnumbered}",1))]
+body.append(research_plate("research-genealogy","The genealogy of the investigation","Each revision inherits or extends a computational model. Amber marks revisions concentrated on instruments or controls. This chronology is not a biological genealogy."))
 for n,title,record in records:
     if int(n) in groups:
         phase_end=next((k-1 for k in groups if k>int(n)),len(records))
@@ -98,8 +105,15 @@ for n,title,record in records:
     if atlas.exists():
         subprocess.run(["rsvg-convert","-f","pdf","-o",str(atlas.with_suffix(".pdf")),str(atlas)],check=True)
         body.append(raw_latex(r"\par\Needspace{.31\textheight}\section{Analytical plate}\begin{center}\includegraphics[width=\linewidth,height=.32\textheight,keepaspectratio]{atlas/"+n+r"-atlas.pdf}\end{center}"))
+    if n=="0012":
+        body.append(research_plate("spatial-sections","Observing four spatial dimensions","The periodic fourth coordinate indexes three-dimensional sections. The two observatory views introduced in Generation 0014 are separated by half the domain; they need not depict the same structures."))
+    if n=="0021":
+        body.append(research_plate("threshold-profile","Threshold-dependent organization","Measured final G0021 profile. The Euler characteristic and coverage describe different properties; neither alone establishes functional compartments."))
+    if n=="0024":
+        body.append(research_plate("genetic-architecture","Independent inherited traits","Sixteen genotypes per species form a four-dimensional binary mutation graph. Independence here means separate encoded loci, not statistically independent allele frequencies."))
     body.append(frame_section(n))
 body.append((ROOT/"report/synthesis.md").read_text().replace("## What the experiments establish","## What the experiments establish {.unnumbered}").replace("## The limits of observation","## The limits of observation {.unnumbered}").replace("## Continuing the inquiry","## Continuing the inquiry {.unnumbered}"))
+body.append(research_plate("comparative-endpoints","Comparative experimental evidence","Upper: descriptive historical endpoints, not a controlled contrast. Lower: four matched-seed G0023 arms; the cost treatment bundles two penalties. All matrix values use threshold 0.20."))
 body.append("## Provenance {.unnumbered}\n\nSource revision: `"+revision+"`. The source revision identifies the published model and experimental records. Numerical results refer to the configurations described in each chapter. Analytical diagrams describe model relationships; simulation views depict sampled numerical states.")
 (out/"report.md").write_text("\n\n".join(body))
 subprocess.run(["pandoc",str(out/"report.md"),"--standalone","--toc","--toc-depth=1","--number-sections","--top-level-division=chapter","--metadata","documentclass=report","--metadata","title=Ontogenesis: Computational Emergence","--metadata","subtitle=Living scientific and engineering monograph","--metadata","author=Scott Muller — Ontogenesis Project","--variable","geometry:margin=25mm","--variable","fontsize=11pt","--include-in-header=report/preamble.tex","-o",str(out/"ontogenesis.tex")],check=True)
