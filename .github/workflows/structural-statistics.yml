@@ -1,26 +1,43 @@
 name: Generation 0027 structural statistics
 on:
   workflow_dispatch:
+    inputs:
+      full_resolution:
+        description: 'Run expensive 24^4 / 4800-step experiment'
+        type: boolean
+        default: false
+      verify_observer:
+        description: 'Repeat full simulation for checkpoint equivalence (approximately 2x CPU)'
+        type: boolean
+        default: false
   push:
     branches: [main]
     paths: [structural_statistics.py, .github/workflows/structural-statistics.yml]
+permissions:
+  contents: read
+concurrency:
+  group: structural-statistics-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
   smoke:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
       - run: pip install numpy==2.2.6
-      - run: python -c "import numpy as np; np.show_runtime()" 
+      - run: python -c "import numpy as np; np.show_runtime()"
       - run: lscpu
-      - run: python structural_statistics.py --n 12 --steps 240 --verify --out smoke.json
+      - run: python structural_statistics.py --n 12 --steps 240 --observe-stride 120 --verify --out smoke.json
       - uses: actions/upload-artifact@v7
         with:
           name: structural-12
           path: smoke.json
+          retention-days: 30
   full:
+    if: github.event_name == 'workflow_dispatch' && inputs.full_resolution
     needs: smoke
     runs-on: ubuntu-latest
     timeout-minutes: 350
@@ -30,8 +47,17 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install numpy==2.2.6
-      - run: python -u structural_statistics.py --verify --out result.json
+      - run: python -c "import numpy as np; np.show_runtime()"
+      - run: lscpu
+      - name: Run full-resolution statistics
+        env:
+          VERIFY: ${{ inputs.verify_observer }}
+        run: |
+          args=()
+          if [ "$VERIFY" = "true" ]; then args+=(--verify); fi
+          python -u structural_statistics.py --observe-stride 120 "${args[@]}" --out result.json
       - uses: actions/upload-artifact@v7
         with:
           name: structural-24
           path: result.json
+          retention-days: 30
