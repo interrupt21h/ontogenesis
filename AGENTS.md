@@ -5,3 +5,7 @@ Every new Ontogenesis generation must include a detailed generation record, cons
 ## Mathematical typography
 
 Use GitHub native LaTeX math blocks (fenced `math` or double-dollar delimiters) for display equations and single-dollar delimiters for inline notation. Break long equations across lines, define symbols, and use separate descriptive headings for distinct equations. Do not place mathematical models in plain-text code fences. See [GitHub mathematical expressions](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions).
+
+## Living monograph
+
+Keep report/introduction.md mechanism map and analytical or measured illustrations current; report/build.py regenerates the complete LaTeX monograph from docs/HISTORY.md. Verify scientific-report CI, retain the standalone PDF, and update the README with the newest verified direct PDF artifact link when available. Label diagrams as conceptual or measured; do not invent simulation images. Preserve the durable report workflow link.
