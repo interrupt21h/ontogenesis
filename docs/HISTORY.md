@@ -850,6 +850,53 @@ This is a multiscale Euler and winding profile, not persistent homology: no feat
 | 0.25 | 0% | 0 | 0 | none |
 | 0.30 | 0% | 0 | 0 | none |
 
+<!-- AUTO-CI-BEGIN -->
+
+### Automated CI verification
+
+[Successful run](https://github.com/interrupt21h/ontogenesis/actions/runs/44779049219) · [Standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44779049219/artifacts/14653267678) · [Diagnostics](https://github.com/interrupt21h/ontogenesis/actions/runs/44779049219/artifacts/14653307566). Source revision: `ad7b2584373ac1ae634c7b4d084315d5b5bcb487`.
+
+| Final metric | Value |
+|---|---:|
+| step | 4800 |
+| slice position | 0 |
+| v mean | 0.0123706583 |
+| w mean | 0.182805432 |
+| v active | 0.0361207562 |
+| w active | 0.682795018 |
+| feedback rms | 0.18501398 |
+| energy mean | 0.893727368 |
+| energy min | 0.852653999 |
+| energy depleted | 0 |
+| structure mean | 0.147089456 |
+| structure active | 0.105037736 |
+| signal mean | 0.357746172 |
+| signal active | 0.345558449 |
+| recovery mean | 0.427526534 |
+| trait mean | 0.392482936 |
+| trait std | 0.0578903576 |
+| trait min | 0.27473986 |
+| trait max | 0.649445159 |
+| structure jaccard | 0.942028164 |
+| boundary faces | 36620 |
+| boundary per cell | 1.05081925 |
+| metabolite v mean | 0.00755712603 |
+| metabolite w mean | 0.118428005 |
+| metabolite overlap | 0.00464393861 |
+| genotype entropy | 1.57285512 |
+| structure components | 2 |
+| largest structure | 30575 |
+| oldest entity | 1500 |
+| lineage events | 856 |
+| cavity candidates | 0 |
+| cavity fraction | 0 |
+| largest cavity | 0 |
+| complement components | 1 |
+| euler characteristic | 0 |
+
+<!-- AUTO-CI-END -->
+
+
 ## Generation 0022 — Structural heredity
 
 Status: CI verified.
