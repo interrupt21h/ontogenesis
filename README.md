@@ -2,9 +2,9 @@
 
 An experiment in computational emergence. Each generation preserves its rules, seed, metrics and render.
 
-## Latest verified animation — Generation 0022: Structural heredity
+## Latest verified animation — Generation 0023: Factorial niche controls
 
-[Download standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44679969605/artifacts/14605328949) (2.03 MiB) · [Workflow](https://github.com/interrupt21h/ontogenesis/actions/workflows/niche.yml)
+[Download standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44687054986/artifacts/14609910431) (2.03 MiB) · [Workflow](https://github.com/interrupt21h/ontogenesis/actions/workflows/niche.yml)
 
 Authentication required; artifacts expire after 30 days.
 
@@ -45,6 +45,7 @@ Ontogenesis investigates emergence in continuous, periodic reaction–diffusion 
 | 0021 | [Multiscale topological persistence](docs/generations/0021.md) | [Python](persistence.py) | [Runs](.github/workflows/persistence.yml) · Verified |
 | 0022 | [Structural heredity](docs/generations/0022.md) | [Python](niche.py) | [Runs](.github/workflows/niche.yml) · Verified |
 | 0023 | [Factorial niche controls](docs/generations/0023.md) | [Python](controls.py) | [Runs](.github/workflows/controls.yml) · Pending verification |
+| 0024 | [Independent construction specialization](docs/generations/0024.md) | [Python](specialization.py) | [Runs](.github/workflows/specialization.yml) · Pending verification |
 
 ## Reproduce locally
 
