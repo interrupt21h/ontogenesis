@@ -53,7 +53,7 @@ def special_source(gen,artifact,p):
                     step=re.search(r"(\d+)\.png$",name)[1]
                     encode(["-loop","1","-framerate","24","-i",str(img),"-t","2","-vf",f"scale=720:720,pad=1280:720:280:0:color=0x101c29,setsar=1,drawtext=fontfile={FONT}:text='Archived still | step {int(step)}':fontcolor=white:fontsize=24:x=15:y=20"],clip)
                     clips.append(clip)
-                c=Path(d)/"concat.txt";c.write_text("".join(f"file '{x.name}'\\n" for x in clips))
+                c=Path(d)/"concat.txt";c.write_text("".join(f"file '{x.name}'\n" for x in clips))
                 run("ffmpeg","-v","error","-y","-f","concat","-safe","0","-i",str(c),"-c","copy",str(p))
             else:
                 names=[n for n in z.namelist() if n.endswith("result.json")]
