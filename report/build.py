@@ -44,26 +44,27 @@ def frame_section(n):
     def caption(i):
         return labels[i]+" --- frame "+str(meta["indices"][i]+1)
     provenance=r"\par\smallskip{\footnotesize Source animation artifact "+str(artifact)+r". Frame numbers refer to playback order, not integration steps. \par}"
-    if int(n)<14:
-        panels=[r"\begin{minipage}[t]{.48\linewidth}\centering "+picture(paths[i],r"\linewidth",r".29\textheight")+r"\par\small "+caption(i)+r"\end{minipage}" for i in (0,1)]
-        block=r"\clearpage\AtlasPlateHeading{"+n+r"}{Development sequence}{"+str(meta["count"])+r" frames in animation}\noindent "+r"\hfill ".join(panels)+r"\par\medskip\begin{center}"+picture(paths[2],r".88\linewidth",r".36\textheight")+r"\par\small "+caption(2)+r"\end{center}"+provenance
-        return raw_latex(block)
     from PIL import Image
-    # One chronological context plate and a full-width endpoint detail plate.
-    rows=[]
-    for i in (0,1):
-        rows.append(r"\begin{minipage}{\linewidth}\centering "+picture(paths[i],r"\linewidth",r".195\textheight")+r"\par\small "+caption(i)+r"\end{minipage}\par\smallskip")
-    rows.append(r"\begin{minipage}{\linewidth}\centering "+picture(paths[2],r"\linewidth",r".195\textheight")+r"\par\small "+caption(2)+r"\end{minipage}\par\smallskip")
-    context=raw_latex(r"\clearpage\AtlasPlateHeading{"+n+r"}{Development sequence}{"+str(meta["count"])+r" frames in animation}"+"".join(rows)+provenance)
-    with Image.open(out/paths[2]) as im:
-        if im.size!=(1280,720):
-            return context
-        panels=[]
-        for tag,rect,label in (("chemistry",(14,110,495,575),"Chemistry section"),("identity",(510,110,985,575),"Identity section")):
-            detail=Path(paths[2]).with_name("final-"+tag+".png")
-            im.crop(rect).save(out/detail)
-            panels.append(r"\begin{center}"+picture(str(detail),r".95\linewidth",r".32\textheight")+r"\par\small "+label+r"\end{center}")
-    return context+raw_latex(r"\clearpage\AtlasPlateHeading{"+n+r"}{Final spatial sections}{"+"Frame "+str(meta["indices"][2]+1)+r"}"+"".join(panels)+r"\par\small Distinct fourth-coordinate sections, enlarged without interpolation of new scientific detail."+provenance)
+    if not all((out/p).is_file() for p in paths):
+        return ""
+    blocks=[]
+    for i,path in enumerate(paths):
+        with Image.open(out/path) as im:
+            w,h=im.size
+        heading=("Development sequence" if i==0 else "Development sequence (continued)")
+        block=r"\clearpage\AtlasPlateHeading{"+n+"}{"+heading+"}{"+str(i+1)+" of 3 | "+str(meta["count"])+r" frames in animation}"
+        block+=r"\begin{center}\vspace*{.035\textheight}"+picture(path,r"\linewidth",r".70\textheight")+r"\par\medskip{\large\bfseries "+caption(i)+r"}\par\smallskip{\small Source raster: "+str(w)+" by "+str(h)+r" pixels}\end{center}"
+        block+=r"\noindent "+provenance
+        blocks.append(raw_latex(block))
+    # Crops are explicitly labelled image regions, not claims about physical coordinates.
+    if int(n)>=14:
+        with Image.open(out/paths[2]) as im:
+            if im.size==(1280,720):
+                for tag,rect,label in (("left",(14,110,495,575),"Left visualization region"),("right",(510,110,985,575),"Right visualization region")):
+                    detail=Path(paths[2]).with_name("final-detail-"+tag+".png")
+                    im.crop(rect).save(out/detail)
+                    blocks.append(raw_latex(r"\clearpage\AtlasPlateHeading{"+n+r"}{Final frame detail}{"+label+r"}\begin{center}"+picture(str(detail),r"\linewidth",r".65\textheight")+r"\par\medskip{\large "+label+r"}\end{center}\noindent Enlarged crop of the final playback frame; no new numerical information is inferred."+provenance))
+    return "".join(blocks)
 
 def research_plate(name,heading,caption):
     return raw_latex(r"\par\Needspace{.43\textheight}\section*{"+heading+r"}\begin{center}\includegraphics[width=\linewidth,height=.48\textheight,keepaspectratio]{atlas/"+name+r".pdf}\end{center}\noindent "+caption+r"\par")
