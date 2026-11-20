@@ -35,13 +35,15 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
-      - run: pip install numpy==2.2.6 matplotlib==3.10.3
+      - run: pip install numpy==2.2.6 matplotlib==3.10.3 pymupdf==1.26.0
       - run: python3 report/build.py
       - name: Verify PDF
         run: |
           pdfinfo report/build/ontogenesis.pdf
           pdftotext report/build/ontogenesis.pdf report/build/verified.txt
           grep -q 'Generation 0001' report/build/verified.txt
+      - name: Audit page composition
+        run: python3 report/audit.py
       - name: Upload standalone PDF
         id: pdf
         uses: actions/upload-artifact@v7
@@ -61,6 +63,9 @@ jobs:
             report/build/frames
             report/build/mechanisms
             report/build/atlas
+            report/build/cover.png
+            report/build/layout-audit.json
+            report/build/contact-sheet.jpg
       - name: Link report
         run: echo '[Download standalone PDF](${{ steps.pdf.outputs.artifact-url }})' >> "$GITHUB_STEP_SUMMARY"
       - name: Preserve compilation diagnostics on failure
