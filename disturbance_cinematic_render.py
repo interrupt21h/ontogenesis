@@ -221,6 +221,7 @@ def phase(step, event, total):
 
 def draw_movie_frame(volume, meta, *, step, frame_number, total_frames,
                      width, height, caption):
+    """Immersive full-bleed art: the measured 3D world is the entire frame."""
     if width<640 or height<360 or width%2 or height%2:
         raise ValueError("Even frame dimensions of at least 640x360 required")
     event=meta["event_step"]
@@ -228,80 +229,65 @@ def draw_movie_frame(volume, meta, *, step, frame_number, total_frames,
     frac=float(step)/total
     n=volume.shape[-1]
     depth=((n*.5)+(n*.88)*math.sin(2*math.pi*(frac*.67+.08)))%n
-    hero_w=int(width*.77)
-    side_w=width-hero_w
-    top=int(height*.17)
-    bottom=int(height*.115)
-    world_h=height-top-bottom
-    image=Image.new("RGB",(width,height),INK)
-    d=ImageDraw.Draw(image)
-    d.rectangle((0,0,width,5),fill=TEAL if step<event else AMBER)
-    d.text((int(width*.04),int(height*.036)),"ONTOGENESIS  /  0028",
-           font=font(max(17,int(height*.040)),bold=True),fill=WHITE)
-    d.text((int(width*.04),int(height*.103)),phase(step,event,total),
-           font=font(max(13,int(height*.025)),bold=True),
-           fill=TEAL if step<event else AMBER)
-    d.text((width-int(width*.25),int(height*.055)),"AN ARTIFICIAL UNIVERSE",
-           font=font(max(10,int(height*.018))),fill=MUTED)
 
-    margin=int(width*.036)
-    hw=hero_w-margin-12
-    hh=world_h-8
-    fog=camera_frame(composite(volume,meta,depth),(hw,hh),frac)
-    cloud=voxel_cloud(volume,(hw,hh),frac)
-    # Numeric fields determine both layers; the cloud emphasizes 3D spatial
-    # structure and makes camera motion distinct from scalar-field evolution.
-    hero=Image.blend(fog,cloud,.87)
-    image.paste(hero,(margin,top))
-    d=ImageDraw.Draw(image)
-    d.rounded_rectangle((margin,top,margin+hw,top+hh),radius=6,
-                        outline=(54,106,127),width=2)
-    d.text((margin+18,top+16),"3D VOXEL FIELD  /  FIXED ω  /  ROTATING CAMERA",
-           font=font(max(10,int(height*.019)),bold=True),fill=WHITE)
+    fog=camera_frame(composite(volume,meta,depth),(width,height),frac)
+    cloud=voxel_cloud(volume,(width,height),frac)
+    image=Image.blend(fog,cloud,.94)
 
-    # The inset shows a real z section from the same recorded omega hyperplane.
+    # Inset spatial evidence is used only briefly so diagnostic graphics
+    # never dominate the cinematic composition.
     idx=int(round(depth))%n
-    inset=composite_2d(volume[:,idx,:,:],meta)
-    inset_size=min(int(side_w*.72),int(world_h*.43))
-    inset=inset.resize((inset_size,inset_size),Image.Resampling.BICUBIC)
-    inset_x=hero_w+int(side_w*.12)
-    inset_y=top+int(world_h*.07)
-    image.paste(inset,(inset_x,inset_y))
+    if (.28<=frac<=.42) or (.77<=frac<=.87):
+        size=min(int(width*.20),int(height*.32))
+        section=composite_2d(volume[:,idx,:,:],meta)
+        section=section.resize((size,size),Image.Resampling.BICUBIC)
+        x=width-size-int(width*.055)
+        y=int(height*.18)
+        image.paste(section,(x,y))
+        pane=ImageDraw.Draw(image)
+        pane.rectangle((x-2,y-2,x+size+2,y+size+2),
+                       outline=TEAL,width=2)
+        pane.text((x,y+size+13),f"MEASURED z={idx:02d} / ω={meta['recording']['omega_index']:02d}",
+                  font=font(max(10,int(height*.019)),bold=True),fill=WHITE)
+
+    # Legibility gradients are a graphic overlay, not a simulated field.
+    veil=Image.new("RGBA",(width,height),(0,0,0,0))
+    vd=ImageDraw.Draw(veil,"RGBA")
+    vd.rectangle((0,0,width,int(height*.16)),fill=(5,11,25,156))
+    vd.rectangle((0,int(height*.85),width,height),fill=(5,11,25,168))
+    image=Image.alpha_composite(image.convert("RGBA"),veil).convert("RGB")
     d=ImageDraw.Draw(image)
-    d.rectangle((inset_x-2,inset_y-2,inset_x+inset_size+2,inset_y+inset_size+2),
-                outline=TEAL,width=2)
-    label_sz=max(10,int(height*.019))
-    d.text((inset_x,inset_y+inset_size+13),f"VOLUME SECTION  z={idx:02d}",
-           font=font(label_sz,bold=True),fill=WHITE)
-    d.text((inset_x,inset_y+inset_size+43),f"ω={meta['recording']['omega_index']:02d}  /  N={n}",
-           font=font(label_sz),fill=MUTED)
-    legend_y=top+int(world_h*.73)
-    for i,(color,label) in enumerate(((AMBER,"MATRIX"),(PINK,"SPECIES V"),
-                                     (TEAL,"SPECIES W"),(BLUE,"EXCITATION"))):
-        y=legend_y+i*max(20,int(height*.035))
-        d.ellipse((inset_x,y,inset_x+9,y+9),fill=color)
-        d.text((inset_x+18,y-3),label,font=font(label_sz),fill=MUTED)
+    pad=int(width*.038)
+    d.text((pad,int(height*.038)),"ONTOGENESIS  /  0028",
+           font=font(max(20,int(height*.038)),bold=True),fill=WHITE)
+    d.text((pad,int(height*.103)),phase(step,event,total),
+           font=font(max(12,int(height*.022)),bold=True),
+           fill=TEAL if step<event else AMBER)
+    d.text((width-int(width*.31),int(height*.064)),
+           "A FIELD OF ARTIFICIAL LIFE",
+           font=font(max(10,int(height*.019))),fill=MUTED)
 
-    # The outline is an EXPLICIT symbolic annotation, not a physical wave.
-    if event <= step <= event+total*.045:
+    # Explicit symbolic annotation: not a physical wavefront.
+    if event<=step<=event+total*.045:
         age=(step-event)/max(total*.045,1)
-        cx=margin+hw//2;cy=top+hh//2
-        radius=int((.1+.22*age)*min(hw,hh))
+        radius=int((.10+.25*age)*min(width,height))
+        cx,cy=width//2,height//2
         d.ellipse((cx-radius,cy-radius,cx+radius,cy+radius),
-                  outline=AMBER,width=max(2,int(5*(1-age))))
-        d.text((margin+18,top+hh-34),"EXTERNAL SHOCK / EVENT MARKER",
-               fill=AMBER,font=font(label_sz,bold=True))
+                  outline=AMBER,width=max(2,int(6*(1-age))))
+        d.text((pad,int(height*.77)),"EXTERNAL DISTURBANCE  /  EVENT MARKER",
+               font=font(max(11,int(height*.022)),bold=True),fill=AMBER)
 
-    y=height-int(height*.078)
-    d.text((margin,y-6),f"STEP {step:04.0f} / {total:04d}",
-           fill=WHITE,font=font(max(12,int(height*.023)),bold=True))
-    bar_x=int(width*.35);bar_end=width-margin
-    d.line((bar_x,y+7,bar_end,y+7),fill=(53,78,94),width=4)
-    d.line((bar_x,y+7,bar_x+int((bar_end-bar_x)*frac),y+7),fill=TEAL,width=4)
-    event_x=bar_x+int((bar_end-bar_x)*event/total)
-    d.line((event_x,y-4,event_x,y+19),fill=AMBER,width=3)
-    d.text((margin,height-24),caption,
-           fill=MUTED,font=font(max(9,int(height*.014))))
+    # Playback progress is intentionally subordinate to the changing world.
+    info_y=int(height*.885)
+    d.text((pad,info_y),f"STEP {step:04.0f} / {total:04d}",
+           font=font(max(12,int(height*.025)),bold=True),fill=WHITE)
+    d.text((pad,int(height*.945)),caption,
+           font=font(max(9,int(height*.014))),fill=MUTED)
+    x0=int(width*.40);x1=width-pad;line_y=int(height*.907)
+    d.line((x0,line_y,x1,line_y),fill=(48,75,92),width=4)
+    d.line((x0,line_y,x0+int((x1-x0)*frac),line_y),fill=TEAL,width=4)
+    cut=x0+int((x1-x0)*event/total)
+    d.line((cut,line_y-12,cut,line_y+12),fill=AMBER,width=3)
     return image
 
 

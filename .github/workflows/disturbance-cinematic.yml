@@ -41,6 +41,8 @@ jobs:
         run: |
           python -m compileall -q consolidation.py disturbance_cinematic.py disturbance_cinematic_render.py
           python -c 'import disturbance_cinematic,disturbance_cinematic_render; print("Cinematic modules import cleanly")'
+      - name: Verify observer independence and archive provenance
+        run: python -m unittest discover -s tests -p 'test_disturbance_cinematic.py' -v
       - name: Capture the verified low-budget artistic universe
         run: |
           /usr/bin/time -v python -u disturbance_cinematic.py --n 12 --steps 420 --shock-step 280 --sample-every 10 --out cinematic-preview.npz --metadata cinematic-preview.json
