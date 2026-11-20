@@ -25,6 +25,8 @@ self-hosted or employer compute. 350-minute job timeout. A preview gate must
 pass. Durable archive assets are uploaded to atlas-media only after successful
 render and FFmpeg decodability checks.
 
-Outcome: PENDING until the GitHub Actions master job completes. Do not
+Execution: [GitHub Actions run 44829195043](https://github.com/interrupt21h/ontogenesis/actions/runs/44829195043), revision f9fb2a79da09f0bfc741b84d6a5c9429b36e9bd6. The preview gate passed with 432 encoded frames and committed numerical-field SHA provenance. Its [video artifact](https://github.com/interrupt21h/ontogenesis/actions/runs/44829195043/artifacts/14675921895) and [native field archive](https://github.com/interrupt21h/ontogenesis/actions/runs/44829195043/artifacts/14673923851) are separately retained. The full 24⁴ cinematic master job was started by that workflow.
+
+Outcome of full master: PENDING until its full job completes. Do not
 replace the report/videos.json G0028 evidence artifact with the master
 until verified render, frame inspection and appropriate provenance review.

@@ -53,3 +53,25 @@ I regard this infrastructure as a principal outcome of the creative experiment. 
 ## Topology presentation refresh
 
 Generations 0020–0025 now share a threshold-sensitive topology dashboard. It preserves the original secondary complement measurement, presents absolute component sizes and adaptive cell-count scaling, and shows coverage at matrix thresholds 0.10, 0.15 and 0.20. Successful refreshed runs are reconciled into the video manifest and generation records before report regeneration. Historical videos remain historical until replacement runs succeed. No numerical equations were modified.
+
+
+## The G0028 artistic publication path
+
+A limitation became visible when the first G0028 science pilot generated little
+compelling motion: the 12⁴ chemical populations collapsed early, while the
+six-panel presentation showed mostly diagnostic summaries. The project now
+retains that pilot as measurement evidence, separately from its featured
+artistic intent. The new G0028 pipeline records actual 3D fixed-omega
+concentration volumes for five fields from a single four-dimensional
+universe, archives them in a SHA-256-checked compact NPZ, and uses an
+independent renderer with orbiting voxel projections, real 2D sections,
+spatial contrast, and explicitly aesthetic temporal blending.
+
+The automatic small-domain preview passed in [run 44829195043](https://github.com/interrupt21h/ontogenesis/actions/runs/44829195043).
+A 60-second, 24⁴ / 4800-step cinematic master was explicitly opted in
+through one marked GitHub commit, gated by the preview rather than triggered
+on all code pushes. Preview media, field values, manifest and poster are
+preserved as durable release assets and can be rerendered in a manual
+render-only job without recomputing the underlying experiment. Visual
+improvement is assessed separately from scientific validation and full
+master results remain pending until its Actions execution finishes.

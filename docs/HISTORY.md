@@ -1380,3 +1380,6 @@ separately gated and remains unverified until execution and inspection.
 [Capture](../disturbance_cinematic.py) ·
 [Renderer](../disturbance_cinematic_render.py) ·
 [Workflow](../.github/workflows/disturbance-cinematic.yml).
+
+
+**G0028 cinematic preview verified (2026-11-20):** [Workflow run 44829195043](https://github.com/interrupt21h/ontogenesis/actions/runs/44829195043) completed the new observer/archival integrity and full-bleed artistic preview at source revision `f9fb2a79da09f0bfc741b84d6a5c9429b36e9bd6`. [18-second MP4, 432 frames, poster and metadata](https://github.com/interrupt21h/ontogenesis/actions/runs/44829195043/artifacts/14675921895) and [native float16 fixed-omega 3D field archive](https://github.com/interrupt21h/ontogenesis/actions/runs/44829195043/artifacts/14673923851) were retained; release copies support render-only reproduction. Visual inspection confirms rotating voxel geometry and staged shock marker, **not** restored chemistry in the 12⁴ transient. The marked 24⁴ cinematic master is executing as a separate job in the same run; do not mark it verified until completed and inspected.
