@@ -69,6 +69,8 @@ def research_plate(name,heading,caption):
 subprocess.run([os.sys.executable, str(ROOT / 'report/atlas.py')],check=True)
 subprocess.run([os.sys.executable,str(ROOT/'report/research_atlas.py')],check=True)
 body = [re.sub(r"(?m)^## (.+)$",r"## \1 {.unnumbered}",intro.replace("# Vision and method","# Vision and method {.unnumbered}",1))]
+essay = (ROOT / "docs/RECURSIVE_CREATION.md").read_text()
+body.append(re.sub(r"(?m)^(#{1,2} .+)$", r"\1 {.unnumbered}", essay))
 body.append(research_plate("research-genealogy","The genealogy of the investigation","Each revision inherits or extends a computational model. Amber marks revisions concentrated on instruments or controls. This chronology is not a biological genealogy."))
 for n,title,record in records:
     if int(n) in groups:
