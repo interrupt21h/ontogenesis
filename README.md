@@ -14,6 +14,12 @@ Ontogenesis investigates emergence both within a simulated world and within the 
 
 Authentication required; artifacts expire after 30 days.
 
+## Complete evolution film
+
+**[Download latest published evolution MP4](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-evolution.mp4)** · [Film provenance](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/film-provenance.json) · [Film builds](https://github.com/interrupt21h/ontogenesis/actions/workflows/film.yml)
+
+The combined film is rebuilt automatically following successful experiment workflows. Original videos retain their playback duration; G0001 uses labelled archived stills and headless consolidation experiments use measured summaries when verified. Each generation is independently initialized. The release links become available after the first successful film build and retain the latest successfully published edition.
+
 ## Scientific and engineering monograph
 
 **[Download current verified PDF](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis.pdf)** · [Latest successful report build](https://github.com/interrupt21h/ontogenesis/actions/workflows/report.yml?query=is%3Asuccess) · [Report source](report/) · [All report builds](https://github.com/interrupt21h/ontogenesis/actions/workflows/report.yml)
