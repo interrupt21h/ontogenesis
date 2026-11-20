@@ -2,6 +2,16 @@
 
 An experiment in computational emergence. Each generation preserves its rules, seed, metrics and render.
 
+## A two-day creative experiment
+
+I began Ontogenesis by brainstorming a complicated system that could evolve iteratively, produce compelling visual artifacts and fully leverage continuous integration (CI) for numerical execution, testing, rendering and publication. I was not attempting to establish a new scientific theory of artificial life.
+
+Over approximately two days (November 19–20, 2026), I deliberately invested minimal direct development effort in evolving the numerical system, delegating much of its mathematical formulation and implementation to AI. Most of my attention went toward aesthetics and the presentation of the resulting artifacts. I intentionally allowed the mathematics to exceed my own understanding to investigate how complex iterative development could extend beyond my independent capabilities as a developer.
+
+The [first recorded numerical CI execution](https://github.com/interrupt21h/ontogenesis/actions/runs/44456063725) began at 04:06:58 UTC on November 19. The [automated film publication and README integration](https://github.com/interrupt21h/ontogenesis/commit/ad9e3d270ecb403c696a99dad7ef0ce2452426bf) were committed by 16:09:07 UTC on November 20: a documented interval of 36 hours, 2 minutes and 9 seconds. This is elapsed milestone time, not tracked human working hours or a measured productivity claim.
+
+The code, animations, numerical archives, CI history and monograph collectively document this creative experiment. Successful execution does not establish mathematical or scientific validity; unresolved questions and limitations remain part of the published record.
+
 ## Artistic vision and creative methodology
 
 Ontogenesis investigates emergence both within a simulated world and within the recursive human–AI process that constructs it. I direct the artistic inquiry while AI participates extensively in mathematical synthesis, software implementation, interpretation and documentation. The delegation of complexity is itself part of the medium.
