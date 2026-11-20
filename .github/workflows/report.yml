@@ -143,6 +143,7 @@ jobs:
             report/build/phase_art
             report/build/evidence
             report/build/layout-audit.json
+            report/build/experiment-figure-audit.json
             report/build/contact-sheet.jpg
             report/build/engineering
       - name: Archive verified report and native frame samples
