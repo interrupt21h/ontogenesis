@@ -14,7 +14,7 @@ manifest = json.loads((ROOT / "report/videos.json").read_text())
 for gen, artifact in sorted(manifest.items()):
     target = OUT / f"{gen}-{artifact}"
     metadata = target / "frames.json"
-    if metadata.exists() and all((target / f"{i}.jpg").is_file() for i in range(3)):
+    if metadata.exists() and json.loads(metadata.read_text()).get("native_resolution") and all((target / f"{i}.jpg").is_file() for i in range(3)):
         continue
     target.mkdir(exist_ok=True)
     try:
@@ -36,9 +36,9 @@ for gen, artifact in sorted(manifest.items()):
                 raise ValueError("Empty video")
             indices = [round((count-1)*p) for p in (.1,.5,1)]
             for i, index in enumerate(indices):
-                subprocess.run(["ffmpeg","-v","error","-y","-i",str(video),"-vf",f"select=eq(n\\,{index}),scale=960:-2","-frames:v","1","-q:v","2",str(target / f"{i}.jpg")],check=True)
+                subprocess.run(["ffmpeg","-v","error","-y","-i",str(video),"-vf",f"select=eq(n\\,{index}),null","-frames:v","1","-q:v","2",str(target / f"{i}.jpg")],check=True)
                 if not (target / f"{i}.jpg").is_file():
                     raise ValueError("Missing extracted frame")
-            metadata.write_text(json.dumps({"artifact":artifact,"count":count,"indices":indices,"rate":info["streams"][0]["avg_frame_rate"]}))
+            metadata.write_text(json.dumps({"native_resolution":True,"artifact":artifact,"count":count,"indices":indices,"rate":info["streams"][0]["avg_frame_rate"]}))
     except (OSError, ValueError, KeyError, subprocess.CalledProcessError, zipfile.BadZipFile) as exc:
         print(f"::warning::Generation {gen}: frames unavailable: {exc}")
