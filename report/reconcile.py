@@ -24,7 +24,7 @@ url=f"{base}/artifacts/{video['id']}"
 manifest=Path("report/videos.json")
 videos=json.loads(manifest.read_text())
 # Do not regress a generation to an older rerun.
-if int(videos.get(gen,0))>video["id"]: sys.exit(0)
+if int(videos.get(gen,0))>=video["id"]: sys.exit(0)
 with tempfile.TemporaryDirectory() as tmp:
     gh("run","download",run_id,"-n",diag["name"],"-D",tmp)
     files=list(Path(tmp).rglob("metrics.json"))
