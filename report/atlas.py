@@ -8,7 +8,8 @@ from matplotlib.colors import TwoSlopeNorm
 from matplotlib.patches import FancyArrowPatch
 
 ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/"docs/figures"
+OUT=ROOT/"report/build/atlas"
+OUT.mkdir(parents=True,exist_ok=True)
 plt.rcParams.update({"font.family":"DejaVu Sans","font.size":10,"axes.spines.top":False,"axes.spines.right":False,"axes.labelcolor":"#19334a","text.color":"#19334a","axes.titleweight":"bold","svg.fonttype":"path","figure.facecolor":"white"})
 def save(fig,n,title,note):
     fig.suptitle(f"ONTOGENESIS / {n:04d}   |   {title}",x=.06,ha="left",fontsize=15,fontweight="bold")
@@ -17,7 +18,7 @@ def save(fig,n,title,note):
     fig.savefig(OUT/f"{n:04d}-atlas.svg")
     plt.close(fig)
 
-u,v=np.meshgrid(np.linspace(0,1,201),np.linspace(0,.5,201))
+u,v=np.meshgrid(np.linspace(0,1,81),np.linspace(0,.5,81))
 f,k=.035,.062
 du=-u*v*v+f*(1-u)
 dv=u*v*v-(f+k)*v
