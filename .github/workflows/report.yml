@@ -51,6 +51,18 @@ jobs:
               python report/field_atlas.py "report/build/numerical/$gen/fields" report/build/atlas
             fi
           done
+      - name: Retrieve consolidation evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for pair in 0026:14651386328 0027:14662151055; do
+            gen=${pair%:*}
+            id=${pair#*:}
+            mkdir -p "report/build/evidence/$gen"
+            gh api "repos/${{ github.repository }}/actions/artifacts/$id/zip" > "/tmp/evidence-$gen.zip"
+            unzip -o "/tmp/evidence-$gen.zip" -d "report/build/evidence/$gen"
+          done
+          python report/consolidation_atlas.py
       - name: Validate report generator syntax
         run: python3 -m compileall -q report
       - name: Collect engineering atlas
@@ -65,6 +77,9 @@ jobs:
           test -s report/build/atlas/0024-field-evolution.pdf
           grep -q 'Evolution of the computational production framework' report/build/verified.txt
           for plate in repository-growth execution-timeline artifact-production workflow-topology; do test -s "report/build/engineering/$plate.pdf"; done
+          test -s report/build/atlas/0026-evidence.pdf
+          test -s report/build/atlas/0027-evidence.pdf
+          grep -q 'About the artist' report/build/verified.txt
           grep -q 'Generation 0024' report/build/verified.txt
           grep -q 'Generation 0001' report/build/verified.txt
           grep -q 'The genealogy of the investigation' report/build/verified.txt
@@ -92,6 +107,8 @@ jobs:
             report/build/mechanisms
             report/build/atlas
             report/build/cover.png
+            report/build/phase_art
+            report/build/evidence
             report/build/layout-audit.json
             report/build/contact-sheet.jpg
             report/build/engineering
