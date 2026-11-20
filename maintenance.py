@@ -6,6 +6,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 from field_archive import save_snapshot
+from report.temporal import events
 
 ARM='combined'
 assert ARM in ('baseline','cost','maintenance','combined')
@@ -310,6 +311,7 @@ class Tracker:
 
 
 def main():
+    fixed = os.environ.get("FIXED_OBSERVER","0")=="1"
     topology_selftest()
     a=np.zeros((4,)*4,dtype=bool)
     a[0,1,1,1]=a[-1,1,1,1]=True
@@ -347,6 +349,7 @@ def main():
     out=Path("gallery/0025")
     out.mkdir(parents=True,exist_ok=True)
     metrics=[]
+    peak=-1.0
     cumulative_maintenance=0.0
     last_maintenance=0.0
     tracker=Tracker()
@@ -382,9 +385,15 @@ def main():
             metrics[-1]['builder_mass']=float(builders.sum(dtype=np.float64))
             if step%120==0:
                 metrics[-1]['multiscale_topology']=multiscale_topology(m)
-            if step in (0,1200,2400,3600,STEPS):
+            if metrics[-1]["structure_active"] > peak:
+                peak=metrics[-1]["structure_active"]
+                save_snapshot(out/"peak-fields",step,STEPS,dict(u=u,v=v,w=w,q=q,e=e,m=m,pulse=pulse,recovery=recovery,trait=trait,xv=xv,xw=xw,gv=gv,gw=gw,identities=identities))
+            if step in (0,240,480,600,800,1200,2400,3600,STEPS):
                 save_snapshot(out/"fields",step,STEPS,dict(u=u,v=v,w=w,q=q,e=e,m=m,pulse=pulse,
                     recovery=recovery,trait=trait,xv=xv,xw=xw,gv=gv,gw=gw,identities=identities))
+            if fixed:
+                directory=out/"fixed";directory.mkdir(exist_ok=True)
+                render(v[0],w[0],e[0],m[0],pulse[0],allele[0],0,directory/f"{step:05d}.png")
             if ARM=='combined': observatory((v,w,e,m,pulse,allele),identities,tracker,step,slice_position,out/f"{step:05d}.png",metrics)
         if step==STEPS: break
         q+=.075*lap(q)+.025*(v-w-q)
@@ -472,6 +481,7 @@ def main():
         assert gv.min()>=-1e-6 and gw.min()>=-1e-6
     (out/"metrics.json").write_text(json.dumps(metrics,indent=2))
     (out/"lineages.json").write_text(json.dumps(dict(history=tracker.history,events=tracker.events),indent=2))
+    (out/"events.json").write_text(json.dumps(events(metrics),indent=2))
     print(json.dumps(metrics[-1],indent=2))
 
 if __name__=="__main__":
