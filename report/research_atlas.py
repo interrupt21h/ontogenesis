@@ -63,9 +63,9 @@ assert len(records)>=24
 # Dedicated heading band and equal-size cards; all connectors occupy gutters.
 fig,ax=plt.subplots(figsize=(10,11))
 fig.subplots_adjust(left=.025,right=.975,bottom=.035,top=.985)
-ax.axis("off"); ax.set(xlim=(0,12),ylim=(0,2.03*len(phases)+1))
 phases=[(1,3,"Pattern formation"),(4,7,"Transport and volume"),(8,11,"Environmental feedback"),(12,14,"Observation"),(15,17,"Heredity and ecology"),(18,20,"Structure and topology"),(21,24,"Construction and controls"),(25,25,"Structural maintenance"),(26, min(27,len(records)), "Consolidation")]
 if len(records)>27: phases.extend((g,min(g+3,len(records)),"Final experiments") for g in range(28,len(records)+1,4))
+ax.axis("off"); ax.set(xlim=(0,12),ylim=(0,2.03*len(phases)+1))
 short={3:"Symmetry\nbreaking",6:"Volumetric\nemergence",9:"Organization",10:"Communication",19:"Compartment\nformation",20:"Topological\ncomplexity",21:"Multiscale topology\npersistence",22:"Structural\nheredity",23:"Factorial niche\nconstruction controls",24:"Independent construction\nspecialization"}
 import textwrap
 for i,(lo,hi,theme) in enumerate(phases):
