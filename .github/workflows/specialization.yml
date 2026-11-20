@@ -1,12 +1,5 @@
 name: Generation 0024
 on:
-  push:
-    paths:
-      - specialization.py
-      - requirements.txt
-      - field_archive.py
-      - report/field_atlas.py
-      - .github/workflows/specialization.yml
   workflow_dispatch:
 permissions:
   contents: write
