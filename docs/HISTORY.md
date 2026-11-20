@@ -1329,7 +1329,7 @@ Report matrix mean, standard deviation, coefficient of variation, periodic forwa
 
 ## Generation 0027 — Structural statistics beyond fixed thresholds
 
-Status: Pending CI verification.
+Status: CI completed successfully; cross-run bitwise equivalence not established.
 
 Parent: G0026 baseline; seed 42, periodic lattice 24^4, 4800 steps, observations every 120 steps. Smoke test 12^4, 240 steps. No new physical mechanism. Retain the same integrator and all fixed-threshold statistics. Preserve the full observation history.
 
@@ -1341,3 +1341,7 @@ Compare checkpoint hashes to G0026 when the full result is available. No claim o
 
 [Source](../../structural_statistics.py) · [Workflow](../../.github/workflows/structural-statistics.yml).
 
+
+### Verified outcome
+
+[CI run 44799157187](https://github.com/interrupt21h/ontogenesis/actions/runs/44799157187) completed successfully at both scales. [Full-resolution artifact 14662151055](https://github.com/interrupt21h/ontogenesis/actions/runs/44799157187/artifacts/14662151055), revision `8d741da67cdd1e7df4db2f7246e1215f970168c6`, retains 41 observations. Final matrix mean 0.1470894561, standard deviation 0.0409239276, CV 0.278224753; adaptive threshold 0.14, coverage 58.21096%, binned separability 0.7152774. The radial shell [0.03125, 0.0625) contains 77.50962% of nonzero spectral energy, consistent with domain-scale variation. Fixed threshold 0.20 covers 10.5037736% (34845 cells), one fewer than G0026. Initial state hashes match G0026 but all 40 subsequent checkpoint hashes differ across separate runner executions. Endpoint mean differs by about 2.48e-8; bitwise equivalence is not established. CPU-dependent numerical dispatch is a possible explanation, not a demonstrated cause. A matched same-process headless/observer experiment is required to isolate the observer. No evidence of intrinsic length or functional phases is established.
