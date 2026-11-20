@@ -103,6 +103,20 @@ essay = essay.replace("The development cycle can be described in six stages.", "
 \end{tikzpicture}
 \end{center}"""),1)
 body.append(essay)
+engineering = (ROOT/"report/engineering.md").read_text()
+body.append(re.sub(r"(?m)^(#{1,2} .+)$",r"\1 {.unnumbered}",engineering))
+engineering_dir=out/"engineering"
+if (engineering_dir/"summary.md").exists():
+    body.append((engineering_dir/"summary.md").read_text())
+    for filename,heading,caption in [
+        ("repository-growth","Repository evolution","Tracked Python bytes and documented generations; not mathematical complexity."),
+        ("execution-timeline","Parallel execution chronology","Run envelopes clipped at the milestone; overlapping runs are not additive wall time."),
+        ("artifact-production","Artifact production and run states","Observable metadata at collection; missing or expired records may affect counts."),
+        ("workflow-topology","Declarative workflow topology","Edges derived from workflow YAML completion triggers at the report revision.")
+    ]:
+        body.append("## "+heading+" {.unnumbered}\n\n"+raw_latex(r"\begin{center}\includegraphics[width=\linewidth,height=.65\textheight,keepaspectratio]{engineering/"+filename+r".pdf}\end{center}")+"\n\n"+caption)
+else:
+    body.append("Engineering telemetry was not collected for this build; no quantitative measurements are inferred.")
 body.append("## Reading the atlas {.unnumbered}\n\nThe early generations explore pattern formation and competing chemical fields. Subsequent phases introduce transport, resources and environmental feedback, followed by four-dimensional observation, inherited variation and structural construction. The experimental plates show selected moments in playback; numerical plots and fixed-coordinate sections provide complementary evidence. Read the chapters as a sequence of evolving questions rather than as steps toward a predetermined endpoint.")
 body.append(research_plate("research-genealogy","The genealogy of the investigation","Each revision inherits or extends a computational model. Amber marks revisions concentrated on instruments or controls. This chronology is not a biological genealogy."))
 for n,title,record in records:
