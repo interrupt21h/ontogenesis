@@ -68,6 +68,7 @@ def research_plate(name,heading,caption):
 
 subprocess.run([os.sys.executable, str(ROOT / 'report/atlas.py')],check=True)
 subprocess.run([os.sys.executable,str(ROOT/'report/research_atlas.py')],check=True)
+subprocess.run([os.sys.executable,str(ROOT/'report/phase_art.py')],check=True)
 body = [re.sub(r"(?m)^## (.+)$",r"## \1 {.unnumbered}",intro.replace("# Vision and method","# Vision and method {.unnumbered}",1))]
 essay = (ROOT / "docs/RECURSIVE_CREATION.md").read_text()
 body.append(re.sub(r"(?m)^(#{1,2} .+)$", r"\1 {.unnumbered}", essay))
@@ -75,30 +76,11 @@ body.append(research_plate("research-genealogy","The genealogy of the investigat
 for n,title,record in records:
     if int(n) in groups:
         phase_end=next((k-1 for k in groups if k>int(n)),len(records))
-        manifest=json.loads((ROOT/"report/videos.json").read_text())
         phase_index=list(groups).index(int(n))
         roman=("I","II","III","IV","V","VI","VII")[phase_index]
-        images=[]
-        for g in range(int(n),phase_end+1):
-            key=f"{g:04d}"
-            p=out/"frames"/f"{key}-{manifest.get(key)}"/"2.jpg"
-            if p.exists():
-                images.append((key,str(p.relative_to(out)),records[g-1][1]))
-        # A full-page dark editorial opening, with independent conceptual and empirical panels.
-        concepts={1:("LOCAL REACTIONS", "Spatial differentiation", "Competition for substrate"),4:("CONSERVATIVE FLUX", "Transport across faces", "Feedback from chemistry"),8:("LOCAL ENVIRONMENT", "Energy and matrix", "Excitation and memory"),12:("SPATIAL SECTIONS", "Fourth-axis sampling", "Identity across observations"),15:("INHERITED VARIATION", "Mutation and selection", "Metabolic exchange"),18:("STRUCTURAL GEOMETRY", "Selective permeability", "Periodic connectivity"),21:("NICHE CONSTRUCTION", "Inherited construction", "Matched experimental controls")}
-        tag,left,right=concepts[int(n)]
-        concept=r"\begin{tikzpicture}[x=1cm,y=1cm]\draw[phaseaccent,line width=1.5pt] (0,0) -- (12,0);"
-        for j,label in enumerate((left,right)):
-            x=3+6*j
-            concept+=r"\node[draw=phaseaccent,rounded corners=3pt,minimum width=5.5cm,minimum height=1.2cm,text=white,font=\sffamily\small,align=center] at ("+str(x)+r",0) {"+label+r"};"
-        concept+=r"\end{tikzpicture}"
-        rows=[]
-        for i in range(0,len(images),2):
-            tiles=[]
-            for key,path,title in images[i:i+2]:
-                tiles.append(r"\begin{minipage}[t]{.48\linewidth}\centering\includegraphics[width=\linewidth,height=.175\textheight,keepaspectratio]{"+path+r"}\par{\sffamily\small\bfseries\color{white} "+key+r" / "+title+r"}\end{minipage}")
-            rows.append(r"\noindent\hfill"+r"\hfill".join(tiles)+r"\hfill\null\par\medskip")
-        body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{phase"+roman+r"}\pagecolor{phaseblack}\color{white}\thispagestyle{empty}\refstepcounter{part}\addcontentsline{toc}{part}{\thepart\quad "+groups[int(n)]+r"}\PhaseBand{"+roman+"}{"+n+"--"+f"{phase_end:04d}"+r"}{\sffamily\bfseries\fontsize{32}{36}\selectfont "+groups[int(n)]+r"\par}\medskip{\sffamily\large "+phase_text[int(n)]+r"\par}\vfill{\sffamily\bfseries\small "+tag+r" / CONCEPTUAL RELATIONSHIP\par}\medskip\noindent\hfill"+concept+r"\hfill\null\par\vfill"+"\n".join(rows)+r"{\sffamily\footnotesize Sampled experimental frames.\par}\clearpage\nopagecolor\color{black}"))
+        subtitles=["Pattern and competition","Motion and dimensionality","Resources and feedback","Sections and persistence","Variation and exchange","Interfaces and connectivity","Construction and selection"]
+        title_style=r"\raggedright\sffamily\bfseries\fontsize{29}{34}\selectfont\hyphenpenalty=10000\exhyphenpenalty=10000 "
+        body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{phase"+roman+r"}\pagecolor{phaseblack}\color{white}\thispagestyle{empty}\refstepcounter{part}\addcontentsline{toc}{part}{\thepart\quad "+groups[int(n)]+r"}\PhaseBand{"+roman+"}{"+n+"--"+f"{phase_end:04d}"+r"}{\sffamily\large "+subtitles[phase_index]+r"\par}\medskip{"+title_style+groups[int(n)]+r"\par}\bigskip{\raggedright\sffamily\large "+phase_text[int(n)]+r"\par}\bigskip\noindent\includegraphics[width=\linewidth]{phase_art/"+str(phase_index+1)+r".png}\par\smallskip{\sffamily\footnotesize Conceptual artwork --- not experimental data.\par}\vfill{\color{phaseaccent}\hrule height 2pt}\medskip{\raggedright\sffamily\small "+r"\quad / \quad ".join(key+" "+name for key,name,_ in records[int(n)-1:phase_end])+r"\par}\clearpage\nopagecolor\color{black}"))
     record = re.sub(r"(?ms)^### Reproduction and provenance\n(.*?)(?=^### |\Z)", lambda m: "\n\n**Experiment sources:** " + " · ".join(line.strip()[2:] for line in m[1].splitlines() if line.strip().startswith("- ") and "Run from repository" not in line) + "\n\n", record)
     record = re.sub(r"(?m)^[-*] Run from repository root:.*\n?", "", record)
     # Only normalize plain prose, never existing math or code.
@@ -120,7 +102,8 @@ for n,title,record in records:
         prose=next((line.strip() for line in result[1].splitlines() if line.strip() and not line.startswith(("|","-","$","[","#",chr(96)))),"")
         if prose and len(prose)<650 and not prose.lower().startswith("pending"):
             finding=raw_latex(r"\noindent{\color{phaseaccent}\rule{\linewidth}{1.2pt}}\par{\sffamily\bfseries\small\color{phaseaccent} EXPERIMENTAL OBSERVATION\par}\smallskip")+prose+"\n\n"+raw_latex(r"\noindent{\color{phaseaccent}\rule{\linewidth}{.5pt}}\par")
-            chapter=finding+chapter
+            # Keep the original observation in its scientific context; avoid duplicating prose.
+            pass
     if analytical:
         anchor=re.search(r"(?m)^## Interpretation and limitations",chapter)
         if anchor:
