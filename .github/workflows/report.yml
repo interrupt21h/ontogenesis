@@ -16,7 +16,7 @@ concurrency:
 jobs:
   report:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v5
       - name: Install LaTeX and Pandoc
@@ -27,7 +27,7 @@ jobs:
         with:
           path: report/build/frames
           key: report-frames-v2-${{ hashFiles('report/videos.json') }}
-          restore-keys: report-frames-v1-
+          restore-keys: report-frames-v2-
       - name: Extract verified animation frames
         env:
           GH_TOKEN: ${{ github.token }}
@@ -36,12 +36,17 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install numpy==2.2.6 matplotlib==3.10.3 pymupdf==1.26.0
+      - name: Validate report generator syntax
+        run: python3 -m compileall -q report
       - run: python3 report/build.py
       - name: Verify PDF
         run: |
           pdfinfo report/build/ontogenesis.pdf
           pdftotext report/build/ontogenesis.pdf report/build/verified.txt
           grep -q 'Generation 0001' report/build/verified.txt
+          grep -q 'The genealogy of the investigation' report/build/verified.txt
+          grep -q 'Comparative experimental evidence' report/build/verified.txt
+          for plate in spatial-sections genetic-architecture research-genealogy comparative-endpoints threshold-profile; do test -s "report/build/atlas/$plate.pdf"; done
       - name: Audit page composition
         run: python3 report/audit.py
       - name: Upload standalone PDF
