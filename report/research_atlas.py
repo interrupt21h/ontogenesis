@@ -60,19 +60,30 @@ save(fig,"genetic-architecture")
 history=(ROOT/"docs/HISTORY.md").read_text()
 records=re.findall(r"^## Generation (\d{4}) — (.+)$",history,re.M)
 assert len(records)>=24
-fig,ax=plt.subplots(figsize=(9,8)); ax.axis("off"); ax.set(xlim=(0,12),ylim=(0,12))
+# Dedicated heading band and equal-size cards; all connectors occupy gutters.
+fig,ax=plt.subplots(figsize=(8,9.3))
+fig.subplots_adjust(left=.025,right=.975,bottom=.035,top=.985)
+ax.axis("off"); ax.set(xlim=(0,12),ylim=(0,15.2))
 phases=[(1,3,"Pattern formation"),(4,7,"Transport and volume"),(8,11,"Environmental feedback"),(12,14,"Observation"),(15,17,"Heredity and ecology"),(18,20,"Structure and topology"),(21,24,"Construction and controls")]
+short={3:"Symmetry\\nbreaking",6:"Volumetric\\nemergence",9:"Organization",10:"Communication",19:"Compartment\\nformation",20:"Topological\\ncomplexity",21:"Multiscale topology\\npersistence",22:"Structural\\nheredity",23:"Factorial niche\\nconstruction controls",24:"Independent construction\\nspecialization"}
+import textwrap
 for i,(lo,hi,theme) in enumerate(phases):
-    y=10.8-i*1.5
-    ax.text(.1,y+.35,theme,weight="bold",fontsize=10)
+    y=14.85-i*2.03
+    ax.text(.12,y,f"{i+1:02d}  /  {theme.upper()}",weight="bold",fontsize=10,va="top",color=INK)
     for j,g in enumerate(range(lo,hi+1)):
-        x=3.45+j*2.05
-        title=records[g-1][1]
-        import textwrap
-        box(ax,x,y-.12,1.8,.95,f"{g:04d}\n"+textwrap.fill(title,18),TEAL if g not in (13,14,19,20,21,23) else GOLD)
-        if j: arrow(ax,(x-.23,y+.35),(x-.03,y+.35))
-    if i<6: arrow(ax,(2.8,y+.15),(2.8,y-1.0),BLUE)
-ax.text(.1,.15,"Sequence of model revisions; amber identifies observation or control-focused revisions.",fontsize=9)
+        x=.15+j*3.0
+        color=GOLD if g in (13,14,19,20,21,23) else TEAL
+        bottom=y-1.63
+        ax.add_patch(FancyBboxPatch((x,bottom),2.65,1.19,boxstyle="round,pad=.015,rounding_size=.07",facecolor=color+"10",edgecolor=color,lw=.9))
+        ax.text(x+.13,bottom+.93,f"{g:04d}",fontsize=9,weight="bold",color=color,va="center")
+        title=short.get(g,textwrap.fill(records[g-1][1],22,break_long_words=False))
+        ax.text(x+1.325,bottom+.43,title,ha="center",va="center",fontsize=8.5,linespacing=1.12)
+        if j: 
+            ax.add_patch(FancyArrowPatch((x-.30,bottom+.59),(x-.06,bottom+.59),arrowstyle="-|>",mutation_scale=9,color=TEAL,lw=1,shrinkA=0,shrinkB=0))
+    if i<6: ax.plot([.12,11.8],[y-1.83]*2,color="#dce4e8",lw=.65)
+ax.text(.15,.48,"MODEL REVISION",color=TEAL,weight="bold",fontsize=9)
+ax.text(4.1,.48,"OBSERVATION / CONTROL",color=GOLD,weight="bold",fontsize=9)
+ax.text(.15,.10,"Read left to right, then top to bottom. Labels are abbreviated where necessary.",fontsize=8)
 save(fig,"research-genealogy")
 # Exact recorded endpoint values, with no inferred missing data.
 fig,axes=plt.subplots(2,1,figsize=(9,6.7),gridspec_kw={"height_ratios":[1,1.2]})
