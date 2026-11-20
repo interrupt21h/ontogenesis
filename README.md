@@ -10,9 +10,9 @@ Authentication required; artifacts expire after 30 days.
 
 ## Scientific and engineering monograph
 
-**[Current PDF — latest successful report build](https://github.com/interrupt21h/ontogenesis/actions/workflows/report.yml?query=is%3Asuccess)** · [Report source](report/) · [All report builds](https://github.com/interrupt21h/ontogenesis/actions/workflows/report.yml)
+**[Download current verified PDF](https://github.com/interrupt21h/ontogenesis/actions/runs/44654319303/artifacts/14593095794)** · [Latest successful report build](https://github.com/interrupt21h/ontogenesis/actions/workflows/report.yml?query=is%3Asuccess)** · [Report source](report/) · [All report builds](https://github.com/interrupt21h/ontogenesis/actions/workflows/report.yml)
 
-Open the newest successful run and select the standalone `ontogenesis.pdf` artifact. The independent LaTeX pipeline automatically rebuilds on documentation changes; the generated TeX is also archived separately. To reproduce locally, install Pandoc, latexmk, TeX Live (latex-extra, pictures, fonts-recommended) and run `python3 report/build.py`.
+Open the newest successful run and select the standalone `ontogenesis.pdf` artifact. The report samples early, middle and final frames from indexed MP4 artifacts when available. The independent LaTeX pipeline automatically rebuilds on documentation changes; the generated TeX is also archived separately. To reproduce locally, install Pandoc, latexmk, TeX Live (latex-extra, pictures, fonts-recommended) and run `python3 report/build.py`.
 
 ## Experimental history
 
