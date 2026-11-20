@@ -62,14 +62,8 @@ def normalize(a, meta, field, contrast=1.0):
     return np.clip(scaled ** contrast, 0, 1)
 
 
-def composite(volume, meta, depth):
-    """Depth-weighted (z) luminosity from a fixed-omega observed 3D volume."""
-    n = volume.shape[-1]
-    z = np.arange(n, dtype=np.float32)
-    distance = np.minimum((z-depth) % n, (depth-z) % n)
-    weights = np.exp(-.5*(distance / max(1.5, n/5.5))**2)
-    weights /= weights.sum()
-    scene = np.tensordot(weights, volume, axes=(0, 1))
+def composite_2d(scene, meta):
+    """Artistic field map of one authentic 2D slice (or documented projection)."""
     # scene indices: matrix, V, W, pulse, energy.
     matrix = normalize(scene[0], meta, "matrix", .78)
     v = normalize(scene[1], meta, "species_v", .68)
@@ -90,6 +84,17 @@ def composite(volume, meta, depth):
     return Image.fromarray(np.uint8(np.round(255*rgb)), "RGB")
 
 
+def composite(volume, meta, depth):
+    """Gaussian depth composite across the observed z axis (not a true slice)."""
+    n = volume.shape[-1]
+    z = np.arange(n, dtype=np.float32)
+    distance = np.minimum((z-depth) % n, (depth-z) % n)
+    weights = np.exp(-.5*(distance / max(1.5, n/5.5))**2)
+    weights /= weights.sum()
+    scene = np.tensordot(weights, volume, axes=(0, 1))
+    return composite_2d(scene, meta)
+
+
 def camera_frame(lowres, shape, progress):
     w,h = shape
     # Bicubic is a DISPLAY reconstruction of measured lattice cells.
@@ -105,6 +110,101 @@ def camera_frame(lowres, shape, progress):
     # A low-energy glow reveals chemical interfaces rather than masking them.
     glow=scene.filter(ImageFilter.GaussianBlur(max(3, w//70)))
     return Image.blend(glow,scene,.76)
+
+
+def voxel_cloud(volume, shape, progress):
+    """Rotating projected 3D voxel glyphs, all sourced from observed lattice values.
+
+    Camera rotation and adaptive intensity exposure are *presentation*, not
+    field transport. Optional fine edges join genuinely adjacent grid voxels.
+    """
+    width,height=shape
+    n=volume.shape[-1]
+    grid=np.indices((n,n,n),dtype=np.float32).reshape(3,-1).T
+    grid-=(n-1)/2.0
+    z,y,x=grid.T
+    phi=2*math.pi*progress*1.45+.3
+    theta=.46+.12*math.sin(2*math.pi*progress)
+    xr=x*math.cos(phi)-z*math.sin(phi)
+    zr=x*math.sin(phi)+z*math.cos(phi)
+    yr=y*math.cos(theta)-zr*math.sin(theta)
+    depth=y*math.sin(theta)+zr*math.cos(theta)
+    perspective=2.0/(2.2-depth/n)
+    sx=width/2+xr*(width/n)*.67*perspective
+    sy=height/2+yr*(height/n)*.78*perspective
+
+    strength=np.zeros(n**3,dtype=np.float32)
+    rgb=np.zeros((n**3,3),dtype=np.float32)
+    colors=((1,.70,.33),(1,.31,.72),(.27,.91,.85),(.46,.59,1.))
+    matrix_strength=None
+    for channel,amplitude,weight,color in (
+        (0,.004,.76,colors[0]),
+        (1,.02,.50,colors[1]),
+        (2,.02,.52,colors[2]),
+        (3,.08,.58,colors[3])
+    ):
+        raw=volume[channel].ravel()
+        low,high=np.percentile(raw,(54,98.5))
+        exposure=np.clip((raw-low)/max(high-low,1e-9),0,1)
+        # Do not magnify numerical extinction into fictitious chemistry.
+        exposure*=min(1.,float(np.max(raw))/amplitude)
+        exposure*=weight
+        rgb+=exposure[:,None]*np.asarray(color,dtype=np.float32)
+        strength+=exposure
+        if channel==0:
+            matrix_strength=exposure
+    # Only a *measured* resource deficit may generate a red scar.
+    deficit=np.clip((1-volume[4].ravel()-.003)/.12,0,1)*.6
+    strength+=deficit
+    rgb+=deficit[:,None]*np.asarray((1.,.13,.09),dtype=np.float32)
+    significant=max(float(np.percentile(strength,61)),.07)
+    pixels=np.where(strength>significant)[0]
+    canvas=Image.new("RGB",(width,height),INK)
+    if len(pixels)==0:
+        return canvas
+    glow=Image.new("RGBA",(width,height),(0,0,0,0))
+    fine=Image.new("RGBA",(width,height),(0,0,0,0))
+    g=ImageDraw.Draw(glow,"RGBA")
+    d=ImageDraw.Draw(fine,"RGBA")
+
+    # A restrained mesh is a visualization of *grid-neighbor adjacency*,
+    # not biological fibers or an inferred transport network.
+    structural=(matrix_strength.reshape(n,n,n)>.45)
+    if np.any(structural):
+        lines=Image.new("RGBA",(width,height),(0,0,0,0))
+        pen=ImageDraw.Draw(lines,"RGBA")
+        for axis in range(3):
+            a=structural.copy()
+            b=np.roll(structural,-1,axis=axis)
+            a&=b
+            ix=np.where(a)
+            if not ix[0].size:
+                continue
+            src=np.ravel_multi_index(ix,(n,n,n))
+            neighbor=list(ix)
+            neighbor[axis]=(neighbor[axis]+1)%n
+            dst=np.ravel_multi_index(tuple(neighbor),(n,n,n))
+            for u,v in zip(src[::3],dst[::3]):
+                if abs(sx[u]-sx[v])>width*.16 or abs(sy[u]-sy[v])>height*.16:
+                    continue
+                pen.line((float(sx[u]),float(sy[u]),float(sx[v]),float(sy[v])),
+                         fill=(196,136,79,35),width=1)
+        canvas=Image.alpha_composite(canvas.convert("RGBA"),lines).convert("RGB")
+
+    # Painter's algorithm for correctly layered luminous voxel glyphs.
+    for k in pixels[np.argsort(depth[pixels])]:
+        power=float(np.clip(strength[k],0,2))
+        shade=np.clip(rgb[k]/max(strength[k],.08),0,1)
+        color=tuple(int(c*255) for c in shade)
+        xx,yy=float(sx[k]),float(sy[k])
+        size=(1.5+1.3*power)*float(perspective[k])
+        g.ellipse((xx-size*3,yy-size*3,xx+size*3,yy+size*3),
+                  fill=color+(min(180,int(20+38*power)),))
+        d.ellipse((xx-size,yy-size,xx+size,yy+size),
+                  fill=color+(min(255,int(65+90*power)),))
+    cloud=Image.alpha_composite(canvas.convert("RGBA"),
+                                glow.filter(ImageFilter.GaussianBlur(max(3,width//90))))
+    return Image.alpha_composite(cloud,fine).convert("RGB")
 
 
 def phase(step, event, total):
@@ -147,17 +247,21 @@ def draw_movie_frame(volume, meta, *, step, frame_number, total_frames,
     margin=int(width*.036)
     hw=hero_w-margin-12
     hh=world_h-8
-    hero=camera_frame(composite(volume,meta,depth),(hw,hh),frac)
+    fog=camera_frame(composite(volume,meta,depth),(hw,hh),frac)
+    cloud=voxel_cloud(volume,(hw,hh),frac)
+    # Numeric fields determine both layers; the cloud emphasizes 3D spatial
+    # structure and makes camera motion distinct from scalar-field evolution.
+    hero=Image.blend(fog,cloud,.87)
     image.paste(hero,(margin,top))
     d=ImageDraw.Draw(image)
     d.rounded_rectangle((margin,top,margin+hw,top+hh),radius=6,
                         outline=(54,106,127),width=2)
-    d.text((margin+18,top+16),"DEPTH-COMPOSITE   /   FIXED ω",
+    d.text((margin+18,top+16),"3D VOXEL FIELD  /  FIXED ω  /  ROTATING CAMERA",
            font=font(max(10,int(height*.019)),bold=True),fill=WHITE)
 
     # The inset shows a real z section from the same recorded omega hyperplane.
     idx=int(round(depth))%n
-    inset=composite(volume,meta,float(idx))
+    inset=composite_2d(volume[:,idx,:,:],meta)
     inset_size=min(int(side_w*.72),int(world_h*.43))
     inset=inset.resize((inset_size,inset_size),Image.Resampling.BICUBIC)
     inset_x=hero_w+int(side_w*.12)
@@ -217,7 +321,7 @@ def render(archive, metadata, movie, poster, *, seconds=60, fps=24,
         "-pix_fmt","yuv420p","-movflags","+faststart",str(out)
     ]
     written=set()
-    caption="RECORDED NUMERICAL VOLUMES  /  SPATIAL RECONSTRUCTION + VISUAL TEMPORAL BLENDING"
+    caption="OBSERVED VOXELS  /  ROTATING PROJECTION + VISUAL TEMPORAL BLENDING (NOT EXTRA SIMULATION STEPS)"
     proc=subprocess.Popen(ffmpeg,stdin=subprocess.PIPE)
     try:
         for i in range(total):

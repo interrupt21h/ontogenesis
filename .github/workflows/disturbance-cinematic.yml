@@ -32,6 +32,10 @@ jobs:
           pip install numpy==2.2.6 pillow==11.2.1
           sudo apt-get update
           sudo apt-get install -y ffmpeg fonts-dejavu-core
+      - name: Validate code and rendering imports
+        run: |
+          python -m compileall -q consolidation.py disturbance_cinematic.py disturbance_cinematic_render.py
+          python -c 'import disturbance_cinematic,disturbance_cinematic_render; print("Cinematic modules import cleanly")'
       - name: Capture the verified low-budget artistic universe
         run: |
           /usr/bin/time -v python -u disturbance_cinematic.py --n 12 --steps 420 --shock-step 280 --sample-every 10 --out cinematic-preview.npz --metadata cinematic-preview.json
