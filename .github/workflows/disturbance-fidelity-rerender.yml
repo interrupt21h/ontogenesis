@@ -1,0 +1,55 @@
+name: G0028 fidelity render-only reprocessing
+on:
+  workflow_dispatch:
+    inputs:
+      edition:
+        description: 'Which verified numerical archive to rerender'
+        type: choice
+        required: true
+        options: [preview, full]
+        default: preview
+      seconds:
+        description: 'Length of the cinematic video (6-180 sec)'
+        type: number
+        default: 60
+permissions:
+  contents: read
+jobs:
+  rerender:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install numpy==2.2.6 scipy==1.15.3 pillow==11.2.1
+      - run: |
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! test -f /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf; then
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg fonts-dejavu-core
+          fi
+      - name: Retrieve preserved numerical archive without simulation
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EDITION: ${{ inputs.edition }}
+        run: |
+          mkdir -p input
+          gh release download atlas-media -p "cinematic-fidelity-$EDITION.npz" -p "cinematic-fidelity-$EDITION.json" -D input
+      - name: Render with volume rays and verify decoding
+        env:
+          EDITION: ${{ inputs.edition }}
+          SECONDS: ${{ inputs.seconds }}
+        run: |
+          if [ "$EDITION" = full ]; then WIDTH=1280; HEIGHT=720; RAYS=96; else WIDTH=960; HEIGHT=540; RAYS=56; fi
+          python -u disturbance_fidelity_render.py --input "input/cinematic-fidelity-$EDITION.npz" --metadata "input/cinematic-fidelity-$EDITION.json" --movie ontogenesis-0028-fidelity-rerender.mp4 --poster ontogenesis-0028-fidelity-rerender.png --seconds "$SECONDS" --fps 24 --width "$WIDTH" --height "$HEIGHT" --ray-samples "$RAYS"
+          ffmpeg -v error -xerror -i ontogenesis-0028-fidelity-rerender.mp4 -f null -
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0028-fidelity-rendered-${{ inputs.edition }}
+          path: |
+            ontogenesis-0028-fidelity-rerender.mp4
+            ontogenesis-0028-fidelity-rerender.png
+            ontogenesis-0028-fidelity-rerender.render.json
+          retention-days: 30
+          if-no-files-found: error
