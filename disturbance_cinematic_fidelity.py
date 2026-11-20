@@ -44,14 +44,14 @@ def create_fidelity_archive(out, metadata, *, seed=42, n=12, steps=320,
     event=steps*2//3 if shock_step is None else shock_step
     if not 2 <= event <= steps-2:
         raise ValueError("Shock step outside valid numerical range")
-    schedule=sorted(samples_for(steps,event,sample_every))
+    dense_steps=sorted(set([0,steps,event-1,event,event+1,steps//4,
+                            steps//2,3*steps//4]))
+    schedule=sorted(samples_for(steps,event,sample_every) | set(dense_steps))
     if len(schedule)>1700:
         raise ValueError("More than 1700 samples; increase cadence")
     omega_indices=np.arange(omega_planes,dtype=np.int32)*n//omega_planes
     if len(set(omega_indices))!=len(omega_indices):
         raise ValueError("Omega planes not distinct")
-    dense_steps=sorted(set([0,steps,event-1,event,event+1,steps//4,
-                            steps//2,3*steps//4]))
     sample_shape=(len(schedule),omega_planes,len(CHANNELS),n,n,n)
     # Keep an explicit budget because high temporal and omega coverage is
     # multiplicative in N^3 and could overwhelm a GitHub-hosted runner.
