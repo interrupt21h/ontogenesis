@@ -1,0 +1,28 @@
+name: Evolution film
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: evolution-film
+  cancel-in-progress: false
+jobs:
+  film:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v5
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-dejavu-core
+      - run: python3 report/film.py
+      - uses: actions/upload-artifact@v7
+        with:
+          path: report/build/film/ontogenesis-evolution.mp4
+          archive: false
+          if-no-files-found: error
+      - name: Publish film and preserve original source videos
+        run: |
+          gh release upload atlas-media report/build/film/video-*.mp4 --clobber
+          gh release upload atlas-media report/build/film/ontogenesis-evolution.mp4 report/build/film/film-provenance.json --clobber
