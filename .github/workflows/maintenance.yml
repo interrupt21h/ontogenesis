@@ -40,6 +40,14 @@ jobs:
         run: |
           python report/temporal.py gallery/0025/metrics.json gallery/0025/evolution.mp4 gallery/0025/temporal
           ffmpeg -v error -y -framerate 24 -pattern_type glob -i "gallery/0025/fixed/*.png" -c:v libx264 -pix_fmt yuv420p -movflags +faststart gallery/0025/fixed.mp4
+      - name: Frozen and matched spatial views
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/parent-state
+          gh release download atlas-media -p field-state-0024.tar.gz -D /tmp
+          tar -xzf /tmp/field-state-0024.tar.gz -C /tmp/parent-state
+          python report/spatial.py gallery/0025/fields gallery/0025/temporal --parent /tmp/parent-state/fields
       - uses: actions/upload-artifact@v7
         with:
           name: generation-0025-observation
