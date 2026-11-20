@@ -800,6 +800,53 @@ Retain 1,201 frames at 24 fps, target 50.042 seconds, 720p standalone MP4. Show 
 
 [Successful run](https://github.com/interrupt21h/ontogenesis/actions/runs/44651857629), [MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44651857629/artifacts/14592383068). Final Euler characteristic 0; cell counts [56148, 200178, 266887, 157706, 34849]; two structural components, one complement component, zero secondary complement candidates, 856 lineage events, entropy 1.572855 bits. Analytic self-tests passed.
 
+<!-- AUTO-CI-BEGIN -->
+
+### Automated CI verification
+
+[Successful run](https://github.com/interrupt21h/ontogenesis/actions/runs/44779036858) · [Standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44779036858/artifacts/14654342940) · [Diagnostics](https://github.com/interrupt21h/ontogenesis/actions/runs/44779036858/artifacts/14654268063). Source revision: `47b738a06c6e0cc5f7ae233b0610b5e3d4db716d`.
+
+| Final metric | Value |
+|---|---:|
+| step | 4800 |
+| slice position | 0 |
+| v mean | 0.0123707273 |
+| w mean | 0.182805681 |
+| v active | 0.0361237703 |
+| w active | 0.682785976 |
+| feedback rms | 0.185013875 |
+| energy mean | 0.893727368 |
+| energy min | 0.852654196 |
+| energy depleted | 0 |
+| structure mean | 0.147089481 |
+| structure active | 0.10504075 |
+| signal mean | 0.357744769 |
+| signal active | 0.345549407 |
+| recovery mean | 0.427524716 |
+| trait mean | 0.392482912 |
+| trait std | 0.0578903336 |
+| trait min | 0.274739921 |
+| trait max | 0.649444764 |
+| structure jaccard | 0.942028164 |
+| boundary faces | 36620 |
+| boundary per cell | 1.0507891 |
+| metabolite v mean | 0.0075571903 |
+| metabolite w mean | 0.118427972 |
+| metabolite overlap | 0.00464397287 |
+| genotype entropy | 1.57285508 |
+| structure components | 2 |
+| largest structure | 30576 |
+| oldest entity | 1500 |
+| lineage events | 856 |
+| cavity candidates | 0 |
+| cavity fraction | 0 |
+| largest cavity | 0 |
+| complement components | 1 |
+| euler characteristic | 0 |
+
+<!-- AUTO-CI-END -->
+
+
 ## Generation 0021 — Multiscale topological persistence
 
 Status: CI verified.
