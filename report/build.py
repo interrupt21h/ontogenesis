@@ -113,6 +113,12 @@ for n,title,record in records:
     else:
         analytical=""
     chapter=convert(re.sub(r"^### ","## ",record,flags=re.M))
+    result=re.search(r"(?ms)^## (?:Visualization and observed results|Verified outcome|Verified CI outcome|Verified factorial outcome)\n\n?(.*?)(?=^## |\Z)",chapter)
+    if result:
+        prose=next((line.strip() for line in result[1].splitlines() if line.strip() and not line.startswith(("|","-","$","[","#",chr(96)))),"")
+        if prose and len(prose)<650 and not prose.lower().startswith("pending"):
+            finding=raw_latex(r"\noindent{\color{phaseaccent}\rule{\linewidth}{1.2pt}}\par{\sffamily\bfseries\small\color{phaseaccent} EXPERIMENTAL OBSERVATION\par}\smallskip")+prose+"\n\n"+raw_latex(r"\noindent{\color{phaseaccent}\rule{\linewidth}{.5pt}}\par")
+            chapter=finding+chapter
     if analytical:
         anchor=re.search(r"(?m)^## Interpretation and limitations",chapter)
         if anchor:
@@ -144,6 +150,7 @@ for n,title,record in records:
             ("field-metrics","Measured developmental trajectories","Global coverage and allele frequencies independently recomputed from five archived numerical states. Connecting lines guide the eye between samples.")]:
             body.append(research_plate("0024-"+suffix,heading,caption))
     body.append(frame_section(n))
+body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontogreen}"))
 body.append((ROOT/"report/synthesis.md").read_text().replace("## What the experiments establish","## What the experiments establish {.unnumbered}").replace("## The limits of observation","## The limits of observation {.unnumbered}").replace("## Continuing the inquiry","## Continuing the inquiry {.unnumbered}"))
 body.append(research_plate("comparative-endpoints","Comparative experimental evidence","Upper: descriptive historical endpoints, not a controlled contrast. Lower: four matched-seed G0023 arms; the cost treatment bundles two penalties. All matrix values use threshold 0.20."))
 body.append("## Provenance {.unnumbered}\n\nSource revision: `"+revision+"`. The source revision identifies the published model and experimental records. Numerical results refer to the configurations described in each chapter. Analytical diagrams describe model relationships; simulation views depict sampled numerical states.")
