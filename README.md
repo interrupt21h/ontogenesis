@@ -8,9 +8,9 @@ Ontogenesis investigates emergence both within a simulated world and within the 
 
 **[Recursive creation: human intention, machine intelligence and computational emergence](docs/RECURSIVE_CREATION.md)** — an essay on the artistic method, distributed authorship and the relationship between simulated evolution and creative development.
 
-## Latest verified animation — Generation 0023: Factorial niche controls
+## Latest verified animation — Generation 0024: Independent construction specialization
 
-[Download standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44687054986/artifacts/14609910431) (2.03 MiB) · [Workflow](https://github.com/interrupt21h/ontogenesis/actions/workflows/niche.yml)
+[Download standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44702101025/artifacts/14621170429) (2.37 MiB) · [Workflow](https://github.com/interrupt21h/ontogenesis/actions/workflows/specialization.yml)
 
 Authentication required; artifacts expire after 30 days.
 
@@ -50,9 +50,8 @@ Ontogenesis investigates emergence in continuous, periodic reaction–diffusion 
 | 0020 | [Topological complexity](docs/generations/0020.md) | [Python](topology.py) | [Runs](.github/workflows/topology.yml) · Verified |
 | 0021 | [Multiscale topological persistence](docs/generations/0021.md) | [Python](persistence.py) | [Runs](.github/workflows/persistence.yml) · Verified |
 | 0022 | [Structural heredity](docs/generations/0022.md) | [Python](niche.py) | [Runs](.github/workflows/niche.yml) · Verified |
-| 0023 | [Factorial niche controls](docs/generations/0023.md) | [Python](controls.py) | [Runs](.github/workflows/controls.yml) · Pending verification |
-| 0024 | [Independent construction specialization](docs/generations/0024.md) | [Python](specialization.py) | [Runs](.github/workflows/specialization.yml) · Pending verification |
-
+| 0023 | [Factorial niche controls](docs/generations/0023.md) | [Python](controls.py) | [Runs](.github/workflows/controls.yml) · Verified |
+| 0024 | [Independent construction specialization](docs/generations/0024.md) | [Python](specialization.py) | [Runs](.github/workflows/specialization.yml) · Verified |
 | 0025 | [Energy-funded structural maintenance](docs/generations/0025.md) | [Python](maintenance.py) | [Runs](.github/workflows/maintenance.yml) · Pending verification |
 
 ## Reproduce locally
