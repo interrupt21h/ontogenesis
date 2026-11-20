@@ -123,7 +123,10 @@ def main():
     for i,g in enumerate(workflows):
         y=3.45-i*1.50
         label=g["name"]
-        if len(label)>27:label=label[:26]+"…"
+        if label=="Reconcile experiment publication":
+            label="Publication reconciliation"
+        elif len(label)>27:
+            label=label[:26]+"…"
         count=len(set(g["upstream"]))
         node(6.6,y,5.05,1.12,label,
              f"{count} declared workflow_run sources","#f4f5fb","#698cb4")

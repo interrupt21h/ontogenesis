@@ -7,7 +7,7 @@
 <rect x="45" y="212" width="210" height="120" rx="13" stroke="#29877e" stroke-width="2" fill="#def1ea"/>
 <text x="64" y="249" font-size="22" font-weight="bold" fill="#176a60">G0023</text>
 <text x="64" y="278" font-size="17" fill="#193f4e">Factorial baseline</text>
-<text x="64" y="301" font-size="15" fill="#426978">Model + matched controls</text>
+<text x="64" y="301" font-size="15" fill="#426978">Matched baseline</text>
 
 <rect x="386" y="111" width="250" height="113" rx="13" stroke="#29877e" stroke-width="2" fill="#def1ea"/>
 <text x="408" y="147" font-size="22" font-weight="bold" fill="#176a60">G0024</text>

@@ -169,7 +169,7 @@ branch_diagram=ROOT/"docs/figures/research-finale.svg"
 if not branch_diagram.is_file():
     raise RuntimeError("Missing late-experiment model ancestry SVG")
 subprocess.run(["rsvg-convert","-f","pdf","-o",str(out/"atlas/research-finale.pdf"),str(branch_diagram)],check=True)
-body.append(research_plate("research-finale","The late-experiment branch structure","Verified software inheritance branches at G0023: G0024 then G0025 develop construction and maintenance, while G0026 supports G0027 numerical measurement and G0028 intervention. Renderers may reuse artistic techniques without altering a later model's numerical ancestry."))
+body.append(research_plate("research-finale","The late-experiment branch structure","Verified software inheritance branches at G0023: G0024 then G0025 develop construction and maintenance, while G0026 supports G0027 numerical measurement and G0028 intervention. Renderers may reuse artistic techniques without altering a later model's numerical ancestry.")) body.append("**Reading the branches.** G0024 and G0025 explore a line of construction specialization and maintenance. G0026 instead returns to the G0023 factorial baseline to verify numerical observation. Its headless implementation supports G0027's new statistics and G0028's externally imposed disturbance. A similarity in visual rendering across those branches does not imply that the evolving fields, genetic states, or final conditions were carried forward between generations.")
 for n,title,record in records:
     if int(n) in groups:
         phase_end=next((k-1 for k in groups if k>int(n)),len(records))
@@ -180,6 +180,16 @@ for n,title,record in records:
         body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{phase"+roman+r"}\pagecolor{phaseblack}\color{white}\thispagestyle{empty}\refstepcounter{part}\addcontentsline{toc}{part}{\thepart\quad "+groups[int(n)]+r"}\PhaseBand{"+roman+"}{"+n+"--"+f"{phase_end:04d}"+r"}{\sffamily\large "+subtitles[phase_index]+r"\par}\medskip{"+title_style+groups[int(n)]+r"\par}\bigskip{\raggedright\sffamily\large "+phase_text[int(n)]+r"\par}\bigskip\noindent\includegraphics[width=\linewidth]{phase_art/"+str(8 if phase_index==7 else 10 if phase_index==8 else phase_index+1)+r".png}\par\vfill{\color{phaseaccent}\hrule height 2pt}\medskip{\raggedright\sffamily\small "+r"\quad / \quad ".join(key+" "+name for key,name,_ in records[int(n)-1:phase_end])+r"\par}\clearpage\nopagecolor\color{black}"))
     record = re.sub(r"(?ms)^### Reproduction and provenance\n(.*?)(?=^### |\Z)", lambda m: "\n\n**Experiment sources:** " + " · ".join(line.strip()[2:] for line in m[1].splitlines() if line.strip().startswith("- ") and "Run from repository" not in line) + "\n\n", record)
     record = re.sub(r"(?m)^[-*] Run from repository root:.*\n?", "", record)
+    # A 40-character unbreakable monospace revision spills past the right
+    # margin in the G0020-G0025 source notes. Preserve exact hex bytes while
+    # introducing invisible, optional TeX line-break opportunities.
+    record = re.sub(
+        r"(Source revision:\\s*)`([0-9a-f]{40})`",
+        lambda match: match.group(1) + r"\\texttt{" +
+        r"\\allowbreak ".join(match.group(2)[i:i+8] for i in range(0,40,8)) +
+        "}",
+        record,
+    )
     # Only normalize plain prose, never existing math or code.
     pieces = re.split(r"(```[\s\S]*?```|\$\$[\s\S]*?\$\$|\$[^$\n]+\$|`[^`\n]+`)", record)
     for i in range(0,len(pieces),2):
