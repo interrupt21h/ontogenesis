@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 import numpy as np
 from PIL import Image
+from topology_panel import topology_panel
 
 ARM=os.environ.get('ONTO_ARM','combined')
 assert ARM in ('baseline','cost','maintenance','combined')
@@ -113,7 +114,7 @@ def observatory(fields,identities,tracker,step,position,path,metrics):
     # Fixed scales and full-run time axis; no rescaling as history grows.
     panels=[("ACTIVE COVERAGE", [("v_active",(239,165,74),1),("w_active",(60,190,235),1),("structure_active",(180,145,235),1)]),
             ("GENETIC ENTROPY / 3 bits",[("genotype_entropy",(220,170,245),3)]),
-            ("SECONDARY COMPLEMENT / coverage",[("cavity_fraction",(80,220,160),1)])]
+            ]
     for j,(heading,series) in enumerate(panels):
         left=24+j*320
         draw.text((left,590),heading,font=small,fill=(200,220,240))
@@ -124,6 +125,7 @@ def observatory(fields,identities,tracker,step,position,path,metrics):
                 draw.line(points,fill=color,width=2)
         for k,(key,color,scale) in enumerate(series):
             draw.text((left+k*98,696),key.replace("structure_active","matrix").replace("_active",""),font=small,fill=color)
+    topology_panel(draw, metrics, STEPS, N**4)
     canvas.save(path)
 
 def periodic_labels(m):
