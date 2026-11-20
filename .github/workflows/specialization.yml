@@ -1,5 +1,9 @@
 name: Generation 0024
 on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/specialization.yml
   workflow_dispatch:
 permissions:
   contents: write
