@@ -46,10 +46,13 @@ for n,title,record in records:
     if int(n) in groups:
         body.append("\\part{"+groups[int(n)]+"}")
     body.append("# Generation "+n+" — "+title+"\n\n"+convert(re.sub(r"^### ","## ",record,flags=re.M)))
-    body.append(frame_section(n))
-    figure=ROOT / 'docs' / 'figures' / f'{n}.pdf'
+    figure=ROOT / 'docs' / 'figures' / f'{n}.svg'
     if figure.exists():
-        body.append('## Mechanism illustration\n\n'+r'\begin{center}\includegraphics[width=.92\linewidth]{../../docs/figures/'+n+r'.pdf}\end{center}')
+        target=out / "mechanisms"
+        target.mkdir(exist_ok=True)
+        subprocess.run(["rsvg-convert","-f","pdf","-o",str(target / f"{n}.pdf"),str(figure)],check=True)
+        body.append('## Mechanism illustration\n\n'+r'\begin{center}\includegraphics[width=.92\linewidth]{mechanisms/'+n+r'.pdf}\end{center}')
+    body.append(frame_section(n))
 body.append("# Research agenda\n\n"+history.split("## Research priorities",1)[-1])
 body.append("# Provenance\n\nSource revision: `"+revision+"`. Historical records may contain original pending statements followed by verified outcomes; later verified outcomes supersede those statements. Source code remains normative. The illustrations are analytical or illustrative unless identified as measured data.")
 (out/"report.md").write_text("\n\n".join(body))
