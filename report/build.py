@@ -37,8 +37,24 @@ def frame_section(n):
     if int(n)>=14:
         result = ["## Simulation frames"]
         for i,label in enumerate(("Early development","Intermediate development","Final development")):
-            result.append(r"\begin{center}\begin{minipage}{.92\linewidth}\centering\includegraphics[width=\linewidth,height=.29\textheight,keepaspectratio]{frames/"+n+"-"+str(artifact)+"/"+str(i)+r".jpg}\par\small "+label+" --- frame "+str(meta["indices"][i]+1)+" / "+str(meta["count"])+r"\end{minipage}\end{center}")
-        result.append(f"[Source animation artifact {artifact}](https://github.com/interrupt21h/ontogenesis/actions/artifacts/{artifact}). Playback indices, not integration steps.")
+            path=f"frames/{n}-{artifact}/{i}.jpg"
+            result.append(r"\clearpage\AtlasPlateHeading{"+n+"}{"+label+"}{"+str(meta["indices"][i]+1)+" / "+str(meta["count"])+r"}\par\noindent\includegraphics[width=\linewidth]{"+path+r"}\par\medskip")
+            # Preserve the original full frame, then magnify only known dashboard regions.
+            if 19<=int(n)<=23:
+                from PIL import Image
+                with Image.open(out/path) as im:
+                    if im.size==(1280,720):
+                        for tag,rect,caption in (
+                            ("charts",(14,578,990,720),"Time-series detail"),
+                            ("records",(990,78,1280,580),"Entity and event record"),
+                        ):
+                            detail=Path(path).with_name(f"{i}-{tag}.png")
+                            im.crop(rect).save(out/detail)
+                            if tag=="charts":
+                                result.append(r"\noindent{\sffamily\bfseries\color{ontoblue} "+caption+r"}\par\smallskip\noindent\includegraphics[width=\linewidth]{"+str(detail)+r"}\par\medskip")
+                            else:
+                                result.append(r"\noindent{\sffamily\bfseries\color{ontoblue} "+caption+r"}\par\smallskip\noindent\includegraphics[height=.24\textheight,keepaspectratio]{"+str(detail)+r"}\par")
+        result.append(f"[Source animation artifact {artifact}](https://github.com/interrupt21h/ontogenesis/actions/artifacts/{artifact}). Original frame followed by labeled crops where supported; no reconstructed data. Playback indices, not integration steps.")
         return "\n\n".join(result)
     result = ["## Simulation frames", r"\begin{center}\begin{minipage}{\linewidth}\centering"]
     for i, label in enumerate(("Early development", "Intermediate development", "Final development")):
