@@ -41,6 +41,7 @@ def frame_section(n):
     result.append(f"[Source animation artifact {artifact}](https://github.com/interrupt21h/ontogenesis/actions/artifacts/{artifact}). Frames are sampled by playback index, not inferred integration step.")
     return "\n\n".join(result)
 
+subprocess.run([os.sys.executable, str(ROOT / 'report/atlas.py')],check=True)
 body = [intro,convert(method)]
 for n,title,record in records:
     if int(n) in groups:
@@ -55,6 +56,10 @@ for n,title,record in records:
     plot=ROOT / "report" / "plots" / f"{n}.tex"
     if plot.exists():
         body.append("## Quantitative atlas\n\n"+plot.read_text())
+    atlas=out / "atlas" / f"{n}-atlas.svg"
+    if atlas.exists():
+        subprocess.run(["rsvg-convert","-f","pdf","-o",str(atlas.with_suffix(".pdf")),str(atlas)],check=True)
+        body.append("## Analytical plate\n\n"+r"\begin{center}\includegraphics[width=.98\linewidth]{atlas/"+n+r"-atlas.pdf}\end{center}")
     body.append(frame_section(n))
 body.append("# Research agenda\n\n"+history.split("## Research priorities",1)[-1])
 body.append("# Provenance\n\nSource revision: `"+revision+"`. Historical records may contain original pending statements followed by verified outcomes; later verified outcomes supersede those statements. Source code remains normative. The illustrations are analytical or illustrative unless identified as measured data.")
