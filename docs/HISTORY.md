@@ -1,6 +1,6 @@
 # Ontogenesis — experimental history
 
-This is a retrospective engineering and scientific record of generations 0001–0023. Each generation is a separate reproducible experiment, not a continuation from a checkpoint. Source code is normative. Recorded values are single-seed observations from successful CI runs; hypotheses and limitations are explicitly separated. Parameters are dimensionless and the time step is one. L denotes the periodic nearest-neighbor discrete Laplacian. Active chemical coverage is the fraction of cells above 0.1; structural coverage uses M > 0.2. All runs use seed 42. Artifact links require GitHub authentication and expire; workflow links remain the durable regeneration path.
+This is a retrospective engineering and scientific record of generations 0001–0024. Each generation is a separate reproducible experiment, not a continuation from a checkpoint. Source code is normative. Recorded values are single-seed observations from successful CI runs; hypotheses and limitations are explicitly separated. Parameters are dimensionless and the time step is one. L denotes the periodic nearest-neighbor discrete Laplacian. Active chemical coverage is the fraction of cells above 0.1; structural coverage uses M > 0.2. All runs use seed 42. Artifact links require GitHub authentication and expire; workflow links remain the durable regeneration path.
 
 ## Contents
 
@@ -924,6 +924,42 @@ Single seed; factorial contrasts distinguish treatments at this seed but cannot 
 ### Reproduction and provenance
 
 [Source](../controls.py) · [Workflow](../.github/workflows/controls.yml). Set ONTO_ARM to baseline, cost, maintenance or combined.
+
+
+### Verified factorial outcome
+
+[Successful CI](https://github.com/interrupt21h/ontogenesis/actions/runs/44687054986). All four arms passed, seed 42, step 4800.
+
+| Arm | Matrix coverage (%) | V active (%) | W active (%) | Entropy (bits) |
+|---|---:|---:|---:|---:|
+| Baseline | 10.5038 | 3.6121 | 68.2795 | 1.57286 |
+| Cost | 0 | 50.4865 | 10.0279 | 1.21726 |
+| Maintenance | 34.4627 | 0.7246 | 79.2975 | 1.57900 |
+| Combined | 0 | 65.0499 | 21.7159 | 1.11982 |
+
+At this seed, the bundled costs eliminated matrix above threshold 0.20 in both cost-bearing arms; protection alone increased coverage by 23.9589 percentage points. This does not isolate the individual energy and reproduction penalties or establish behavior across seeds.
+
+[Combined animation](https://github.com/interrupt21h/ontogenesis/actions/runs/44687054986/artifacts/14609910431).
+
+## Generation 0024 — Independent construction specialization
+
+Status: CI pending.
+
+### Mechanism
+
+Four binary loci C, K, S and B encode catalysis, energy economy, signal response and construction independently. Sixteen genotypes per species, initialized uniformly. B controls matrix deposition and maintenance; S retains signal-dependent fitness. Builder birth penalty is reduced from 0.08 to 0.02 and energy surcharge from 0.02 to 0.005. These are exploratory parameter choices, not separately controlled effects.
+
+```math
+R'_g=(1-4\mu)R_g+\mu\sum_{j=0}^{3}R_{g\oplus 2^j}
+```
+
+Mutation conserves total births; runtime assertion checks this. Seed 42, periodic 24^4 lattice, 4800 steps, stride 4, 24 fps. All inherited transport and topology diagnostics retained. The entropy display range is four bits.
+
+### Interpretation
+
+Results pending. Independent loci and reduced costs change simultaneously, so this experiment cannot attribute outcomes to either alone. No claim of cooperation or functional compartment formation.
+
+[Source](../specialization.py) · [CI](../.github/workflows/specialization.yml)
 
 ## Research priorities
 
