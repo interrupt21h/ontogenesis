@@ -8,6 +8,12 @@ An experiment in computational emergence. Each generation preserves its rules, s
 
 Authentication required; artifacts expire after 30 days.
 
+## Scientific and engineering monograph
+
+**[Current PDF — latest successful report build](https://github.com/interrupt21h/ontogenesis/actions/workflows/report.yml?query=is%3Asuccess)** · [Report source](report/) · [All report builds](https://github.com/interrupt21h/ontogenesis/actions/workflows/report.yml)
+
+Open the newest successful run and select the standalone `ontogenesis.pdf` artifact. The independent LaTeX pipeline automatically rebuilds on documentation changes; the generated TeX is also archived separately. To reproduce locally, install Pandoc, latexmk, TeX Live (latex-extra, pictures, fonts-recommended) and run `python3 report/build.py`.
+
 ## Experimental history
 
 Ontogenesis investigates emergence in continuous, periodic reaction–diffusion systems, progressing from chemical differentiation through transport, energy, structural memory, signaling, four-dimensional geometry, lineage tracking, heredity and ecological interactions. Each generation is a fresh seeded experiment, not a checkpoint continuation.
