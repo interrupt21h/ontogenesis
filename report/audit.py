@@ -16,7 +16,13 @@ for page in doc:
     hist = region.histogram()
     ink = sum(hist[:220])/max(1,region.width*region.height)
     words = page.get_text("words")
-    rows.append(dict(page=page.number+1,words=len(words),ink_fraction=round(ink,4),review=ink<.025))
+    content=page.get_text()
+    plate=("Development sequence" in content or "Final frame detail" in content) and "Source animation artifact" in content
+    images=page.get_image_info()
+    width=max((i["bbox"][2]-i["bbox"][0] for i in images),default=0)
+    fraction=width/max(1,page.rect.width-2*25/25.4*72)
+    undersized=plate and fraction<.85
+    rows.append(dict(page=page.number+1,words=len(words),ink_fraction=round(ink,4),simulation_plate=plate,image_width_fraction=round(fraction,3),undersized=undersized,review=ink<.025 or undersized))
     thumbs.append(im)
 w,h=thumbs[0].size
 cols=6
@@ -28,4 +34,6 @@ for i,im in enumerate(thumbs):
     draw.text((x+4,y+h+2),str(i+1),fill="black")
 sheet.save(out/"contact-sheet.jpg",quality=88)
 (out/"layout-audit.json").write_text(json.dumps(rows,indent=2))
-print("Sparse pages for review:",[r["page"] for r in rows if r["review"]])
+print("Pages for review:",[r["page"] for r in rows if r["review"]])
+if any(r["undersized"] for r in rows):
+    raise SystemExit("Simulation plate width below 85% of text area")
