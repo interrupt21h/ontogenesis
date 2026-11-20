@@ -9,3 +9,5 @@ Use GitHub native LaTeX math blocks (fenced `math` or double-dollar delimiters) 
 ## Living monograph
 
 Keep report/introduction.md mechanism map and analytical or measured illustrations current; report/build.py regenerates the complete LaTeX monograph from docs/HISTORY.md. Verify scientific-report CI, retain the standalone PDF, and update the README with the newest verified direct PDF artifact link when available. Label diagrams as conceptual or measured; do not invent simulation images. Preserve the durable report workflow link.
+
+For each newly verified standalone MP4, add its artifact ID to report/videos.json. The report workflow extracts three actual playback frames; verify availability and compilation before changing the README direct PDF link. Cached frames are an optimization, not permanent archival storage. Never substitute conceptual imagery for missing frames.
