@@ -44,7 +44,7 @@ def frame_section(n):
     provenance=r"\par\smallskip{\footnotesize Source animation artifact "+str(artifact)+r". Frame numbers refer to playback order, not integration steps. \par}"
     if int(n)<14:
         panels=[r"\begin{minipage}[t]{.48\linewidth}\centering "+picture(paths[i],r"\linewidth",r".25\textheight")+r"\par\small "+caption(i)+r"\end{minipage}" for i in (0,1)]
-        block=r"\par\Needspace{.68\textheight}\AtlasPlateHeading{"+n+r"}{Development sequence}{"+str(meta["count"])+r" total}\noindent "+r"\hfill ".join(panels)+r"\par\medskip\begin{center}"+picture(paths[2],r".76\linewidth",r".32\textheight")+r"\par\small "+caption(2)+r"\end{center}"+provenance
+        block=r"\par\Needspace{.68\textheight}\AtlasPlateHeading{"+n+r"}{Development sequence}{"+str(meta["count"])+r" frames}\noindent "+r"\hfill ".join(panels)+r"\par\medskip\begin{center}"+picture(paths[2],r".76\linewidth",r".32\textheight")+r"\par\small "+caption(2)+r"\end{center}"+provenance
         return raw_latex(block)
     from PIL import Image
     # One chronological context plate and a full-width endpoint detail plate.
@@ -71,7 +71,36 @@ subprocess.run([os.sys.executable,str(ROOT/'report/research_atlas.py')],check=Tr
 subprocess.run([os.sys.executable,str(ROOT/'report/phase_art.py')],check=True)
 body = [re.sub(r"(?m)^## (.+)$",r"## \1 {.unnumbered}",intro.replace("# Vision and method","# Vision and method {.unnumbered}",1))]
 essay = (ROOT / "docs/RECURSIVE_CREATION.md").read_text()
-body.append(re.sub(r"(?m)^(#{1,2} .+)$", r"\1 {.unnumbered}", essay))
+essay = essay.replace("# Recursive creation: human intention, machine intelligence and computational emergence", "# Recursive creation",1)
+essay = re.sub(r"(?m)^(#{1,2} .+)$", r"\1 {.unnumbered}", essay)
+essay = essay.replace("## The process as medium", raw_latex(r"\noindent\includegraphics[width=\linewidth,height=.30\textheight,keepaspectratio]{phase_art/8.png}\par\medskip")+"## The process as medium",1)
+essay = essay.replace("Three distinct processes provide the conceptual structure of the work.", "Three distinct processes provide the conceptual structure of the work."+raw_latex(r"""\begin{center}
+\begin{tikzpicture}[every node/.style={font=\sffamily\small,align=left}]
+\fill[phaseI!9,rounded corners=4pt] (0,0) rectangle (12.6,5.1);
+\node[anchor=north west,text=phaseI,font=\sffamily\bfseries] at (.3,4.9) {03 / Creative inquiry};
+\node[anchor=north west] at (.3,4.45) {Questions, interpretation, aesthetic selection};
+\fill[phaseIV!13,rounded corners=4pt] (.65,.35) rectangle (11.95,3.65);
+\node[anchor=north west,text=phaseIV,font=\sffamily\bfseries] at (.95,3.45) {02 / Model revision};
+\node[anchor=north west] at (.95,3.0) {Mechanisms, parameters, instruments};
+\fill[phaseIII!18,rounded corners=4pt] (1.3,.7) rectangle (11.3,2.25);
+\node[anchor=north west,text=phaseIII,font=\sffamily\bfseries] at (1.6,2.05) {01 / Simulated world};
+\node[anchor=north west] at (1.6,1.55) {State updates, feedback, inherited variation};
+\end{tikzpicture}
+\end{center}"""),1)
+essay = essay.replace("The development cycle can be described in six stages.", "The development cycle can be described in six stages."+raw_latex(r"""\begin{center}
+\begin{tikzpicture}[x=1cm,y=1cm, every node/.style={font=\sffamily\small}, stage/.style={rounded corners=3pt,draw=ontoblue,fill=ontoblue!6,minimum width=3.7cm,minimum height=1.15cm,align=center}, flow/.style={-{Stealth[length=2.5mm]},thick,draw=ontoblue}]
+\node[stage] (a) at (0,0) {\bfseries Intention\\Human inquiry};
+\node[stage] (b) at (4.8,0) {\bfseries Synthesis\\AI construction};
+\node[stage] (c) at (9.6,0) {\bfseries Execution\\Numerical experiment};
+\node[stage] (d) at (9.6,-2) {\bfseries Observation\\Emergent behavior};
+\node[stage] (e) at (4.8,-2) {\bfseries Evaluation\\Critical judgment};
+\node[stage] (f) at (0,-2) {\bfseries Revision\\New possibilities};
+\draw[flow] (a)--(b); \draw[flow] (b)--(c); \draw[flow] (c)--(d);
+\draw[flow] (d)--(e); \draw[flow] (e)--(f); \draw[flow] (f)--(a);
+\node[font=\sffamily\footnotesize,text=ontoblue] at (4.8,-1) {Evidence informs the next inquiry};
+\end{tikzpicture}
+\end{center}"""),1)
+body.append(essay)
 body.append(research_plate("research-genealogy","The genealogy of the investigation","Each revision inherits or extends a computational model. Amber marks revisions concentrated on instruments or controls. This chronology is not a biological genealogy."))
 for n,title,record in records:
     if int(n) in groups:
@@ -80,7 +109,7 @@ for n,title,record in records:
         roman=("I","II","III","IV","V","VI","VII")[phase_index]
         subtitles=["Pattern and competition","Motion and dimensionality","Resources and feedback","Sections and persistence","Variation and exchange","Interfaces and connectivity","Construction and selection"]
         title_style=r"\raggedright\sffamily\bfseries\fontsize{29}{34}\selectfont\hyphenpenalty=10000\exhyphenpenalty=10000 "
-        body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{phase"+roman+r"}\pagecolor{phaseblack}\color{white}\thispagestyle{empty}\refstepcounter{part}\addcontentsline{toc}{part}{\thepart\quad "+groups[int(n)]+r"}\PhaseBand{"+roman+"}{"+n+"--"+f"{phase_end:04d}"+r"}{\sffamily\large "+subtitles[phase_index]+r"\par}\medskip{"+title_style+groups[int(n)]+r"\par}\bigskip{\raggedright\sffamily\large "+phase_text[int(n)]+r"\par}\bigskip\noindent\includegraphics[width=\linewidth]{phase_art/"+str(phase_index+1)+r".png}\par\smallskip{\sffamily\footnotesize Conceptual artwork --- not experimental data.\par}\vfill{\color{phaseaccent}\hrule height 2pt}\medskip{\raggedright\sffamily\small "+r"\quad / \quad ".join(key+" "+name for key,name,_ in records[int(n)-1:phase_end])+r"\par}\clearpage\nopagecolor\color{black}"))
+        body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{phase"+roman+r"}\pagecolor{phaseblack}\color{white}\thispagestyle{empty}\refstepcounter{part}\addcontentsline{toc}{part}{\thepart\quad "+groups[int(n)]+r"}\PhaseBand{"+roman+"}{"+n+"--"+f"{phase_end:04d}"+r"}{\sffamily\large "+subtitles[phase_index]+r"\par}\medskip{"+title_style+groups[int(n)]+r"\par}\bigskip{\raggedright\sffamily\large "+phase_text[int(n)]+r"\par}\bigskip\noindent\includegraphics[width=\linewidth]{phase_art/"+str(phase_index+1)+r".png}\par\vfill{\color{phaseaccent}\hrule height 2pt}\medskip{\raggedright\sffamily\small "+r"\quad / \quad ".join(key+" "+name for key,name,_ in records[int(n)-1:phase_end])+r"\par}\clearpage\nopagecolor\color{black}"))
     record = re.sub(r"(?ms)^### Reproduction and provenance\n(.*?)(?=^### |\Z)", lambda m: "\n\n**Experiment sources:** " + " · ".join(line.strip()[2:] for line in m[1].splitlines() if line.strip().startswith("- ") and "Run from repository" not in line) + "\n\n", record)
     record = re.sub(r"(?m)^[-*] Run from repository root:.*\n?", "", record)
     # Only normalize plain prose, never existing math or code.
@@ -93,7 +122,7 @@ for n,title,record in records:
     atlas=out / "atlas" / f"{n}-atlas.svg"
     if atlas.exists():
         subprocess.run(["rsvg-convert","-f","pdf","-o",str(atlas.with_suffix(".pdf")),str(atlas)],check=True)
-        analytical=raw_latex(r"\par\section{Analytical plate}\nopagebreak\begin{center}\includegraphics[width=\linewidth,height=.32\textheight,keepaspectratio]{atlas/"+n+r"-atlas.pdf}\end{center}")
+        analytical=raw_latex(r"\par\section{Analytical plate}\nopagebreak\begin{center}\includegraphics[width=\linewidth,height=.27\textheight,keepaspectratio]{atlas/"+n+r"-atlas.pdf}\end{center}")
     else:
         analytical=""
     chapter=convert(re.sub(r"^### ","## ",record,flags=re.M))
@@ -138,7 +167,7 @@ for n,title,record in records:
 body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontogreen}"))
 body.append((ROOT/"report/synthesis.md").read_text().replace("## What the experiments establish","## What the experiments establish {.unnumbered}").replace("## The limits of observation","## The limits of observation {.unnumbered}").replace("## Continuing the inquiry","## Continuing the inquiry {.unnumbered}"))
 body.append(research_plate("comparative-endpoints","Comparative experimental evidence","Upper: descriptive historical endpoints, not a controlled contrast. Lower: four matched-seed G0023 arms; the cost treatment bundles two penalties. All matrix values use threshold 0.20."))
-body.append("## Provenance {.unnumbered}\n\nSource revision: `"+revision+"`. The source revision identifies the published model and experimental records. Numerical results refer to the configurations described in each chapter. Analytical diagrams describe model relationships; simulation views depict sampled numerical states.")
+body.append("## Provenance {.unnumbered}\n\nSource revision: `"+revision+"`. The source revision identifies the published model and experimental records. Numerical results refer to the configurations described in each chapter. Editorial artwork accompanies thematic introductions and the creative essay. Analytical diagrams describe model relationships; simulation views depict sampled numerical states.")
 (out/"report.md").write_text("\n\n".join(body))
 subprocess.run(["pandoc",str(out/"report.md"),"--standalone","--toc","--toc-depth=1","--number-sections","--top-level-division=chapter","--metadata","documentclass=report","--metadata","title=Ontogenesis: Computational Emergence","--metadata","subtitle=Living scientific and engineering monograph","--metadata","author=Scott Muller — Ontogenesis Project","--variable","geometry:margin=25mm","--variable","fontsize=11pt","--include-in-header=report/preamble.tex","-o",str(out/"ontogenesis.tex")],check=True)
 tex=out/"ontogenesis.tex"
@@ -153,7 +182,6 @@ custom=r"""\begin{titlepage}
 \node[anchor=north west,text=white,font=\sffamily\Large] at ([xshift=25mm,yshift=-60mm]current page.north west) {Computational emergence};
 \node[anchor=south west,text=white,font=\sffamily\large] at ([xshift=25mm,yshift=30mm]current page.south west) {Scott Muller};
 \node[anchor=south west,text=white,font=\sffamily\small] at ([xshift=25mm,yshift=23mm]current page.south west) {Living experimental monograph};
-\node[anchor=south west,text=white,font=\sffamily\scriptsize] at ([xshift=25mm,yshift=15mm]current page.south west) {Generative cover artwork --- not experimental data};
 \end{tikzpicture}\null
 \end{titlepage}"""
 preamble,marker,document=raw.partition(r"\begin{document}")
