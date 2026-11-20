@@ -387,10 +387,11 @@ def main():
                 metrics[-1]['multiscale_topology']=multiscale_topology(m)
             if metrics[-1]["structure_active"] > peak:
                 peak=metrics[-1]["structure_active"]
-                save_snapshot(out/"peak-fields",step,STEPS,dict(u=u,v=v,w=w,q=q,e=e,m=m,pulse=pulse,recovery=recovery,trait=trait,xv=xv,xw=xw,gv=gv,gw=gw,identities=identities))
+                for old in (out/"peak-fields").glob("state-*.npz"): old.unlink()
+                save_snapshot(out/"peak-fields",step,STEPS,dict(u=u,v=v,w=w,q=q,e=e,m=m,pulse=pulse,recovery=recovery,trait=trait,xv=xv,xw=xw,gv=gv,gw=gw,identities=identities),generation="0025")
             if step in (0,240,480,600,800,1200,2400,3600,STEPS):
                 save_snapshot(out/"fields",step,STEPS,dict(u=u,v=v,w=w,q=q,e=e,m=m,pulse=pulse,
-                    recovery=recovery,trait=trait,xv=xv,xw=xw,gv=gv,gw=gw,identities=identities))
+                    recovery=recovery,trait=trait,xv=xv,xw=xw,gv=gv,gw=gw,identities=identities),generation="0025")
             if fixed:
                 directory=out/"fixed";directory.mkdir(exist_ok=True)
                 render(v[0],w[0],e[0],m[0],pulse[0],allele[0],0,directory/f"{step:05d}.png")
