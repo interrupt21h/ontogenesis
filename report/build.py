@@ -67,6 +67,9 @@ def frame_section(n):
     return "".join(blocks)
 
 def research_plate(name,heading,caption):
+    # Plates are embedded as raw TeX: bare superscripts trigger Missing $.
+    if re.search(r"\b\d+\^\d+", caption):
+        raise ValueError("Raw LaTeX plate caption contains an unescaped power")
     return raw_latex(r"\par\Needspace{.43\textheight}\section*{"+heading+r"}\begin{center}\includegraphics[width=\linewidth,height=.62\textheight,keepaspectratio]{atlas/"+name+r".pdf}\end{center}\noindent "+caption+r"\par")
 
 subprocess.run([os.sys.executable, str(ROOT / 'report/atlas.py')],check=True)
@@ -184,7 +187,7 @@ for n,title,record in records:
     if n in ("0026","0027"):
         body.append(research_plate(n+"-evidence","Measured evidence","Recorded full-resolution numerical diagnostics, seed 42, 4800 steps. These are measurements, not reconstructed spatial fields. Artifact identifiers appear on the plate."))
     if n=="0028":
-        body.append(research_plate("0028-evidence","Localized disturbance: matched pilot measurements","Recorded numerical time series from the verified 12^4, 240-step paired pilot (artifact 14670709650); the dashed line marks the external event at step 120. Differences are disturbed minus control; this is not full-resolution evidence."))
+        body.append(research_plate("0028-evidence","Localized disturbance: matched pilot measurements","Recorded numerical time series from the verified $12^{4}$, 240-step paired pilot (artifact 14670709650); the dashed line marks the external event at step 120. Differences are disturbed minus control; this is not full-resolution evidence."))
     body.append(frame_section(n))
 body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontogreen}"))
 body.append((ROOT/"report/synthesis.md").read_text().replace("## The original experiment revisited","## The original experiment revisited {.unnumbered}").replace("## What the experiments establish","## What the experiments establish {.unnumbered}").replace("## The limits of observation","## The limits of observation {.unnumbered}").replace("## Continuing the inquiry","## Continuing the inquiry {.unnumbered}"))
