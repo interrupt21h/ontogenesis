@@ -1178,36 +1178,36 @@ The matrix remains widespread at lower thresholds but almost disappears at 0.20.
 
 ### Automated CI verification
 
-[Successful run](https://github.com/interrupt21h/ontogenesis/actions/runs/44767135932) · [Standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44767135932/artifacts/14649867616) · [Diagnostics](https://github.com/interrupt21h/ontogenesis/actions/runs/44767135932/artifacts/14649592653). Source revision: `058330736b5846fb7177a1bd580bf7807cab98db`.
+[Successful run](https://github.com/interrupt21h/ontogenesis/actions/runs/44780023521) · [Standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44780023521/artifacts/14657517295) · [Diagnostics](https://github.com/interrupt21h/ontogenesis/actions/runs/44780023521/artifacts/14657502210). Source revision: `ab8ac9369730d4baa677488802877814f82a4b58`.
 
 | Final metric | Value |
 |---|---:|
 | step | 4800 |
 | slice position | 0 |
-| v mean | 0.0200364324 |
-| w mean | 0.192739953 |
+| v mean | 0.0200361879 |
+| w mean | 0.192740165 |
 | v active | 0.0623101128 |
-| w active | 0.781334394 |
-| feedback rms | 0.194405496 |
-| energy mean | 0.88422405 |
-| energy min | 0.835352417 |
+| w active | 0.781343437 |
+| feedback rms | 0.194405749 |
+| energy mean | 0.884223982 |
+| energy min | 0.835352629 |
 | energy depleted | 0 |
-| structure mean | 0.146020485 |
+| structure mean | 0.14602049 |
 | structure active | 1.20563272e-05 |
-| signal mean | 0.453090397 |
-| signal active | 0.479703173 |
-| recovery mean | 0.422020763 |
-| trait mean | 0.398493108 |
-| trait std | 0.0659618175 |
-| trait min | 0.278881323 |
-| trait max | 0.666063858 |
+| signal mean | 0.453095136 |
+| signal active | 0.47971523 |
+| recovery mean | 0.422022134 |
+| trait mean | 0.398493144 |
+| trait std | 0.0659616194 |
+| trait min | 0.278881043 |
+| trait max | 0.666063919 |
 | structure jaccard | 0.25 |
 | boundary faces | 28 |
 | boundary per cell | 7 |
-| metabolite v mean | 0.012481402 |
-| metabolite w mean | 0.12545443 |
-| metabolite overlap | 0.00654153545 |
-| genotype entropy | 2.26733441 |
+| metabolite v mean | 0.0124812797 |
+| metabolite w mean | 0.125454662 |
+| metabolite overlap | 0.00654150418 |
+| genotype entropy | 2.26733471 |
 | structure components | 2 |
 | largest structure | 3 |
 | oldest entity | 4 |
@@ -1217,8 +1217,8 @@ The matrix remains widespread at lower thresholds but almost disappears at 0.20.
 | largest cavity | 0 |
 | complement components | 1 |
 | euler characteristic | 1 |
-| maintenance mean | 0.284941197 |
-| builder mass | 13621.0179 |
+| maintenance mean | 0.28494133 |
+| builder mass | 13621.0158 |
 
 <!-- AUTO-CI-END -->
 
