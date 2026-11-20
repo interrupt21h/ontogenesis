@@ -23,7 +23,7 @@ As the artifacts became more complex, the report acquired a separate build pipel
 
 The simulation jobs for G0024 and G0025 were changed to manual dispatch (subsequently allowing workflow-file changes to trigger deliberate refreshes) to avoid expensive reruns caused by changes to observational code. The report uses concurrency cancellation to discard superseded builds; the film serializes publication. Frame caches and persistent release assets reduce reliance on temporary artifacts. These policies trade immediate recomputation for explicit control over numerical expense.
 
-A successful experiment is not equivalent to successful downstream publication. Release files may lag source changes, and artifact expiry can prevent historical reconstruction. Publication therefore depends on preserved source data, not solely on workflow success. The workflow topology illustration records declarative completion triggers; explicit CLI dispatches and path-filtered push triggers are additional edges described in the source.
+A successful experiment is not equivalent to successful downstream publication. Release files may lag source changes, and artifact expiry can prevent historical reconstruction. Publication therefore depends on preserved source data, not solely on workflow success. The workflow topology diagram groups actual declarative workflow-run relationships into readable source and publication families. Its arrows summarize source membership rather than individual job invocations; explicit CLI dispatches, push-path triggers, archived-data access, and release uploads are deliberately excluded from the plotted arrows and discussed separately.
 
 ## Post-consolidation execution discipline
 

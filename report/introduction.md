@@ -94,4 +94,4 @@ The G0028 pilot tests an intervention rather than introducing a new evolved biol
 
 ## Reading the evidence
 
-The reported observations are predominantly single-seed experiments. Active coverage is not mass. Identity events depend on sampling cadence. A successful render establishes execution, not a biological or scientific validation. The report distinguishes analytical examples from measurements and records pending experiments explicitly.
+The reported observations are predominantly single-seed experiments. Active coverage is not mass. Identity events depend on sampling cadence. A successful render establishes execution, not a biological or scientific validation. The report distinguishes analytical examples from measurements and records pending experiments explicitly. After the chronological chapters, **Final renders and visualization fidelity** assembles verified image sequences and their provenance. G0026 and G0027 are intentionally measurement-focused and are not presented as missing cinematic universes. G0028's verified preview is a separate, reduced-domain visual artifact, not a full-domain recovery result.

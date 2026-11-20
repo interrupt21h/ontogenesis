@@ -78,6 +78,8 @@ def final_render_plate(n, title, interpretation, observed=(1,2)):
     artifact=manifest.get(n)
     if artifact is None:
         raise RuntimeError(f"No verified media manifest entry for gallery G{n}")
+    if n=="0028" and artifact!=14675921895:
+        raise RuntimeError("G0028 gallery is captioned for the verified 12^4 preview; update the labels before substituting another film")
     folder=out/"frames"/f"{n}-{artifact}"
     index_file=folder/"frames.json"
     if not index_file.exists():
@@ -211,7 +213,7 @@ for n,title,record in records:
         target=out / "mechanisms"
         target.mkdir(exist_ok=True)
         subprocess.run(["rsvg-convert","-f","pdf","-o",str(target / f"{n}.pdf"),str(figure)],check=True)
-        body.append('## Mechanism illustration\n\n'+r'\begin{center}\includegraphics[width=.92\linewidth]{mechanisms/'+n+r'.pdf}\end{center}')
+        body.append(('## Conceptual intervention design (not simulation data)' if n=="0028" else '## Mechanism illustration')+'\n\n'+r'\begin{center}\includegraphics[width=.92\linewidth]{mechanisms/'+n+r'.pdf}\end{center}')
     plot=ROOT / "report" / "plots" / f"{n}.tex"
     if plot.exists():
         body.append("## Quantitative atlas\n\n"+plot.read_text())

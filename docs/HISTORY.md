@@ -1329,7 +1329,7 @@ Report matrix mean, standard deviation, coefficient of variation, periodic forwa
 
 ## Generation 0027 — Structural statistics beyond fixed thresholds
 
-Status: CI completed successfully; cross-run bitwise equivalence not established.
+Status: CI verified, including 41/41 same-process observer checkpoints; separate-run bitwise agreement remains unverified.
 
 Parent: G0026 baseline; seed 42, periodic lattice 24^4, 4800 steps, observations every 120 steps. Smoke test 12^4, 240 steps. No new physical mechanism. Retain the same integrator and all fixed-threshold statistics. Preserve the full observation history.
 
@@ -1352,7 +1352,7 @@ Compare checkpoint hashes to G0026 when the full result is available. No claim o
 
 ## Generation 0028 — Localized disturbance and recovery
 
-Status: 12⁴ pilot CI verified; optional 24⁴ full-domain experiment pending. This experiment follows the planned G0028–G0032 finale, keeping the full-resolution baseline costly runs manually gated on standard GitHub-hosted CPU runners. It adds a single deterministic Gaussian intervention halfway through a seeded trajectory, separately depleting local energy and matrix. An unperturbed arm of the same seed and initialization supplies a contemporaneous control.
+Status: matched-control 12⁴ pilot verified; 24⁴ paired full-domain study remains pending. Separate reduced-domain cinematic previews are verified, while the 24⁴ high-fidelity cinematic master is executing and is not yet validated. This experiment follows the planned G0028–G0032 finale, keeping the full-resolution baseline costly runs manually gated on standard GitHub-hosted CPU runners. It adds a single deterministic Gaussian intervention halfway through a seeded trajectory, separately depleting local energy and matrix. An unperturbed arm of the same seed and initialization supplies a contemporaneous control.
 
 The automated 12⁴/240-step pilot and optional 24⁴/4800-step paired comparison record real 2D sections from both arms, native numerical measurements, and checkpoint hashes. A standalone H.264 MP4 and scientific PNG plate are derived from those observations, with fixed comparative scales and no reconstructed fields. Recovery of local mean energy or matrix is assessed as attenuation of the paired difference, not asserted in advance.
 
@@ -1361,10 +1361,16 @@ The G0026 full-resolution workflow was also moved behind manual dispatch; prior 
 [Detailed record](generations/0028.md) · [Source](../disturbance.py) · [Workflow](../.github/workflows/disturbance.yml).
 
 
+### Evidence-film publication
+
 **G0028 presentation verification:** [Refined pilot run 44824014028](https://github.com/interrupt21h/ontogenesis/actions/runs/44824014028) · [artifact 14673655018](https://github.com/interrupt21h/ontogenesis/actions/runs/44824014028/artifacts/14673655018) completed a 92-frame, 7.666667-second H.264 film and corrected six-panel visualization. The sampled numerical frames and hashes matched the original pilot exactly; revised video holds repeat measured frames rather than interpolate states. Visual layout was inspected; documentation and monograph use original measured values. The current full-resolution G0025 movie remains separately identified.
+
+### Interpretation limitations
 
 **Interpretation safeguard:** In the verified 12⁴ pilot, the unperturbed matrix core was only about 0.005535 at the event and declined to about 0.002087 by the endpoint; shocked matrix ended near 0.001724. Attenuating the paired difference does not mean the structural matrix returned to its pre-event level, and the 240-step pilot is an early transient rather than a mature-universe resilience test. Full 24⁴ execution remains pending.
 
+
+### Cinematic observation: the initial replacement
 
 **G0028 cinematic development (artistic priority):** The previous six-panel
 pilot movie proved matched numerical observation but was not visually compelling
@@ -1382,8 +1388,12 @@ separately gated and remains unverified until execution and inspection.
 [Workflow](../.github/workflows/disturbance-cinematic.yml).
 
 
+### Verified reduced-domain cinematic edition
+
 **G0028 cinematic preview verified (2026-11-20):** [Workflow run 44829195043](https://github.com/interrupt21h/ontogenesis/actions/runs/44829195043) completed the new observer/archival integrity and full-bleed artistic preview at source revision `f9fb2a79da09f0bfc741b84d6a5c9429b36e9bd6`. [18-second MP4, 432 frames, poster and metadata](https://github.com/interrupt21h/ontogenesis/actions/runs/44829195043/artifacts/14675921895) and [native float16 fixed-omega 3D field archive](https://github.com/interrupt21h/ontogenesis/actions/runs/44829195043/artifacts/14673923851) were retained; release copies support render-only reproduction. Visual inspection confirms rotating voxel geometry and staged shock marker, **not** restored chemistry in the 12⁴ transient. The marked 24⁴ cinematic master is executing as a separate job in the same run; do not mark it verified until completed and inspected.
 
+
+### Restoring G0025-class volumetric fidelity
 
 **G0028 G0025-fidelity revision (2026-11-20):** The cinematic observer was
 extended from five fields / one omega hyperplane / stride 30 to seven
