@@ -1070,7 +1070,7 @@ Single matched seed; shared resource debit, not genotype-specific expenditure. N
 
 ### Automated CI verification
 
-[Successful run](https://github.com/interrupt21h/ontogenesis/actions/runs/44720533337) · [Standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44720533337/artifacts/14627835931) · [Diagnostics](https://github.com/interrupt21h/ontogenesis/actions/runs/44720533337/artifacts/14627286753). Source revision: `d75b3b703cd98502cd2c8031c1b13f4f92ddac76`.
+[Successful run](https://github.com/interrupt21h/ontogenesis/actions/runs/44725414897) · [Standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44725414897/artifacts/14629726626) · [Diagnostics](https://github.com/interrupt21h/ontogenesis/actions/runs/44725414897/artifacts/14629925582). Source revision: `755615ef2a30ec871f7f3698c707b83165b122b1`.
 
 | Final metric | Value |
 |---|---:|
