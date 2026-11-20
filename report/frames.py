@@ -17,6 +17,15 @@ for gen, artifact in sorted(manifest.items()):
     if metadata.exists() and json.loads(metadata.read_text()).get("native_resolution") and all((target / f"{i}.jpg").is_file() for i in range(3)):
         continue
     target.mkdir(exist_ok=True)
+    archival = f"frames-{gen}-{artifact}.zip"
+    with tempfile.TemporaryDirectory() as cache:
+        result = subprocess.run(["gh","release","download","atlas-media","--repo",REPO,"--pattern",archival,"--dir",cache],capture_output=True)
+        if result.returncode == 0:
+            with zipfile.ZipFile(Path(cache)/archival) as z:
+                for name in ("0.jpg","1.jpg","2.jpg","frames.json"):
+                    (target/name).write_bytes(z.read(name))
+            if json.loads(metadata.read_text()).get("native_resolution"):
+                continue
     try:
         with tempfile.TemporaryDirectory() as tmp:
             payload = Path(tmp) / "artifact"
