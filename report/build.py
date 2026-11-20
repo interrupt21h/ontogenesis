@@ -35,28 +35,32 @@ def frame_section(n):
         return "## Simulation frames\n\nVerified video indexed, but frame extraction was unavailable during this build."
     meta = json.loads((folder / "frames.json").read_text())
     if int(n)>=14:
-        result = ["## Simulation frames"]
+        from PIL import Image
+        result = []
         for i,label in enumerate(("Early development","Intermediate development","Final development")):
             path=f"frames/{n}-{artifact}/{i}.jpg"
             result.append(r"\clearpage\AtlasPlateHeading{"+n+"}{"+label+"}{"+str(meta["indices"][i]+1)+" / "+str(meta["count"])+r"}\par\noindent\includegraphics[width=\linewidth]{"+path+r"}\par\medskip")
-            # Preserve the original full frame, then magnify only known dashboard regions.
-            if 19<=int(n)<=23:
-                from PIL import Image
-                with Image.open(out/path) as im:
-                    if im.size==(1280,720):
+            with Image.open(out/path) as im:
+                if im.size==(1280,720):
+                    def crop(tag,rect):
+                        detail=Path(path).with_name(f"{i}-{tag}.png")
+                        im.crop(rect).save(out/detail)
+                        return str(detail)
+                    left=crop("chemistry",(14,95,495,575))
+                    right=crop("identity",(510,95,985,575))
+                    result.append(r"\noindent\begin{minipage}[t]{.48\linewidth}\includegraphics[width=\linewidth]{"+left+r"}\par\small A. Chemistry view\end{minipage}\hfill\begin{minipage}[t]{.48\linewidth}\includegraphics[width=\linewidth]{"+right+r"}\par\small B. Identity view\end{minipage}\par\medskip")
+                    if 19<=int(n)<=23:
+                        result.append(r"\clearpage\AtlasPlateHeading{"+n+r"}{Dashboard details}{"+str(meta["indices"][i]+1)+r"}")
                         for tag,rect,caption in (
                             ("coverage",(14,578,345,720),"Active coverage"),
                             ("entropy",(340,578,665,720),"Genetic entropy"),
                             ("complement",(660,578,990,720),"Complement coverage"),
-                            ("records",(990,78,1280,580),"Entity and event record"),
                         ):
-                            detail=Path(path).with_name(f"{i}-{tag}.png")
-                            im.crop(rect).save(out/detail)
-                            if tag!="records":
-                                result.append((r"\clearpage\AtlasPlateHeading{"+n+r"}{Dashboard details}{"+str(meta["indices"][i]+1)+r"}" if tag=="coverage" else "")+r"\noindent{\sffamily\bfseries\color{ontoblue} "+caption+r"}\par\smallskip\noindent\includegraphics[width=.72\linewidth]{"+str(detail)+r"}\par\medskip")
-                            else:
-                                result.append(r"\noindent{\sffamily\bfseries\color{ontoblue} "+caption+r"}\par\smallskip\noindent\includegraphics[height=.24\textheight,keepaspectratio]{"+str(detail)+r"}\par")
-        result.append(f"[Source animation artifact {artifact}](https://github.com/interrupt21h/ontogenesis/actions/artifacts/{artifact}). Original frame followed by labeled crops where supported; no reconstructed data. Playback indices, not integration steps.")
+                            detail=crop(tag,rect)
+                            result.append(r"\noindent\begin{minipage}{.72\linewidth}\small\sffamily "+caption+r"\par\includegraphics[width=\linewidth]{"+detail+r"}\end{minipage}\par\smallskip")
+                        detail=crop("records",(990,78,1280,580))
+                        result.append(r"\clearpage\AtlasPlateHeading{"+n+r"}{Entity and event record}{"+str(meta["indices"][i]+1)+r"}\noindent\includegraphics[width=.72\linewidth,height=.78\textheight,keepaspectratio]{"+detail+r"}\par")
+        result.append(f"[Source animation artifact {artifact}](https://github.com/interrupt21h/ontogenesis/actions/artifacts/{artifact}). Labeled crops preserve original pixels. Playback indices, not integration steps.")
         return "\n\n".join(result)
     result = ["## Simulation frames", r"\begin{center}\begin{minipage}{\linewidth}\centering"]
     for i, label in enumerate(("Early development", "Intermediate development", "Final development")):
@@ -70,7 +74,7 @@ subprocess.run([os.sys.executable, str(ROOT / 'report/atlas.py')],check=True)
 body = [intro.replace("# Project overview","# Project overview {.unnumbered}",1),convert(method)]
 for n,title,record in records:
     if int(n) in groups:
-        body.append("\\part{"+groups[int(n)]+"}")
+        body.append("\\clearpage\\part{"+groups[int(n)]+"}\\clearpage")
     body.append("\\setcounter{chapter}{"+str(int(n)-1)+"}\n\n# Generation "+n+" — "+title+"\n\n"+convert(re.sub(r"^### ","## ",record,flags=re.M)))
     figure=ROOT / 'docs' / 'figures' / f'{n}.svg'
     if figure.exists() and "CONCEPTUAL MECHANISM" not in figure.read_text().upper():
@@ -86,12 +90,18 @@ for n,title,record in records:
         subprocess.run(["rsvg-convert","-f","pdf","-o",str(atlas.with_suffix(".pdf")),str(atlas)],check=True)
         body.append("## Analytical plate\n\n"+r"\begin{center}\includegraphics[width=.98\linewidth]{atlas/"+n+r"-atlas.pdf}\end{center}")
     body.append(frame_section(n))
-body.append("# Research agenda\n\n"+history.split("## Research priorities",1)[-1])
-body.append("# Provenance\n\nSource revision: `"+revision+"`. Historical records may contain original pending statements followed by verified outcomes; later verified outcomes supersede those statements. Source code remains normative. The illustrations are analytical or illustrative unless identified as measured data.")
+body.append("# Research agenda {.unnumbered}\n\n"+history.split("## Research priorities",1)[-1])
+body.append("# Provenance {.unnumbered}\n\nSource revision: `"+revision+"`. Historical records may contain original pending statements followed by verified outcomes; later verified outcomes supersede those statements. Source code remains normative. The illustrations are analytical or illustrative unless identified as measured data.")
 (out/"report.md").write_text("\n\n".join(body))
 subprocess.run(["pandoc",str(out/"report.md"),"--standalone","--toc","--toc-depth=1","--number-sections","--top-level-division=chapter","--metadata","documentclass=report","--metadata","title=Ontogenesis: Computational Emergence","--metadata","subtitle=Living scientific and engineering monograph","--metadata","author=Scott Muller — Ontogenesis Project","--variable","geometry:margin=25mm","--variable","fontsize=11pt","--include-in-header=report/preamble.tex","-o",str(out/"ontogenesis.tex")],check=True)
 tex=out/"ontogenesis.tex"
-cover=next(iter(sorted((out/"frames").glob("0021-*/2.jpg"))),None)
+cover=next(iter(sorted((out/"frames").glob("0018-*/1.jpg"))),None)
+if cover is not None:
+    from PIL import Image
+    with Image.open(cover) as im:
+        if im.size==(1280,720):
+            im.crop((14,95,495,575)).save(out/"cover.png")
+            cover=out/"cover.png"
 if cover is not None:
     raw=tex.read_text()
     custom=r"""\begin{titlepage}\pagecolor{ontoink}\color{white}\sffamily
@@ -99,7 +109,7 @@ if cover is not None:
 {\fontsize{42}{46}\selectfont\bfseries ONTOGENESIS\par}
 \vspace{.4cm}{\LARGE Computational emergence\par}\vspace{1cm}
 \noindent\includegraphics[width=\linewidth]{"""+str(cover.relative_to(out))+r"""}\par
-\vspace{.4cm}{\small Generation 0021 --- final simulation frame\par}
+\vspace{.4cm}{\small Generation 0018 --- intermediate chemistry view\par}
 \vfill{\Large Scott Muller\par}\medskip Living experimental monograph\par
 \end{titlepage}\nopagecolor\color{black}"""
     preamble, marker, document = raw.partition(r"\begin{document}")
