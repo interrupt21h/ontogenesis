@@ -62,19 +62,25 @@ def frame_section(n):
                         result.append(r"\clearpage\AtlasPlateHeading{"+n+r"}{Entity and event record}{"+str(meta["indices"][i]+1)+r"}\noindent\includegraphics[width=.72\linewidth,height=.78\textheight,keepaspectratio]{"+detail+r"}\par")
         result.append(f"[Source animation artifact {artifact}](https://github.com/interrupt21h/ontogenesis/actions/artifacts/{artifact}). Labeled crops preserve original pixels. Playback indices, not integration steps.")
         return "\n\n".join(result)
-    result = ["## Simulation frames", r"\begin{center}\begin{minipage}{\linewidth}\centering"]
-    for i, label in enumerate(("Early development", "Intermediate development", "Final development")):
-        path = f"frames/{n}-{artifact}/{i}.jpg"
-        result.append(r"\begin{minipage}[t]{.32\linewidth}\centering\includegraphics[width=\linewidth,height=.23\textheight,keepaspectratio]{"+path+r"}\par\small "+label+r"\\ Frame "+str(meta['indices'][i]+1)+" / "+str(meta['count'])+r"\end{minipage}"+(r"\hfill" if i<2 else "")+"%")
-    result.append(r"\end{minipage}\end{center}")
-    result.append(f"[Source animation artifact {artifact}](https://github.com/interrupt21h/ontogenesis/actions/artifacts/{artifact}). Frames are sampled by playback index, not inferred integration step.")
-    return "\n\n".join(result[:1]+["\n".join(result[1:-1])]+result[-1:])
+    result = ["## Simulation frames"]
+    # Keep the final image prominent; two earlier views establish progression.
+    path = f"frames/{n}-{artifact}/2.jpg"
+    result.append(r"\begin{center}\includegraphics[width=.58\linewidth,height=.32\textheight,keepaspectratio]{"+path+r"}\par\small Final development --- frame "+str(meta["indices"][2]+1)+r"\end{center}")
+    panels = []
+    for i,label in enumerate(("Early development","Intermediate development")):
+        path=f"frames/{n}-{artifact}/{i}.jpg"
+        panels.append(r"\begin{minipage}[t]{.47\linewidth}\centering\includegraphics[width=\linewidth,height=.23\textheight,keepaspectratio]{"+path+r"}\par\small "+label+" --- frame "+str(meta["indices"][i]+1)+r"\end{minipage}")
+    result.append(r"\noindent"+r"\hfill".join(panels)+r"\par")
+    result.append(f"[Source animation artifact {artifact}](https://github.com/interrupt21h/ontogenesis/actions/artifacts/{artifact}). Frames sampled by playback index, not inferred integration step.")
+    return "\n\n".join(result)
 
 subprocess.run([os.sys.executable, str(ROOT / 'report/atlas.py')],check=True)
 body = [intro.replace("# Project overview","# Project overview {.unnumbered}",1),convert(method)]
 for n,title,record in records:
     if int(n) in groups:
         body.append("\\clearpage\\part{"+groups[int(n)]+"}\\clearpage")
+    if "Verified CI outcome" in record or "Verified factorial outcome" in record or "Verified outcome" in record:
+        record = re.sub(r"(?im)^Status: (?:CI )?pending[^\n]*$", "Status: verified outcome recorded below.", record)
     body.append("\\setcounter{chapter}{"+str(int(n)-1)+"}\n\n# Generation "+n+" — "+title+"\n\n"+convert(re.sub(r"^### ","## ",record,flags=re.M)))
     figure=ROOT / 'docs' / 'figures' / f'{n}.svg'
     if figure.exists() and "CONCEPTUAL MECHANISM" not in figure.read_text().upper():
