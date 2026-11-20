@@ -22,7 +22,7 @@ jobs:
       - name: Install LaTeX and Pandoc
         run: |
           sudo apt-get update
-          sudo apt-get install -y pandoc latexmk texlive-latex-extra texlive-pictures texlive-fonts-recommended poppler-utils ffmpeg
+          sudo apt-get install -y pandoc latexmk texlive-latex-extra texlive-pictures texlive-fonts-recommended poppler-utils ffmpeg librsvg2-bin
       - uses: actions/cache@v4
         with:
           path: report/build/frames
@@ -55,6 +55,7 @@ jobs:
             report/build/report.md
             report/preamble.tex
             report/build/frames
+            report/build/mechanisms
       - name: Link report
         run: echo '[Download standalone PDF](${{ steps.pdf.outputs.artifact-url }})' >> "$GITHUB_STEP_SUMMARY"
       - name: Preserve compilation diagnostics on failure
