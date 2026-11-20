@@ -15,3 +15,6 @@ For each newly verified standalone MP4, add its artifact ID to report/videos.jso
 ## Visual editorial standard
 
 Every generation must include a mechanism-specific SVG under docs/figures/NNNN.svg, embedded in its descriptive Markdown page and reused by the report compiler. Clearly distinguish mechanism schematics, analytical plots and actual simulation frames. Preserve existing equations and provenance. Add measured charts and representative real frame images wherever available. Verify PDF compilation and inspect layout when possible; do not claim visual verification from CI alone. Local report builds require librsvg2-bin in addition to existing dependencies.
+
+## Atlas publication layout
+Use navy, teal and amber accents, serif scientific text and sans-serif plate labels. For dashboard generations use full-text-width original frames without a restrictive height cap. Provide labeled individual native-pixel subplot crops on dedicated detail pages when the layout is known; never infer measurements from crops. Verify pagination and legibility visually before describing an edition as publication-ready.
