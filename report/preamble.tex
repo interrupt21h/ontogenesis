@@ -20,3 +20,21 @@
 \DeclareUnicodeCharacter{2079}{\textsuperscript{9}}
 \DeclareUnicodeCharacter{03C9}{\ensuremath{\omega}}
 \AtBeginDocument{\hypersetup{hypertexnames=false}}
+
+% Editorial identity: restrained scientific atlas.
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\definecolor{ontoink}{HTML}{19334A}
+\titleformat{\chapter}[display]{\normalfont\huge\bfseries\color{ontoink}}{\Large\color{ontogreen}\chaptertitlename\ \thechapter}{8pt}{}[\vspace{6pt}{\color{ontogreen}\titlerule}]
+\titlespacing*{\chapter}{0pt}{0pt}{22pt}
+\titleformat{\section}{\Large\bfseries\color{ontoblue}}{\thesection}{.6em}{}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{ontoblue} ONTOGENESIS}
+\fancyhead[R]{\small\color{ontoink} Computational emergence}
+\fancyfoot[L]{\small\color{ontoblue} Scientific monograph}
+\fancyfoot[R]{\thepage}
+\setlength{\headheight}{15pt}
+\captionsetup{font=small,labelfont=bf}
+\AtBeginDocument{\hypersetup{colorlinks=true,linkcolor=ontoblue,urlcolor=ontoblue}}
