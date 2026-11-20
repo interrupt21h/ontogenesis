@@ -10,10 +10,10 @@ from matplotlib.patches import FancyArrowPatch
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/"report/build/atlas"
 OUT.mkdir(parents=True,exist_ok=True)
-plt.rcParams.update({"font.family":"DejaVu Sans","font.size":10,"axes.spines.top":False,"axes.spines.right":False,"axes.labelcolor":"#19334a","text.color":"#19334a","axes.titleweight":"bold","svg.fonttype":"path","figure.facecolor":"white"})
+plt.rcParams.update({"font.family":"DejaVu Sans","font.size":12,"axes.spines.top":False,"axes.spines.right":False,"axes.labelcolor":"#19334a","text.color":"#19334a","axes.titleweight":"bold","svg.fonttype":"path","figure.facecolor":"white"})
 def save(fig,n,title,note):
     fig.suptitle(f"ONTOGENESIS / {n:04d}   |   {title}",x=.06,ha="left",fontsize=15,fontweight="bold")
-    fig.text(.06,.025,note,fontsize=8,color="#526575")
+    fig.text(.06,.025,note,fontsize=9,color="#526575")
     fig.tight_layout(rect=(.03,.09,.98,.88))
     fig.savefig(OUT/f"{n:04d}-atlas.svg",bbox_inches="tight",pad_inches=.12)
     plt.close(fig)
@@ -22,7 +22,7 @@ u,v=np.meshgrid(np.linspace(0,1,81),np.linspace(0,.5,81))
 f,k=.035,.062
 du=-u*v*v+f*(1-u)
 dv=u*v*v-(f+k)*v
-fig,ax=plt.subplots(1,2,figsize=(9,4))
+fig,ax=plt.subplots(1,2,figsize=(8,4.8))
 for a,z,title in zip(ax,(du,dv),("Substrate reaction rate","Activator reaction rate")):
     lim=np.abs(z).max()
     im=a.pcolormesh(u,v,z,cmap="RdBu_r",norm=TwoSlopeNorm(vmin=-lim,vcenter=0,vmax=lim),shading="auto",rasterized=False)
@@ -34,7 +34,7 @@ save(fig,1,"Reaction phase space","Analytical local reaction terms; diffusion om
 x=np.linspace(0,2*np.pi,180)
 xx,yy=np.meshgrid(x,x)
 h=(np.sin(xx)+np.cos(yy)+.5*np.sin(2*xx-yy))/2.5
-fig,ax=plt.subplots(1,2,figsize=(9,4))
+fig,ax=plt.subplots(1,2,figsize=(8,4.8))
 for a,z,title in zip(ax,(.097+.009*h,.094-.009*h),("Species V decay","Species W decay")):
     im=a.contourf(xx,yy,z,levels=np.linspace(.085,.106,22),cmap="viridis",extend="both")
     a.set(xlabel="x (radians)",ylabel="y (radians)",title=title,aspect="equal")
@@ -54,14 +54,14 @@ ax.set_anchor("C")
 save(fig,4,"Prescribed circulation","Analytical zero-phase continuum analogue; simulation uses discrete conservative fluxes.")
 
 m=np.linspace(0,1,200)
-fig,ax=plt.subplots(figsize=(9,3.5))
+fig,ax=plt.subplots(figsize=(8,4.5))
 ax.plot(m,1/(1+5*m),color="#177e89",lw=2.5)
 ax.fill_between(m,0,1/(1+5*m),color="#177e89",alpha=.12)
 ax.set(xlabel="Matrix concentration M",ylabel="Relative mobility",ylim=(0,1.05),title="Structural feedback on transport")
 ax.grid(alpha=.2)
 save(fig,9,"Matrix-mediated mobility","Analytical response 1/(1+5M); not measured data.")
 
-fig,ax=plt.subplots(figsize=(9,3.5))
+fig,ax=plt.subplots(figsize=(8,4.5))
 for k,c in [(1,"#177e89"),(4,"#375a91")]:
     ax.plot(m,np.exp(-k*m),lw=2.4,label=f"Barrier coefficient {k}",color=c)
 ax.set(xlabel="Absolute matrix difference across face",ylabel="Relative permeability",ylim=(0,1.05))
