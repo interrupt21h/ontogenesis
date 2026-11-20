@@ -32,6 +32,10 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 report/frames.py
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install numpy==2.2.6 matplotlib==3.10.3
       - run: python3 report/build.py
       - name: Verify PDF
         run: |
@@ -56,6 +60,7 @@ jobs:
             report/preamble.tex
             report/build/frames
             report/build/mechanisms
+            report/build/atlas
       - name: Link report
         run: echo '[Download standalone PDF](${{ steps.pdf.outputs.artifact-url }})' >> "$GITHUB_STEP_SUMMARY"
       - name: Preserve compilation diagnostics on failure
