@@ -74,14 +74,27 @@ for n,title,record in records:
     if int(n) in groups:
         phase_end=next((k-1 for k in groups if k>int(n)),len(records))
         manifest=json.loads((ROOT/"report/videos.json").read_text())
+        phase_index=list(groups).index(int(n))
+        roman=("I","II","III","IV","V","VI","VII")[phase_index]
         images=[]
         for g in range(int(n),phase_end+1):
             key=f"{g:04d}"
             p=out/"frames"/f"{key}-{manifest.get(key)}"/"2.jpg"
             if p.exists():
-                images.append(r"\begin{minipage}[t]{.47\linewidth}\centering\includegraphics[width=\linewidth,height=.23\textheight,keepaspectratio]{"+str(p.relative_to(out))+r"}\par\small Generation "+key+r"\end{minipage}")
-        rows=[(r"\noindent"+r"\hfill".join(images[i:i+2]) if len(images[i:i+2])==2 else r"\noindent\hfill"+images[i]+r"\hfill\null")+r"\par\medskip" for i in range(0,min(len(images),6),2)]
-        body.append(raw_latex(r"\clearpage\part{"+groups[int(n)]+"}"+r"\par{\sffamily\large Generations "+n+"--"+f"{phase_end:04d}"+r"}\par\medskip "+phase_text[int(n)]+r"\par\bigskip "+ "\n".join(rows)+r"\par{\small Final sampled frames from verified animations.\par}\clearpage"))
+                images.append((key,str(p.relative_to(out)),records[g-1][1]))
+        def tile(item,width,height):
+            key,path,title=item
+            return (r"\begin{minipage}[t]{"+width+r"}\centering"
+                    +r"\colorbox{phaseblack}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\centering "
+                    +r"\includegraphics[width=\linewidth,height="+height+r",keepaspectratio]{"+path+r"}}}"
+                    +r"\par\smallskip{\sffamily\small\bfseries\color{phaseaccent} "+key+r"}\quad{\sffamily\small "+title+r"}\end{minipage}")
+        rows=[]
+        if len(images)%2:
+            rows.append(r"\noindent"+tile(images[-1],r"\linewidth",r".27\textheight")+r"\par\medskip")
+            images=images[:-1]
+        for i in range(0,len(images),2):
+            rows.append(r"\noindent"+r"\hfill".join(tile(item,r".485\linewidth",r".22\textheight") for item in images[i:i+2])+r"\par\medskip")
+        body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{phase"+roman+r"}\PhaseBand{"+roman+"}{"+n+"--"+f"{phase_end:04d}"+r"}\part{"+groups[int(n)]+r"}\noindent{\sffamily\large\color{ontoink} "+phase_text[int(n)]+r"\par}\bigskip"+ "\n".join(rows)+r"\par{\small\sffamily Final sampled frames from verified animations.\par}\vfill\noindent{\color{phaseaccent}\rule{\linewidth}{3pt}}\clearpage"))
     record = re.sub(r"(?ms)^### Reproduction and provenance\n(.*?)(?=^### |\Z)", lambda m: "\n\n**Experiment sources:** " + " · ".join(line.strip()[2:] for line in m[1].splitlines() if line.strip().startswith("- ") and "Run from repository" not in line) + "\n\n", record)
     record = re.sub(r"(?m)^[-*] Run from repository root:.*\n?", "", record)
     # Only normalize plain prose, never existing math or code.
@@ -91,7 +104,20 @@ for n,title,record in records:
     record = "".join(pieces)
     if "Verified CI outcome" in record or "Verified factorial outcome" in record or "Verified outcome" in record:
         record = re.sub(r"(?im)^Status: (?:CI )?pending[^\n]*$", "Status: verified outcome recorded below.", record)
-    body.append("\\setcounter{chapter}{"+str(int(n)-1)+"}\n\n# Generation "+n+" — "+title+"\n\n"+convert(re.sub(r"^### ","## ",record,flags=re.M)))
+    atlas=out / "atlas" / f"{n}-atlas.svg"
+    if atlas.exists():
+        subprocess.run(["rsvg-convert","-f","pdf","-o",str(atlas.with_suffix(".pdf")),str(atlas)],check=True)
+        analytical=raw_latex(r"\par\section{Analytical plate}\nopagebreak\begin{center}\includegraphics[width=\linewidth,height=.32\textheight,keepaspectratio]{atlas/"+n+r"-atlas.pdf}\end{center}")
+    else:
+        analytical=""
+    chapter=convert(re.sub(r"^### ","## ",record,flags=re.M))
+    if analytical:
+        anchor=re.search(r"(?m)^## Interpretation and limitations",chapter)
+        if anchor:
+            chapter=chapter[:anchor.start()]+analytical+chapter[anchor.start():]
+        else:
+            chapter+=analytical
+    body.append("\\setcounter{chapter}{"+str(int(n)-1)+"}\n\n# Generation "+n+" — "+title+"\n\n"+chapter)
     figure=ROOT / 'docs' / 'figures' / f'{n}.svg'
     if figure.exists() and "CONCEPTUAL MECHANISM" not in figure.read_text().upper():
         target=out / "mechanisms"
@@ -101,10 +127,6 @@ for n,title,record in records:
     plot=ROOT / "report" / "plots" / f"{n}.tex"
     if plot.exists():
         body.append("## Quantitative atlas\n\n"+plot.read_text())
-    atlas=out / "atlas" / f"{n}-atlas.svg"
-    if atlas.exists():
-        subprocess.run(["rsvg-convert","-f","pdf","-o",str(atlas.with_suffix(".pdf")),str(atlas)],check=True)
-        body.append(raw_latex(r"\par\Needspace{.38\textheight}\section{Analytical plate}\begin{center}\includegraphics[width=\linewidth,height=.48\textheight,keepaspectratio]{atlas/"+n+r"-atlas.pdf}\end{center}"))
     if n=="0012":
         body.append(research_plate("spatial-sections","Observing four spatial dimensions","The periodic fourth coordinate indexes three-dimensional sections. The two observatory views introduced in Generation 0014 are separated by half the domain; they need not depict the same structures."))
     if n=="0021":
