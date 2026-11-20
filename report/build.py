@@ -34,21 +34,22 @@ def frame_section(n):
     if not (folder / "frames.json").exists():
         return "## Simulation frames\n\nVerified video indexed, but frame extraction was unavailable during this build."
     meta = json.loads((folder / "frames.json").read_text())
-    result = ["## Simulation frames"]
+    result = ["## Simulation frames", r"\begin{center}\begin{minipage}{\linewidth}\centering"]
     for i, label in enumerate(("Early development", "Intermediate development", "Final development")):
         path = f"frames/{n}-{artifact}/{i}.jpg"
-        result.append(r"\begin{center}" + "\n" + r"\includegraphics[width=.98\linewidth,height=.36\textheight,keepaspectratio]{" + path + "}\n\n" + label + f" --- frame {meta['indices'][i]+1} of {meta['count']}.\n" + r"\end{center}")
+        result.append(r"\begin{minipage}[t]{.32\linewidth}\centering\includegraphics[width=\linewidth,height=.23\textheight,keepaspectratio]{"+path+r"}\par\small "+label+r"\\ Frame "+str(meta['indices'][i]+1)+" / "+str(meta['count'])+r"\end{minipage}"+(r"\hfill" if i<2 else "")+"%")
+    result.append(r"\end{minipage}\end{center}")
     result.append(f"[Source animation artifact {artifact}](https://github.com/interrupt21h/ontogenesis/actions/artifacts/{artifact}). Frames are sampled by playback index, not inferred integration step.")
-    return "\n\n".join(result)
+    return "\n\n".join(result[:1]+["\n".join(result[1:-1])]+result[-1:])
 
 subprocess.run([os.sys.executable, str(ROOT / 'report/atlas.py')],check=True)
-body = [intro,convert(method)]
+body = [intro.replace("# Project overview","# Project overview {.unnumbered}",1),convert(method)]
 for n,title,record in records:
     if int(n) in groups:
         body.append("\\part{"+groups[int(n)]+"}")
     body.append("\\setcounter{chapter}{"+str(int(n)-1)+"}\n\n# Generation "+n+" — "+title+"\n\n"+convert(re.sub(r"^### ","## ",record,flags=re.M)))
     figure=ROOT / 'docs' / 'figures' / f'{n}.svg'
-    if figure.exists():
+    if figure.exists() and "CONCEPTUAL MECHANISM" not in figure.read_text().upper():
         target=out / "mechanisms"
         target.mkdir(exist_ok=True)
         subprocess.run(["rsvg-convert","-f","pdf","-o",str(target / f"{n}.pdf"),str(figure)],check=True)
@@ -64,5 +65,5 @@ for n,title,record in records:
 body.append("# Research agenda\n\n"+history.split("## Research priorities",1)[-1])
 body.append("# Provenance\n\nSource revision: `"+revision+"`. Historical records may contain original pending statements followed by verified outcomes; later verified outcomes supersede those statements. Source code remains normative. The illustrations are analytical or illustrative unless identified as measured data.")
 (out/"report.md").write_text("\n\n".join(body))
-subprocess.run(["pandoc",str(out/"report.md"),"--standalone","--toc","--number-sections","--top-level-division=chapter","--metadata","documentclass=report","--metadata","title=Ontogenesis: Computational Emergence","--metadata","subtitle=Living scientific and engineering monograph","--metadata","author=Scott Muller — Ontogenesis Project","--variable","geometry:margin=25mm","--variable","fontsize=11pt","--include-in-header=report/preamble.tex","-o",str(out/"ontogenesis.tex")],check=True)
+subprocess.run(["pandoc",str(out/"report.md"),"--standalone","--toc","--toc-depth=1","--number-sections","--top-level-division=chapter","--metadata","documentclass=report","--metadata","title=Ontogenesis: Computational Emergence","--metadata","subtitle=Living scientific and engineering monograph","--metadata","author=Scott Muller — Ontogenesis Project","--variable","geometry:margin=25mm","--variable","fontsize=11pt","--include-in-header=report/preamble.tex","-o",str(out/"ontogenesis.tex")],check=True)
 subprocess.run(["latexmk","-pdf","-interaction=nonstopmode","-halt-on-error","ontogenesis.tex"],cwd=out,check=True)
