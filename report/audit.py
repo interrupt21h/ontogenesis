@@ -87,7 +87,7 @@ for g in ("0024","0025","0028"):
 if chapter_pages["0028"]>=gallery["0024"]:
     raise SystemExit("Final gallery must follow all numbered experiments")
 synthesis=next(i+1 for i,t in enumerate(text_pages)
-               if t.startswith("ONTOGENESIS") and "Synthesis and research directions" in t)
+               if i+1>gallery["0028"] and "Synthesis and research directions" in t)
 if gallery["0028"]>=synthesis:
     raise SystemExit("Synthesis must follow the curated final gallery")
 if not ("About the artist" in text_pages[-1] or "About the artist" in text_pages[-2]):
