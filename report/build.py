@@ -102,5 +102,11 @@ if cover is not None:
 \vspace{.4cm}{\small Generation 0021 --- final simulation frame\par}
 \vfill{\Large Scott Muller\par}\medskip Living experimental monograph\par
 \end{titlepage}\nopagecolor\color{black}"""
-    tex.write_text(raw.replace(r"\maketitle",custom,1))
+    preamble, marker, document = raw.partition(r"\begin{document}")
+    if not marker:
+        raise RuntimeError("Pandoc output has no document body")
+    document, count = re.subn(r"(?m)^[ \t]*\\maketitle[ \t]*$", lambda _: custom, document, count=1)
+    if count != 1:
+        raise RuntimeError("Expected standalone title invocation in Pandoc document body")
+    tex.write_text(preamble + marker + document)
 subprocess.run(["latexmk","-pdf","-interaction=nonstopmode","-halt-on-error","ontogenesis.tex"],cwd=out,check=True)
