@@ -101,8 +101,7 @@ essay = essay.replace("The development cycle can be described in six stages.", "
 \end{tikzpicture}
 \end{center}"""),1)
 body.append(essay)
-body.append(raw_latex(r"\clearpage"))
-body.append((ROOT/"docs/AUTHOR.md").read_text().replace("# About the artist","# About the artist {.unnumbered}",1))
+body.append("## Reading the atlas {.unnumbered}\n\nThe early generations explore pattern formation and competing chemical fields. Subsequent phases introduce transport, resources and environmental feedback, followed by four-dimensional observation, inherited variation and structural construction. The experimental plates show selected moments in playback; numerical plots and fixed-coordinate sections provide complementary evidence. Read the chapters as a sequence of evolving questions rather than as steps toward a predetermined endpoint.")
 body.append(research_plate("research-genealogy","The genealogy of the investigation","Each revision inherits or extends a computational model. Amber marks revisions concentrated on instruments or controls. This chronology is not a biological genealogy."))
 for n,title,record in records:
     if int(n) in groups:
@@ -170,6 +169,11 @@ body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontogreen}"))
 body.append((ROOT/"report/synthesis.md").read_text().replace("## What the experiments establish","## What the experiments establish {.unnumbered}").replace("## The limits of observation","## The limits of observation {.unnumbered}").replace("## Continuing the inquiry","## Continuing the inquiry {.unnumbered}"))
 body.append(research_plate("comparative-endpoints","Comparative experimental evidence","Upper: descriptive historical endpoints, not a controlled contrast. Lower: four matched-seed G0023 arms; the cost treatment bundles two penalties. All matrix values use threshold 0.20."))
 body.append("## Provenance {.unnumbered}\n\nSource revision: `"+revision+"`. The source revision identifies the published model and experimental records. Numerical results refer to the configurations described in each chapter. Editorial artwork accompanies thematic introductions and the creative essay. Analytical diagrams describe model relationships; simulation views depict sampled numerical states.")
+author = (ROOT/"docs/AUTHOR.md").read_text()
+author = author.replace("# About the artist", "# About the artist {.unnumbered}",1)
+author = author.replace("Scott Muller is",raw_latex(r"\begin{center}\includegraphics[width=\linewidth,height=.19\textheight,keepaspectratio]{phase_art/9.png}\end{center}{\sffamily\bfseries\LARGE\color{ontoink} Scott Muller\par}{\sffamily\small\color{ontoblue} Scientific visualization / Systems engineering / Computational art\par}\medskip")+"Scott Muller is",1)
+body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontogreen}"))
+body.append(author)
 (out/"report.md").write_text("\n\n".join(body))
 subprocess.run(["pandoc",str(out/"report.md"),"--standalone","--toc","--toc-depth=1","--number-sections","--top-level-division=chapter","--metadata","documentclass=report","--metadata","title=Ontogenesis: Computational Emergence","--metadata","subtitle=Living scientific and engineering monograph","--metadata","author=Scott Muller — Ontogenesis Project","--variable","geometry:margin=25mm","--variable","fontsize=11pt","--include-in-header=report/preamble.tex","-o",str(out/"ontogenesis.tex")],check=True)
 tex=out/"ontogenesis.tex"
