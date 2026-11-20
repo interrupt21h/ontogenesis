@@ -61,18 +61,19 @@ history=(ROOT/"docs/HISTORY.md").read_text()
 records=re.findall(r"^## Generation (\d{4}) — (.+)$",history,re.M)
 assert len(records)>=24
 # Dedicated heading band and equal-size cards; all connectors occupy gutters.
-fig,ax=plt.subplots(figsize=(8,9.3))
+fig,ax=plt.subplots(figsize=(10,11))
 fig.subplots_adjust(left=.025,right=.975,bottom=.035,top=.985)
-ax.axis("off"); ax.set(xlim=(0,12),ylim=(0,15.2))
-phases=[(1,3,"Pattern formation"),(4,7,"Transport and volume"),(8,11,"Environmental feedback"),(12,14,"Observation"),(15,17,"Heredity and ecology"),(18,20,"Structure and topology"),(21,24,"Construction and controls")]
+ax.axis("off"); ax.set(xlim=(0,12),ylim=(0,2.03*len(phases)+1))
+phases=[(1,3,"Pattern formation"),(4,7,"Transport and volume"),(8,11,"Environmental feedback"),(12,14,"Observation"),(15,17,"Heredity and ecology"),(18,20,"Structure and topology"),(21,24,"Construction and controls"),(25,25,"Structural maintenance"),(26, min(27,len(records)), "Consolidation")]
+if len(records)>27: phases.extend((g,min(g+3,len(records)),"Final experiments") for g in range(28,len(records)+1,4))
 short={3:"Symmetry\nbreaking",6:"Volumetric\nemergence",9:"Organization",10:"Communication",19:"Compartment\nformation",20:"Topological\ncomplexity",21:"Multiscale topology\npersistence",22:"Structural\nheredity",23:"Factorial niche\nconstruction controls",24:"Independent construction\nspecialization"}
 import textwrap
 for i,(lo,hi,theme) in enumerate(phases):
-    y=14.85-i*2.03
+    y=2.03*(len(phases)-i)+.65
     ax.text(.12,y,f"{i+1:02d}  /  {theme.upper()}",weight="bold",fontsize=10,va="top",color=INK)
     for j,g in enumerate(range(lo,hi+1)):
         x=.15+j*3.0
-        color=GOLD if g in (13,14,19,20,21,23) else TEAL
+        color=GOLD if g in (13,14,19,20,21,23,26,27) else TEAL
         bottom=y-1.63
         ax.add_patch(FancyBboxPatch((x,bottom),2.65,1.19,boxstyle="round,pad=.015,rounding_size=.07",facecolor=color+"10",edgecolor=color,lw=.9))
         ax.text(x+.13,bottom+.93,f"{g:04d}",fontsize=9,weight="bold",color=color,va="center")
@@ -80,7 +81,7 @@ for i,(lo,hi,theme) in enumerate(phases):
         ax.text(x+1.325,bottom+.43,title,ha="center",va="center",fontsize=8.5,linespacing=1.12)
         if j: 
             ax.add_patch(FancyArrowPatch((x-.30,bottom+.59),(x-.06,bottom+.59),arrowstyle="-|>",mutation_scale=9,color=TEAL,lw=1,shrinkA=0,shrinkB=0))
-    if i<6: ax.plot([.12,11.8],[y-1.83]*2,color="#dce4e8",lw=.65)
+    if i<len(phases)-1: ax.plot([.12,11.8],[y-1.83]*2,color="#dce4e8",lw=.65)
 ax.text(.15,.48,"MODEL REVISION",color=TEAL,weight="bold",fontsize=9)
 ax.text(4.1,.48,"OBSERVATION / CONTROL",color=GOLD,weight="bold",fontsize=9)
 ax.text(.15,.10,"Read left to right, then top to bottom. Labels are abbreviated where necessary.",fontsize=8)
