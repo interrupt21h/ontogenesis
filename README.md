@@ -2,11 +2,11 @@
 
 An experiment in computational emergence. Each generation preserves its rules, seed, metrics and render.
 
-## Latest verified animation — Generation 0017: Ecosystem
+## Latest verified animation — Generation 0019: Compartmentalization
 
-[Download evolution.mp4 directly](https://github.com/interrupt21h/ontogenesis/actions/runs/44616522872/artifacts/14575716178) (334.5 KiB, no ZIP) · [Workflow runs](https://github.com/interrupt21h/ontogenesis/actions/workflows/ecosystem.yml)
+[Download standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44624382551/artifacts/14583640908) (2.30 MiB) · [Workflow](https://github.com/interrupt21h/ontogenesis/actions/workflows/compartmentalization.yml)
 
-GitHub authentication required. Artifacts expire after 30 days.
+Authentication required; artifacts expire after 30 days.
 
 ## Experimental history
 
@@ -33,8 +33,9 @@ Ontogenesis investigates emergence in continuous, periodic reaction–diffusion 
 | 0015 | [Evolution](docs/generations/0015.md) | [Python](evolution.py) | [Runs](.github/workflows/evolution.yml) · Verified |
 | 0016 | [Genetics](docs/generations/0016.md) | [Python](genetics.py) | [Runs](.github/workflows/genetics.yml) · Verified |
 | 0017 | [Ecosystem](docs/generations/0017.md) | [Python](ecosystem.py) | [Runs](.github/workflows/ecosystem.yml) · Verified |
-| 0018 | [Morphogenesis](docs/generations/0018.md) | [Python](morphogenesis.py) | [Runs](.github/workflows/morphogenesis.yml) · Pending verification |
-| 0019 | [Compartmentalization](docs/generations/0019.md) | [Python](compartmentalization.py) | [Runs](.github/workflows/compartmentalization.yml) · Pending verification |
+| 0018 | [Morphogenesis](docs/generations/0018.md) | [Python](morphogenesis.py) | [Runs](.github/workflows/morphogenesis.yml) · Verified |
+| 0019 | [Compartmentalization](docs/generations/0019.md) | [Python](compartmentalization.py) | [Runs](.github/workflows/compartmentalization.yml) · Verified |
+| 0020 | [Topological complexity](docs/generations/0020.md) | [Python](topology.py) | [Runs](.github/workflows/topology.yml) · Pending verification |
 
 ## Reproduce locally
 
