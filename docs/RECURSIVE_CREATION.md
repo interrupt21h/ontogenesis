@@ -6,7 +6,7 @@
 
 Ontogenesis is both an artificial world and an investigation into how such a world can be created. Its subject is emergence: the appearance of organized behavior through the interaction of comparatively simple local rules. Its medium, however, extends beyond numerical simulation. The work is constructed through an iterative exchange between human intention, generative artificial intelligence and the observable consequences of computational experiments.
 
-I do not begin with a complete specification of the finished work. Instead, an initial question establishes a direction of inquiry. A computational model gives that question operational form; execution reveals consequences that may not have been anticipated; observation generates new questions. The mathematical system is subsequently extended, revised or instrumented. The work develops through this recurring cycle rather than through the execution of a fixed plan.
+I do not begin with a complete specification of the finished work. I begin with a question. I use AI to give that question computational form, then examine what the resulting system actually does. Its behavior often suggests questions I could not have formulated before the experiment. The mathematical system is subsequently extended, revised or instrumented. The work develops through this recurring cycle rather than through the execution of a fixed plan.
 
 The individual animations are therefore manifestations of a larger artistic object: the evolving collection of models, measurements, images and decisions that constitutes Ontogenesis.
 
@@ -75,7 +75,7 @@ Reproducibility is thus an artistic as well as an engineering value: it allows t
 
 ## Acceleration and its limits
 
-The rapid development of Ontogenesis demonstrates the practical capacity of AI-assisted work to compress the interval between a conceptual question and an executable experiment. It does not establish a measured productivity multiplier, nor does it eliminate the expertise involved in evaluating the result.
+What particularly interests me about this process is how dramatically it compresses the interval between a conceptual question and an executable experiment. I can pursue a line of inquiry while it is still fresh, without having to resolve every implementation detail myself. It does not establish a measured productivity multiplier, nor does it eliminate the expertise involved in evaluating the result.
 
 My technical literacy, mathematical interests and aesthetic judgment shape which proposals I accept, question or reject. AI can generate plausible but incorrect explanations, introduce implementation errors or obscure the difference between an observation and an inference. The speed of construction may exceed the speed of validation.
 
