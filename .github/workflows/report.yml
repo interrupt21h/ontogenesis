@@ -40,16 +40,15 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          mkdir -p report/build/numerical/0024
-          if ! gh release view atlas-media --json assets > /tmp/atlas-assets.json; then
-            echo 'No atlas release available yet' >&2
-            exit 0
-          fi
-          if python -c 'import json,sys; sys.exit(not any(a["name"]=="field-state-0024.tar.gz" for a in json.load(open("/tmp/atlas-assets.json"))["assets"]))'; then
-            gh release download atlas-media -p field-state-0024.tar.gz -D /tmp
-            tar -xzf /tmp/field-state-0024.tar.gz -C report/build/numerical/0024
-            python report/field_atlas.py report/build/numerical/0024/fields report/build/atlas
-          fi
+          gh release view atlas-media --json assets > /tmp/atlas-assets.json
+          for gen in 0024 0025; do
+            if python -c 'import json,sys; sys.exit(not any(a["name"]=="field-state-"+sys.argv[1]+".tar.gz" for a in json.load(open("/tmp/atlas-assets.json"))["assets"]))' "$gen"; then
+              mkdir -p "report/build/numerical/$gen"
+              gh release download atlas-media -p "field-state-$gen.tar.gz" -D /tmp
+              tar -xzf "/tmp/field-state-$gen.tar.gz" -C "report/build/numerical/$gen"
+              python report/field_atlas.py "report/build/numerical/$gen/fields" report/build/atlas
+            fi
+          done
       - name: Validate report generator syntax
         run: python3 -m compileall -q report
       - run: python3 report/build.py
@@ -57,6 +56,9 @@ jobs:
         run: |
           pdfinfo report/build/ontogenesis.pdf
           pdftotext report/build/ontogenesis.pdf report/build/verified.txt
+          test -s report/build/atlas/0024-field-evolution.pdf
+          grep -q '19.2948' report/build/verified.txt
+          grep -q 'Generation 0024' report/build/verified.txt
           grep -q 'Generation 0001' report/build/verified.txt
           grep -q 'The genealogy of the investigation' report/build/verified.txt
           grep -q 'Comparative experimental evidence' report/build/verified.txt
