@@ -72,6 +72,46 @@ def research_plate(name,heading,caption):
         raise ValueError("Raw LaTeX plate caption contains an unescaped power")
     return raw_latex(r"\par\Needspace{.43\textheight}\section*{"+heading+r"}\begin{center}\includegraphics[width=\linewidth,height=.62\textheight,keepaspectratio]{atlas/"+name+r".pdf}\end{center}\noindent "+caption+r"\par")
 
+def final_render_plate(n, title, interpretation, observed=(1,2)):
+    """Two curated source-animation stills, NOT made-up numerical keyframes."""
+    manifest=json.loads((ROOT/"report/videos.json").read_text())
+    artifact=manifest.get(n)
+    if artifact is None:
+        raise RuntimeError(f"No verified media manifest entry for gallery G{n}")
+    folder=out/"frames"/f"{n}-{artifact}"
+    index_file=folder/"frames.json"
+    if not index_file.exists():
+        raise RuntimeError(f"No verified cached film frames for gallery G{n}: {artifact}")
+    meta=json.loads(index_file.read_text())
+    if meta["count"]<3 or len(meta["indices"])!=3:
+        raise RuntimeError(f"Incomplete frame metadata for G{n}")
+    plates=[]
+    for index in observed:
+        file=folder/f"{index}.jpg"
+        if not file.is_file() or file.stat().st_size<1024:
+            raise RuntimeError(f"Gallery image unavailable: {file}")
+        frame=int(meta["indices"][index])+1
+        seq=("INTERMEDIATE" if index==1 else
+             "FINAL" if index==2 else "INITIAL")
+        plates.append(
+            r"\begin{center}\includegraphics[width=.96\linewidth,height=.285\textheight,keepaspectratio]{"
+            +f"frames/{n}-{artifact}/{index}.jpg"
+            +r"}\par\medskip{\sffamily\bfseries\small "+seq+
+            f" PLAYBACK OBSERVATION  /  FRAME {frame} OF {meta['count']}"+
+            r"}\end{center}\par\medskip")
+    text=(
+        r"\clearpage\noindent{\sffamily\small\bfseries\color{phaseaccent} "
+        +f"FINAL RENDERS  /  GENERATION {n}"
+        +r"}\par\medskip{\sffamily\LARGE\bfseries\color{ontoink} "
+        +title+r"}\par\medskip{\color{phaseaccent}\hrule height 1.4pt}\par\medskip"
+        +"".join(plates)
+        +r"\noindent{\footnotesize\color{ontoink} "+interpretation+r"\par}"
+        +r"\par\medskip{\footnotesize Source GitHub Actions video artifact "
+        +str(artifact)+r"; frame labels reflect playback order, not numerical step.}"
+    )
+    return raw_latex(text)
+
+
 subprocess.run([os.sys.executable, str(ROOT / 'report/atlas.py')],check=True)
 subprocess.run([os.sys.executable,str(ROOT/'report/research_atlas.py')],check=True)
 subprocess.run([os.sys.executable,str(ROOT/'report/phase_art.py')],check=True)
@@ -122,7 +162,12 @@ if (engineering_dir/"summary.md").exists():
 else:
     body.append("Engineering telemetry was not collected for this build; no quantitative measurements are inferred.")
 body.append("## Reading the atlas {.unnumbered}\n\nThe early generations explore pattern formation and competing chemical fields. Subsequent phases introduce transport, resources and environmental feedback, followed by four-dimensional observation, inherited variation and structural construction. The experimental plates show selected moments in playback; numerical plots and fixed-coordinate sections provide complementary evidence. Read the chapters as a sequence of evolving questions rather than as steps toward a predetermined endpoint.")
-body.append(research_plate("research-genealogy","The genealogy of the investigation","Each revision inherits or extends a computational model. Amber marks revisions concentrated on instruments or controls. This chronology is not a biological genealogy."))
+body.append(research_plate("research-genealogy","The genealogy of the investigation","Chronological programme and thematic clusters, not a direct numerical-parentage graph. Amber marks observation-oriented revisions; explicit branch relationships appear on the following plate."))
+branch_diagram=ROOT/"docs/figures/research-finale.svg"
+if not branch_diagram.is_file():
+    raise RuntimeError("Missing late-experiment model ancestry SVG")
+subprocess.run(["rsvg-convert","-f","pdf","-o",str(out/"atlas/research-finale.pdf"),str(branch_diagram)],check=True)
+body.append(research_plate("research-finale","The late-experiment branch structure","Verified software inheritance branches at G0023: G0024 then G0025 develop construction and maintenance, while G0026 supports G0027 numerical measurement and G0028 intervention. Renderers may reuse artistic techniques without altering a later model's numerical ancestry."))
 for n,title,record in records:
     if int(n) in groups:
         phase_end=next((k-1 for k in groups if k>int(n)),len(records))
@@ -189,6 +234,17 @@ for n,title,record in records:
     if n=="0028":
         body.append(research_plate("0028-evidence","Localized disturbance: matched pilot measurements","Recorded numerical time series from the verified $12^{4}$, 240-step paired pilot (artifact 14670709650); the dashed line marks the external event at step 120. Differences are disturbed minus control; this is not full-resolution evidence."))
     body.append(frame_section(n))
+body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontogreen}"))
+body.append((ROOT/"report/final_renders.md").read_text())
+for generation,title,note in [
+    ("0024","Specialization: visible structure and measured limits",
+     "A sampled observatory, not the entire four-dimensional field. G0024 develops inherited construction traits and its final structural coverage depends strongly on the threshold."),
+    ("0025","Maintenance: the established volumetric baseline",
+     "G0025 uses a genuine 96-cubed volumetric ray sampler for a moving observed section. Light transport is an artistic rendering operation, not an extra simulation process."),
+    ("0028","Disturbance: limited-domain cinema",
+     "The source is the verified 12-to-the-fourth cinematic preview, not the full 24-to-the-fourth matched experiment. Camera motion and temporal interpolation do not establish post-shock ecological recovery."),
+]:
+    body.append(final_render_plate(generation,title,note))
 body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontogreen}"))
 body.append((ROOT/"report/synthesis.md").read_text().replace("## The original experiment revisited","## The original experiment revisited {.unnumbered}").replace("## What the experiments establish","## What the experiments establish {.unnumbered}").replace("## The limits of observation","## The limits of observation {.unnumbered}").replace("## Continuing the inquiry","## Continuing the inquiry {.unnumbered}"))
 body.append(research_plate("comparative-endpoints","Comparative experimental evidence","Upper: descriptive historical endpoints, not a controlled contrast. Lower: four matched-seed G0023 arms; the cost treatment bundles two penalties. All matrix values use threshold 0.20."))
