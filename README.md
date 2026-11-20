@@ -20,7 +20,7 @@ Ontogenesis investigates emergence both within a simulated world and within the 
 
 ## Latest verified animation — Generation 0025 — Energy-funded structural maintenance
 
-[Download standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44725486341/artifacts/14632512434) (2.28 MiB) · [Workflow](https://github.com/interrupt21h/ontogenesis/actions/workflows/maintenance.yml)
+[Download standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44767135810/artifacts/14651505406) (2.28 MiB) · [Workflow](https://github.com/interrupt21h/ontogenesis/actions/workflows/maintenance.yml)
 
 Authentication required; artifacts expire after 30 days.
 
