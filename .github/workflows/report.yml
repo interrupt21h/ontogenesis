@@ -9,6 +9,7 @@ on:
       - '.github/workflows/report.yml'
 permissions:
   contents: read
+  actions: read
 concurrency:
   group: scientific-report
   cancel-in-progress: true
@@ -21,7 +22,16 @@ jobs:
       - name: Install LaTeX and Pandoc
         run: |
           sudo apt-get update
-          sudo apt-get install -y pandoc latexmk texlive-latex-extra texlive-pictures texlive-fonts-recommended poppler-utils
+          sudo apt-get install -y pandoc latexmk texlive-latex-extra texlive-pictures texlive-fonts-recommended poppler-utils ffmpeg
+      - uses: actions/cache@v4
+        with:
+          path: report/build/frames
+          key: report-frames-v1-${{ hashFiles('report/videos.json') }}
+          restore-keys: report-frames-v1-
+      - name: Extract verified animation frames
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 report/frames.py
       - run: python3 report/build.py
       - name: Verify PDF
         run: |
@@ -44,6 +54,7 @@ jobs:
             report/build/ontogenesis.tex
             report/build/report.md
             report/preamble.tex
+            report/build/frames
       - name: Link report
         run: echo '[Download standalone PDF](${{ steps.pdf.outputs.artifact-url }})' >> "$GITHUB_STEP_SUMMARY"
       - name: Preserve compilation diagnostics on failure
