@@ -88,6 +88,10 @@ Calculated from G0018's exponential barrier factor, holding the unattenuated loc
 
 Logged final structural coverage at threshold 0.2. G0017 has one occupied cell out of 331,776. This is an endpoint comparison across different models and durations, not a controlled causal experiment.
 
+## Measured example: a paired environmental disturbance
+
+The G0028 pilot tests an intervention rather than introducing a new evolved biological mechanism. Two copies of the inherited four-dimensional system use matching initial states and random seeds; one receives a single localized Gaussian reduction of energy and matrix at step 120. In the 12⁴, 240-step pilot, the matched regional energy difference declined from -0.52454 to -0.00440 by the endpoint, and the matrix difference from -0.003330 to -0.000363. A dedicated evidence plate in the G0028 chapter plots both trajectories and their differences from native numerical records. The initial matrix concentration in the affected region was small and already declining; attenuation of a contrast is not evidence of mature structural regeneration. No full 24⁴ outcome has yet been established.
+
 ## Reading the evidence
 
 The reported observations are predominantly single-seed experiments. Active coverage is not mass. Identity events depend on sampling cadence. A successful render establishes execution, not a biological or scientific validation. The report distinguishes analytical examples from measurements and records pending experiments explicitly.

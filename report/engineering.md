@@ -25,6 +25,12 @@ The simulation jobs for G0024 and G0025 were changed to manual dispatch (subsequ
 
 A successful experiment is not equivalent to successful downstream publication. Release files may lag source changes, and artifact expiry can prevent historical reconstruction. Publication therefore depends on preserved source data, not solely on workflow success. The workflow topology illustration records declarative completion triggers; explicit CLI dispatches and path-filtered push triggers are additional edges described in the source.
 
+## Post-consolidation execution discipline
+
+G0027 now executes only a verified short smoke test on push, with the expensive 24⁴ / 4800-step simulation and optional repeated observer pass behind explicit manual inputs. G0026 received the same manual gate for its historical full-domain reference after optional, default-inert intervention and observation hooks were introduced. The G0028 paired shock experiment adds a budgeted automatic 12⁴ pilot and a separately opted-in 24⁴ two-universe run. Its complete numeric result is archived as JSON; measured-field video rendering and the scientific PDF are downstream activities and do not rerun the simulation. A corrected six-panel pilot film holds authentic sampled frames for legibility rather than interpolating new numerical states.
+
+The evolution film no longer rebuilds when the G0026 smoke check passes. Subsequent media-manifest updates, rather than unrelated documentation changes, initiate new film editions. This protects limited GitHub-hosted CPU runner time without weakening the documented controls.
+
 ## Failure and adaptation
 
 | Observed pressure | Engineering response |
