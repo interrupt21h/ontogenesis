@@ -68,6 +68,20 @@ jobs:
             test -s "report/build/evidence/$gen/result.json"
           done
           python report/consolidation_atlas.py
+      - name: Retrieve verified G0028 pilot evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p report/build/evidence/0028
+          if gh release download atlas-media -p "disturbance-evidence-0028.json" -D report/build/evidence/0028; then
+            mv report/build/evidence/0028/disturbance-evidence-0028.json report/build/evidence/0028/result.json
+          else
+            gh api "repos/interrupt21h/ontogenesis/actions/artifacts/14670709650/zip" > /tmp/g0028-pilot.zip
+            unzip -o /tmp/g0028-pilot.zip -d report/build/evidence/0028
+          fi
+          test -s report/build/evidence/0028/result.json
+          python report/disturbance_atlas.py report/build/evidence/0028/result.json report/build/atlas/0028-evidence.pdf
+          test -s report/build/atlas/0028-evidence.pdf
       - name: Validate report generator syntax
         run: python3 -m compileall -q report
       - name: Collect engineering atlas
@@ -84,6 +98,8 @@ jobs:
           for plate in repository-growth execution-timeline artifact-production workflow-topology; do test -s "report/build/engineering/$plate.pdf"; done
           test -s report/build/atlas/0026-evidence.pdf
           test -s report/build/atlas/0027-evidence.pdf
+          test -s report/build/atlas/0028-evidence.pdf
+          grep -q 'Generation 0028' report/build/verified.txt
           grep -q 'About the artist' report/build/verified.txt
           grep -q 'Generation 0024' report/build/verified.txt
           grep -q 'Generation 0001' report/build/verified.txt
@@ -127,6 +143,8 @@ jobs:
             cp "report/build/evidence/$gen/result.json" "report/build/evidence/$gen/structural-evidence-$gen.json"
             gh release upload atlas-media "report/build/evidence/$gen/structural-evidence-$gen.json" --clobber
           done
+          cp report/build/evidence/0028/result.json report/build/evidence/0028/disturbance-evidence-0028.json
+          gh release upload atlas-media report/build/evidence/0028/disturbance-evidence-0028.json --clobber
           gh release upload atlas-media report/build/ontogenesis.pdf --clobber
       - name: Link report
         run: echo '[Download standalone PDF](${{ steps.pdf.outputs.artifact-url }})' >> "$GITHUB_STEP_SUMMARY"

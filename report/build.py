@@ -183,6 +183,8 @@ for n,title,record in records:
             body.append(research_plate(n+"-"+suffix,heading,caption))
     if n in ("0026","0027"):
         body.append(research_plate(n+"-evidence","Measured evidence","Recorded full-resolution numerical diagnostics, seed 42, 4800 steps. These are measurements, not reconstructed spatial fields. Artifact identifiers appear on the plate."))
+    if n=="0028":
+        body.append(research_plate("0028-evidence","Localized disturbance: matched pilot measurements","Recorded numerical time series from the verified 12^4, 240-step paired pilot (artifact 14670709650); the dashed line marks the external event at step 120. Differences are disturbed minus control; this is not full-resolution evidence."))
     body.append(frame_section(n))
 body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontogreen}"))
 body.append((ROOT/"report/synthesis.md").read_text().replace("## The original experiment revisited","## The original experiment revisited {.unnumbered}").replace("## What the experiments establish","## What the experiments establish {.unnumbered}").replace("## The limits of observation","## The limits of observation {.unnumbered}").replace("## Continuing the inquiry","## Continuing the inquiry {.unnumbered}"))
