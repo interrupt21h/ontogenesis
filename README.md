@@ -4,7 +4,7 @@ An experiment in computational emergence. Each generation preserves its rules, s
 
 ## Artistic vision and creative methodology
 
-Ontogenesis investigates emergence both within a simulated world and within the recursive human–AI process that constructs it. Scott Muller directs the artistic inquiry while AI participates extensively in mathematical synthesis, software implementation, interpretation and documentation. The delegation of complexity is itself part of the medium.
+Ontogenesis investigates emergence both within a simulated world and within the recursive human–AI process that constructs it. I direct the artistic inquiry while AI participates extensively in mathematical synthesis, software implementation, interpretation and documentation. The delegation of complexity is itself part of the medium.
 
 **[Recursive creation: human intention, machine intelligence and computational emergence](docs/RECURSIVE_CREATION.md)** — an essay on the artistic method, distributed authorship and the relationship between simulated evolution and creative development.
 
@@ -52,6 +52,8 @@ Ontogenesis investigates emergence in continuous, periodic reaction–diffusion 
 | 0022 | [Structural heredity](docs/generations/0022.md) | [Python](niche.py) | [Runs](.github/workflows/niche.yml) · Verified |
 | 0023 | [Factorial niche controls](docs/generations/0023.md) | [Python](controls.py) | [Runs](.github/workflows/controls.yml) · Pending verification |
 | 0024 | [Independent construction specialization](docs/generations/0024.md) | [Python](specialization.py) | [Runs](.github/workflows/specialization.yml) · Pending verification |
+
+| 0025 | [Energy-funded structural maintenance](docs/generations/0025.md) | [Python](maintenance.py) | [Runs](.github/workflows/maintenance.yml) · Pending verification |
 
 ## Reproduce locally
 
