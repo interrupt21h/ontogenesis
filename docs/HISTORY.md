@@ -964,3 +964,34 @@ Results pending. Independent loci and reduced costs change simultaneously, so th
 ## Research priorities
 
 Morphogenesis: investigate selective permeability, localized metabolism and compartment boundaries; measure four-dimensional surface/volume and cavities. Before attributing effects, compare matched-seed controls, disable new mechanisms independently, run parameter sweeps and report uncertainty. No generation establishes consciousness, biological life or autonomous organisms.
+
+## Generation 0025 — Energy-funded structural maintenance
+
+**Research question:** Can structural construction persist when maintenance draws on shared local energy?
+
+### Implementation and parameters
+
+Parent: G0024. Retain all four independent binary loci, seed 42, periodic 24⁴ lattice, 4800 integration steps and sampling stride 4. Add an ongoing local energy debit after energy replenishment and birth consumption, before structural evolution. Let B denote total builder concentration, E available energy and M existing structural concentration.
+
+```math
+\begin{aligned}
+H &= \frac{B}{0.08+B}E \\
+P &= \min(E,0.015HM) \\
+E' &= E-P \\
+\Delta M &= 0.025L(M)+D(1-M)\\
+&\quad -(0.005+0.006\,\mathrm{pulse})(1-0.65H)M
+\end{aligned}
+```
+
+D is inherited matrix deposition. Maintenance protection uses pre-payment H; payment is bounded by available energy. The coefficient 0.015 is an exploratory choice in dimensionless units. The debit affects shared local energy rather than exclusively builder genotypes. This is not a thermodynamic budget.
+
+
+### Visualization and observed results
+
+Pending CI. Retains observatory, native field archives and topology diagnostics; adds cumulative maintenance energy debit.
+
+### Interpretation and limitations
+
+Single matched seed; shared resource debit, not genotype-specific expenditure. No demonstrated cooperation.
+
+[Source](../maintenance.py) · [Workflow](../.github/workflows/maintenance.yml)
