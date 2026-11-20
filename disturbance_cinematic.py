@@ -78,6 +78,10 @@ def create_archive(out, metadata, *, seed=42, n=16, steps=720,
             "core_matrix": float(fields["matrix"][core].mean()),
             "global_energy": float(fields["energy"].mean()),
             "global_matrix": float(fields["matrix"].mean()),
+            "volume_matrix_std": float(section[0].std()),
+            "visible_v_peak": float(section[1].max()),
+            "visible_w_peak": float(section[2].max()),
+            "visible_pulse_peak": float(section[3].max()),
         })
 
     result = consolidation.run(
@@ -144,6 +148,15 @@ def create_archive(out, metadata, *, seed=42, n=16, steps=720,
         "archive": {"filename": out.name, "sha256": digest, "bytes": out.stat().st_size},
         "frame_metrics": metrics,
         "numerical_hashes": result["hashes"],
+        "artistic_signal_diagnostics": {
+            "observed_fraction_with_v_peak_over_0p02":
+                sum(row["visible_v_peak"] > .02 for row in metrics) / len(metrics),
+            "observed_fraction_with_w_peak_over_0p02":
+                sum(row["visible_w_peak"] > .02 for row in metrics) / len(metrics),
+            "observed_fraction_with_pulse_peak_over_0p05":
+                sum(row["visible_pulse_peak"] > .05 for row in metrics) / len(metrics),
+            "interpretation": "Simple visibility proxies, not ecological or aesthetic proof",
+        },
         "final": {"matrix_mean": result["final"]["matrix_mean"],
                   "energy": metrics[-1]["global_energy"],
                   "v_active": result["final"]["v_active"],

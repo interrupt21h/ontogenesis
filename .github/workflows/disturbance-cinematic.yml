@@ -20,18 +20,23 @@ concurrency:
   cancel-in-progress: false
 jobs:
   preview:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
-      - name: Install numerical and cinematic runtime
+      - name: Install pinned cinematic runtime and verify host tools
         run: |
           pip install numpy==2.2.6 pillow==11.2.1
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg fonts-dejavu-core
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! test -f /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf; then
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg fonts-dejavu-core
+          fi
+          ffmpeg -version | head -n 1
       - name: Validate code and rendering imports
         run: |
           python -m compileall -q consolidation.py disturbance_cinematic.py disturbance_cinematic_render.py
@@ -70,10 +75,19 @@ jobs:
           path: cinematic-preview.npz
           if-no-files-found: error
           retention-days: 30
+      - name: Archive preview observations and movie for independent rerendering
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view atlas-media >/dev/null 2>&1 || gh release create atlas-media --title "Scientific atlas archive" --notes "Verified scientific and artistic numerical source media" --prerelease
+          gh release upload atlas-media cinematic-preview.npz cinematic-preview.json ontogenesis-0028-preview.mp4 ontogenesis-0028-preview.png --clobber
+          echo "Verified preview media and native fields archived in atlas-media" >> "$GITHUB_STEP_SUMMARY"
   full:
     if: github.event_name == 'workflow_dispatch' && inputs.full_resolution
     needs: preview
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
     timeout-minutes: 350
     steps:
       - uses: actions/checkout@v5
@@ -81,7 +95,11 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install numpy==2.2.6 pillow==11.2.1
-      - run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-dejavu-core
+      - run: |
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! test -f /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf; then
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg fonts-dejavu-core
+          fi
       - run: python -c 'import numpy as np; np.show_runtime()'
       - run: lscpu
       - name: Archive a single developing high-resolution 4D universe
@@ -106,3 +124,10 @@ jobs:
           path: cinematic-full.npz
           if-no-files-found: error
           retention-days: 30
+      - name: Publish full-resolution film and numeric fields as durable release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view atlas-media >/dev/null 2>&1 || gh release create atlas-media --title "Scientific atlas archive" --notes "Verified scientific and artistic numerical source media" --prerelease
+          gh release upload atlas-media cinematic-full.npz cinematic-full.json ontogenesis-0028-cinematic.mp4 ontogenesis-0028-cinematic.png --clobber
+          echo "Full 4D-derived cinematic master and native 3D observations archived in atlas-media" >> "$GITHUB_STEP_SUMMARY"
