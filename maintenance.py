@@ -249,6 +249,8 @@ def topology_selftest():
 class Tracker:
     def __init__(self):
         self.previous=None
+        self.stable_mask=None
+        self.persistence=None
         self.next_id=1
         self.birth={}
         self.history=[]
@@ -366,6 +368,14 @@ def main():
             def section(a):
                 return (1-frac)*a[index]+frac*a[(index+1)%N]
             identities,entity_metrics=tracker.update(m,step)
+            if tracker.stable_mask is None:
+                tracker.stable_mask=np.zeros_like(m,dtype=bool)
+                tracker.persistence=np.zeros_like(m,dtype=np.int16)
+            candidate=np.where(tracker.stable_mask,m>.18,m>.22)
+            tracker.persistence=np.where(candidate,np.minimum(tracker.persistence+1,3),0)
+            tracker.stable_mask=candidate & (tracker.stable_mask | (tracker.persistence>=3))
+            _,stable_sizes=periodic_labels(tracker.stable_mask.astype(np.float32))
+            entity_metrics.update(stable_components=sum(n>=8 for n in stable_sizes.values()),stable_cells=sum(n for n in stable_sizes.values() if n>=8))
             pooled=gv+gw
             allele=np.clip((xv+xw)/.3,0,1)
             totals=pooled.sum(axis=(1,2,3,4),dtype=np.float64)
