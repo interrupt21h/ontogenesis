@@ -42,6 +42,8 @@ Authentication required; artifacts expire after 30 days.
 
 **[Download latest published evolution MP4](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-evolution.mp4)** · [Film provenance](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/film-provenance.json) · [Film builds](https://github.com/interrupt21h/ontogenesis/actions/workflows/film.yml)
 
+The G0028 chapter currently uses the **verified 12⁴ cinematic preview** (artifact 14675921895), explicitly labelled a small-domain artistic demonstration; it will not be described as full-resolution ecological evidence. The long-running 24⁴ G0028 cinematic master has not yet passed its full job or visual review.
+
 The combined film is rebuilt automatically following successful experiment workflows. Original videos retain their playback duration; G0001 uses labelled archived stills and headless consolidation experiments use measured summaries when verified. Each generation is independently initialized. The release links become available after the first successful film build and retain the latest successfully published edition.
 
 ## Engineering evolution

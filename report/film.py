@@ -107,10 +107,16 @@ def main():
     for gen,artifact in sorted(manifest.items()):
         p,info=source(gen,artifact)
         title=OUT/f"chapter-{gen}.mp4"; clip=OUT/f"clip-{gen}.mp4"
-        card([f"GENERATION {gen}",titles.get(gen,""),("Archived still sequence" if gen=="0001" else "Measured summary, not simulation footage" if gen=="0026" else "Independent numerical experiment")],title,2.5)
+        subtitle=("Archived still sequence" if gen=="0001" else
+                  "Measured summary, not simulation footage" if gen=="0026" else
+                  "Cinematic small-domain preview / 12^4 / not mature-life evidence"
+                  if gen=="0028" and artifact==14675921895 else
+                  "Cinematic master / 24^4" if gen=="0028" else
+                  "Independent numerical experiment")
+        card([f"GENERATION {gen}",titles.get(gen,""),subtitle],title,2.5)
         encode(["-i",str(p),"-vf","fps=24,scale=1280:720:force_original_aspect_ratio=decrease:force_divisible_by=2,pad=1280:720:(ow-iw)/2:(oh-ih)/2:color=0x101c29,setsar=1"],clip)
         segments.extend([title,clip])
-        records.append(dict(generation=gen,artifact=artifact,kind="archived_stills" if gen=="0001" else "measured_summary" if gen=="0026" else "original_video",source_sha256=hashlib.sha256(p.read_bytes()).hexdigest(),source_duration=float(info["format"]["duration"]),normalized_duration=float(probe(clip)["format"]["duration"]),source=p.name))
+        records.append(dict(generation=gen,artifact=artifact,kind="archived_stills" if gen=="0001" else "measured_summary" if gen=="0026" else "cinematic_preview" if gen=="0028" and artifact==14675921895 else "cinematic_master" if gen=="0028" else "original_video",source_sha256=hashlib.sha256(p.read_bytes()).hexdigest(),source_duration=float(info["format"]["duration"]),normalized_duration=float(probe(clip)["format"]["duration"]),source=p.name))
     end=OUT/"end.mp4";card(["ONTOGENESIS","End of verified video sequence","See the scientific monograph for methods and limitations"],end,5);segments.append(end)
     concat=OUT/"concat.txt";concat.write_text("".join(f"file '{p.name}'\n" for p in segments))
     film=OUT/"ontogenesis-evolution.mp4"
