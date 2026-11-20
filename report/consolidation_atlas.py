@@ -10,7 +10,7 @@ root=Path(__file__).resolve().parent/"build"
 out=root/"atlas"
 out.mkdir(parents=True,exist_ok=True)
 plt.rcParams.update({"font.size":11,"axes.spines.top":False,"axes.spines.right":False,"axes.titleweight":"bold","axes.labelcolor":"#19334a"})
-for gen,artifact in (("0026",14651386328),("0027",14662151055)):
+for gen,artifact in (("0026",14651386328),("0027",14670723105)):
     data=json.loads((root/"evidence"/gen/"result.json").read_text())
     assert data["n"]==24 and data["steps"]==4800 and data["seed"]==42
     m=data["final"]
