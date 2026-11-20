@@ -92,18 +92,49 @@ def main():
         if a.get("created_at") and a["created_at"]<=END: sizes[a["workflow"]]+=a["size_in_bytes"] or 0
     top=sizes.most_common(12);ax[1].barh([x[0] for x in top],[x[1]/1048576 for x in top],color="#398873");ax[1].tick_params(axis="y",labelsize=7);ax[1].set_xlabel("MiB");ax[1].set_title("Retained artifact metadata (top 12)")
     chart("artifact-production",fig)
-    fig,ax=plt.subplots(figsize=(10,9),layout="constrained");ax.axis("off")
+    # Group the real declared workflow_run graph rather than plotting dozens
+    # of nearly coincident edges that are unreadable at monograph page size.
+    from matplotlib.patches import FancyBboxPatch
     upstream=[g for g in graph if g["upstream"]]
-    ax.text(.03,.96,"Experiment completion sources",weight="bold",transform=ax.transAxes)
-    ax.text(.68,.96,"Publication workflows",weight="bold",transform=ax.transAxes)
-    allsrc=sorted(set(n for g in upstream for n in g["upstream"]))
-    for i,n in enumerate(allsrc):
-        y=.9-i*.8/max(1,len(allsrc)-1)
-        ax.text(.03,y,n,fontsize=11,transform=ax.transAxes,va="center")
-        for j,g in enumerate(upstream):
-            if n in g["upstream"]: ax.plot([.35,.66],[y,.75-j*.35],color="#5686aa",alpha=.55,linewidth=.8,transform=ax.transAxes)
-    for j,g in enumerate(upstream): ax.text(.68,.75-j*.35,g["name"],fontsize=11,weight="bold",transform=ax.transAxes)
-    ax.text(.03,.025,"Declarative workflow_run edges only; CLI dispatch and push paths are discussed separately.",fontsize=8,transform=ax.transAxes)
+    sources=sorted(set(n for g in upstream for n in g["upstream"]))
+    fig,ax=plt.subplots(figsize=(11.5,6),layout="constrained")
+    ax.set_xlim(0,12);ax.set_ylim(0,6);ax.axis("off")
+    def node(x,y,w,h,title,details,fill,stroke):
+        ax.add_patch(FancyBboxPatch((x,y),w,h,boxstyle="round,pad=.08,rounding_size=.12",
+                                    linewidth=1.6,edgecolor=stroke,facecolor=fill))
+        ax.text(x+.2,y+h-.32,title,weight="bold",fontsize=14,va="top",color="#19334a")
+        ax.text(x+.2,y+h-.85,details,fontsize=10.5,va="top",color="#345b70",
+                linespacing=1.55)
+    ax.text(.25,5.68,"A grouped view of actual YAML workflow_run dependencies",
+            fontsize=15,weight="bold",color="#19334a")
+    # These are real upstream workflow names, not a physical dependency chain.
+    categories={"Early experiments":sum(x.startswith("Generation 00") and
+                      x[-4:].isdigit() and int(x[-4:])<=17 for x in sources),
+                "Later experiments":sum(x.startswith("Generation 00") and
+                      x[-4:].isdigit() and int(x[-4:])>17 for x in sources)}
+    other=len(sources)-sum(categories.values())
+    detail="\n".join(f"{label}: {amount}" for label,amount in categories.items()
+                     if amount)
+    if other: detail+=f"\nOther declared workflows: {other}"
+    node(.3,2.07,4.4,2.72,"DECLARED SOURCE SET",
+         f"{len(sources)} distinct upstream names\n"+detail,
+         "#ecf5f6","#3c879c")
+    workflows=upstream[:3]
+    for i,g in enumerate(workflows):
+        y=3.45-i*1.50
+        label=g["name"]
+        if len(label)>27:label=label[:26]+"…"
+        count=len(set(g["upstream"]))
+        node(6.6,y,5.05,1.12,label,
+             f"{count} declared workflow_run sources","#f4f5fb","#698cb4")
+        ax.annotate("",xy=(6.42,y+.55),xytext=(4.86,3.36),
+                    arrowprops={"arrowstyle":"->","color":"#578aa6","lw":2.0})
+    ax.text(.45,.85,"Arrows summarize declared workflow_run trigger membership.",
+            fontsize=11,color="#19334a")
+    ax.text(.45,.52,"Push-path, explicit manual dispatch, release uploads and data reuse",
+            fontsize=10.5,color="#56788b")
+    ax.text(.45,.26,"are separate mechanisms; no nonexistent edges are implied.",
+            fontsize=10.5,color="#56788b")
     chart("workflow-topology",fig)
     seconds=sum(max(0,(min(date(j["completed_at"]),date(END))-max(date(j["started_at"]),date(START))).total_seconds()) for j in jobs if j["started_at"] and j["completed_at"])
     lines=["## Recorded engineering metrics","",f"Collected at {snapshot['collected']}; source revision is recorded in the accompanying JSON. The milestone window is {START} to {END}.","", "| Metric | Value |","|---|---:|",f"| Commits in milestone window | {sum(window(c['time']) for c in commits)} |",f"| Workflow definitions at report revision | {len(graph)} |",f"| Observable run records initiated in window | {len(rr)} |",f"| Latest-attempt job records retrieved | {len(jobs)} |",f"| Completed-job overlap with window (hours) | {seconds/3600:.2f} |",f"| Observable artifact volume created by milestone (MiB) | {sum(sizes.values())/1048576:.2f} |","", "Job hours are a partial aggregate, not billing or human effort. Run states are observed at collection, not reconstructed as of the milestone. Deleted or expired metadata and prior attempts may be missing. No human time was measured."]
