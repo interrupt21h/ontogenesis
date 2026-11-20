@@ -38,3 +38,13 @@
 \setlength{\headheight}{15pt}
 \captionsetup{font=small,labelfont=bf}
 \AtBeginDocument{\hypersetup{colorlinks=true,linkcolor=ontoblue,urlcolor=ontoblue}}
+
+% Compact thematic transitions rather than empty divider sheets.
+\titleclass{\part}{straight}
+\titleformat{\part}[block]{\sffamily\Large\bfseries\color{ontoblue}}{\thepart}{1em}{}[\color{ontogreen}\titlerule]
+\titlespacing*{\part}{0pt}{12pt}{12pt}
+\raggedbottom
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\chapter}{\thispagestyle{plain}}{\thispagestyle{fancy}}{}{}
+\makeatother
