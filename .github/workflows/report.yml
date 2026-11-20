@@ -41,7 +41,10 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p report/build/numerical/0024
-          gh release view atlas-media --json assets > /tmp/atlas-assets.json
+          if ! gh release view atlas-media --json assets > /tmp/atlas-assets.json; then
+            echo 'No atlas release available yet' >&2
+            exit 0
+          fi
           if python -c 'import json,sys; sys.exit(not any(a["name"]=="field-state-0024.tar.gz" for a in json.load(open("/tmp/atlas-assets.json"))["assets"]))'; then
             gh release download atlas-media -p field-state-0024.tar.gz -D /tmp
             tar -xzf /tmp/field-state-0024.tar.gz -C report/build/numerical/0024
