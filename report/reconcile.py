@@ -18,7 +18,7 @@ def artifact(name):
     if len(matches)!=1: raise RuntimeError(f"Expected one artifact {name}")
     return matches[0]
 video=artifact("evolution.mp4")
-diag=artifact("generation-"+gen)
+diag=artifact("generation-"+gen+("-combined" if gen=="0023" else ""))
 base=f"https://github.com/{repo}/actions/runs/{run_id}"
 url=f"{base}/artifacts/{video['id']}"
 manifest=Path("report/videos.json")
