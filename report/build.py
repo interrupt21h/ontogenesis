@@ -171,7 +171,7 @@ body.append(research_plate("comparative-endpoints","Comparative experimental evi
 body.append("## Provenance {.unnumbered}\n\nSource revision: `"+revision+"`. The source revision identifies the published model and experimental records. Numerical results refer to the configurations described in each chapter. Editorial artwork accompanies thematic introductions and the creative essay. Analytical diagrams describe model relationships; simulation views depict sampled numerical states.")
 author = (ROOT/"docs/AUTHOR.md").read_text()
 author = author.replace("# About the artist", "# About the artist {.unnumbered}",1)
-author = author.replace("Scott Muller is",raw_latex(r"\begin{center}\includegraphics[width=\linewidth,height=.19\textheight,keepaspectratio]{phase_art/9.png}\end{center}{\sffamily\bfseries\LARGE\color{ontoink} Scott Muller\par}{\sffamily\small\color{ontoblue} Scientific visualization / Systems engineering / Computational art\par}\medskip")+"Scott Muller is",1)
+author = author.replace("I am",raw_latex(r"\begin{center}\includegraphics[width=\linewidth,height=.19\textheight,keepaspectratio]{phase_art/9.png}\end{center}{\sffamily\bfseries\LARGE\color{ontoink} Scott Muller\par}{\sffamily\small\color{ontoblue} Scientific visualization / Systems engineering / Computational art\par}\medskip")+"I am",1)
 body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontogreen}"))
 body.append(author)
 (out/"report.md").write_text("\n\n".join(body))
