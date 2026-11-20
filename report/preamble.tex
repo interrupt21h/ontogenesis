@@ -62,3 +62,27 @@
 \usepackage{needspace}
 \let\AtlasOriginalSection\section
 \renewcommand{\section}{\Needspace{4\baselineskip}\AtlasOriginalSection}
+
+% Phase-specific editorial accents and substantial chapter hierarchy.
+\definecolor{phaseI}{HTML}{087C91}
+\definecolor{phaseII}{HTML}{235BA4}
+\definecolor{phaseIII}{HTML}{087B65}
+\definecolor{phaseIV}{HTML}{7356A3}
+\definecolor{phaseV}{HTML}{A34D46}
+\definecolor{phaseVI}{HTML}{A46B20}
+\definecolor{phaseVII}{HTML}{376F83}
+\colorlet{phaseaccent}{ontogreen}
+\definecolor{phaseblack}{HTML}{101E2D}
+\titleformat{\chapter}[display]{\sffamily\bfseries\fontsize{25}{29}\selectfont\color{ontoink}}{}{0pt}{}[\vspace{4pt}{\color{phaseaccent}\titlerule[2pt]}]
+\titleformat{name=\chapter,numberless}[display]{\sffamily\bfseries\fontsize{25}{29}\selectfont\color{ontoink}}{}{0pt}{}[\vspace{4pt}{\color{phaseaccent}\titlerule[2pt]}]
+\titlespacing*{\chapter}{0pt}{0pt}{12pt}
+\titleformat{\section}{\sffamily\large\bfseries\color{phaseaccent}}{\thesection}{.6em}{}
+\titlespacing*{\section}{0pt}{10pt plus 2pt}{4pt}
+\titleformat{\part}[block]{\sffamily\bfseries\fontsize{29}{33}\selectfont\color{white}}{}{0pt}{}
+\titlespacing*{\part}{0pt}{0pt}{9pt}
+\newcommand{\PhaseBand}[2]{%
+ \noindent\colorbox{phaseaccent}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\vspace{5pt}\sffamily\bfseries\color{white}\large PART #1\hfill GENERATIONS #2\par\vspace{5pt}}}\par\medskip}
+\renewcommand{\AtlasPlateHeading}[3]{%
+ \noindent\colorbox{phaseaccent}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\sffamily\bfseries\color{white}\small GENERATION #1 \hfill SIMULATION PLATE}}\par
+ \medskip{\sffamily\LARGE\bfseries\color{ontoink} #2\par}
+ {\sffamily\small\color{phaseaccent} Playback frame #3\par}\medskip}
