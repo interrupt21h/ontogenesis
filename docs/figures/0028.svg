@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 295" role="img" aria-label="Conceptual matched environmental-shock experiment">
+<rect width="1160" height="295" rx="20" fill="#102f49"/>
+<text x="36" y="38" font-family="sans-serif" font-size="18" font-weight="bold" fill="#eaf5fa">G0028 / PAIRED ENVIRONMENTAL INTERVENTION</text>
+<text x="36" y="62" font-family="sans-serif" font-size="13" fill="#9cbed0">CONCEPTUAL SCHEMATIC — NOT SIMULATED DATA</text>
+<g font-family="sans-serif" text-anchor="middle">
+<rect x="30" y="93" width="306" height="132" rx="12" fill="#1c5270" stroke="#62babe" stroke-width="2"/>
+<text x="183" y="127" fill="white" font-size="20" font-weight="bold">Identical initial universes</text>
+<text x="183" y="157" fill="#d6edf5" font-size="15">Matched seed and model</text>
+<text x="183" y="186" fill="#b6d9e7" font-size="14">Unperturbed control</text>
+<path d="M339 159 H401 M390 149 L403 159 L390 169" fill="none" stroke="#84cdd3" stroke-width="4"/>
+<rect x="409" y="93" width="325" height="132" rx="12" fill="#315063" stroke="#efb55f" stroke-width="2"/>
+<text x="571" y="127" fill="white" font-size="20" font-weight="bold">Localized energy + matrix loss</text>
+<text x="571" y="157" fill="#f5dfb6" font-size="15">Single periodic 4D Gaussian shock</text>
+<text x="571" y="186" fill="#e8d3b0" font-size="14">At the simulation midpoint</text>
+<path d="M737 159 H807 M796 149 L810 159 L796 169" fill="none" stroke="#84cdd3" stroke-width="4"/>
+<rect x="818" y="93" width="311" height="132" rx="12" fill="#1c5270" stroke="#62babe" stroke-width="2"/>
+<text x="973" y="127" fill="white" font-size="20" font-weight="bold">Compare local deviations</text>
+<text x="973" y="157" fill="#d6edf5" font-size="15">Actual E, M sections + metrics</text>
+<text x="973" y="186" fill="#b6d9e7" font-size="14">Recovery is tested, not presumed</text>
+</g>
+<text x="580" y="264" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#a9ccd9">A diagram of experimental design, distinct from the measured motion-picture and evidence plate.</text>
+</svg>

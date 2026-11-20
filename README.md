@@ -77,6 +77,7 @@ Ontogenesis investigates emergence in continuous, periodic reaction–diffusion 
 | 0025 | [Energy-funded structural maintenance](docs/generations/0025.md) | [Python](maintenance.py) | [Runs](.github/workflows/maintenance.yml) · Verified |
 | 0026 | [Observer independence](docs/generations/0026.md) | [Python](consolidation.py) | [Runs](.github/workflows/consolidation.yml) · Verified |
 | 0027 | [Structural statistics](docs/generations/0027.md) | [Python](structural_statistics.py) | [Runs](.github/workflows/structural-statistics.yml) · Verified execution; cross-run hashes differ |
+| 0028 | [Localized disturbance and recovery](docs/generations/0028.md) | [Python](disturbance.py) · [Renderer](disturbance_render.py) | [Runs](.github/workflows/disturbance.yml) · Pilot CI pending; full manual |
 
 ## Reproduce locally
 

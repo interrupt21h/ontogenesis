@@ -1348,3 +1348,14 @@ Compare checkpoint hashes to G0026 when the full result is available. No claim o
 
 
 **G0027 verification update (2026-11-20):** [Run 44814192851](https://github.com/interrupt21h/ontogenesis/actions/runs/44814192851) completed full-resolution matched same-process verification with 41/41 matching checkpoints. Endpoint measurements agree with the earlier G0027 archive. This supports non-invasive observation within the tested execution, but not bitwise agreement between separate GitHub runners. Subsequent full runs are manual; smoke tests remain automatic. The report reuses archived diagnostics rather than rerunning the universe.
+
+
+## Generation 0028 — Localized disturbance and recovery
+
+Status: implementation committed; CI verification and measured outcomes pending. This experiment follows the planned G0028–G0032 finale, keeping the full-resolution baseline costly runs manually gated on standard GitHub-hosted CPU runners. It adds a single deterministic Gaussian intervention halfway through a seeded trajectory, separately depleting local energy and matrix. An unperturbed arm of the same seed and initialization supplies a contemporaneous control.
+
+The automated 12⁴/240-step pilot and optional 24⁴/4800-step paired comparison record real 2D sections from both arms, native numerical measurements, and checkpoint hashes. A standalone H.264 MP4 and scientific PNG plate are derived from those observations, with fixed comparative scales and no reconstructed fields. Recovery of local mean energy or matrix is assessed as attenuation of the paired difference, not asserted in advance.
+
+The G0026 full-resolution workflow was also moved behind manual dispatch; prior verified G0026/G0027 claims and archives remain intact. No new measured result, full-resolution video or recovery effect is claimed until CI validates it.
+
+[Detailed record](generations/0028.md) · [Source](../disturbance.py) · [Workflow](../.github/workflows/disturbance.yml).
