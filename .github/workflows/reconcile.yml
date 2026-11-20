@@ -1,0 +1,42 @@
+name: Reconcile experiment publication
+on:
+  workflow_run:
+    workflows: [Generation 0024, Generation 0025]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: Successful experiment run ID
+        required: true
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: reconcile-experiment
+  cancel-in-progress: false
+jobs:
+  reconcile:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+      - name: Reconcile and publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ inputs.run_id || github.event.workflow_run.id }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            python3 report/reconcile.py "$RUN_ID"
+            git add README.md docs/HISTORY.md docs/generations report/videos.json
+            if git diff --cached --quiet; then break; fi
+            git commit -m "Reconcile verified experiment $RUN_ID"
+            if git push origin HEAD:main; then break; fi
+            test "$attempt" != 3
+          done
+          gh workflow run report.yml --ref main
