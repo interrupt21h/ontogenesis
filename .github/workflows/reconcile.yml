@@ -1,7 +1,7 @@
 name: Reconcile experiment publication
 on:
   workflow_run:
-    workflows: [Generation 0024, Generation 0025]
+    workflows: [Generation 0020, Generation 0021, Generation 0022, Generation 0023, Generation 0024, Generation 0025]
     types: [completed]
   workflow_dispatch:
     inputs:
