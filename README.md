@@ -2,17 +2,17 @@
 
 An experiment in computational emergence. Each generation preserves its rules, seed, metrics and render.
 
-## Latest verified animation — Generation 0021: Multiscale topological persistence
+## Latest verified animation — Generation 0022: Structural heredity
 
-[Download standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44658944680/artifacts/14598000801) (2.31 MiB) · [Workflow](https://github.com/interrupt21h/ontogenesis/actions/workflows/persistence.yml)
+[Download standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44679969605/artifacts/14605328949) (2.03 MiB) · [Workflow](https://github.com/interrupt21h/ontogenesis/actions/workflows/niche.yml)
 
 Authentication required; artifacts expire after 30 days.
 
 ## Scientific and engineering monograph
 
-**[Download current verified PDF](https://github.com/interrupt21h/ontogenesis/actions/runs/44658979431/artifacts/14593914198)** · [Latest successful report build](https://github.com/interrupt21h/ontogenesis/actions/workflows/report.yml?query=is%3Asuccess)** · [Report source](report/) · [All report builds](https://github.com/interrupt21h/ontogenesis/actions/workflows/report.yml)
+**[Download current verified PDF](https://github.com/interrupt21h/ontogenesis/actions/runs/44680266238/artifacts/14603079409)** · [Latest successful report build](https://github.com/interrupt21h/ontogenesis/actions/workflows/report.yml?query=is%3Asuccess) · [Report source](report/) · [All report builds](https://github.com/interrupt21h/ontogenesis/actions/workflows/report.yml)
 
-Open the newest successful run and select the standalone `ontogenesis.pdf` artifact. The report samples early, middle and final frames from indexed MP4 artifacts when available. The independent LaTeX pipeline automatically rebuilds on documentation changes; the generated TeX is also archived separately. To reproduce locally, install Pandoc, latexmk, TeX Live (latex-extra, pictures, fonts-recommended) and run `python3 report/build.py`.
+Open the newest successful run and select the standalone `ontogenesis.pdf` artifact. The report samples early, middle and final frames from indexed MP4 artifacts when available. The independent LaTeX pipeline automatically rebuilds on documentation changes; the generated TeX is also archived separately. To reproduce locally, install Pandoc, latexmk, TeX Live (latex-extra, pictures, fonts-recommended) and librsvg2-bin, then run `python3 report/build.py`.
 
 ## Experimental history
 
@@ -43,7 +43,7 @@ Ontogenesis investigates emergence in continuous, periodic reaction–diffusion 
 | 0019 | [Compartmentalization](docs/generations/0019.md) | [Python](compartmentalization.py) | [Runs](.github/workflows/compartmentalization.yml) · Verified |
 | 0020 | [Topological complexity](docs/generations/0020.md) | [Python](topology.py) | [Runs](.github/workflows/topology.yml) · Verified |
 | 0021 | [Multiscale topological persistence](docs/generations/0021.md) | [Python](persistence.py) | [Runs](.github/workflows/persistence.yml) · Verified |
-| 0022 | [Structural heredity](docs/generations/0022.md) | [Python](niche.py) | [Runs](.github/workflows/niche.yml) · Pending verification |
+| 0022 | [Structural heredity](docs/generations/0022.md) | [Python](niche.py) | [Runs](.github/workflows/niche.yml) · Verified |
 
 ## Reproduce locally
 
