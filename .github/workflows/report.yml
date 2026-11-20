@@ -55,12 +55,17 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          for pair in 0026:14651386328 0027:14662151055; do
+          for pair in 0026:14651386328 0027:14670723105; do
             gen=${pair%:*}
             id=${pair#*:}
             mkdir -p "report/build/evidence/$gen"
-            gh api "repos/${{ github.repository }}/actions/artifacts/$id/zip" > "/tmp/evidence-$gen.zip"
-            unzip -o "/tmp/evidence-$gen.zip" -d "report/build/evidence/$gen"
+            if gh release download atlas-media -p "structural-evidence-$gen.json" -D "report/build/evidence/$gen"; then
+              mv "report/build/evidence/$gen/structural-evidence-$gen.json" "report/build/evidence/$gen/result.json"
+            else
+              gh api "repos/${{ github.repository }}/actions/artifacts/$id/zip" > "/tmp/evidence-$gen.zip"
+              unzip -o "/tmp/evidence-$gen.zip" -d "report/build/evidence/$gen"
+            fi
+            test -s "report/build/evidence/$gen/result.json"
           done
           python report/consolidation_atlas.py
       - name: Validate report generator syntax
@@ -118,6 +123,10 @@ jobs:
         run: |
           gh release view atlas-media >/dev/null 2>&1 || gh release create atlas-media --title "Scientific atlas archive" --notes "Verified report and provenance-labelled frame samples." --prerelease
           python3 report/archive.py
+          for gen in 0026 0027; do
+            cp "report/build/evidence/$gen/result.json" "report/build/evidence/$gen/structural-evidence-$gen.json"
+            gh release upload atlas-media "report/build/evidence/$gen/structural-evidence-$gen.json" --clobber
+          done
           gh release upload atlas-media report/build/ontogenesis.pdf --clobber
       - name: Link report
         run: echo '[Download standalone PDF](${{ steps.pdf.outputs.artifact-url }})' >> "$GITHUB_STEP_SUMMARY"
