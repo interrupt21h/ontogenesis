@@ -9,11 +9,11 @@ on:
   push:
     branches: [main]
     paths:
-      - 'consolidation.py'
+      # Legacy cinematic revision remains manually dispatchable, but
+      # observer-only and fidelity workflow updates must not queue another
+      # duplicate preview behind a costly 24^4 master.
       - 'disturbance_cinematic.py'
       - 'disturbance_cinematic_render.py'
-      - 'tests/test_disturbance_cinematic.py'
-      - '.github/workflows/disturbance-cinematic.yml'
 permissions:
   contents: read
 concurrency:
