@@ -1,8 +1,10 @@
 # Ontogenesis — experimental history
 
-This is a retrospective engineering and scientific record of generations 0001–0019. Each generation is a separate reproducible experiment, not a continuation from a checkpoint. Source code is normative. Recorded values are single-seed observations from successful CI runs; hypotheses and limitations are explicitly separated. Parameters are dimensionless and the time step is one. L denotes the periodic nearest-neighbor discrete Laplacian. Active chemical coverage is the fraction of cells above 0.1; structural coverage uses M > 0.2. All runs use seed 42. Artifact links require GitHub authentication and expire; workflow links remain the durable regeneration path.
+This is a retrospective engineering and scientific record of generations 0001–0020. Each generation is a separate reproducible experiment, not a continuation from a checkpoint. Source code is normative. Recorded values are single-seed observations from successful CI runs; hypotheses and limitations are explicitly separated. Parameters are dimensionless and the time step is one. L denotes the periodic nearest-neighbor discrete Laplacian. Active chemical coverage is the fraction of cells above 0.1; structural coverage uses M > 0.2. All runs use seed 42. Artifact links require GitHub authentication and expire; workflow links remain the durable regeneration path.
 
 ## Contents
+
+- [0020 — Topological complexity](#generation-0020--topological-complexity)
 
 - [0019 — Compartmentalization](#generation-0019--compartmentalization)
 
@@ -656,7 +658,7 @@ Cross-feeding and turnover changed together; no mass-conserving chemical network
 
 ## Generation 0018 — Morphogenesis
 
-Status: committed; CI verification pending.
+Status: CI passed.
 
 ### Research question
 
@@ -712,9 +714,14 @@ Longer runtime, turnover and permeability change together; compare matched-durat
 
 
 
+### Verified CI outcome
+
+CI passed: [run](https://github.com/interrupt21h/ontogenesis/actions/runs/44619535803), [raw MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44619535803/artifacts/14581045352) (1,896,622 bytes). Final matrix coverage 10.504075%, two components, largest 30,576 cells, 36,620 boundary faces, oldest identity 1,500 steps, 760 lineage events, entropy 1.572855 bits.
+
+
 ## Generation 0019 — Compartmentalization
 
-Status: committed; CI pending.
+Status: CI passed.
 
 ### Research question and parent
 Can structural material enclose localized regions, and how do those regions relate to population activity, energy and genetic diversity? Retain all G0018 physical equations, initialization, 24^4 periodic lattice, seed 42 and 4,800 integration steps. Only diagnostic and rendering cadence changes (six to four steps); no new dynamic fields.
@@ -746,6 +753,45 @@ Pending. Do not infer valid compartments from topology alone. Candidate detectio
 
 ### Reproduction
 [Source](../compartmentalization.py) · [Workflow](../.github/workflows/compartmentalization.yml). Python 3.12, requirements.txt, scipy==1.15.3; run from root.
+
+
+
+### Verified CI outcome
+
+CI passed: [run](https://github.com/interrupt21h/ontogenesis/actions/runs/44624382551), [raw MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44624382551/artifacts/14583640908) (2,408,862 bytes). Final matrix coverage 10.503774%, two components, largest 30,575 cells, 36,620 boundary faces, oldest identity 1,500 steps, 856 lineage events, entropy 1.572855 bits, zero final enclosure candidates. Event count depends on observation cadence; endpoint differences are small numerical differences, not new physical mechanisms.
+
+
+## Generation 0020 — Topological complexity
+
+Status: committed; CI pending.
+
+### Research question and implementation
+
+Retain G0019 physics, seed 42, 24^4 domain, 4,800 steps and stride four. Replace cut-dependent complement segmentation with periodic face-connected labels. Exclude the largest complement component as a background proxy; report other components of at least eight cells. Equal-size ties use label order, so the background choice is not uniquely translation invariant in ties. Small components may wrap, and no contractibility claim is made.
+
+### Mathematical model
+
+The occupied 4D voxels generate a closed cubical complex with periodic identification. Count unique k-dimensional faces for each orientation by Boolean unions of shifted masks. The Euler characteristic is
+
+```math
+\chi=\sum_{k=0}^{4}(-1)^k n_k=n_0-n_1+n_2-n_3+n_4
+```
+
+For Betti numbers over a field, the Euler–Poincare relation is
+
+```math
+\chi=\sum_{k=0}^{4}(-1)^k\beta_k
+```
+
+The implementation computes cell counts and Euler characteristic, not individual Betti numbers. Face connectivity in segmentation differs from closed-cube connectivity at corner contacts. Analytic assertions cover empty complex, one voxel, full periodic torus and a periodic one-axis tube.
+
+### Visualization and results
+
+Retain 1,201 frames at 24 fps, target 50.042 seconds, 720p standalone MP4. Show Euler characteristic in live sidebar and secondary complement coverage in the history chart. Export counts of all five cell dimensions and periodic complement components. Pending CI. No persistent homology, multiscale topology or winding-number detection yet; these are future work.
+
+### Reproduction
+
+[Source](../topology.py) · [Workflow](../.github/workflows/topology.yml). Python 3.12, requirements.txt and scipy==1.15.3. Run from root.
 
 
 
