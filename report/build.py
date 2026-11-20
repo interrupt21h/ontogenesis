@@ -111,6 +111,14 @@ for n,title,record in records:
         body.append(research_plate("threshold-profile","Threshold-dependent organization","Measured final G0021 profile. The Euler characteristic and coverage describe different properties; neither alone establishes functional compartments."))
     if n=="0024":
         body.append(research_plate("genetic-architecture","Independent inherited traits","Sixteen genotypes per species form a four-dimensional binary mutation graph. Independence here means separate encoded loci, not statistically independent allele frequencies."))
+    if n=="0024" and (out/"atlas/0024-field-evolution.pdf").exists():
+        for suffix,heading,caption in [
+            ("field-evolution","Numerical development","Native x-y sections at fixed fourth and third coordinates; color scales are fixed over all five sampled steps for each field."),
+            ("field-projections","Projected chemical environment","Mean concentrations over the fourth and third axes. These projections are not individual spatial sections."),
+            ("trait-landscape","Spatial distribution of heredity","Local population-weighted allele fractions; cells with negligible total population are undefined."),
+            ("structural-volume","Structural occupancy in three dimensions","Native cell centers above matrix threshold 0.20 in two fourth-coordinate sections. The rectangular cut does not reveal all periodic connections."),
+            ("field-metrics","Measured developmental trajectories","Global coverage and allele frequencies independently recomputed from five archived numerical states. Connecting lines guide the eye between samples.")]:
+            body.append(research_plate("0024-"+suffix,heading,caption))
     body.append(frame_section(n))
 body.append((ROOT/"report/synthesis.md").read_text().replace("## What the experiments establish","## What the experiments establish {.unnumbered}").replace("## The limits of observation","## The limits of observation {.unnumbered}").replace("## Continuing the inquiry","## Continuing the inquiry {.unnumbered}"))
 body.append(research_plate("comparative-endpoints","Comparative experimental evidence","Upper: descriptive historical endpoints, not a controlled contrast. Lower: four matched-seed G0023 arms; the cost treatment bundles two penalties. All matrix values use threshold 0.20."))
