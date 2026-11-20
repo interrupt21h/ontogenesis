@@ -4,10 +4,13 @@ on:
     paths:
       - specialization.py
       - requirements.txt
+      - field_archive.py
+      - report/field_atlas.py
       - .github/workflows/specialization.yml
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
+  actions: write
 jobs:
   render:
     runs-on: ubuntu-latest
@@ -31,6 +34,18 @@ jobs:
             gallery/0024/04800.png
           retention-days: 30
           if-no-files-found: error
+      - name: Generate independent numerical atlas
+        run: |
+          pip install matplotlib==3.10.3
+          python report/field_atlas.py gallery/0024/fields gallery/0024/field-atlas
+      - uses: actions/upload-artifact@v7
+        with:
+          name: generation-0024-numerical-state
+          path: |
+            gallery/0024/fields
+            gallery/0024/field-atlas
+          if-no-files-found: error
+          retention-days: 30
       - name: Upload standalone MP4
         id: video
         uses: actions/upload-artifact@v7
@@ -41,3 +56,11 @@ jobs:
           if-no-files-found: error
       - name: Link animation
         run: echo '[Download MP4 directly](${{ steps.video.outputs.artifact-url }})' >> "$GITHUB_STEP_SUMMARY"
+      - name: Publish numerical observation archive
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view atlas-media >/dev/null 2>&1 || gh release create atlas-media --title "Scientific atlas archive" --notes "Verified scientific observations." --prerelease
+          tar -C gallery/0024 -czf field-state-0024.tar.gz fields
+          gh release upload atlas-media field-state-0024.tar.gz --clobber
+          gh workflow run report.yml --ref main
