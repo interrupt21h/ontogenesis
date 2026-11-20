@@ -12,6 +12,12 @@ The structural occupancy comparison is particularly instructive: near-total matr
 
 A connected region is not necessarily an organism; a tracked identity is not necessarily a lineage; a complementary component is not necessarily a functional compartment. Likewise, an attractive visualization can conceal saturation, numerical diffusion or ambiguity introduced by a moving spatial section. Quantitative diagnostics and visual observations are complementary rather than interchangeable.
 
+## The original experiment revisited
+
+My principal objective was not to establish a new theory of artificial life. It was to see how far a complicated, CI-driven, visually expressive computational system could be evolved with minimal direct development effort over approximately two days. By deliberately delegating mathematical work beyond my own understanding, I explored the separation between creative direction and independent implementation competence. Most of my attention went to the aesthetics and presentation of the work. The growing system, its failures, the changing instruments of observation and the publication infrastructure are all outcomes of that exploration. The scientific limitations recorded here are consequently integral to the artwork.
+
+The initial edition belongs to November 19–20, 2026; later verification and publication work should be distinguished from its original creative window. The interval between recorded CI and film-integration milestones is 36 hours, 2 minutes and 9 seconds, not a measure of active human effort.
+
 ## Continuing the inquiry
 
 I have begun a dedicated consolidation phase in G0026, without adding new physical mechanisms. The next scientific priorities are matched-seed ensembles, independent mechanism ablations, numerical stability and resolution studies, and explicit resource budgets. Structural persistence should be assessed across thresholds and scales, while prospective compartments should be tested for transport and metabolic function. The relation between inherited construction traits and local environmental modification remains a central question.
