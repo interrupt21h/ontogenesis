@@ -1,6 +1,6 @@
 # Ontogenesis — experimental history
 
-This is a retrospective engineering and scientific record of generations 0001–0022. Each generation is a separate reproducible experiment, not a continuation from a checkpoint. Source code is normative. Recorded values are single-seed observations from successful CI runs; hypotheses and limitations are explicitly separated. Parameters are dimensionless and the time step is one. L denotes the periodic nearest-neighbor discrete Laplacian. Active chemical coverage is the fraction of cells above 0.1; structural coverage uses M > 0.2. All runs use seed 42. Artifact links require GitHub authentication and expire; workflow links remain the durable regeneration path.
+This is a retrospective engineering and scientific record of generations 0001–0023. Each generation is a separate reproducible experiment, not a continuation from a checkpoint. Source code is normative. Recorded values are single-seed observations from successful CI runs; hypotheses and limitations are explicitly separated. Parameters are dimensionless and the time step is one. L denotes the periodic nearest-neighbor discrete Laplacian. Active chemical coverage is the fraction of cells above 0.1; structural coverage uses M > 0.2. All runs use seed 42. Artifact links require GitHub authentication and expire; workflow links remain the durable regeneration path.
 
 ## Contents
 
@@ -888,6 +888,42 @@ This is a phenomenological niche-construction mechanism, not evidence of autonom
 ### Verified CI outcome
 
 [Successful run](https://github.com/interrupt21h/ontogenesis/actions/runs/44679969605) · [Standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44679969605/artifacts/14605328949). 1201 frames, 50.041667 seconds, 2128983 bytes. Final active V 65.0499%, W 21.7159%, matrix above 0.20: 0%; energy mean 0.880461, genotype entropy 1.119818 bits, maintenance mean 0.219252, builder mass 9777.46343. No occupied matrix components at threshold 0.20. This does not establish that maintenance alone caused structural loss; the fitness and energy penalties changed simultaneously.
+
+## Generation 0023 — Factorial niche construction controls
+
+Status: CI pending.
+
+### Research question and implementation
+
+Separate builder fitness costs from matrix protection using a matched-seed 2-by-2 factorial experiment. All arms use seed 42, 24^4 cells, 4800 steps and identical sampling. The combined arm generates the 50-second animation; every arm exports metrics and lineage data.
+
+| Arm | Fitness and energy cost | Matrix protection |
+|---|---|---|
+| Baseline | Off | Off |
+| Cost | On | Off |
+| Maintenance | Off | On |
+| Combined | On | On |
+
+
+### Mathematical model
+
+The cost indicator C multiplies the 0.08 birth penalty and 0.02 energy surcharge. The maintenance indicator A multiplies the 0.65 protection coefficient.
+
+```math
+f_{cost}=1-0.08CS,\qquad f_{decay}=1-0.65AH
+```
+
+### Visualization and observed results
+
+Results pending. Compare matrix coverage, energy, population activity, genotype entropy and winding profiles. Combined reproduces G0022; baseline reproduces G0021 equations.
+
+### Interpretation and limitations
+
+Single seed; factorial contrasts distinguish treatments at this seed but cannot establish generality. The two cost terms are bundled. No new physical mechanism is introduced.
+
+### Reproduction and provenance
+
+[Source](../controls.py) · [Workflow](../.github/workflows/controls.yml). Set ONTO_ARM to baseline, cost, maintenance or combined.
 
 ## Research priorities
 
