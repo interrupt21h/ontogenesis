@@ -78,7 +78,16 @@ subprocess.run([os.sys.executable, str(ROOT / 'report/atlas.py')],check=True)
 body = [intro.replace("# Project overview","# Project overview {.unnumbered}",1),convert(method)]
 for n,title,record in records:
     if int(n) in groups:
-        body.append("\\clearpage\\part{"+groups[int(n)]+"}\\clearpage")
+        phase_end=next((k-1 for k in groups if k>int(n)),len(records))
+        manifest=json.loads((ROOT/"report/videos.json").read_text())
+        images=[]
+        for g in range(int(n),phase_end+1):
+            key=f"{g:04d}"
+            p=out/"frames"/f"{key}-{manifest.get(key)}"/"2.jpg"
+            if p.exists():
+                images.append(r"\begin{minipage}[t]{.47\linewidth}\centering\includegraphics[width=\linewidth,height=.19\textheight,keepaspectratio]{"+str(p.relative_to(out))+r"}\par\small Generation "+key+r"\end{minipage}")
+        rows=[r"\noindent"+r"\hfill".join(images[i:i+2])+r"\par\medskip" for i in range(0,min(len(images),6),2)]
+        body.append("\\clearpage\\part{"+groups[int(n)]+"}\n\n"+r"{\sffamily\large Generations "+n+"--"+f"{phase_end:04d}"+r"}\par\bigskip"+"\n\n".join(rows)+"\n\n"+r"\smallskip{\small Final sampled frames from verified animations.\par}\clearpage")
     if "Verified CI outcome" in record or "Verified factorial outcome" in record or "Verified outcome" in record:
         record = re.sub(r"(?im)^Status: (?:CI )?pending[^\n]*$", "Status: verified outcome recorded below.", record)
     body.append("\\setcounter{chapter}{"+str(int(n)-1)+"}\n\n# Generation "+n+" — "+title+"\n\n"+convert(re.sub(r"^### ","## ",record,flags=re.M)))
