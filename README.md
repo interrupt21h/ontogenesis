@@ -18,7 +18,13 @@ Ontogenesis investigates emergence both within a simulated world and within the 
 
 **[Recursive creation: human intention, machine intelligence and computational emergence](docs/RECURSIVE_CREATION.md)** — an essay on the artistic method, distributed authorship and the relationship between simulated evolution and creative development.
 
-## Latest verified animation — Generation 0025 — Energy-funded structural maintenance
+## Latest verified matched-control pilot — Generation 0028
+
+[Download corrected pilot MP4 and measured evidence](https://github.com/interrupt21h/ontogenesis/actions/runs/44824014028/artifacts/14673655018) · [Generation study](docs/generations/0028.md).
+
+G0028's automatically tested 12⁴, 240-step comparison showed 99.16% attenuation of its localized energy difference and 89.09% attenuation of its localized matrix difference by step 240, relative to a seed-matched control. The 7.67-second film uses actual numerical sections with clearly labeled held samples; it is a small-domain pilot, **not** full-resolution evidence. The complete 24⁴ paired experiment remains manually dispatched.
+
+## Latest verified full-resolution animation — Generation 0025 — Energy-funded structural maintenance
 
 [Download standalone MP4](https://github.com/interrupt21h/ontogenesis/actions/runs/44780041778/artifacts/14658013645) (2.33 MiB) · [Workflow](https://github.com/interrupt21h/ontogenesis/actions/workflows/maintenance.yml)
 
@@ -77,7 +83,7 @@ Ontogenesis investigates emergence in continuous, periodic reaction–diffusion 
 | 0025 | [Energy-funded structural maintenance](docs/generations/0025.md) | [Python](maintenance.py) | [Runs](.github/workflows/maintenance.yml) · Verified |
 | 0026 | [Observer independence](docs/generations/0026.md) | [Python](consolidation.py) | [Runs](.github/workflows/consolidation.yml) · Verified |
 | 0027 | [Structural statistics](docs/generations/0027.md) | [Python](structural_statistics.py) | [Runs](.github/workflows/structural-statistics.yml) · Verified execution; cross-run hashes differ |
-| 0028 | [Localized disturbance and recovery](docs/generations/0028.md) | [Python](disturbance.py) · [Renderer](disturbance_render.py) | [Pilot passed](https://github.com/interrupt21h/ontogenesis/actions/runs/44823647222) · Full manual |
+| 0028 | [Localized disturbance and recovery](docs/generations/0028.md) | [Python](disturbance.py) · [Renderer](disturbance_render.py) | [Refined MP4 + pilot passed](https://github.com/interrupt21h/ontogenesis/actions/runs/44824014028/artifacts/14673655018) · Full manual |
 
 ## Reproduce locally
 
