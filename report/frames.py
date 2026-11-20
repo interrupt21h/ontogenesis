@@ -14,17 +14,17 @@ manifest = json.loads((ROOT / "report/videos.json").read_text())
 for gen, artifact in sorted(manifest.items()):
     target = OUT / f"{gen}-{artifact}"
     metadata = target / "frames.json"
-    if gen!="0024" and metadata.exists() and json.loads(metadata.read_text()).get("native_resolution") and all((target / f"{i}.jpg").is_file() for i in range(3)):
+    if metadata.exists() and json.loads(metadata.read_text()).get("native_resolution") and (gen!="0024" or json.loads(metadata.read_text()).get("indices")==[0,152,1200]) and all((target / f"{i}.jpg").is_file() for i in range(3)):
         continue
     target.mkdir(exist_ok=True)
     archival = f"frames-{gen}-{artifact}.zip"
     with tempfile.TemporaryDirectory() as cache:
         result = subprocess.run(["gh","release","download","atlas-media","--repo",REPO,"--pattern",archival,"--dir",cache],capture_output=True)
-        if result.returncode == 0 and gen!="0024":
+        if result.returncode == 0:
             with zipfile.ZipFile(Path(cache)/archival) as z:
                 for name in ("0.jpg","1.jpg","2.jpg","frames.json"):
                     (target/name).write_bytes(z.read(name))
-            if json.loads(metadata.read_text()).get("native_resolution"):
+            if json.loads(metadata.read_text()).get("native_resolution") and (gen!="0024" or json.loads(metadata.read_text()).get("indices")==[0,152,1200]):
                 continue
     try:
         with tempfile.TemporaryDirectory() as tmp:
