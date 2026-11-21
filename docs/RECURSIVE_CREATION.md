@@ -1,5 +1,7 @@
 # Recursive creation: human intention, machine intelligence and computational emergence
 
+[← Project overview](../README.md) · [Documentation](README.md) · [About the artist](AUTHOR.md) · [Experiment atlas](EXPERIMENTS.md)
+
 *An artist’s statement on human intention, machine intelligence and computational emergence.*
 
 ## A two-day experiment in delegated complexity

@@ -1,6 +1,6 @@
 # Repository instructions
 
-Every new Ontogenesis generation must include a detailed generation record, consolidated history update and README index update. Follow [docs/METHODOLOGY.md](docs/METHODOLOGY.md) and [docs/GENERATION_TEMPLATE.md](docs/GENERATION_TEMPLATE.md). Preserve original generation code. Mark results pending until CI verifies execution; subsequently record measured results and artifact provenance. Keep video as a standalone raw MP4, diagnostics separate. Do not claim causal findings without controls. Document numerical limitations and design decisions.
+Every new Ontogenesis generation must include a detailed generation record, consolidated history update and a canonical experiment index update in `docs/EXPERIMENTS.md`, with a concise overview-level README update where useful. Follow [docs/METHODOLOGY.md](docs/METHODOLOGY.md) and [docs/GENERATION_TEMPLATE.md](docs/GENERATION_TEMPLATE.md). Preserve original generation code. Mark results pending until CI verifies execution; subsequently record measured results and artifact provenance. Keep video as a standalone raw MP4, diagnostics separate. Do not claim causal findings without controls. Document numerical limitations and design decisions.
 
 ## Mathematical typography
 
@@ -74,3 +74,7 @@ preserve earlier verified featured art if a new candidate looks worse.
 Dynamic exposure must be documented and must not turn homogeneous
 extinct chemistry into artificial organisms. The cost of fidelity
 is subject to the independent GitHub-hosted CPU runner budget.
+
+## Documentation navigation and media publication
+
+The concise artistic landing page is `README.md`; maintain experiment numbering in `docs/EXPERIMENTS.md`, cinematic editions in `docs/VISUAL_GALLERY.md`, CI and archive instructions in `docs/PIPELINE.md`, and research outcomes in `docs/HISTORY.md` plus the individual generation pages. Do not grow the README by appending duplicate status reports. Use actual archived poster images linked to the correct videos; do not attempt unsupported inline HTML video players in GitHub Markdown. A successful full-resolution film workflow does not establish a paired experiment result and does not authorize automatic promotion in `report/videos.json`. Validate internal Markdown links and SVG assets after documentation edits.

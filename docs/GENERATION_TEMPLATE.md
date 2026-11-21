@@ -1,33 +1,68 @@
-# Generation NNNN — Title
+# Generation NNNN — Descriptive title
 
-Status: planned / committed / CI passed / CI failed
+[← Experiment atlas](EXPERIMENTS.md) · [Methodology](METHODOLOGY.md) · [Publication workflow](PIPELINE.md)
+
+> **Status:** Planned; no numerical result verified. Replace after CI succeeds, and specify whether a pilot or full-resolution study passed.
+
+**Suggested figure:** `figures/NNNN.svg`. Create the conceptual mechanism SVG and caption it clearly, or reference a verified native-field image. Do **not** describe a schematic as simulation output.
 
 ## Research question and hypothesis
 
-## Parent generation and changes
+State one testable scientific question and a separate artistic question. Distinguish predicted phenomena from measured outcomes.
 
-### Retained mechanisms
+## Parent model and changed mechanisms
+
+Describe exact numerical ancestry; borrowing a renderer from another generation does not imply inheriting its equations.
+
+### Mechanisms retained
 
 ### New or modified mechanisms
 
-## Equations and parameters
+## Mathematical model and conventions
 
-## Initialization, lattice and numerical integration
+Define symbols, equations, dimensionless units, periodic axes, numerical discretization, stability choices and initial conditions. Use GitHub-native LaTeX for mathematical typography.
 
-## Rendering and output artifacts
+## Experimental design
 
-## Diagnostics, invariants and controls
+| Setting | Value |
+|:--|:--|
+| Seed, genotype/arms | Pending |
+| Spatial lattice and axes | Pending |
+| Integration steps and time increment | Pending |
+| Observation cadence / precision | Pending |
+| Treatment and matched controls | Pending |
+| Numerical invariants and planned diagnostics | Pending |
 
-## Verified results
+## Visual outputs
 
-Pending until CI completes. Record actual values, run URL, source SHA, raw MP4 URL and size, diagnostics URL, and any failure/correction.
+| Type | Meaning | Status |
+|:--|:--|:--|
+| Numerical plate | Directly measured source arrays | Pending |
+| Cinematic film | Renderer transforms recorded fields | Pending |
+| Mechanism diagram | Hypothesized/implemented concept; **not measured data** | Pending |
+
+Explain camera motion, interpolation, exposure, ray integration and other artistic presentation transforms.
+
+## Verified observations and provenance
+
+| Property | Logged evidence |
+|:--|:--|
+| Workflow run URL | Pending |
+| Exact source commit SHA | Pending |
+| Recorded numeric measurements and uncertainty | Pending |
+| Artifact identifiers / persistent release links | Pending |
+| Native field array shape, dtype and units | Pending |
+| Film dimensions, duration and provenance | Pending |
+| Observed limitations and contrary results | Pending |
 
 ## Interpretation and limitations
 
-## Reproduction instructions
+Do not confuse attenuation relative to a control with restoration of the pre-event state. Quantitative results must come from observed fields, not reconstructed video colors.
+
+## Reproduction
+
+Provide the exact tested command and explicit opt-in switch for costly work. Link to [the repository execution guide](PIPELINE.md).
 
 ## Next research direction
 
-## Mathematical typography
-
-Use GitHub native LaTeX math blocks (fenced `math` or double-dollar delimiters) for display equations and single-dollar delimiters for inline notation. Break long equations across lines, define symbols, and use separate descriptive headings for distinct equations. Do not place mathematical models in plain-text code fences. See [GitHub mathematical expressions](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions).
+Propose the next experiment without claiming it has already succeeded.

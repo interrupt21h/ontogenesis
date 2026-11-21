@@ -27,6 +27,4 @@ render and FFmpeg decodability checks.
 
 Execution: [GitHub Actions run 44829195043](https://github.com/interrupt21h/ontogenesis/actions/runs/44829195043), revision f9fb2a79da09f0bfc741b84d6a5c9429b36e9bd6. The preview gate passed with 432 encoded frames and committed numerical-field SHA provenance. Its [video artifact](https://github.com/interrupt21h/ontogenesis/actions/runs/44829195043/artifacts/14675921895) and [native field archive](https://github.com/interrupt21h/ontogenesis/actions/runs/44829195043/artifacts/14673923851) are separately retained. The full 24⁴ cinematic master job was started by that workflow.
 
-Outcome of full master: PENDING until its full job completes. Do not
-replace the report/videos.json G0028 evidence artifact with the master
-until verified render, frame inspection and appropriate provenance review.
+**Execution outcome:** [G0028 single-plane cinematic run 44829195043](https://github.com/interrupt21h/ontogenesis/actions/runs/44829195043) succeeded, including the 24⁴ master, numerical NPZ, poster and 60-second MP4. The separate [G0028 four-plane fidelity master](https://github.com/interrupt21h/ontogenesis/actions/runs/44833423671) also succeeded. Their [durable release assets](https://github.com/interrupt21h/ontogenesis/releases/tag/atlas-media) are retained; they do **not** by themselves establish ecological recovery or replace the paired-control experiment. The cumulative film deliberately continues to use the older verified 12⁴ G0028 preview pending visual editorial selection. See [visual gallery](VISUAL_GALLERY.md).

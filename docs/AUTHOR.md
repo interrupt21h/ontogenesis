@@ -1,5 +1,7 @@
 # About the artist
 
+[← Project overview](../README.md) · [Documentation](README.md) · [Artist's statement](RECURSIVE_CREATION.md) · [Visual gallery](VISUAL_GALLERY.md)
+
 I am a multidisciplinary technologist with over three decades of experience spanning scientific visualization, systems engineering, open-source software and advanced security research.
 
 My professional work includes leading international deployments of NOAA’s Science On a Sphere platform and developing real-time scientific visualization systems used by institutions across North America, Europe, Asia and Latin America, including NASA and NOAA. My broader technical practice encompasses embedded systems, geospatial visualization, scientific middleware, research infrastructure and artificial intelligence.

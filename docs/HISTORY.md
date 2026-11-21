@@ -1,6 +1,8 @@
 # Ontogenesis — experimental history
 
-This is a retrospective engineering and scientific record of generations 0001–0026. Each generation is a separate reproducible experiment, not a continuation from a checkpoint. Source code is normative. Recorded values are single-seed observations from successful CI runs; hypotheses and limitations are explicitly separated. Parameters are dimensionless and the time step is one. L denotes the periodic nearest-neighbor discrete Laplacian. Active chemical coverage is the fraction of cells above 0.1; structural coverage uses M > 0.2. All runs use seed 42. Artifact links require GitHub authentication and expire; workflow links remain the durable regeneration path.
+[← Project overview](../README.md) · [Experiments](EXPERIMENTS.md) · [Visual gallery](VISUAL_GALLERY.md) · [Publishing guide](PIPELINE.md)
+
+This is a retrospective engineering and scientific record of generations 0001–0028. Each generation is a separate reproducible experiment, not a continuation from a checkpoint. Source code is normative. Recorded values are single-seed observations from successful CI runs; hypotheses and limitations are explicitly separated. Parameters are dimensionless and the time step is one. L denotes the periodic nearest-neighbor discrete Laplacian. Active chemical coverage is the fraction of cells above 0.1; structural coverage uses M > 0.2. All runs use seed 42. Artifact links require GitHub authentication and expire; workflow links remain the durable regeneration path.
 
 ## Contents
 
@@ -1352,7 +1354,7 @@ Compare checkpoint hashes to G0026 when the full result is available. No claim o
 
 ## Generation 0028 — Localized disturbance and recovery
 
-Status: matched-control 12⁴ pilot verified; 24⁴ paired full-domain study remains pending. Separate reduced-domain cinematic previews are verified, while the 24⁴ high-fidelity cinematic master is executing and is not yet validated. This experiment follows the planned G0028–G0032 finale, keeping the full-resolution baseline costly runs manually gated on standard GitHub-hosted CPU runners. It adds a single deterministic Gaussian intervention halfway through a seeded trajectory, separately depleting local energy and matrix. An unperturbed arm of the same seed and initialization supplies a contemporaneous control.
+Status (20 November 2026): 12⁴ paired scientific pilot verified; 24⁴ paired full-domain study dispatched but not yet reconciled. Two distinct full 24⁴ cinematic editions have passed CI and retained their numerical field archives; neither is itself a matched-control experiment, and artistic evaluation remains separate. This experiment begins the planned G0028–G0032 finale, keeping the full-resolution baseline costly runs manually gated on standard GitHub-hosted CPU runners. It adds a single deterministic Gaussian intervention halfway through a seeded trajectory, separately depleting local energy and matrix. An unperturbed arm of the same seed and initialization supplies a contemporaneous control.
 
 The automated 12⁴/240-step pilot and optional 24⁴/4800-step paired comparison record real 2D sections from both arms, native numerical measurements, and checkpoint hashes. A standalone H.264 MP4 and scientific PNG plate are derived from those observations, with fixed comparative scales and no reconstructed fields. Recovery of local mean energy or matrix is assessed as attenuation of the paired difference, not asserted in advance.
 
