@@ -1,8 +1,8 @@
-# Evolution of the computational production framework
+# How the computational contraption grew
 
 I began this project to explore continuous integration through a complicated, visually expressive system. The infrastructure was not specified in advance: it evolved alongside the mathematical models and their instruments of observation. Over the initial November 19–20, 2026 creative window, I delegated much of the engineering and mathematics to AI while concentrating my attention on the aesthetics and intelligibility of the outputs.
 
-## Architectural progression
+## How the machinery grew
 
 | Stage | Production responsibility |
 |---|---|
@@ -19,7 +19,7 @@ The initial render workflow installs Python dependencies and executes a seeded m
 
 As the artifacts became more complex, the report acquired a separate build pipeline: retrieve indexed video samples and archived numerical fields, generate figures, compile Pandoc and LaTeX, inspect the PDF and publish it. The film pipeline independently discovers successful main-branch experiments, normalizes video geometry and frame rate, assembles labelled chapters and checks decoding before release. The reconciliation workflow updates verified records for its configured generations and explicitly dispatches the report. The film is not a continuous numerical trajectory across generations.
 
-## Resource management and publication
+## Keeping the runners from melting
 
 The simulation jobs for G0024 and G0025 were changed to manual dispatch (subsequently allowing workflow-file changes to trigger deliberate refreshes) to avoid expensive reruns caused by changes to observational code. The report uses concurrency cancellation to discard superseded builds; the film serializes publication. Frame caches and persistent release assets reduce reliance on temporary artifacts. These policies trade immediate recomputation for explicit control over numerical expense.
 
@@ -31,7 +31,7 @@ G0027 now executes only a verified short smoke test on push, with the expensive 
 
 The evolution film no longer rebuilds when the G0026 smoke check passes. Subsequent media-manifest updates, rather than unrelated documentation changes, initiate new film editions. This protects limited GitHub-hosted CPU runner time without weakening the documented controls.
 
-## Failure and adaptation
+## Things that broke (and what changed)
 
 | Observed pressure | Engineering response |
 |---|---|
@@ -44,7 +44,7 @@ The evolution film no longer rebuilds when the G0026 smoke check passes. Subsequ
 
 The FFmpeg defect is documented by the [failed film run](https://github.com/interrupt21h/ontogenesis/actions/runs/44770439965) and [corrective commit](https://github.com/interrupt21h/ontogenesis/commit/ad3d6a7a3d57397cbec0274a20a825edffa47459). A correction is not evidence of a successful rerun. Other failures require their own log evidence; the aggregate status chart does not infer causes from conclusions.
 
-## Interpretation of engineering measurements
+## What the numbers actually mean
 
 The recorded milestone window begins with the first numerical workflow at 04:06:58 UTC on November 19 and ends with film integration at 16:09:07 UTC on November 20. It spans 36 hours, 2 minutes and 9 seconds. The charts distinguish source growth, run envelopes, completed-job overlap and observable artifact storage. They do not measure human effort, billed runner time, mathematical sophistication or scientific validity.
 
