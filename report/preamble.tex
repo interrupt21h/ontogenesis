@@ -89,3 +89,19 @@
 
 \definecolor{phaseVIII}{HTML}{526C91}
 \definecolor{phaseIX}{HTML}{A45E56}
+
+% Editorial metadata is visually separate from the experimental narrative.
+% Use quietly tinted panels, italic metadata, and a narrow accent rule.
+\newcommand{\AtlasMetadata}[2]{%
+  \par\smallskip\noindent
+  \begingroup
+  \setlength{\fboxsep}{7pt}%
+  \colorbox{phaseaccent!7}{%
+    \parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
+      \raggedright\sffamily\footnotesize
+      {\bfseries\color{phaseaccent}#1}\quad
+      {\itshape\color{ontoink}#2}\strut
+    }%
+  }%
+  \endgroup\par\smallskip
+}

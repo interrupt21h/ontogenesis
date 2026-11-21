@@ -1,0 +1,9 @@
+# The computational apparatus
+
+The mathematical systems in Ontogenesis are implemented as separately versioned experiments. Each numerical generation begins from a defined initial state and integrates local rules over a periodic lattice. The recorded states are not successive checkpoints of one continuous artificial organism. The progression reflects a sequence of questions about structure, environment, inheritance and observation.
+
+Early experiments rendered chemical patterns directly. Later generations introduced numerical sections of three- and four-dimensional domains, population identities, energy accounting, and structural diagnostics. As the simulations became more complex, the observing instruments also changed. A rendered shape can be persuasive without being a persistent connected object, and a feature that disappears above one threshold may remain substantial below it. For this reason, the work contains both images and measurements.
+
+The numerical experiments, field archives and film renderers occupy distinct stages of the production process. Encoded video frames can contain interpolation, projection, color mapping, virtual-camera motion and volumetric light integration. Those operations contribute to the artwork but are not additional updates of the simulated state. When available, the underlying concentration arrays and control measurements provide an independent basis for interpretation.
+
+The publication brings those registers together: experimental mechanisms, measured findings, visual observations and the limits of each. The production infrastructure supports a reproducible record, but its changing workflows are not themselves evidence of biological emergence. Detailed workflow provenance, run identifiers and engineering telemetry appear in the appendices.
