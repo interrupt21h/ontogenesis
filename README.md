@@ -4,7 +4,7 @@
 
 **An artificial-life visualization experiment in computational art, scientific instrumentation, and recursive human–AI creation.**
 
-[**Watch the evolution film**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-evolution.mp4) · [**Visual gallery**](docs/VISUAL_GALLERY.md) · [**Scientific monograph**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis.pdf) · [**Experiment index**](docs/EXPERIMENTS.md)
+[**Watch the latest film**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-cinematic.mp4) · [**Complete evolution**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-evolution.mp4) · [**Visual gallery**](docs/VISUAL_GALLERY.md) · [**Scientific monograph**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis.pdf) · [**Experiment index**](docs/EXPERIMENTS.md)
 
 > [!NOTE]
 > Ontogenesis is exploratory computational art, not a biological model. Each generation is a separate numerical experiment, and its films offer artistic views of the simulated fields.
@@ -13,13 +13,13 @@
 
 Ontogenesis investigates how local mathematical rules, chemical interaction, four-dimensional geometry, structural memory, and environmental interventions can generate visually unfamiliar forms. The process itself is part of the art: human artistic direction, AI-assisted development, GitHub-hosted numerical execution, and reproducible publication.
 
-The original time-bounded edition unfolded over November 19–20, 2026. Its first recorded numerical execution and automated film-publication milestone were 36 hours, 2 minutes, and 9 seconds apart. This is **elapsed milestone time**, not an estimate of human work. Read the [artist's statement](docs/RECURSIVE_CREATION.md) for the creative method and its limits.
+Developed through a concentrated sequence of experiments in November 2026, the work combines artistic direction, iterative simulation, observation and numerical analysis. The [artist's statement](docs/RECURSIVE_CREATION.md) describes this method and the relationship between human intention and machine-assisted creation.
 
 ## Watch the evolving universe
 
 [![G0028 — luminous evolving structures from the 24⁴ numerical simulation](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-cinematic.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-cinematic.mp4)
 
-### G0028 · A living field
+### G0028 · Structures in motion
 
 An evolving landscape of color, structure and movement, rendered from a **24⁴ numerical universe** across 4,800 simulation steps. This 60-second cinematic follows the system before and after a localized environmental disturbance.
 
@@ -27,7 +27,7 @@ An evolving landscape of color, structure and movement, rendered from a **24⁴ 
 
 *The animation is an artistic interpretation of measured numerical fields, not a claim that the system is biologically alive.*
 
-## Current experimental record
+## Research at a glance
 
 | Dimension | Project overview |
 |:--|:--|
