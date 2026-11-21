@@ -47,12 +47,17 @@ history=(root/"docs/HISTORY.md").read_text()
 generations=[int(x) for x in re.findall(r"^## Generation (\d{4})",history,re.M)]
 if generations!=list(range(1,29)):
     raise SystemExit(f"Experiment-history record missing, duplicated or unordered: {generations}")
+first_experiment_boundary=next(
+    (p.number for p in doc if "PART I" in p.get_text() and
+     "GENERATIONS 0001" in p.get_text()),None)
+if first_experiment_boundary is None:
+    raise SystemExit("No Part I divider in the PDF")
 chapter_pages={}
 for n in generations:
     target=f"Generation {n:04d} "
     matches=[]
     for page in doc:
-        if page.number<20:  # exclude the early table of contents
+        if page.number <= first_experiment_boundary:
             continue
         lines=page.get_text().splitlines()
         if any(line.startswith(target) and ("—" in line or line.endswith("—"))

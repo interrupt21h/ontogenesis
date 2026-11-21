@@ -106,7 +106,7 @@ jobs:
           python - <<'PY'
           import fitz, re
           d=fitz.open("report/build/ontogenesis.pdf")
-          assert len(d)>=191, f"Final-render gallery missing: {len(d)} pages"
+          assert len(d)>=165, f"Unexpectedly incomplete monograph: {len(d)} pages"
           content="\n".join(p.get_text() for p in d)
           for n in ("0024","0025","0028"):
               assert re.search(r"FINAL RENDERS\s*/\s*GENERATION\s*"+n, content), f"Missing verified gallery plate G{n}"

@@ -4,6 +4,7 @@ import re
 import subprocess
 import os
 import json
+from editorial import prepare, links
 
 ROOT = Path(__file__).resolve().parents[1]
 os.chdir(ROOT)
@@ -118,7 +119,7 @@ subprocess.run([os.sys.executable, str(ROOT / 'report/atlas.py')],check=True)
 subprocess.run([os.sys.executable,str(ROOT/'report/research_atlas.py')],check=True)
 subprocess.run([os.sys.executable,str(ROOT/'report/phase_art.py')],check=True)
 body = [re.sub(r"(?m)^## (.+)$",r"## \1 {.unnumbered}",intro.replace("# Vision and method","# Vision and method {.unnumbered}",1))]
-essay = (ROOT / "docs/RECURSIVE_CREATION.md").read_text()
+essay = (ROOT / "report/artist_statement.md").read_text()
 essay = essay.replace("# Recursive creation: human intention, machine intelligence and computational emergence", "# Recursive creation",1)
 essay = re.sub(r"(?m)^(#{1,2} .+)$", r"\1 {.unnumbered}", essay)
 essay = essay.replace("## The process as medium", raw_latex(r"\begin{center}\includegraphics[width=.96\linewidth,height=.20\textheight,keepaspectratio]{phase_art/8.png}\end{center}")+"## The process as medium",1)
@@ -149,20 +150,9 @@ essay = essay.replace("The development cycle can be described in six stages.", "
 \end{tikzpicture}
 \end{center}"""),1)
 body.append(essay)
-engineering = (ROOT/"report/engineering.md").read_text()
+engineering = (ROOT/"report/production.md").read_text()
 body.append(re.sub(r"(?m)^(#{1,2} .+)$",r"\1 {.unnumbered}",engineering))
 engineering_dir=out/"engineering"
-if (engineering_dir/"summary.md").exists():
-    body.append((engineering_dir/"summary.md").read_text().replace("## Recorded engineering metrics","## Recorded engineering metrics {.unnumbered}"))
-    for filename,heading,caption in [
-        ("repository-growth","Repository evolution","Tracked Python bytes and documented generations; not mathematical complexity."),
-        ("execution-timeline","Parallel execution chronology","Run envelopes clipped at the milestone; overlapping runs are not additive wall time."),
-        ("artifact-production","Artifact production and run states","Observable metadata at collection; missing or expired records may affect counts."),
-        ("workflow-topology","Declarative workflow topology","Edges derived from workflow YAML completion triggers at the report revision.")
-    ]:
-        body.append("## "+heading+" {.unnumbered}\n\n"+raw_latex(r"\begin{center}\includegraphics[width=\linewidth,height=.65\textheight,keepaspectratio]{engineering/"+filename+r".pdf}\end{center}")+"\n\n"+caption)
-else:
-    body.append("Engineering telemetry was not collected for this build; no quantitative measurements are inferred.")
 body.append("## Reading the atlas {.unnumbered}\n\nThe early generations explore pattern formation and competing chemical fields. Subsequent phases introduce transport, resources and environmental feedback, followed by four-dimensional observation, inherited variation and structural construction. The experimental plates show selected moments in playback; numerical plots and fixed-coordinate sections provide complementary evidence. Read the chapters as a sequence of evolving questions rather than as steps toward a predetermined endpoint.")
 body.append(research_plate("research-genealogy","The genealogy of the investigation","Chronological programme and thematic clusters, not a direct numerical-parentage graph. Amber marks observation-oriented revisions; explicit branch relationships appear on the following plate."))
 branch_diagram=ROOT/"docs/figures/research-finale.svg"
@@ -179,25 +169,16 @@ for n,title,record in records:
         subtitles=["Pattern and competition","Motion and dimensionality","Resources and feedback","Sections and persistence","Variation and exchange","Interfaces and connectivity","Construction and selection","Reproducibility and evidence","Intervention and evolving perception"]
         title_style=r"\raggedright\sffamily\bfseries\fontsize{29}{34}\selectfont\hyphenpenalty=10000\exhyphenpenalty=10000 "
         body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{phase"+roman+r"}\pagecolor{phaseblack}\color{white}\thispagestyle{empty}\refstepcounter{part}\addcontentsline{toc}{part}{\thepart\quad "+groups[int(n)]+r"}\PhaseBand{"+roman+"}{"+n+"--"+f"{phase_end:04d}"+r"}{\sffamily\large "+subtitles[phase_index]+r"\par}\medskip{"+title_style+groups[int(n)]+r"\par}\bigskip{\raggedright\sffamily\large "+phase_text[int(n)]+r"\par}\bigskip\noindent\includegraphics[width=\linewidth]{phase_art/"+str(8 if phase_index==7 else 10 if phase_index==8 else phase_index+1)+r".png}\par\vfill{\color{phaseaccent}\hrule height 2pt}\medskip{\raggedright\sffamily\small "+r"\quad / \quad ".join(key+" "+name for key,name,_ in records[int(n)-1:phase_end])+r"\par}\clearpage\nopagecolor\color{black}"))
-    record = re.sub(r"(?ms)^### Reproduction and provenance\n(.*?)(?=^### |\Z)", lambda m: "\n\n**Experiment sources:** " + " · ".join(line.strip()[2:] for line in m[1].splitlines() if line.strip().startswith("- ") and "Run from repository" not in line) + "\n\n", record)
-    record = re.sub(r"(?m)^[-*] Run from repository root:.*\n?", "", record)
-    # A 40-character unbreakable monospace revision spills past the right
-    # margin in the G0020-G0025 source notes. Preserve exact hex bytes while
-    # introducing invisible, optional TeX line-break opportunities.
-    record = re.sub(
-        r"(Source revision:\s*)`([0-9a-f]{40})`",
-        lambda match: match.group(1) + r"\texttt{" +
-        r"\allowbreak ".join(match.group(2)[i:i+8] for i in range(0,40,8)) +
-        "}",
-        record,
-    )
-    # Only normalize plain prose, never existing math or code.
-    pieces = re.split(r"(```[\s\S]*?```|\$\$[\s\S]*?\$\$|\$[^$\n]+\$|`[^`\n]+`)", record)
-    for i in range(0,len(pieces),2):
-        pieces[i] = re.sub(r"(?<![\w$])(\d+)\^([234])(?![\w$])",lambda m: "$"+m[1]+"^{"+m[2]+"}$",pieces[i])
-    record = "".join(pieces)
-    if "Verified CI outcome" in record or "Verified factorial outcome" in record or "Verified outcome" in record:
-        record = re.sub(r"(?im)^Status: (?:committed; )?(?:CI )?pending[^\n]*$", "Status: verified outcome recorded below.", record)
+    # Print-ready experiment: remove draft history and technical run trails.
+    record = prepare(n,record)
+    # Preserve math and code while normalizing plain-text lattice powers.
+    tick=chr(96)
+    splitter="("+tick*3+r"[\s\S]*?"+tick*3+r"|\$\$[\s\S]*?\$\$|\$[^$\n]+\$|"+tick+r"[^"+tick+r"\n]+"+tick+")"
+    segments=re.split(splitter,record)
+    for k in range(0,len(segments),2):
+        segments[k]=re.sub(r"(?<![\w$])(\d+)\^([234])(?![\w$])",
+            lambda m:"$"+m[1]+"^{"+m[2]+"}$",segments[k])
+    record="".join(segments)
     atlas=out / "atlas" / f"{n}-atlas.svg"
     if atlas.exists():
         subprocess.run(["rsvg-convert","-f","pdf","-o",str(atlas.with_suffix(".pdf")),str(atlas)],check=True)
@@ -261,11 +242,48 @@ for generation,title,note in [
 body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontogreen}"))
 body.append((ROOT/"report/synthesis.md").read_text().replace("## The original experiment revisited","## The original experiment revisited {.unnumbered}").replace("## What the experiments establish","## What the experiments establish {.unnumbered}").replace("## The limits of observation","## The limits of observation {.unnumbered}").replace("## Continuing the inquiry","## Continuing the inquiry {.unnumbered}"))
 body.append(research_plate("comparative-endpoints","Comparative experimental evidence","Upper: descriptive historical endpoints, not a controlled contrast. Lower: four matched-seed G0023 arms; the cost treatment bundles two penalties. All matrix values use threshold 0.20."))
-body.append(raw_latex(r"\clearpage")+ "## Provenance {.unnumbered}\n\nSource revision: `"+revision+"`. The source revision identifies the published model and experimental records. Numerical results refer to the configurations described in each chapter. Editorial artwork accompanies thematic introductions and the creative essay. Analytical diagrams describe model relationships; simulation views depict sampled numerical states.")
+body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontoblue}"))
+body.append("# Appendix A — Experimental source record {.unnumbered}\n\n"
+    "This register preserves source-code, workflow and run references for "
+    "every generation without interrupting the scientific chapters. A "
+    "successful run verifies its specified execution and assertions; "
+    "it does not independently validate artificial life.\n\n"
+    "| Generation | Implementation | Workflow | Verified run |\n"
+    "|:--|:--|:--|:--|\n"+
+    "\n".join(links(n,title,original) for n,title,original in records))
+body.append(raw_latex(r"\clearpage"))
+body.append("# Appendix B — Computational production record {.unnumbered}\n\n"
+    "These engineering measurements describe the experiment's documented "
+    "creation and publication processes. They do not measure biological "
+    "significance, human labor or the complexity of the mathematical world.")
+if (engineering_dir/"summary.md").exists():
+    body.append((engineering_dir/"summary.md").read_text().replace(
+        "## Recorded engineering metrics",
+        "## Recorded engineering metrics {.unnumbered}"))
+for filename,heading,caption in [
+    ("repository-growth","Repository evolution",
+     "Source and workflow growth across the recorded milestone."),
+    ("execution-timeline","Computational execution",
+     "Concurrent job envelopes, not total labor or billed time."),
+    ("artifact-production","Archived artifact and run records",
+     "Collected repository metadata; expired artifacts may be absent."),
+    ("workflow-topology","Publication dependencies",
+     "Grouped completion triggers, excluding manual dispatch and release-data reuse.")
+]:
+    body.append("## "+heading+" {.unnumbered}\n\n"+
+        raw_latex(r"\begin{center}\includegraphics[width=\linewidth,height=.55\textheight,keepaspectratio]{engineering/"+
+          filename+r".pdf}\end{center}")+"\n\n"+caption)
+body.append(raw_latex(r"\clearpage")+"# Edition provenance {.unnumbered}\n\n"
+    "Repository source revision: "+revision+". "
+    "The numerical interpretations refer to each chapter's described "
+    "configuration. Conceptual diagrams, native-field measurements and "
+    "cinematic frames are different kinds of representation.")
 author = (ROOT/"docs/AUTHOR.md").read_text().split("\n",1)[1].strip()
+author = "\n".join(line for line in author.splitlines()
+                   if not line.startswith("[←")).strip()
 body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontogreen}")+"# About the artist {.unnumbered}"+raw_latex(r"\noindent\includegraphics[width=\linewidth,height=.22\textheight,keepaspectratio]{phase_art/9.png}\par\medskip{\sffamily\bfseries\LARGE\color{ontoink} Scott Muller\par}{\sffamily\small\color{ontoblue} Scientific visualization / Systems engineering / Computational art\par}\medskip{\color{ontogreen}\hrule}\medskip")+author)
 (out/"report.md").write_text("\n\n".join(body))
-subprocess.run(["pandoc",str(out/"report.md"),"--standalone","--toc","--toc-depth=1","--number-sections","--top-level-division=chapter","--metadata","documentclass=report","--metadata","title=Ontogenesis: Computational Emergence","--metadata","subtitle=Living scientific and engineering monograph","--metadata","author=Scott Muller — Ontogenesis Project","--variable","geometry:margin=25mm","--variable","fontsize=11pt","--include-in-header=report/preamble.tex","-o",str(out/"ontogenesis.tex")],check=True)
+subprocess.run(["pandoc",str(out/"report.md"),"--standalone","--toc","--toc-depth=1","--number-sections","--top-level-division=chapter","--metadata","documentclass=report","--metadata","title=Ontogenesis: Computational Emergence","--metadata","subtitle=Computational art and research atlas","--metadata","author=Scott Muller — Ontogenesis Project","--variable","geometry:margin=25mm","--variable","fontsize=11pt","--include-in-header=report/preamble.tex","-o",str(out/"ontogenesis.tex")],check=True)
 tex=out/"ontogenesis.tex"
 subprocess.run([os.sys.executable,str(ROOT/"report/cover_art.py")],check=True)
 raw=tex.read_text()
@@ -277,7 +295,7 @@ custom=r"""\begin{titlepage}
 \node[anchor=north west,text=white,font=\sffamily\bfseries\fontsize{39}{44}\selectfont] at ([xshift=23mm,yshift=-40mm]current page.north west) {ONTOGENESIS};
 \node[anchor=north west,text=white,font=\sffamily\Large] at ([xshift=25mm,yshift=-60mm]current page.north west) {Computational emergence};
 \node[anchor=south west,text=white,font=\sffamily\large] at ([xshift=25mm,yshift=30mm]current page.south west) {Scott Muller};
-\node[anchor=south west,text=white,font=\sffamily\small] at ([xshift=25mm,yshift=23mm]current page.south west) {Living experimental monograph};
+\node[anchor=south west,text=white,font=\sffamily\small] at ([xshift=25mm,yshift=23mm]current page.south west) {Illustrated computational-art monograph};
 \node[anchor=south west,text=white,font=\sffamily\small] at ([xshift=25mm,yshift=16mm]current page.south west) {scott@21h.io};
 \end{tikzpicture}\null
 \end{titlepage}"""
