@@ -1,12 +1,10 @@
-<div align="center">
+# Ontogenesis
 
 ![Ontogenesis — conceptual visual identity, not raw simulation imagery](docs/assets/ontogenesis-hero.svg)
 
 **An artificial-life visualization experiment in computational art, scientific instrumentation, and recursive human–AI creation.**
 
 [**Watch the evolution film**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-evolution.mp4) · [**Visual gallery**](docs/VISUAL_GALLERY.md) · [**Scientific monograph**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis.pdf) · [**Experiment index**](docs/EXPERIMENTS.md)
-
-</div>
 
 > [!NOTE]
 > Ontogenesis is exploratory computational art, **not a validated biological model**. Each generation is a separately initialized numerical experiment. Successful CI execution demonstrates the assertions and deliverables tested in that run—not ecological recovery, numerical convergence, or biological life.
