@@ -1,4 +1,4 @@
-"""G0028 matched pilot: documented numerical evidence from JSON, not video."""
+"""G0028 matched interventions: measured pilot and full-domain fields, never decoded video."""
 import argparse,json
 from pathlib import Path
 import matplotlib
@@ -12,7 +12,8 @@ def render(src,out):
     shocked=data["arms"]["shock"]["frames"]
     steps=np.array([r["step"] for r in control])
     assert steps.tolist()==[r["step"] for r in shocked]
-    assert data["generation"]=="0028" and data["seed"]==42 and data["n"]==12 and data["steps"]==240
+    assert data["generation"]=="0028" and data["seed"]==42
+    assert (data["n"],data["steps"],data["event_step"]) in ((12,240,120),(24,4800,2400))
     assert steps[0]==0 and data["event_step"] in steps and steps[-1]==240
     plt.rcParams.update({"font.family":"DejaVu Sans","font.size":10,
                          "axes.spines.top":False,"axes.spines.right":False})
@@ -20,9 +21,9 @@ def render(src,out):
     fig.subplots_adjust(top=.82,bottom=.14,left=.095,right=.96,hspace=.43,wspace=.27)
     fig.suptitle("ONTOGENESIS / G0028  ·  LOCALIZED DISTURBANCE",
                  color="#173b55",fontsize=17,fontweight="bold",y=.965)
-    fig.text(.5,.903,"Paired, recorded numerical measurements · 12⁴ periodic lattice · seed 42",
+    fig.text(.5,.903,f"Paired, recorded numerical measurements · {data['n']}⁴ periodic lattice · seed 42",
              ha="center",fontsize=11,color="#526b7b")
-    fig.text(.5,.865,"Small-domain pilot only — no full-resolution recovery claim",
+    fig.text(.5,.865,("Full-domain paired comparison — not proof of organismal recovery" if data["n"]==24 else "Small-domain pilot — not a mature-ecology recovery study"),
              ha="center",fontsize=10,color="#a26b2d")
     for col,(key,title) in enumerate((("local_energy","Energy in perturbation core"),
                                        ("local_matrix","Structural matrix in perturbation core"))):
@@ -42,15 +43,16 @@ def render(src,out):
         bottom.set_ylabel("Difference in regional mean")
         for ax in (top,bottom):
             ax.axvline(data["event_step"],color="#ab5c42",ls="--",lw=1.3,alpha=.85)
-            ax.set_xlim(0,240)
+            ax.set_xlim(0,data["steps"])
             ax.grid(color="#dce6eb",alpha=.65)
     c=data["comparisons"]
     fig.text(.5,.065,
-             f"At step 240: |ΔE| attenuation {100*c['local_energy']['deviation_attenuation']:.2f}%"
+             f"At step {data['steps']}: |ΔE| attenuation {100*c['local_energy']['deviation_attenuation']:.2f}%"
              f"   ·   |ΔM| attenuation {100*c['local_matrix']['deviation_attenuation']:.2f}%",
              ha="center",color="#173b55",fontsize=10,fontweight="bold")
     fig.text(.5,.03,
-             "Source: verified G0028 pilot artifact 14670709650 · native numerical measurements · dashed line: shock at step 120",
+             (f"Source: verified G0028 {'full artifact 14682932255' if data['n']==24 else 'pilot artifact 14670709650'}"
+              f" · measured core means · dashed line: shock at step {data['event_step']}"),
              ha="center",color="#526b7b",fontsize=8.5)
     out=Path(out);out.parent.mkdir(parents=True,exist_ok=True)
     fig.savefig(out,facecolor=fig.get_facecolor())
