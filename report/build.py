@@ -248,7 +248,7 @@ body.append(research_plate("comparative-endpoints","Comparative experimental evi
 body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontoblue}"))
 body.append("# Appendix A — Experimental source record {.unnumbered}\n\n"
     "This register preserves source-code, workflow and run references for "
-    "every generation without interrupting the scientific chapters. A "
+    "every generation without interrupting the experiment chapters. A "
     "successful run verifies its specified execution and assertions; "
     "it does not independently validate artificial life.\n\n"
     "| Generation | Implementation | Workflow | Verified run |\n"
@@ -286,7 +286,7 @@ author = "\n".join(line for line in author.splitlines()
                    if not line.startswith("[←")).strip()
 body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontogreen}")+"# About the artist {.unnumbered}"+raw_latex(r"\noindent\includegraphics[width=\linewidth,height=.22\textheight,keepaspectratio]{phase_art/9.png}\par\medskip{\sffamily\bfseries\LARGE\color{ontoink} Scott Muller\par}{\sffamily\small\color{ontoblue} Matsch Systems / Systems engineering / Computational art\par}\medskip{\color{ontogreen}\hrule}\medskip")+author)
 (out/"report.md").write_text("\n\n".join(body))
-subprocess.run(["pandoc",str(out/"report.md"),"--standalone","--toc","--toc-depth=1","--number-sections","--top-level-division=chapter","--metadata","documentclass=report","--metadata","title=Ontogenesis: Computational Emergence","--metadata","subtitle=Computational art and research atlas","--metadata","author=Scott Muller — Ontogenesis Project","--variable","geometry:margin=25mm","--variable","fontsize=11pt","--include-in-header=report/preamble.tex","-o",str(out/"ontogenesis.tex")],check=True)
+subprocess.run(["pandoc",str(out/"report.md"),"--standalone","--toc","--toc-depth=1","--number-sections","--top-level-division=chapter","--metadata","documentclass=report","--metadata","title=Ontogenesis: Computational Excess","--metadata","subtitle=An illustrated field journal of evolving simulations and overworked CI","--metadata","author=Scott Muller — Ontogenesis Project","--variable","geometry:margin=25mm","--variable","fontsize=11pt","--include-in-header=report/preamble.tex","-o",str(out/"ontogenesis.tex")],check=True)
 tex=out/"ontogenesis.tex"
 subprocess.run([os.sys.executable,str(ROOT/"report/cover_art.py")],check=True)
 raw=tex.read_text()
@@ -298,7 +298,7 @@ custom=r"""\begin{titlepage}
 \node[anchor=north west,text=white,font=\sffamily\bfseries\fontsize{39}{44}\selectfont] at ([xshift=23mm,yshift=-40mm]current page.north west) {ONTOGENESIS};
 \node[anchor=north west,text=white,font=\sffamily\Large] at ([xshift=25mm,yshift=-60mm]current page.north west) {Computational emergence};
 \node[anchor=south west,text=white,font=\sffamily\large] at ([xshift=25mm,yshift=30mm]current page.south west) {Scott Muller};
-\node[anchor=south west,text=white,font=\sffamily\small] at ([xshift=25mm,yshift=23mm]current page.south west) {Illustrated computational-art monograph};
+\node[anchor=south west,text=white,font=\sffamily\small] at ([xshift=25mm,yshift=23mm]current page.south west) {An illustrated computational field journal};
 \node[anchor=south west,text=white,font=\sffamily\small] at ([xshift=25mm,yshift=16mm]current page.south west) {scott@21h.io};
 \end{tikzpicture}\null
 \end{titlepage}"""
