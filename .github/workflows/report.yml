@@ -82,6 +82,31 @@ jobs:
           test -s report/build/evidence/0028/result.json
           python report/disturbance_atlas.py report/build/evidence/0028/result.json report/build/atlas/0028-evidence.pdf
           test -s report/build/atlas/0028-evidence.pdf
+          test -s report/build/atlas/0028-full-evidence.pdf
+      - name: Retrieve verified G0028 full-domain paired evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p report/build/evidence/0028-full
+          if gh release download atlas-media -p "disturbance-evidence-0028-full.json" -D report/build/evidence/0028-full; then
+            mv report/build/evidence/0028-full/disturbance-evidence-0028-full.json report/build/evidence/0028-full/result.json
+          else
+            gh api "repos/interrupt21h/ontogenesis/actions/artifacts/14682932255/zip" > /tmp/g0028-full.zip
+            unzip -o /tmp/g0028-full.zip result.json -d report/build/evidence/0028-full
+          fi
+          test -s report/build/evidence/0028-full/result.json
+          python - <<'PY'
+          import json
+          x=json.load(open("report/build/evidence/0028-full/result.json"))
+          assert (x["generation"],x["seed"],x["n"],x["steps"],x["event_step"])==("0028",42,24,4800,2400)
+          assert len(x["arms"]["control"]["frames"])==len(x["arms"]["shock"]["frames"])>=121
+          assert len(x["arms"]["control"]["hashes"])==len(x["arms"]["shock"]["hashes"])==41
+          e=x["comparisons"]["local_energy"];m=x["comparisons"]["local_matrix"]
+          assert e["event_difference"]<0 and m["event_difference"]<0
+          assert e["end_difference"]<0 and m["end_difference"]>0
+          PY
+          python report/disturbance_atlas.py report/build/evidence/0028-full/result.json report/build/atlas/0028-full-evidence.pdf
+          test -s report/build/atlas/0028-full-evidence.pdf
       - name: Validate report generator syntax
         run: python3 -m compileall -q report
       - name: Collect engineering atlas
@@ -158,6 +183,8 @@ jobs:
           done
           cp report/build/evidence/0028/result.json report/build/evidence/0028/disturbance-evidence-0028.json
           gh release upload atlas-media report/build/evidence/0028/disturbance-evidence-0028.json --clobber
+          cp report/build/evidence/0028-full/result.json report/build/evidence/0028-full/disturbance-evidence-0028-full.json
+          gh release upload atlas-media report/build/evidence/0028-full/disturbance-evidence-0028-full.json --clobber
           gh release upload atlas-media report/build/ontogenesis.pdf --clobber
       - name: Link report
         run: echo '[Download standalone PDF](${{ steps.pdf.outputs.artifact-url }})' >> "$GITHUB_STEP_SUMMARY"
