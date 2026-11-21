@@ -94,7 +94,7 @@ jobs:
           pdfinfo report/build/ontogenesis.pdf
           pdftotext report/build/ontogenesis.pdf report/build/verified.txt
           test -s report/build/atlas/0024-field-evolution.pdf
-          grep -q 'Evolution of the computational production framework' report/build/verified.txt
+          grep -q 'The computational apparatus' report/build/verified.txt
           for plate in repository-growth execution-timeline artifact-production workflow-topology; do test -s "report/build/engineering/$plate.pdf"; done
           test -s report/build/atlas/0026-evidence.pdf
           test -s report/build/atlas/0027-evidence.pdf

@@ -7,6 +7,7 @@ on:
       - AGENTS.md
       - 'docs/**'
       - 'report/*.md'
+      - 'report/*.py'
       - scripts/check_docs.py
       - .github/workflows/documentation.yml
   workflow_dispatch:
@@ -23,6 +24,10 @@ jobs:
         with:
           python-version: '3.12'
       - run: python scripts/check_docs.py
+      - name: Validate editorial projection before expensive TeX build
+        run: |
+          python -m compileall -q report/build.py report/editorial.py report/editorial_check.py
+          python report/editorial_check.py
       - name: Summary
         if: success()
         run: echo 'Documentation links, SVGs and all 28 indexed generations validated.' >> "$GITHUB_STEP_SUMMARY"
