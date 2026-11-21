@@ -1,4 +1,4 @@
-name: Scientific report
+name: Illustrated field journal
 on:
   workflow_dispatch:
   push:
@@ -11,7 +11,7 @@ permissions:
   contents: write
   actions: read
 concurrency:
-  group: scientific-report
+  group: illustrated-field-journal
   cancel-in-progress: true
 jobs:
   report:
@@ -118,7 +118,7 @@ jobs:
           pdfinfo report/build/ontogenesis.pdf
           pdftotext report/build/ontogenesis.pdf report/build/verified.txt
           test -s report/build/atlas/0024-field-evolution.pdf
-          grep -q 'The computational apparatus' report/build/verified.txt
+          grep -q 'Keeping the machinery running' report/build/verified.txt
           for plate in repository-growth execution-timeline artifact-production workflow-topology; do test -s "report/build/engineering/$plate.pdf"; done
           test -s report/build/atlas/0026-evidence.pdf
           test -s report/build/atlas/0027-evidence.pdf
@@ -175,7 +175,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release view atlas-media >/dev/null 2>&1 || gh release create atlas-media --title "Scientific atlas archive" --notes "Verified report and provenance-labelled frame samples." --prerelease
+          gh release view atlas-media >/dev/null 2>&1 || gh release create atlas-media --title "Ontogenesis media and field journal archive" --notes "Verified report and provenance-labelled frame samples." --prerelease
           python3 report/archive.py
           for gen in 0026 0027; do
             cp "report/build/evidence/$gen/result.json" "report/build/evidence/$gen/structural-evidence-$gen.json"
