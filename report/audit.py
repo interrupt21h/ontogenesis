@@ -78,6 +78,7 @@ must_find=[
     "Synthesis and research directions",
     "About the artist",
     "Localized disturbance: matched pilot measurements",
+    "Full-resolution matched disturbance",
 ]
 for heading in must_find:
     if heading not in alltext:
@@ -97,7 +98,7 @@ if gallery["0028"]>=synthesis:
     raise SystemExit("Synthesis must follow the curated final gallery")
 if not ("About the artist" in text_pages[-1] or "About the artist" in text_pages[-2]):
     raise SystemExit("Final author page missing or shifted away from the end")
-for fig in ("research-finale.pdf","0028-evidence.pdf"):
+for fig in ("research-finale.pdf","0028-evidence.pdf","0028-full-evidence.pdf"):
     file=out/"atlas"/fig
     if not file.exists() or file.stat().st_size<1000:
         raise SystemExit("Required evidence/model-ancestry figure missing: "+fig)
