@@ -72,8 +72,8 @@ def special_source(gen,artifact,p):
 def source(gen,artifact):
     # Featured G0028 artwork is selected deliberately, never by a later
     # workflow's artifact ordering or a small-domain preview.
-    if gen=="0028" and artifact!=14680891214:
-        raise ValueError("G0028 cumulative film must use verified 24^4 fidelity artifact 14680891214")
+    if gen=="0028" and artifact!=14679397104:
+        raise ValueError("G0028 film chapter is curated from the full 24^4 cinematic artifact 14679397104")
     name=f"video-{gen}-{artifact}.mp4"
     p=OUT/name
     if not p.exists():
@@ -120,13 +120,13 @@ def main():
         title=OUT/f"chapter-{gen}.mp4"; clip=OUT/f"clip-{gen}.mp4"
         subtitle=("Archived still sequence" if gen=="0001" else
                   "Measured summary, not simulation footage" if gen=="0026" else
-                  "24^4 volumetric fidelity / 4 omega sections / artistic observation"
+                  "Full-domain 24^4 cinematic / evolving field visualization"
                   if gen=="0028" else
                   "Independent numerical experiment")
         card([f"GENERATION {gen}",titles.get(gen,""),subtitle],title,2.5)
         encode(["-i",str(p),"-vf","fps=24,scale=1280:720:force_original_aspect_ratio=decrease:force_divisible_by=2,pad=1280:720:(ow-iw)/2:(oh-ih)/2:color=0x101c29,setsar=1"],clip)
         segments.extend([title,clip])
-        records.append(dict(generation=gen,artifact=artifact,kind="archived_stills" if gen=="0001" else "measured_summary" if gen=="0026" else "cinematic_fidelity_master_24d4" if gen=="0028" else "original_video",source_sha256=hashlib.sha256(p.read_bytes()).hexdigest(),source_duration=float(info["format"]["duration"]),normalized_duration=float(probe(clip)["format"]["duration"]),source=p.name))
+        records.append(dict(generation=gen,artifact=artifact,kind="archived_stills" if gen=="0001" else "measured_summary" if gen=="0026" else "cinematic_full_master_24d4" if gen=="0028" else "original_video",source_sha256=hashlib.sha256(p.read_bytes()).hexdigest(),source_duration=float(info["format"]["duration"]),normalized_duration=float(probe(clip)["format"]["duration"]),source=p.name))
     end=OUT/"end.mp4";card(["ONTOGENESIS","End of verified video sequence","See the scientific monograph for methods and limitations"],end,5);segments.append(end)
     concat=OUT/"concat.txt";concat.write_text("".join(f"file '{p.name}'\n" for p in segments))
     film=OUT/"ontogenesis-evolution.mp4"

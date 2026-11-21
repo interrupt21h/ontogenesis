@@ -98,8 +98,8 @@ def main() -> int:
     # Assert that all publication surfaces agree on the selected source.
     videos = json.loads((ROOT / "report" / "videos.json").read_text())
     selected = videos.get("0028")
-    if selected != 14680891214:
-        failures.append(f"G0028 film selection regressed: expected 14680891214, got {selected}")
+    if selected != 14679397104:
+        failures.append(f"G0028 film selection regressed: expected 14679397104, got {selected}")
     publication_texts = [
         ROOT / "README.md",
         ROOT / "docs" / "VISUAL_GALLERY.md",
@@ -109,7 +109,7 @@ def main() -> int:
         publication = f.read_text(encoding="utf-8")
         if "24⁴" not in publication or "G0028" not in publication:
             failures.append(f"{f.relative_to(ROOT)} missing 24^4 G0028 publication context")
-    if "14680891214" not in (ROOT / "report" / "film.py").read_text():
+    if "14679397104" not in (ROOT / "report" / "film.py").read_text():
         failures.append("Film assembler not pinned to verified G0028 full-domain master")
     if failures:
         for failure in failures:

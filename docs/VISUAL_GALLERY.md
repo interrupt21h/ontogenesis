@@ -4,31 +4,21 @@
 
 **Ontogenesis publishes numerical evidence and moving visual artwork separately.** The linked poster images below are actual retained outputs of their corresponding successful rendering workflows. Conceptual mechanism figures are explicitly labeled; they must never be confused with simulated field images.
 
-## G0028 — Volumetric fidelity master
+## Featured artwork — G0028 full-resolution cinematic
 
-[![Actual G0028 high-fidelity master film poster, derived from measured numerical fields](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-fidelity-master.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-fidelity-master.mp4)
+[![G0028 evolving field structures — actual frame from full-resolution simulation](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-cinematic.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-cinematic.mp4)
 
-**[Watch the 60-second volumetric master (MP4)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-fidelity-master.mp4)** · [Numerical fields (NPZ)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/cinematic-fidelity-full.npz) · [Field metadata (JSON)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/cinematic-fidelity-full.json) · [Rendering provenance](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-fidelity-master.render.json) · [Verified CI run](https://github.com/interrupt21h/ontogenesis/actions/runs/44833423671)
+**[Watch the full-resolution G0028 film (60 seconds)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-cinematic.mp4)** · [Watch the cumulative evolution](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-evolution.mp4) · [View numerical source data](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/cinematic-full.npz)
 
-| Property | Fidelity edition |
-|:--|:--|
-| Numerical universe | 24⁴ periodic cells, 4,800 steps |
-| Captured samples | 1,203 observation times, four sampled fourth-coordinate hyperplanes |
-| Fields | Seven: matrix, chemical species V/W, pulse, energy, trait, recovery |
-| Precision | float32 solver, float16 frequent visual samples, eight native float32 4D seven-field keyframes |
-| Rendering | Orthographic 96³ emission/absorption, moving virtual camera, field-derived contrast |
-| Film | 1280 × 720, 24 fps, 60 seconds; H.264 MP4 |
-| Interpretation | **One treated universe**, not a matched-control test; successful encoding does not establish ecological recovery |
+The latest selected film follows a **24⁴, 4,800-step numerical simulation** through changing concentrations and structural activity. Its rotating projection gives a spatial impression of a fixed fourth-coordinate slice; movement, color and lighting are visual treatments of recorded numerical fields.
 
-**Cumulative-film selection:** This verified 24⁴ master is the **G0028 chapter in the cumulative evolution film**, pinned to [Actions artifact `14680891214`](https://github.com/interrupt21h/ontogenesis/actions/runs/44833423671/artifacts/14680891214) in [`report/videos.json`](../report/videos.json). The high-fidelity capture uses measured fields, but resolution alone does not guarantee artistic quality or biological validity.
+## Alternate full-domain volumetric study
 
-## G0028 — Single-plane cinematic master
+[![G0028 ray-integrated volume study — archival still](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-fidelity-master.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-fidelity-master.mp4)
 
-[![Actual G0028 single-plane cinematic master poster](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-cinematic.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-cinematic.mp4)
+**[Watch the volumetric alternative](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-fidelity-master.mp4)** · [Source field archive](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/cinematic-fidelity-full.npz) · [Rendering metadata](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-fidelity-master.render.json)
 
-**[Watch the alternative full-resolution MP4](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-cinematic.mp4)** · [Numerical NPZ](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/cinematic-full.npz) · [Metadata](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/cinematic-full.json) · [Verified CI run](https://github.com/interrupt21h/ontogenesis/actions/runs/44829195043)
-
-This different 24⁴ / 4,800-step edition samples **one fixed fourth-coordinate hyperplane** at a coarser cadence and displays evolving fields using rotating voxel-like glyphs. Spatial interpolation, camera motion, glow and color mapping belong to the renderer. This is a film of a treated simulation, **not** a measurement of the treatment effect relative to an untreated control.
+This independently completed **24⁴** edition samples four fourth-coordinate hyperplanes and renders their seven observed fields with 96³ volumetric ray integration. It emphasizes smooth field variation rather than the featured film's granular structures. Both are full-resolution simulations, but their rendered appearances differ because their observation and presentation methods differ.
 
 ## G0028 — Reduced-domain cinematic preview
 
@@ -36,7 +26,7 @@ This different 24⁴ / 4,800-step edition samples **one fixed fourth-coordinate 
 
 **[Watch the verified 18-second preview](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-preview.mp4)** · [CI run](https://github.com/interrupt21h/ontogenesis/actions/runs/44829195043) · [Historical video artifact `14675921895`](https://github.com/interrupt21h/ontogenesis/actions/runs/44829195043/artifacts/14675921895)
 
-This reduced-domain 12⁴ version was the **previous cumulative-film selection**, retained as a rendering-system preview. It is **not** the currently selected G0028 film chapter. Because its active chemical fields decay early, its moving virtual camera should not be mistaken for continuous simulated organism growth. The newly selected 24⁴ film is an artistic observation of one universe, not the paired causal experiment.
+This reduced-domain 12⁴ version is an early rendering study. The selected cumulative-film chapter now uses the full 24⁴ cinematic master. Because its active chemical fields decay early, its moving virtual camera should not be mistaken for continuous simulated organism growth. The newly selected 24⁴ film is an artistic observation of one universe, not the paired causal experiment.
 
 ## Earlier visual benchmarks: G0024 and G0025
 

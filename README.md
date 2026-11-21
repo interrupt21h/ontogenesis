@@ -7,7 +7,7 @@
 [**Watch the evolution film**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-evolution.mp4) · [**Visual gallery**](docs/VISUAL_GALLERY.md) · [**Scientific monograph**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis.pdf) · [**Experiment index**](docs/EXPERIMENTS.md)
 
 > [!NOTE]
-> Ontogenesis is exploratory computational art, **not a validated biological model**. Each generation is a separately initialized numerical experiment. Successful CI execution demonstrates the assertions and deliverables tested in that run—not ecological recovery, numerical convergence, or biological life.
+> Ontogenesis is exploratory computational art, not a biological model. Each generation is a separate numerical experiment, and its films offer artistic views of the simulated fields.
 
 ## The work
 
@@ -17,26 +17,28 @@ The original time-bounded edition unfolded over November 19–20, 2026. Its firs
 
 ## Watch the evolving universe
 
-[![G0028 full-resolution volumetric film poster, rendered from actual measured fields](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-fidelity-master.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-fidelity-master.mp4)
+[![G0028 — luminous evolving structures from the 24⁴ numerical simulation](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-cinematic.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-cinematic.mp4)
 
-**G0028 / Volumetric fidelity master** — 24⁴ lattice, 4,800 integration steps, seven observed fields, four sampled fourth-coordinate hyperplanes, native sample stride 4, 96³ ray integration, and a 60-second 1280 × 720 film. The [full job passed CI](https://github.com/interrupt21h/ontogenesis/actions/runs/44833423671); its artistic effectiveness and biological interpretation are separate questions.
+### G0028 · A living field
 
-[**Play high-fidelity master (MP4)**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-fidelity-master.mp4) · [Alternative single-plane cinematic master](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-cinematic.mp4) · [Compare all versions, posters and native archives](docs/VISUAL_GALLERY.md)
+An evolving landscape of color, structure and movement, rendered from a **24⁴ numerical universe** across 4,800 simulation steps. This 60-second cinematic follows the system before and after a localized environmental disturbance.
 
-The [cumulative evolution film](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-evolution.mp4) selects the **24⁴ G0028 volumetric fidelity master** (60 seconds, 1,440 playback frames) as its final cinematic chapter. The edition is pinned in [`report/videos.json`](report/videos.json) to verified Actions artifact [`14680891214`](https://github.com/interrupt21h/ontogenesis/actions/runs/44833423671/artifacts/14680891214). The earlier 12⁴ preview and alternative single-plane master remain separately archived. G0025 remains the benchmark for assessing volumetric rendering quality; no biological recovery is inferred from camera motion or imagery.
+[**Watch the latest full-resolution film**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-cinematic.mp4) · [Complete evolution film](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-evolution.mp4) · [Visual gallery](docs/VISUAL_GALLERY.md)
+
+*The animation is an artistic interpretation of measured numerical fields, not a claim that the system is biologically alive.*
 
 ## Current experimental record
 
-| Dimension | Verified scope / publication status |
+| Dimension | Project overview |
 |:--|:--|
 | **Implemented experiments** | G0001–G0028, each documented separately |
 | **Full-resolution numerical domain** | 24⁴ periodic cells for the recent full-domain studies |
-| **G0026 observer test** | Full 4,800-step matched observer verification passed |
-| **G0027 structural statistics** | Full 24⁴ run and 41/41 same-process observer checkpoints passed; cross-run bitwise agreement is not established |
-| **G0028 scientific intervention** | 12⁴ paired pilot and [full 24⁴ matched-control run](https://github.com/interrupt21h/ontogenesis/actions/runs/44840239338) both verified; the full study finds 94.35% attenuation in local energy deficit and persistent changes in global matrix coverage |
-| **G0028 cinematic observations** | Both full 24⁴ film workflows passed; source numerical archives and distinct posters retained |
-| **Published research report** | [Verified scientific/engineering PDF](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis.pdf), including the final-render chapter |
-| **Compute** | GitHub-hosted CPU Actions; expensive runs are explicitly gated |
+| **G0026 observer experiment** | Examines whether recording numerical measurements changes the simulation |
+| **G0027 structural analysis** | Studies concentration distributions, spatial frequencies and structural thresholds |
+| **G0028 disturbance experiment** | Compares untreated and disturbed 24⁴ universes, revealing changing local energy differences and persistent matrix differences |
+| **Featured artwork** | Full-resolution 24⁴ G0028 cinematic; an alternative ray-integrated film remains available |
+| **Illustrated monograph** | [Read the scientific and artistic report](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis.pdf) |
+| **Production** | Python numerical simulation, field-based rendering, and a reproducible research archive |
 
 ### The production process
 
@@ -62,8 +64,7 @@ The [cumulative evolution film](https://github.com/interrupt21h/ontogenesis/rele
 
 [**Explore all 28 generations and workflows**](docs/EXPERIMENTS.md) · [Detailed chronological results](docs/HISTORY.md)
 
-> [!IMPORTANT]
-> G0029–G0032 are **planned research directions**, not finished simulations. Full-resolution G0028 cinematic output must not be confused with a paired two-universe controlled experiment.
+G0029–G0032 remain future research directions. See the [experiment atlas](docs/EXPERIMENTS.md) for the measured results and their limitations.
 
 ## Reproduce and explore
 
@@ -76,7 +77,7 @@ python -m pip install -r requirements.txt
 python render.py
 ~~~
 
-Later experiments have workflow-specific requirements such as SciPy. The 24⁴ jobs are expensive: consult the [runbook](docs/PIPELINE.md) before manually dispatching them.
+Later experiments have additional dependencies and substantial computational requirements. See the [reproduction guide](docs/PIPELINE.md).
 
 ## Read more
 
@@ -91,4 +92,4 @@ Later experiments have workflow-specific requirements such as SciPy. The 24⁴ j
 | [Recursive creation](docs/RECURSIVE_CREATION.md) | Creative inquiry and AI-assisted authorship |
 | [About the artist](docs/AUTHOR.md) | Artistic and scientific background |
 
-**Artistic direction:** Scott Muller. AI provided substantial mathematical and engineering implementation; interpretations remain constrained by recorded evidence. Release media may require GitHub authentication. Linked film posters open **actual retained MP4s**; GitHub READMEs do not provide a reliable arbitrary inline-video player.
+**Artistic direction:** Scott Muller · Human-directed, AI-assisted computational art. Technical provenance and numerical evidence are maintained in the supporting documentation.

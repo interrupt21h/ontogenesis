@@ -81,8 +81,8 @@ def final_render_plate(n, title, interpretation, observed=(1,2)):
     artifact=manifest.get(n)
     if artifact is None:
         raise RuntimeError(f"No verified media manifest entry for gallery G{n}")
-    if n=="0028" and artifact!=14680891214:
-        raise RuntimeError("G0028 gallery is edition-locked to verified 24^4 fidelity artifact 14680891214; revise scientific labels before changing this film")
+    if n=="0028" and artifact!=14679397104:
+        raise RuntimeError("G0028 gallery must use the selected full-resolution cinematic edition 14679397104")
     folder=out/"frames"/f"{n}-{artifact}"
     index_file=folder/"frames.json"
     if not index_file.exists():
@@ -238,8 +238,8 @@ for generation,title,note in [
      "A sampled observatory, not the entire four-dimensional field. G0024 develops inherited construction traits and its final structural coverage depends strongly on the threshold."),
     ("0025","Maintenance: the established volumetric baseline",
      "G0025 uses a genuine 96-cubed volumetric ray sampler for a moving observed section. Light transport is an artistic rendering operation, not an extra simulation process."),
-    ("0028","Disturbance: full-domain volumetric observation",
-     "Verified 24-to-the-fourth, 4,800-step single-universe fidelity film (artifact 14680891214): seven observed fields, four sampled omega planes, 96-cubed volumetric rendering. The film is not the independent two-arm matched-control experiment; display interpolation and camera motion do not establish ecological recovery."),
+    ("0028","Disturbance: evolving full-domain fields",
+     "An artistic view of a 24-to-the-fourth numerical world evolved for 4800 steps. Moving observed-field voxels reveal spatial structures before and after a local disturbance. The film is distinct from the paired experimental comparison, and its camera motion does not add numerical steps."),
 ]:
     body.append(final_render_plate(generation,title,note))
 body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontogreen}"))
