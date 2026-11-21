@@ -14,7 +14,7 @@ def render(src,out):
     assert steps.tolist()==[r["step"] for r in shocked]
     assert data["generation"]=="0028" and data["seed"]==42
     assert (data["n"],data["steps"],data["event_step"]) in ((12,240,120),(24,4800,2400))
-    assert steps[0]==0 and data["event_step"] in steps and steps[-1]==240
+    assert steps[0]==0 and data["event_step"] in steps and steps[-1]==data["steps"]
     plt.rcParams.update({"font.family":"DejaVu Sans","font.size":10,
                          "axes.spines.top":False,"axes.spines.right":False})
     fig,axs=plt.subplots(2,2,figsize=(11,7.7),facecolor="#f8fafc")
