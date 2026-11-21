@@ -1,10 +1,10 @@
-# Recursive creation: human intention, machine intelligence and computational emergence
+# Delegating complexity: how Ontogenesis got out of hand
 
 [← Project overview](../README.md) · [Documentation](README.md) · [About the artist](AUTHOR.md) · [Experiment atlas](EXPERIMENTS.md)
 
-*An artist’s statement on human intention, machine intelligence and computational emergence.*
+*A personal account of pushing GitHub Actions, generative art, and AI-assisted development further than strictly necessary.*
 
-## A two-day experiment in delegated complexity
+## A two-day rabbit hole in delegated complexity
 
 Ontogenesis began with a deliberately modest intention: to brainstorm a complicated computational system that I could evolve through successive experiments, generate interesting visual artifacts from, and use to explore the capabilities of continuous integration (CI). I wanted a project in which numerical execution, testing, rendering, artifact retention and publication could become parts of a single iterative creative process. I did not begin with a research hypothesis in mathematical biology or a plan to construct a scientifically validated model of life.
 
