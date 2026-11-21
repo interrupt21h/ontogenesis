@@ -1,0 +1,28 @@
+name: Documentation integrity
+on:
+  push:
+    branches: [main]
+    paths:
+      - README.md
+      - AGENTS.md
+      - 'docs/**'
+      - 'report/*.md'
+      - scripts/check_docs.py
+      - .github/workflows/documentation.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  docs:
+    name: Validate navigation, figures and complete experiment index
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: python scripts/check_docs.py
+      - name: Summary
+        if: success()
+        run: echo 'Documentation links, SVGs and all 28 indexed generations validated.' >> "$GITHUB_STEP_SUMMARY"
