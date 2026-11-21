@@ -90,6 +90,6 @@ Later experiments have additional dependencies and substantial computational req
 | [Scientific conventions](docs/METHODOLOGY.md) | Numerical and evidentiary limitations |
 | [Production / reproducibility](docs/PIPELINE.md) | Safe Actions dispatch, release lifecycle, publication |
 | [Recursive creation](docs/RECURSIVE_CREATION.md) | Creative inquiry and AI-assisted authorship |
-| [About the artist](docs/AUTHOR.md) | Artistic and scientific background |
+| [About the artist](docs/AUTHOR.md) | Current systems work and earlier scientific visualization |
 
 **Artistic direction:** Scott Muller · Human-directed, AI-assisted computational art. Technical provenance and numerical evidence are maintained in the supporting documentation.

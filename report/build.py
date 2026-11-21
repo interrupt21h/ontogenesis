@@ -284,7 +284,7 @@ body.append("## Edition provenance {.unnumbered}\n\n"
 author = (ROOT/"docs/AUTHOR.md").read_text().split("\n",1)[1].strip()
 author = "\n".join(line for line in author.splitlines()
                    if not line.startswith("[←")).strip()
-body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontogreen}")+"# About the artist {.unnumbered}"+raw_latex(r"\noindent\includegraphics[width=\linewidth,height=.22\textheight,keepaspectratio]{phase_art/9.png}\par\medskip{\sffamily\bfseries\LARGE\color{ontoink} Scott Muller\par}{\sffamily\small\color{ontoblue} Scientific visualization / Systems engineering / Computational art\par}\medskip{\color{ontogreen}\hrule}\medskip")+author)
+body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontogreen}")+"# About the artist {.unnumbered}"+raw_latex(r"\noindent\includegraphics[width=\linewidth,height=.22\textheight,keepaspectratio]{phase_art/9.png}\par\medskip{\sffamily\bfseries\LARGE\color{ontoink} Scott Muller\par}{\sffamily\small\color{ontoblue} Matsch Systems / Systems engineering / Computational art\par}\medskip{\color{ontogreen}\hrule}\medskip")+author)
 (out/"report.md").write_text("\n\n".join(body))
 subprocess.run(["pandoc",str(out/"report.md"),"--standalone","--toc","--toc-depth=1","--number-sections","--top-level-division=chapter","--metadata","documentclass=report","--metadata","title=Ontogenesis: Computational Emergence","--metadata","subtitle=Computational art and research atlas","--metadata","author=Scott Muller — Ontogenesis Project","--variable","geometry:margin=25mm","--variable","fontsize=11pt","--include-in-header=report/preamble.tex","-o",str(out/"ontogenesis.tex")],check=True)
 tex=out/"ontogenesis.tex"

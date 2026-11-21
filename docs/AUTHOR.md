@@ -2,12 +2,14 @@
 
 [← Project overview](../README.md) · [Documentation](README.md) · [Artist's statement](RECURSIVE_CREATION.md) · [Visual gallery](VISUAL_GALLERY.md)
 
-I am a multidisciplinary technologist with over three decades of experience spanning scientific visualization, systems engineering, open-source software and advanced security research.
+I am a multidisciplinary technologist and software and systems engineer with more than three decades of experience spanning scientific visualization, embedded computing, Linux infrastructure, open-source software and security.
 
-My professional work includes leading international deployments of NOAA’s Science On a Sphere platform and developing real-time scientific visualization systems used by institutions across North America, Europe, Asia and Latin America, including NASA and NOAA. My broader technical practice encompasses embedded systems, geospatial visualization, scientific middleware, research infrastructure and artificial intelligence.
+I currently work at Matsch Systems in Grand Rapids, Michigan, where I develop and modernize software and infrastructure supporting long-running public-sector systems. My work includes Perl applications, automated testing and continuous integration, Linux and virtualized platforms, observability, and locally deployed AI systems for code analysis and technical knowledge retrieval. A central concern is making complex, historically layered systems more reliable, understandable and maintainable.
 
-A recurring theme throughout my work is the translation of complex, otherwise inaccessible phenomena into forms that can be observed, explored and understood. Ontogenesis extends this intellectual and technical foundation into computational art, treating mathematical systems not only as instruments of analysis but as creative media.
+Earlier in my career, I led international deployments of NOAA’s Science On a Sphere (SOS) platform and developed real-time scientific visualization and kiosk systems for research and public-science institutions across North America, Europe, Asia and Latin America. Those earlier projects included work involving NOAA and NASA, as well as science museums and research organizations.
 
-Through human-directed, AI-assisted experimentation, I investigate the intersection of emergence, higher-dimensional geometry, artificial life and recursive creation. I consider engineering itself an artistic practice, in which the construction of systems and the discovery of their behavior become inseparable aspects of the work.
+My technical background also includes ARM and x86 systems, Android, geospatial visualization, scientific middleware, networking and reverse engineering. Across these fields, I have been drawn to the challenge of making complicated or otherwise invisible processes observable and intelligible.
+
+Ontogenesis extends that interest into computational art. Through human-directed, AI-assisted experimentation, I explore emergence, higher-dimensional geometry, artificial life and recursive creation. I regard engineering as a creative practice in which constructing a system and discovering its behavior can become inseparable parts of the work.
 
 **Correspondence:** [scott@21h.io](mailto:scott@21h.io)
