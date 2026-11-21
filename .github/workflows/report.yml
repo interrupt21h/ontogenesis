@@ -82,7 +82,6 @@ jobs:
           test -s report/build/evidence/0028/result.json
           python report/disturbance_atlas.py report/build/evidence/0028/result.json report/build/atlas/0028-evidence.pdf
           test -s report/build/atlas/0028-evidence.pdf
-          test -s report/build/atlas/0028-full-evidence.pdf
       - name: Retrieve verified G0028 full-domain paired evidence
         env:
           GH_TOKEN: ${{ github.token }}
@@ -124,6 +123,7 @@ jobs:
           test -s report/build/atlas/0026-evidence.pdf
           test -s report/build/atlas/0027-evidence.pdf
           test -s report/build/atlas/0028-evidence.pdf
+          test -s report/build/atlas/0028-full-evidence.pdf
           grep -q 'Generation 0028' report/build/verified.txt
           grep -q 'Final renders and visualization fidelity' report/build/verified.txt
           grep -q 'The late-experiment branch structure' report/build/verified.txt
