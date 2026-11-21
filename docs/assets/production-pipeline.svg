@@ -1,6 +1,84 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1260 300" role="img" aria-label="Conceptual software production process from artistic direction and AI-assisted code to experiments, evidence, cinema and publication">
-<defs><marker id="arr" markerWidth="11" markerHeight="11" refX="10" refY="5" orient="auto"><path d="M0 0L10 5L0 10" stroke="#458d95" stroke-width="1.8" fill="none"/></marker></defs><rect width="1260" height="300" rx="18" fill="#f2f7f9"/>
-<g font-family="DejaVu Sans,sans-serif"><text x="28" y="39" font-size="19" font-weight="bold" fill="#244258">FROM INTENTION TO PUBLISHED ARTIFACTS</text><text x="28" y="63" font-size="13" fill="#59778a">Conceptual pipeline, not simulated chemistry or a complete Actions dependency graph</text>
-<g stroke-width="2"><rect x="28" y="109" width="194" height="101" rx="11" fill="#e1f2ef" stroke="#489b94"/><rect x="270" y="109" width="194" height="101" rx="11" fill="#e2edf5" stroke="#608fa9"/><rect x="512" y="109" width="194" height="101" rx="11" fill="#e2edf5" stroke="#608fa9"/><rect x="754" y="85" width="204" height="77" rx="11" fill="#e1f2ef" stroke="#489b94"/><rect x="754" y="180" width="204" height="77" rx="11" fill="#fff0df" stroke="#c58a56"/><rect x="1006" y="109" width="218" height="101" rx="11" fill="#eeecf8" stroke="#797caa"/></g>
-<g text-anchor="middle" fill="#193b4b"><text x="125" y="142" font-size="16" font-weight="bold">ART DIRECTION</text><text x="367" y="142" font-size="16" font-weight="bold">VERSIONED MODEL</text><text x="609" y="142" font-size="16" font-weight="bold">GITHUB ACTIONS</text><text x="856" y="115" font-size="16" font-weight="bold">EVIDENCE</text><text x="856" y="207" font-size="16" font-weight="bold">CINEMA</text><text x="1115" y="144" font-size="16" font-weight="bold">PUBLICATION</text></g>
-<g text-anchor="middle" fill="#5c7787" font-size="12.5"><text x="125" y="169">human + AI inquiry</text><text x="367" y="169">code, seed, controls</text><text x="609" y="169">numeric execution</text><text x="856" y="138">measured fields</text><text x="856" y="232">field-derived MP4</text><text x="1115" y="174">PDF, film, archive</text></g><g fill="none" stroke="#458d95" stroke-width="2.5" marker-end="url(#arr)"><path d="M224 157H260"/><path d="M466 157H502"/><path d="M708 157H730V123H744"/><path d="M730 157V218H744"/><path d="M960 123H983V149H996"/><path d="M960 218H983V173H996"/></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1480 520" role="img" aria-labelledby="title description">
+  <title id="title">Ontogenesis — from intention to published artifacts</title>
+  <desc id="description">Conceptual production workflow. Human creative direction leads to a versioned numerical model and GitHub-hosted simulation. Numerical evidence and cinematic rendering branch separately, then contribute to publication. This is not simulated data or the exact GitHub Actions dependency graph.</desc>
+  <defs>
+    <linearGradient id="canvas" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7fafc"/>
+      <stop offset="1" stop-color="#eef5f8"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M1 1L10 6L1 11" fill="none" stroke="#438d99" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1480" height="520" rx="24" fill="url(#canvas)"/>
+  <rect x="46" y="39" width="5" height="40" rx="2.5" fill="#259c99"/>
+
+  <g font-family="DejaVu Sans, Arial, sans-serif">
+    <text x="66" y="73" font-size="27" font-weight="700" letter-spacing=".4" fill="#193a50">FROM INTENTION TO PUBLISHED ARTIFACTS</text>
+    <text x="49" y="108" font-size="16" fill="#536f80">Human-guided research, reproducible numerical experiments and field-derived computational art</text>
+    <path d="M48 135H1430" fill="none" stroke="#d7e5eb" stroke-width="2"/>
+
+    <!-- Painted connectors first, behind every card. Distinct upper and lower
+         orthogonal branches terminate at separate publication inlets. -->
+    <g fill="none" stroke="#438d99" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)">
+      <path d="M276 308H314"/>
+      <path d="M559 308H594"/>
+      <path d="M829 308H864V220H895"/>
+      <path d="M864 308V401H895"/>
+      <path d="M1147 220H1197V276H1241"/>
+      <path d="M1147 401H1216V342H1241"/>
+    </g>
+    <g fill="#438d99"><circle cx="864" cy="308" r="5.5"/></g>
+
+    <!-- Main sequence -->
+    <rect x="48" y="242" width="228" height="132" rx="14" fill="#e2f5f0" stroke="#43a49e" stroke-width="2.2"/>
+    <rect x="324" y="242" width="235" height="132" rx="14" fill="#e5f0f8" stroke="#679ab4" stroke-width="2.2"/>
+    <rect x="604" y="242" width="225" height="132" rx="14" fill="#e5f0f8" stroke="#679ab4" stroke-width="2.2"/>
+
+    <!-- Independent evidence and cinematic branches -->
+    <rect x="904" y="155" width="243" height="130" rx="14" fill="#e2f5f0" stroke="#43a49e" stroke-width="2.2"/>
+    <rect x="904" y="336" width="243" height="130" rx="14" fill="#fff0e2" stroke="#cc935c" stroke-width="2.2"/>
+
+    <!-- Both branches feed publication through separate, noncrossing routes. -->
+    <rect x="1250" y="242" width="184" height="132" rx="14" fill="#eceafb" stroke="#8c86b6" stroke-width="2.2"/>
+
+    <!-- Small stage indicators -->
+    <g font-size="14" letter-spacing="1.2" font-weight="700">
+      <text x="67" y="266" fill="#277e79">01 / DIRECT</text>
+      <text x="343" y="266" fill="#4e7a94">02 / VERSION</text>
+      <text x="623" y="266" fill="#4e7a94">03 / EXECUTE</text>
+      <text x="925" y="182" fill="#277e79">04A / MEASURE</text>
+      <text x="925" y="363" fill="#a36c3c">04B / RENDER</text>
+      <text x="1269" y="266" fill="#6e689b">05 / SHARE</text>
+    </g>
+
+    <g font-size="19" font-weight="700" text-anchor="middle" fill="#1a3a4d">
+      <text x="162" y="300">ART DIRECTION</text>
+      <text x="441.5" y="300">VERSIONED MODEL</text>
+      <text x="716.5" y="300">GITHUB ACTIONS</text>
+      <text x="1025.5" y="214">NUMERICAL EVIDENCE</text>
+      <text x="1025.5" y="395">CINEMATIC ART</text>
+      <text x="1342" y="300">PUBLICATION</text>
+    </g>
+    <g font-size="15" fill="#496576" text-anchor="middle">
+      <text x="162" y="330">human + AI inquiry</text>
+      <text x="162" y="352">questions and aesthetics</text>
+      <text x="441.5" y="330">equations, seed, controls</text>
+      <text x="441.5" y="352">source provenance</text>
+      <text x="716.5" y="330">simulation and testing</text>
+      <text x="716.5" y="352">native-field capture</text>
+      <text x="1025.5" y="244">measured fields, metrics</text>
+      <text x="1025.5" y="266">and matched controls</text>
+      <text x="1025.5" y="425">observed fields to MP4</text>
+      <text x="1025.5" y="447">camera and ray integration</text>
+      <text x="1342" y="330">film + report</text>
+      <text x="1342" y="352">data archives</text>
+    </g>
+
+    <!-- Footer explicitly limits interpretation. -->
+    <path d="M48 485H1430" fill="none" stroke="#d7e5eb" stroke-width="1.5"/>
+    <text x="49" y="505" font-size="13" fill="#59778a">CONCEPTUAL PRODUCTION MAP</text>
+    <text x="1429" y="505" font-size="13" text-anchor="end" fill="#59778a">Not simulated chemistry or an exact CI dependency graph</text>
+  </g>
+</svg>
