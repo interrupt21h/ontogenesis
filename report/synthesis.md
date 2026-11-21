@@ -18,9 +18,11 @@ G0026 verifies, at 41 sampled checkpoints in the tested execution, that its read
 
 ## Disturbance and interpretation {.unnumbered}
 
-G0028 shifts from observing undisturbed evolution to imposing a localized event. In its verified 12⁴, 240-step pilot, the regional disturbed-minus-control energy difference decreases in magnitude by about 99.16%; the corresponding matrix difference decreases by about 89.09%. The comparison is with an untreated trajectory. It does not demonstrate that the matrix returns to its pre-event concentration, particularly because the matrix was already sparse and declining.
+G0028 imposes a localized event on one arm of a matched-seed pair. The verified pilot establishes a short-term, small-domain contrast. The longer 24⁴ experiment tests the same principle across 4,800 steps, with the event at step 2400. Its local energy deficit relative to control diminishes by 94.35%; the local matrix contrast decreases in magnitude by 88.05%, crossing from negative to positive.
 
-The cinematic G0028 observations investigate how the same class of numerical world can be experienced visually. Their movement and luminous fields are part of the artwork, but are not measurements of recovery. A full-resolution camera study and a measured paired-control experiment answer different questions. The source selection for the film and the source selection for the scientific comparison are therefore preserved separately.
+That crossing is not equivalent to recovery of an original structure. The two arms finish with similar global mean matrix concentrations but different high-threshold coverage: 5.00% in the disturbed arm and 10.50% in control. The relative populations also diverge. The experiment therefore records both an attenuating local disturbance contrast and persistent differences in the wider state. These observations concern one seed, one intervention geometry and one numerical model.
+
+G0028's moving images express a different dimension of the inquiry. They are interpretations of a single simulated world, not substitutes for the numerical comparison. The distinction between the visual effect of an event and the measured change in a field is central to reading the work responsibly.
 
 ## An open investigation {.unnumbered}
 

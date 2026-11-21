@@ -12,7 +12,7 @@ G0025 introduces energy-funded maintenance and supplies a particularly rich volu
 
 G0026 and G0027 turn attention toward observation itself. Their principal results are diagnostic: observer checks, distributional statistics, spectral energy and adaptive thresholds. These are meaningful experimental outcomes, although they need not produce a new cinematic universe.
 
-G0028 introduces a localized environmental intervention. Its paired pilot measures the disturbed and untreated arms directly. The selected cinematic preview, by contrast, follows a single observed world: it makes an intervention visually perceptible but cannot by itself establish a causal recovery. Independently archived full-domain cinematic editions extend the available visual interpretations; this gallery preserves the source frames explicitly selected for this publication.
+G0028 introduces a localized environmental intervention. Its verified pilot and 24⁴ full-domain comparison measure disturbed and untreated arms directly. The longer experiment records persistent differences in high-threshold matrix coverage even though the local intervention contrast attenuates. The selected cinematic preview, by contrast, follows a single observed world: it makes an intervention visually perceptible but cannot by itself establish a causal recovery. Independently archived full-domain cinematic editions extend the available visual interpretations; this gallery preserves the source frames explicitly selected for this publication.
 
 ## Reading the frame plates {.unnumbered}
 

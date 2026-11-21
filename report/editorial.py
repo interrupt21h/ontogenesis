@@ -28,7 +28,7 @@ def links(number,title,original):
     source=choose({"source"})
     workflow=choose({"workflow","ci"})
     runs=re.findall(r"https://github\.com/interrupt21h/ontogenesis/actions/runs/(\d+)",original)
-    selected={"0026":"44751157353","0027":"44814192851","0028":"44823647222"}
+    selected={"0026":"44751157353","0027":"44814192851","0028":"44840239338"}
     run=selected.get(number,runs[-1] if runs else "")
     docs=f"[G{number}]({BASE}/blob/main/docs/generations/{number}.md)"
     src=f"[Source]({absolute(source)})" if source else "—"
@@ -115,43 +115,54 @@ metrics do not by themselves identify organisms or compartments.
 "0028":r"""
 ## Controlled intervention
 
-G0028 examines how a localized disturbance changes a developing
-four-dimensional chemical system. The numerical dynamics descend
-from G0026. A deterministic periodic Gaussian shock reduces local
-energy and matrix concentration in one seeded trajectory; a second
-trajectory with matching initial conditions remains untreated.
+G0028 examines the response of a four-dimensional chemical system to a
+single, externally imposed spatial disturbance. Its numerical dynamics
+descend from G0026. The same seed, initial condition and integration
+schedule are used in two arms: one untreated control and one
+trajectory receiving a localized periodic Gaussian reduction of energy
+and structural matrix.
 
-## Pilot measurements
+## Pilot and full-domain comparisons
 
-The verified paired pilot uses a 12⁴ lattice, 240 integration steps,
-and an event at step 120. Immediately after the intervention, the
-local disturbed-minus-control energy difference is -0.52454344;
-at step 240 it is -0.00439679. The corresponding matrix differences
-are -0.00332975 and -0.00036322. The magnitudes of these differences
-decline by 99.16% and 89.09%, respectively.
+The exploratory paired pilot uses a 12⁴ lattice, 240 steps and an
+intervention at step 120. It records the local disturbed-minus-control
+energy difference moving from -0.52454344 to -0.00439679, and the matrix
+difference from -0.00332975 to -0.00036322.
 
-These are **deviations from the untreated control**, not evidence
-that the damaged matrix returned to its initial concentration.
-The matrix was already small and declining. A more extensive
-24⁴ paired study was launched separately, but this edition's
-numerical comparison is the verified small-domain pilot.
+The independently executed **24⁴ paired experiment** extends to
+4,800 integration steps, with the intervention at step 2400. It uses
+seed 42 and records 123 observed times per arm. The affected Gaussian
+core contains 1,897 of the 331,776 cells. At the event, the local
+energy difference is -0.44120503; by step 4800 it is -0.02491707,
+a **94.35%** reduction in the magnitude of the deficit. The matrix
+difference changes from -0.08870594 to **+0.01060031**. Its
+absolute magnitude attenuates by **88.05%**, but the sign crosses
+zero: the disturbed arm ends with a higher local mean than control.
 
-## Cinematic observation
+At the full-domain endpoint, global mean matrix concentration is
+0.148343 in the disturbed arm and 0.147089 in control. Yet only
+**5.00%** of disturbed cells exceed matrix threshold 0.20, versus
+**10.50%** in control. Mean concentration and high-threshold coverage
+therefore describe different aspects of the outcome. Active V
+fractions are 2.05% and 3.61%, respectively, while active W
+fractions are 85.35% and 68.28%.
 
-A different, single-universe archive supplies the moving artwork.
-The selected preview records a three-dimensional section from a
-12⁴ numerical domain. Separate full-domain cinematic editions
-observe additional fields and use either stylized voxel projections
-or volumetric ray integration. Camera paths, color exposure and
-display interpolation are visualization operations, not further
-numerical state updates.
+## Interpretation and artistic observation
 
-## Interpretation
+The paired experiment supports a measured, seed-specific response to
+the localized intervention. Recovery of the *difference from control*
+does not mean restoration of the initial matrix field, its connectivity
+or any biological function. The altered global coverage and
+population balance caution against equating a small endpoint local
+difference with return to an unchanged ecological state.
 
-The pilot quantifies a short, single-seed response to an imposed
-disturbance. Neither the attenuation of the paired difference
-nor the visual representation demonstrates mature ecological
-recovery or functioning biological life.
+G0028 also has separately archived cinematic observations of single
+disturbed universes. The selected 12⁴ preview and the 24⁴ artistic
+editions use camera motion, spatial sectioning, exposure and ray
+integration. These are field-derived visualizations, not a two-arm
+causal measurement. Neither the film nor the single-seed experiment
+establishes generalized ecological resilience.
+
 """
 }
 
@@ -159,7 +170,7 @@ def prepare(number,record):
     if number in EDITORIAL:
         stat={"0026":"41 tested observer checkpoints matched",
               "0027":"41/41 same-process observation checkpoints matched",
-              "0028":"Paired 12⁴ pilot verified; full-domain comparison not in this edition"}
+              "0028":"Full 24⁴ paired experiment and reduced-domain pilot verified"}
         parent={"0026":"G0023 factorial baseline","0027":"G0026 numerical baseline",
                 "0028":"G0026 numerical driver"}
         return meta("EVIDENCE",stat[number])+meta("MODEL ANCESTRY",parent[number])+EDITORIAL[number]

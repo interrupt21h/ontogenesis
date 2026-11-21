@@ -90,7 +90,7 @@ Logged final structural coverage at threshold 0.2. G0017 has one occupied cell o
 
 ## Measured example: a paired environmental disturbance
 
-The G0028 pilot tests an intervention rather than introducing a new evolved biological mechanism. Two copies of the inherited four-dimensional system use matching initial states and random seeds; one receives a single localized Gaussian reduction of energy and matrix at step 120. In the 12⁴, 240-step pilot, the matched regional energy difference declined from -0.52454 to -0.00440 by the endpoint, and the matrix difference from -0.003330 to -0.000363. A dedicated evidence plate in the G0028 chapter plots both trajectories and their differences from native numerical records. The initial matrix concentration in the affected region was small and already declining; attenuation of a contrast is not evidence of mature structural regeneration. No full 24⁴ outcome has yet been established.
+The G0028 experiment applies a single localized Gaussian disturbance to one of two identically seeded four-dimensional trajectories. Its short 12⁴ pilot was followed by a verified 24⁴, 4,800-step matched comparison. In the full experiment, the local energy difference relative to the untreated arm attenuates by 94.35% from the intervention to the endpoint. The local matrix difference changes from -0.088706 to +0.010600, crossing zero. These observations measure a changing contrast with the control, not restoration of a pre-intervention structural arrangement. At the endpoint, matrix coverage above threshold 0.20 differs substantially between arms: 5.00% in the disturbed run and 10.50% in control. The G0028 chapter presents both pilot and full-domain native-data evidence plates.
 
 ## Reading the evidence
 
