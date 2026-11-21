@@ -1,24 +1,26 @@
-# Documentation
+# The Ontogenesis notebooks
 
-[← Ontogenesis](../README.md)
+[← Back to Ontogenesis](../README.md)
 
-Ontogenesis is a series of numerical experiments, a computational-art film archive and an account of human-directed, AI-assisted creation. Choose a reading path according to your purpose.
+This is the map of the rabbit hole. Ontogenesis is a casual, curiosity-driven project that uses evolving numerical simulations as material for generative art—and GitHub Actions as a surprisingly ambitious production environment.
 
-![A conceptual diagram of the publication pipeline](assets/production-pipeline.svg)
+The experiment is as much about orchestrating and maintaining the computational machinery as it is about what appears on screen. The technical records are kept because reproducibility and honest measurements are useful, not because this is a formal scientific research program.
 
-| Goal | Start here |
+![Conceptual production pipeline](assets/production-pipeline.svg)
+
+| Looking for… | Start here |
 |:--|:--|
-| Watch the actual art | [Visual gallery, posters, MP4s and field archives](VISUAL_GALLERY.md) |
-| Understand each generation | [Complete experiment index](EXPERIMENTS.md) |
-| Review measurements and numerical claims | [Scientific history](HISTORY.md) |
-| Read the illustrated publication | [Latest monograph PDF](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis.pdf) |
-| Examine methodological limits | [Numerical conventions and evidence standards](METHODOLOGY.md) |
-| Reproduce results or rerender images | [Production and CI guide](PIPELINE.md) |
-| Explore the conceptual art practice | [Recursive creation, artist's statement](RECURSIVE_CREATION.md) |
-| Learn about the artist | [Author biography](AUTHOR.md) |
+| The moving pictures | [Visual gallery](VISUAL_GALLERY.md) |
+| What each generation tried | [Experiment atlas](EXPERIMENTS.md) |
+| What changed and what actually happened | [Experiment history](HISTORY.md) |
+| The illustrated story | [Field journal PDF](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis.pdf) |
+| Mathematical details and caveats | [Numerical notes](METHODOLOGY.md) |
+| CI, rendering, archives, and reproducibility | [Keeping the machinery running](PIPELINE.md) |
+| The human/AI development process | [Delegating complexity](RECURSIVE_CREATION.md) |
+| The person behind it | [About the creator](AUTHOR.md) |
 
-## Three different kinds of figure
+## How to read the pictures
 
-**Measured plots** summarize archived numerical values; **conceptual diagrams** explain hypotheses or control flow without depicting measured fields; **cinematic renderings** transform measured fields into luminous, moving images. Their colors and motion may include camera trajectories, ray integration or interpolation, but those are not additional physics.
+There are three different kinds of images here: **measured plots** summarize numerical values, **conceptual diagrams** explain software or model ideas, and **cinematic renders** turn numerical fields into art. Camera motion, projection, color, and interpolation are presentation choices—not extra physics.
 
-G0001–G0028 are recorded, with documented limitations and varying degrees of numerical verification. G0029–G0032 are proposals. New generation documents begin with the [record template](GENERATION_TEMPLATE.md); production changes should satisfy the [methodology](METHODOLOGY.md) and [link validation](PIPELINE.md).
+G0001–G0028 are recorded experiments, with varying levels of verification. G0029–G0032 are ideas, not completed work. The [generation template](GENERATION_TEMPLATE.md) and [numerical conventions](METHODOLOGY.md) retain the technical details for anyone curious enough to dig deeper.
