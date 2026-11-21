@@ -70,6 +70,10 @@ def special_source(gen,artifact,p):
                 encode(["-loop","1","-framerate","24","-i",str(img),"-t","8","-vf","setsar=1"],p)
 
 def source(gen,artifact):
+    # Featured G0028 artwork is selected deliberately, never by a later
+    # workflow's artifact ordering or a small-domain preview.
+    if gen=="0028" and artifact!=14680891214:
+        raise ValueError("G0028 cumulative film must use verified 24^4 fidelity artifact 14680891214")
     name=f"video-{gen}-{artifact}.mp4"
     p=OUT/name
     if not p.exists():
@@ -89,6 +93,13 @@ def source(gen,artifact):
                 else: p.write_bytes(raw.read_bytes())
     info=probe(p)
     if not any(s["codec_type"]=="video" for s in info["streams"]): raise ValueError(f"No video: {gen}")
+    if gen=="0028":
+        tracks=[s for s in info["streams"] if s["codec_type"]=="video"]
+        v=tracks[0]
+        if (v.get("width"),v.get("height"),v.get("avg_frame_rate"),int(v.get("nb_frames",0)))!=(1280,720,"24/1",1440):
+            raise ValueError("G0028 selected master does not match verified 1280x720 / 24fps / 1440-frame edition")
+        if abs(float(info["format"]["duration"])-60.0)>.05:
+            raise ValueError("G0028 selected master does not match verified 60-second edition")
     return p,info
 def encode(args,p):
     run("ffmpeg","-v","error","-y",*args,"-an","-c:v","libx264","-preset","medium","-crf","21","-pix_fmt","yuv420p","-r","24","-video_track_timescale","12288","-movflags","+faststart",str(p))
@@ -109,14 +120,13 @@ def main():
         title=OUT/f"chapter-{gen}.mp4"; clip=OUT/f"clip-{gen}.mp4"
         subtitle=("Archived still sequence" if gen=="0001" else
                   "Measured summary, not simulation footage" if gen=="0026" else
-                  "Cinematic small-domain preview / 12^4 / not mature-life evidence"
-                  if gen=="0028" and artifact==14675921895 else
-                  "Cinematic master / 24^4" if gen=="0028" else
+                  "24^4 volumetric fidelity / 4 omega sections / artistic observation"
+                  if gen=="0028" else
                   "Independent numerical experiment")
         card([f"GENERATION {gen}",titles.get(gen,""),subtitle],title,2.5)
         encode(["-i",str(p),"-vf","fps=24,scale=1280:720:force_original_aspect_ratio=decrease:force_divisible_by=2,pad=1280:720:(ow-iw)/2:(oh-ih)/2:color=0x101c29,setsar=1"],clip)
         segments.extend([title,clip])
-        records.append(dict(generation=gen,artifact=artifact,kind="archived_stills" if gen=="0001" else "measured_summary" if gen=="0026" else "cinematic_preview" if gen=="0028" and artifact==14675921895 else "cinematic_master" if gen=="0028" else "original_video",source_sha256=hashlib.sha256(p.read_bytes()).hexdigest(),source_duration=float(info["format"]["duration"]),normalized_duration=float(probe(clip)["format"]["duration"]),source=p.name))
+        records.append(dict(generation=gen,artifact=artifact,kind="archived_stills" if gen=="0001" else "measured_summary" if gen=="0026" else "cinematic_fidelity_master_24d4" if gen=="0028" else "original_video",source_sha256=hashlib.sha256(p.read_bytes()).hexdigest(),source_duration=float(info["format"]["duration"]),normalized_duration=float(probe(clip)["format"]["duration"]),source=p.name))
     end=OUT/"end.mp4";card(["ONTOGENESIS","End of verified video sequence","See the scientific monograph for methods and limitations"],end,5);segments.append(end)
     concat=OUT/"concat.txt";concat.write_text("".join(f"file '{p.name}'\n" for p in segments))
     film=OUT/"ontogenesis-evolution.mp4"

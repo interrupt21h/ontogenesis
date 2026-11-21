@@ -96,6 +96,8 @@ synthesis=next(i+1 for i,t in enumerate(text_pages)
                if i+1>gallery["0028"] and "Synthesis and research directions" in t)
 if gallery["0028"]>=synthesis:
     raise SystemExit("Synthesis must follow the curated final gallery")
+if "14680891214" not in text_pages[gallery["0028"]-1]:
+    raise SystemExit("G0028 final-render plate does not cite the selected 24^4 master artifact")
 if not ("About the artist" in text_pages[-1] or "About the artist" in text_pages[-2]):
     raise SystemExit("Final author page missing or shifted away from the end")
 for fig in ("research-finale.pdf","0028-evidence.pdf","0028-full-evidence.pdf"):

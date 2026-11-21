@@ -58,7 +58,9 @@ def frame_section(n):
         block+=r"\noindent "+provenance
         blocks.append(raw_latex(block))
     # Crops are explicitly labelled image regions, not claims about physical coordinates.
-    if int(n)>=14:
+    if int(n)>=14 and n!="0028":
+        # The G0028 fidelity frame is a single central volumetric composition.
+        # Earlier dual-panel crop boxes would cut away the numerical subject.
         with Image.open(out/paths[2]) as im:
             if im.size==(1280,720):
                 for tag,rect,label in (("left",(14,110,495,575),"Left visualization region"),("right",(510,110,985,575),"Right visualization region")):
@@ -79,8 +81,8 @@ def final_render_plate(n, title, interpretation, observed=(1,2)):
     artifact=manifest.get(n)
     if artifact is None:
         raise RuntimeError(f"No verified media manifest entry for gallery G{n}")
-    if n=="0028" and artifact!=14675921895:
-        raise RuntimeError("G0028 gallery is captioned for the verified 12^4 preview; update the labels before substituting another film")
+    if n=="0028" and artifact!=14680891214:
+        raise RuntimeError("G0028 gallery is edition-locked to verified 24^4 fidelity artifact 14680891214; revise scientific labels before changing this film")
     folder=out/"frames"/f"{n}-{artifact}"
     index_file=folder/"frames.json"
     if not index_file.exists():
@@ -236,8 +238,8 @@ for generation,title,note in [
      "A sampled observatory, not the entire four-dimensional field. G0024 develops inherited construction traits and its final structural coverage depends strongly on the threshold."),
     ("0025","Maintenance: the established volumetric baseline",
      "G0025 uses a genuine 96-cubed volumetric ray sampler for a moving observed section. Light transport is an artistic rendering operation, not an extra simulation process."),
-    ("0028","Disturbance: limited-domain cinema",
-     "The source is the verified 12-to-the-fourth cinematic preview, not the full 24-to-the-fourth matched experiment. Camera motion and temporal interpolation do not establish post-shock ecological recovery."),
+    ("0028","Disturbance: full-domain volumetric observation",
+     "Verified 24-to-the-fourth, 4,800-step single-universe fidelity film (artifact 14680891214): seven observed fields, four sampled omega planes, 96-cubed volumetric rendering. The film is not the independent two-arm matched-control experiment; display interpolation and camera motion do not establish ecological recovery."),
 ]:
     body.append(final_render_plate(generation,title,note))
 body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontogreen}"))

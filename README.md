@@ -23,7 +23,7 @@ The original time-bounded edition unfolded over November 19–20, 2026. Its firs
 
 [**Play high-fidelity master (MP4)**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-fidelity-master.mp4) · [Alternative single-plane cinematic master](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-cinematic.mp4) · [Compare all versions, posters and native archives](docs/VISUAL_GALLERY.md)
 
-The [published cumulative evolution film](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-evolution.mp4) still selects the earlier **12⁴ G0028 preview** in `report/videos.json`; neither full-resolution artistic edition has been silently promoted. The original G0025 observatory remains the visual-quality benchmark.
+The [cumulative evolution film](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-evolution.mp4) selects the **24⁴ G0028 volumetric fidelity master** (60 seconds, 1,440 playback frames) as its final cinematic chapter. The edition is pinned in [`report/videos.json`](report/videos.json) to verified Actions artifact [`14680891214`](https://github.com/interrupt21h/ontogenesis/actions/runs/44833423671/artifacts/14680891214). The earlier 12⁴ preview and alternative single-plane master remain separately archived. G0025 remains the benchmark for assessing volumetric rendering quality; no biological recovery is inferred from camera motion or imagery.
 
 ## Current experimental record
 

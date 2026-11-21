@@ -31,7 +31,7 @@ Historical GitHub Actions artifacts normally have **30-day retention**; cited lo
 | G0027 structural statistics | [`structural-statistics.yml`](../.github/workflows/structural-statistics.yml) | Full 24⁴ metrics and 41 matching same-process checkpoints passed |
 | G0028 matched treatment/control | [`disturbance.yml`](../.github/workflows/disturbance.yml) | Pilot and [24⁴ full paired science run](https://github.com/interrupt21h/ontogenesis/actions/runs/44840239338) both passed; report integrates them as separate evidence plates |
 | G0028 first full cinematic | [`disturbance-cinematic.yml`](../.github/workflows/disturbance-cinematic.yml) | Full single-plane master passed CI and retained |
-| G0028 full fidelity cinematic | [`disturbance-fidelity.yml`](../.github/workflows/disturbance-fidelity.yml) | Full four-plane master passed CI and retained |
+| G0028 full fidelity cinematic | [`disturbance-fidelity.yml`](../.github/workflows/disturbance-fidelity.yml) | Verified four-plane 24⁴ master (artifact `14680891214`) selected for cumulative-film G0028 and final PDF frame gallery |
 | G0028 render-only updates | [`disturbance-fidelity-rerender.yml`](../.github/workflows/disturbance-fidelity-rerender.yml) | Uses existing NPZ source instead of recomputing a universe |
 | PDF / cumulative movie | [`report.yml`](../.github/workflows/report.yml) / [`film.yml`](../.github/workflows/film.yml) | Both have verified publication runs; media selection and evidence inputs must be updated deliberately |
 

@@ -5,6 +5,7 @@ import re
 import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
+import json
 from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -92,6 +93,24 @@ def main() -> int:
         "docs/EXPERIMENTS.md", "docs/VISUAL_GALLERY.md", "docs/PIPELINE.md"
     )):
         failures.append("README missing canonical navigation")
+    # A previous PDF/film edition accidentally featured a 12^4 preview after
+    # verified full-domain cinematic master data were already archived.
+    # Assert that all publication surfaces agree on the selected source.
+    videos = json.loads((ROOT / "report" / "videos.json").read_text())
+    selected = videos.get("0028")
+    if selected != 14680891214:
+        failures.append(f"G0028 film selection regressed: expected 14680891214, got {selected}")
+    publication_texts = [
+        ROOT / "README.md",
+        ROOT / "docs" / "VISUAL_GALLERY.md",
+        ROOT / "report" / "final_renders.md",
+    ]
+    for f in publication_texts:
+        publication = f.read_text(encoding="utf-8")
+        if "24⁴" not in publication or "G0028" not in publication:
+            failures.append(f"{f.relative_to(ROOT)} missing 24^4 G0028 publication context")
+    if "14680891214" not in (ROOT / "report" / "film.py").read_text():
+        failures.append("Film assembler not pinned to verified G0028 full-domain master")
     if failures:
         for failure in failures:
             print("ERROR:", failure, file=sys.stderr)

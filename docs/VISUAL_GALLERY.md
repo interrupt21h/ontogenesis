@@ -20,7 +20,7 @@
 | Film | 1280 × 720, 24 fps, 60 seconds; H.264 MP4 |
 | Interpretation | **One treated universe**, not a matched-control test; successful encoding does not establish ecological recovery |
 
-**Caveat:** More accurate archiving does not guarantee a more beautiful film. This edition remains distinct from the selected cumulative-film chapter until visual inspection and provenance review justify promotion.
+**Cumulative-film selection:** This verified 24⁴ master is the **G0028 chapter in the cumulative evolution film**, pinned to [Actions artifact `14680891214`](https://github.com/interrupt21h/ontogenesis/actions/runs/44833423671/artifacts/14680891214) in [`report/videos.json`](../report/videos.json). The high-fidelity capture uses measured fields, but resolution alone does not guarantee artistic quality or biological validity.
 
 ## G0028 — Single-plane cinematic master
 
@@ -34,9 +34,9 @@ This different 24⁴ / 4,800-step edition samples **one fixed fourth-coordinate 
 
 [![Actual 12⁴ G0028 cinematic pilot poster](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-preview.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-preview.mp4)
 
-**[Watch the verified 18-second preview](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-preview.mp4)** · [CI run](https://github.com/interrupt21h/ontogenesis/actions/runs/44829195043) · [Selected source in cumulative-film manifest](../report/videos.json)
+**[Watch the verified 18-second preview](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-preview.mp4)** · [CI run](https://github.com/interrupt21h/ontogenesis/actions/runs/44829195043) · [Historical video artifact `14675921895`](https://github.com/interrupt21h/ontogenesis/actions/runs/44829195043/artifacts/14675921895)
 
-This 12⁴ version is the **currently selected G0028 chapter in the evolution film**. Because its active chemical fields decay early, its moving virtual camera should not be mistaken for continuous simulated organism growth. It is useful for verifying the render pipeline, but does not substitute for full-resolution art or paired causal evidence.
+This reduced-domain 12⁴ version was the **previous cumulative-film selection**, retained as a rendering-system preview. It is **not** the currently selected G0028 film chapter. Because its active chemical fields decay early, its moving virtual camera should not be mistaken for continuous simulated organism growth. The newly selected 24⁴ film is an artistic observation of one universe, not the paired causal experiment.
 
 ## Earlier visual benchmarks: G0024 and G0025
 
