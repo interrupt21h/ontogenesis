@@ -8,7 +8,7 @@ import re
 
 BASE="https://github.com/interrupt21h/ontogenesis"
 AUTO=re.compile(r"(?s)<!-- AUTO-CI-BEGIN -->.*?<!-- AUTO-CI-END -->")
-REPRO=re.compile(r"(?ms)^### Reproduction and provenance\n.*?(?=^### |\Z)")
+REPRO=re.compile(r"(?ms)^### Reproduction(?: and provenance)?\n.*?(?=^### |\Z)")
 LINK=re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 
 def tex(s):
@@ -177,6 +177,20 @@ def prepare(number,record):
     if parent:
         prefix+=meta("MODEL ANCESTRY",parent.group(1))
         record=record[:parent.start()]+record[parent.end():]
+    # Recast instructions from the engineering notes as documentary prose.
+    if number=="0019":
+        record=record.replace(
+            "Replace lower identity timeline panel with three fixed-scale time-series panels:",
+            "The observatory presents three fixed-scale time-series panels:")
+        record=record.replace(
+            "Retain live entity list, recent events and two rotating sections.",
+            "The display includes an entity list, recent events and two rotating sections.")
+        record=record.replace("expected duration", "recorded duration")
+        record=record.replace("Increased rendering cadence may increase runtime; 90-minute timeout retained.","")
+    elif number=="0020":
+        record=record.replace(
+            "Replace cut-dependent complement segmentation with periodic face-connected labels.",
+            "Periodic face-connected labels supersede cut-dependent complement segmentation.")
     brief=compact_metrics(record,number)
     record=AUTO.sub("",record)
     record=REPRO.sub("",record)
