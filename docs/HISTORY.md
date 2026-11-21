@@ -1358,7 +1358,7 @@ Status: 12⁴ paired scientific pilot and 24⁴ paired full-domain study both ve
 
 The automated 12⁴/240-step pilot and optional 24⁴/4800-step paired comparison record real 2D sections from both arms, native numerical measurements, and checkpoint hashes. A standalone H.264 MP4 and scientific PNG plate are derived from those observations, with fixed comparative scales and no reconstructed fields. Recovery of local mean energy or matrix is assessed as attenuation of the paired difference, not asserted in advance.
 
-The G0026 full-resolution workflow was also moved behind manual dispatch; prior verified G0026/G0027 claims and archives remain intact. [Pilot CI run 44823647222](https://github.com/interrupt21h/ontogenesis/actions/runs/44823647222) and [artifact 14670709650](https://github.com/interrupt21h/ontogenesis/actions/runs/44823647222/artifacts/14670709650) verified the 12⁴ experiment, result.json, measured PNG plate and standalone 23-frame MP4 at source revision 2959a8152fa922a80625272a553db4ffc456c0b2. At steps 120 and 240, shocked-minus-control local energy differences were -0.52454344 and -0.00439679 (99.1618% attenuation); matrix differences were -0.00332975 and -0.00036322 (89.0917% attenuation). This is a single-seed small-lattice result, not full-resolution or complete-state recovery. A caption overlap in the initial pilot plate was detected during visual inspection, and the video layout was refined afterward. The 24⁴ run remains manual and unverified.
+The G0026 full-resolution workflow was also moved behind manual dispatch; prior verified G0026/G0027 claims and archives remain intact. [Pilot CI run 44823647222](https://github.com/interrupt21h/ontogenesis/actions/runs/44823647222) and [artifact 14670709650](https://github.com/interrupt21h/ontogenesis/actions/runs/44823647222/artifacts/14670709650) verified the 12⁴ experiment, result.json, measured PNG plate and standalone 23-frame MP4 at source revision 2959a8152fa922a80625272a553db4ffc456c0b2. At steps 120 and 240, shocked-minus-control local energy differences were -0.52454344 and -0.00439679 (99.1618% attenuation); matrix differences were -0.00332975 and -0.00036322 (89.0917% attenuation). This is a single-seed small-lattice result, not full-resolution or complete-state recovery. A caption overlap in the initial pilot plate was detected during visual inspection, and the video layout was refined afterward. The independently run 24⁴ paired study subsequently completed successfully; its native observations are recorded in the full-domain evidence section.
 
 [Detailed record](generations/0028.md) · [Source](../disturbance.py) · [Workflow](../.github/workflows/disturbance.yml).
 
@@ -1384,7 +1384,7 @@ interpolation are explicitly artistic transformations. The automatic 12⁴
 preview is software verification only; observed dissolution of the reduced
 domain's early chemistry is a limitation, not falsely described as rich,
 mature artificial life. A one-universe 24⁴/4800-step cinematic master is
-separately gated and remains unverified until execution and inspection.
+separately gated and completed in CI; visual interpretation remains an independent artistic judgment.
 [Capture](../disturbance_cinematic.py) ·
 [Renderer](../disturbance_cinematic_render.py) ·
 [Workflow](../.github/workflows/disturbance-cinematic.yml).
@@ -1406,8 +1406,7 @@ fidelity pilot passed numerical-invariance, archive, video and poster
 checks; frame review revealed a homogeneous matrix glow that was
 corrected by measured spatial-gradient visibility and a concentration
 gate. The pilot's chemical extinction limits interpretation; no
-mature-life claim is made. The 24⁴ master is explicitly gated on GitHub
-Actions and must be checked before publication. Earlier film and
+mature-life claim is made. The full 24⁴ volumetric master completed successfully in GitHub Actions and retains independent numerical provenance. Earlier film and
 matched-control evidence remain accessible.
 [Capture](../disturbance_cinematic_fidelity.py) ·
 [Ray renderer](../disturbance_fidelity_render.py) ·
