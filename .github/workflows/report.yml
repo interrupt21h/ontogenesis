@@ -125,7 +125,7 @@ jobs:
           test -s report/build/atlas/0028-evidence.pdf
           test -s report/build/atlas/0028-full-evidence.pdf
           grep -q 'Generation 0028' report/build/verified.txt
-          grep -q 'Final renders and visualization fidelity' report/build/verified.txt
+          grep -q 'The moving pictures' report/build/verified.txt
           grep -q 'The late-experiment branch structure' report/build/verified.txt
           test -s report/build/atlas/research-finale.pdf
           python - <<'PY'
