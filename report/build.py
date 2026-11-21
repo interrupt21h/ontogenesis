@@ -274,7 +274,7 @@ for filename,heading,caption in [
     body.append("## "+heading+" {.unnumbered}\n\n"+
         raw_latex(r"\begin{center}\includegraphics[width=\linewidth,height=.55\textheight,keepaspectratio]{engineering/"+
           filename+r".pdf}\end{center}")+"\n\n"+caption)
-body.append(raw_latex(r"\clearpage")+"# Edition provenance {.unnumbered}\n\n"
+body.append("## Edition provenance {.unnumbered}\n\n"
     "Repository source revision: "+revision+". "
     "The numerical interpretations refer to each chapter's described "
     "configuration. Conceptual diagrams, native-field measurements and "

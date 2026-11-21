@@ -16,10 +16,4 @@ G0028 introduces a localized environmental intervention. Its verified pilot and 
 
 ## Reading the frame plates {.unnumbered}
 
-The following pairs of frames are identified by generation and **playback position**, not by inferred physical time. They were derived from separate numerical experiments and rendered using distinct observation methods. Color brightness and image sharpness should not be compared as common measures of population viability, structure or numerical precision.
-
-The plates present successive artistic approaches to observing a system: structural specialization, volumetric maintenance and environmental disturbance. The corresponding experimental chapters provide the measurements and limitations required for scientific interpretation. The selected images are part of the artwork, not substitutes for the underlying numerical archives.
-
-## The visual horizon {.unnumbered}
-
-Further investigation can explore persistent transport networks, succession, functional compartmentalization and long-duration spatial organization. Those remain research directions, not reported outcomes. The central artistic challenge is to make increasingly complicated numerical behavior perceptible without inventing biological meaning or sacrificing the distinction between observed state and visual transformation.
+The following pairs show intermediate and final **playback frames** from separate numerical experiments, not successive moments in one evolving organism. Differences in color intensity, exposure, projection and animation geometry are artistic choices, not comparable measures of functional complexity. The experimental chapters supply each film's numerical context, limitations and provenance.
