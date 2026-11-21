@@ -19,7 +19,7 @@ def tex(s):
 def meta(title,value):
     return "\n\n"+("`"*3)+"{=latex}\n"+r"\AtlasMetadata{"+tex(title)+"}{"+tex(value)+"}\n"+("`"*3)+"\n\n"
 
-def links(number,original):
+def links(number,title,original):
     pairs=LINK.findall(original)
     def choose(keys):
         return next((u for k,u in pairs if k.lower() in keys),"")
