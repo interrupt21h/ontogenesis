@@ -1341,7 +1341,7 @@ The mean-subtracted real Fourier transform is weighted by two on non-DC and non-
 
 Compare checkpoint hashes to G0026 when the full result is available. No claim of observer equivalence for this new measurement until comparison. No new video yet; numerical observations can support subsequent publication plates. Single seed, finite domain and approximate histogram threshold remain limitations.
 
-[Source](../../structural_statistics.py) · [Workflow](../../.github/workflows/structural-statistics.yml).
+[Source](../structural_statistics.py) · [Workflow](../.github/workflows/structural-statistics.yml).
 
 
 ### Verified outcome
