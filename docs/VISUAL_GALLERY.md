@@ -53,7 +53,7 @@ The two figures above are **conceptual documentation graphics**, not screenshots
 
 *Conceptual intervention design, not simulated field data.*
 
-The [verified 12⁴ paired pilot](https://github.com/interrupt21h/ontogenesis/actions/runs/44824014028/artifacts/14673655018) measured approximately **99.16% attenuation** of the *local energy difference relative to control* and **89.09% attenuation** of the *local matrix difference relative to control* by its endpoint. Those percentages **do not imply return to the pre-shock matrix concentration**. The 24⁴ paired-control experiment was [dispatched](https://github.com/interrupt21h/ontogenesis/actions/runs/44840239338) on November 20; its results require separate verification and report reconciliation.
+The [verified 12⁴ paired pilot](https://github.com/interrupt21h/ontogenesis/actions/runs/44824014028/artifacts/14673655018) measured approximately **99.16% attenuation** of the *local energy difference relative to control* and **89.09% attenuation** of the *local matrix difference relative to control* by its endpoint. Those percentages **do not imply return to the pre-shock matrix concentration**. The [24⁴ full paired-control experiment](https://github.com/interrupt21h/ontogenesis/actions/runs/44840239338) subsequently passed its numerical and media workflow. In that 4,800-step run, local energy-difference magnitude attenuated by 94.35% and the matrix difference crossed from -0.088706 to +0.010600. At the endpoint the disturbed arm had 5.00% matrix coverage above 0.20 versus 10.50% in the control. These are measured distributions, not evidence of a restored mature ecology.
 
 ## The complete visual publication
 

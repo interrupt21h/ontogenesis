@@ -29,18 +29,18 @@ Historical GitHub Actions artifacts normally have **30-day retention**; cited lo
 | G0025 maintenance | [`maintenance.yml`](../.github/workflows/maintenance.yml) | Full simulation and visual-quality baseline retained |
 | G0026 observer independence | [`consolidation.yml`](../.github/workflows/consolidation.yml) | Full 24⁴ verification passed |
 | G0027 structural statistics | [`structural-statistics.yml`](../.github/workflows/structural-statistics.yml) | Full 24⁴ metrics and 41 matching same-process checkpoints passed |
-| G0028 matched treatment/control | [`disturbance.yml`](../.github/workflows/disturbance.yml) | Pilot passed; [full paired run dispatched](https://github.com/interrupt21h/ontogenesis/actions/runs/44840239338), findings not yet reconciled |
+| G0028 matched treatment/control | [`disturbance.yml`](../.github/workflows/disturbance.yml) | Pilot and [24⁴ full paired science run](https://github.com/interrupt21h/ontogenesis/actions/runs/44840239338) both passed; report integrates them as separate evidence plates |
 | G0028 first full cinematic | [`disturbance-cinematic.yml`](../.github/workflows/disturbance-cinematic.yml) | Full single-plane master passed CI and retained |
 | G0028 full fidelity cinematic | [`disturbance-fidelity.yml`](../.github/workflows/disturbance-fidelity.yml) | Full four-plane master passed CI and retained |
 | G0028 render-only updates | [`disturbance-fidelity-rerender.yml`](../.github/workflows/disturbance-fidelity-rerender.yml) | Uses existing NPZ source instead of recomputing a universe |
 | PDF / cumulative movie | [`report.yml`](../.github/workflows/report.yml) / [`film.yml`](../.github/workflows/film.yml) | Both have verified publication runs; media selection and evidence inputs must be updated deliberately |
 
-**Do not launch a second 24⁴ paired experiment while [run 44840239338](https://github.com/interrupt21h/ontogenesis/actions/runs/44840239338) is in progress.** A full paired study costs about twice a single universe and is not the same computation as the art-only film.
+**The full 24⁴ paired experiment has already passed. Do not rerun it simply to refresh a PDF.** The two-arm study is considerably more expensive than a single cinematic universe; archived numerical JSON can be reused when changing the report.
 
 ### GitHub CLI
 
 ~~~bash
-# Inspect the already requested full paired-control run.
+# Inspect the already verified full paired-control run.
 gh run view 44840239338 --repo interrupt21h/ontogenesis --json status,conclusion,jobs
 
 # Run only when an existing successful/full job is absent and no run is active.

@@ -30,7 +30,7 @@ G0026 and G0027 focus on observer invariance and quantitative structure. They ar
 
 ## VII — Environmental intervention
 
-G0028's **12⁴ paired pilot** has verified matched-control results. The [full 24⁴ paired experiment](https://github.com/interrupt21h/ontogenesis/actions/runs/44840239338) was dispatched and awaits verified integration. Separately, both 24⁴ artistic masters passed CI. Their movies are not the two-arm causal comparison.
+G0028's **12⁴ pilot** and [full 24⁴, 4,800-step matched-control experiment](https://github.com/interrupt21h/ontogenesis/actions/runs/44840239338) are verified. The larger experiment observes 94.35% attenuation of the local energy deficit and a sign change in the matrix contrast; disturbed high-threshold matrix coverage remains lower (5.00%) than control (10.50%). Both separately rendered 24⁴ artistic masters also passed CI, but their movies are not the two-arm causal measurement.
 
 ## Complete experiment index
 

@@ -33,7 +33,7 @@ The [published cumulative evolution film](https://github.com/interrupt21h/ontoge
 | **Full-resolution numerical domain** | 24⁴ periodic cells for the recent full-domain studies |
 | **G0026 observer test** | Full 4,800-step matched observer verification passed |
 | **G0027 structural statistics** | Full 24⁴ run and 41/41 same-process observer checkpoints passed; cross-run bitwise agreement is not established |
-| **G0028 scientific intervention** | 12⁴ paired pilot passed; [24⁴ paired run dispatched](https://github.com/interrupt21h/ontogenesis/actions/runs/44840239338) and its results await reconciliation |
+| **G0028 scientific intervention** | 12⁴ paired pilot and [full 24⁴ matched-control run](https://github.com/interrupt21h/ontogenesis/actions/runs/44840239338) both verified; the full study finds 94.35% attenuation in local energy deficit and persistent changes in global matrix coverage |
 | **G0028 cinematic observations** | Both full 24⁴ film workflows passed; source numerical archives and distinct posters retained |
 | **Published research report** | [Verified scientific/engineering PDF](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis.pdf), including the final-render chapter |
 | **Compute** | GitHub-hosted CPU Actions; expensive runs are explicitly gated |

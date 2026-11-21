@@ -1354,7 +1354,7 @@ Compare checkpoint hashes to G0026 when the full result is available. No claim o
 
 ## Generation 0028 — Localized disturbance and recovery
 
-Status (20 November 2026): 12⁴ paired scientific pilot verified; 24⁴ paired full-domain study dispatched but not yet reconciled. Two distinct full 24⁴ cinematic editions have passed CI and retained their numerical field archives; neither is itself a matched-control experiment, and artistic evaluation remains separate. This experiment begins the planned G0028–G0032 finale, keeping the full-resolution baseline costly runs manually gated on standard GitHub-hosted CPU runners. It adds a single deterministic Gaussian intervention halfway through a seeded trajectory, separately depleting local energy and matrix. An unperturbed arm of the same seed and initialization supplies a contemporaneous control.
+Status: 12⁴ paired scientific pilot and 24⁴ paired full-domain study both verified; the full study is documented independently of the cinematic observations. Two distinct full 24⁴ cinematic editions have passed CI and retained their numerical field archives; neither is itself a matched-control experiment, and artistic evaluation remains separate. This experiment begins the planned G0028–G0032 finale, keeping the full-resolution baseline costly runs manually gated on standard GitHub-hosted CPU runners. It adds a single deterministic Gaussian intervention halfway through a seeded trajectory, separately depleting local energy and matrix. An unperturbed arm of the same seed and initialization supplies a contemporaneous control.
 
 The automated 12⁴/240-step pilot and optional 24⁴/4800-step paired comparison record real 2D sections from both arms, native numerical measurements, and checkpoint hashes. A standalone H.264 MP4 and scientific PNG plate are derived from those observations, with fixed comparative scales and no reconstructed fields. Recovery of local mean energy or matrix is assessed as attenuation of the paired difference, not asserted in advance.
 
@@ -1369,7 +1369,7 @@ The G0026 full-resolution workflow was also moved behind manual dispatch; prior 
 
 ### Interpretation limitations
 
-**Interpretation safeguard:** In the verified 12⁴ pilot, the unperturbed matrix core was only about 0.005535 at the event and declined to about 0.002087 by the endpoint; shocked matrix ended near 0.001724. Attenuating the paired difference does not mean the structural matrix returned to its pre-event level, and the 240-step pilot is an early transient rather than a mature-universe resilience test. Full 24⁴ execution remains pending.
+**Interpretation safeguard:** In the verified 12⁴ pilot, the unperturbed matrix core was only about 0.005535 at the event and declined to about 0.002087 by the endpoint; shocked matrix ended near 0.001724. Attenuating the paired difference does not mean the structural matrix returned to its pre-event level, and the 240-step pilot is an early transient rather than a mature-universe resilience test. Full 24⁴ paired execution subsequently passed its GitHub Actions run; see the verified full-domain outcome below.
 
 
 ### Cinematic observation: the initial replacement
@@ -1412,3 +1412,8 @@ matched-control evidence remain accessible.
 [Capture](../disturbance_cinematic_fidelity.py) ·
 [Ray renderer](../disturbance_fidelity_render.py) ·
 [CI](../.github/workflows/disturbance-fidelity.yml).
+
+
+### G0028 full-resolution paired-control evidence
+
+[Verified run 44840239338](https://github.com/interrupt21h/ontogenesis/actions/runs/44840239338) completed both 24⁴, 4,800-step arms with seed 42 and event 2400. The shocked-minus-control regional energy difference changed from -0.44120503 at the event to -0.02491707 at the endpoint (94.35% attenuation of magnitude). The matrix difference changed from -0.08870594 to +0.01060031 (88.05% attenuation in absolute magnitude with a sign reversal). Final thresholded matrix coverage at 0.20 was 5.00% in the shocked arm versus 10.50% in control; global matrix means were 0.148343 and 0.147089. Active V was 2.05% versus 3.61%, and active W 85.35% versus 68.28%. This is direct measured full-domain evidence, not reconstructed video color. The differences do not establish mature biological recovery or general behavior across seeds.
