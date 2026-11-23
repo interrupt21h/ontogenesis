@@ -32,7 +32,7 @@ A 24⁴ numerical domain, 4,800 simulation steps, and a localized disturbance. T
 
 | Part | What it does |
 |:--|:--|
-| **28 numbered experiments** | G0001–G0028 explore patterns, transport, energy, structure, inheritance, measurement, and disturbance |
+| **29 numbered experiments** | G0001–G0028 are verified, and the G0029 implementation explores patterns, transport, energy, structure, inheritance, measurement, and disturbance |
 | **Numerical worlds** | Local rules update dimensionless fields on periodic grids; some recent experiments use a 24⁴ domain |
 | **Generative visuals** | Field data becomes images, sections, projections, and films |
 | **GitHub Actions** | Runs experiments, builds artifacts, and helps turn the repository into a tiny computational production studio |
@@ -54,8 +54,13 @@ A 24⁴ numerical domain, 4,800 simulation steps, and a localized disturbance. T
 | [G0024–G0025](docs/EXPERIMENTS.md#v--structural-specialization) | Construction and maintenance |
 | [G0026–G0027](docs/EXPERIMENTS.md#vi--measurement-and-instrumentation) | Better ways to observe and measure the mess |
 | [G0028](docs/EXPERIMENTS.md#vii--environmental-intervention) | Disturbing the system and watching its response |
+| [G0029](docs/EXPERIMENTS.md#viii--transport-with-memory) | Persistent circulation memory, with a same-seed matched control |
 
-G0029–G0032 are ideas for future experiments, not completed results.
+G0029 is implemented and awaiting CI verification. G0030–G0032 remain proposed experiments.
+
+## G0029 · Giving circulation a memory
+
+The latest implementation adds structure-informed curl feedback to the existing four-dimensional flow. [See the experiment](docs/generations/0029.md) and [its workflow](.github/workflows/adaptive-transport.yml). Numerical outcomes are awaiting CI, and G0028 remains the selected full-resolution cinematic artwork.
 
 ## Try it yourself
 

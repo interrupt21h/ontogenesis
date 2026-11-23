@@ -18,7 +18,7 @@ The images can be compelling, but the pixels are not the whole story. A four-dim
 
 ## What to look for
 
-The early experiments explore patterns and competition. Later ones add transport, resources, structural memory, higher-dimensional views, inherited variation, and ways of measuring what persists. The late experiments investigate whether the observing tools interfere with the simulation, how to characterize structures without relying on a single threshold, and what happens after a localized disturbance.
+The early experiments explore patterns and competition. Later ones add transport, resources, structural memory, higher-dimensional views, inherited variation, and ways of measuring what persists. The late experiments investigate whether the observing tools interfere with the simulation, how to characterize structures without relying on a single threshold, what happens after a localized disturbance, and whether remembered chemical activity can change circulation.
 
 Failures, saturation, uninteresting outputs, and unexpectedly expensive workflows are all part of the story. A successful CI run does not guarantee a beautiful film, and a beautiful film does not guarantee an interesting numerical result. Both distinctions are worth keeping.
 

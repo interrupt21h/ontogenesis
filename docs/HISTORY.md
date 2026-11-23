@@ -2,7 +2,7 @@
 
 [← Project overview](../README.md) · [Experiments](EXPERIMENTS.md) · [Visual gallery](VISUAL_GALLERY.md) · [Publishing guide](PIPELINE.md)
 
-This is a retrospective engineering and scientific record of generations 0001–0028. Each generation is a separate reproducible experiment, not a continuation from a checkpoint. Source code is normative. Recorded values are single-seed observations from successful CI runs; hypotheses and limitations are explicitly separated. Parameters are dimensionless and the time step is one. L denotes the periodic nearest-neighbor discrete Laplacian. Active chemical coverage is the fraction of cells above 0.1; structural coverage uses M > 0.2. All runs use seed 42. Artifact links require GitHub authentication and expire; workflow links remain the durable regeneration path.
+This is a retrospective engineering and scientific record of generations 0001–0029. Each generation is a separate reproducible experiment, not a continuation from a checkpoint. Source code is normative. Recorded values are single-seed observations from successful CI runs; hypotheses and limitations are explicitly separated. Parameters are dimensionless and the time step is one. L denotes the periodic nearest-neighbor discrete Laplacian. Active chemical coverage is the fraction of cells above 0.1; structural coverage uses M > 0.2. All runs use seed 42. Artifact links require GitHub authentication and expire; workflow links remain the durable regeneration path.
 
 ## Contents
 
@@ -1416,3 +1416,36 @@ matched-control evidence remain accessible.
 ### G0028 full-resolution paired-control evidence
 
 [Verified run 44840239338](https://github.com/interrupt21h/ontogenesis/actions/runs/44840239338) completed both 24⁴, 4,800-step arms with seed 42 and event 2400. The shocked-minus-control regional energy difference changed from -0.44120503 at the event to -0.02491707 at the endpoint (94.35% attenuation of magnitude). The matrix difference changed from -0.08870594 to +0.01060031 (88.05% attenuation in absolute magnitude with a sign reversal). Final thresholded matrix coverage at 0.20 was 5.00% in the shocked arm versus 10.50% in control; global matrix means were 0.148343 and 0.147089. Active V was 2.05% versus 3.61%, and active W 85.35% versus 68.28%. This is direct measured full-domain evidence, not reconstructed video color. The differences do not establish mature biological recovery or general behavior across seeds.
+
+
+## Generation 0029 — Adaptive transport networks
+
+Status: Implemented code and matched-control workflow; CI evidence pending. The previous G0028 cinematic remains featured.
+
+Parent: G0026 numerical integration, with a new optional divergence-free transport callback. This run is separately seeded rather than continuing G0028's shocked four-dimensional state.
+
+### Mechanism and numerical design
+
+A scalar field slowly remembers structure, active populations and energy deficit. Its finite-difference curl is added to the original circulation before the inherited outgoing-flux limiter. The feedback is externally programmed, not an evolved network.
+
+$$
+\begin{aligned}
+C_* &= \operatorname{clip}(1.6M+0.45(V+W)+0.15(1-E),0,1),\\
+C^{t+1} &= C^t+0.035(C_*-C^t),\\
+A_{ij} &= 0.32C,\qquad i<j,\\
+\delta v_i &\mathrel{+}=d_jA_{ij},\quad\delta v_j\mathrel{-}=d_iA_{ij},\\
+\sum_i d_i\delta v_i &=0.
+\end{aligned}
+$$
+
+Matched arms use identical initial seed 42: one unchanged G0026, one with feedback. The 12⁴ / 180-step pilot and manually gated 24⁴ / 4,800-step full configuration both record actual native fields, paired numerical metrics, source SHA and checksum. Five spatial channels are recorded as multiple 3D fourth-axis sections in float16, along with three float32 full-4D keyframes. The native archives are not complete restart states.
+
+### Artistic observation and limitations
+
+Measured memory, matrix, competing populations and energy are separately ray-integrated into a rotating cinematic visualization. Camera movement, exposure and interpolation are display processing. Neither a future passing CI run nor an attractive render proves autonomous transport or improved survival; matched contrasts must be reported directly. G0028's selected high-resolution film remains in place until a completed G0029 film is actually inspected.
+
+### Reproduction and provenance
+
+[Source](../adaptive_transport.py) · [Workflow](../.github/workflows/adaptive-transport.yml) · [Detailed record](generations/0029.md).
+
+G0030 ecological succession is a proposed successor, not a verified result.

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="430" viewBox="0 0 1040 430" role="img" aria-label="Conceptual adaptive transport design">
+<title>G0029: feedback-controlled circulation (conceptual)</title>
+<rect width="1040" height="430" fill="#0b2130"/>
+<text x="42" y="50" fill="#56e5ca" font-family="DejaVu Sans,sans-serif" font-size="23" font-weight="bold">G0029 / CIRCULATION WITH MEMORY</text>
+<text x="42" y="80" fill="#b6d3de" font-family="DejaVu Sans,sans-serif" font-size="15">Conceptual mechanism, not an image from the simulation</text>
+<rect x="42" y="116" width="431" height="256" rx="12" fill="#173143"/>
+<rect x="566" y="116" width="432" height="256" rx="12" fill="#173143"/>
+<text x="68" y="155" fill="#eee1d1" font-family="DejaVu Sans,sans-serif" font-size="19">CONTROL / G0026</text>
+<text x="593" y="155" fill="#eee1d1" font-family="DejaVu Sans,sans-serif" font-size="19">FEEDBACK / G0029</text>
+<path d="M 106 280 C 200 175 310 350 427 228" fill="none" stroke="#a4b3c6" stroke-width="6" stroke-dasharray="12 12"/>
+<path d="M 628 280 C 736 174 845 350 960 228" fill="none" stroke="#44e4c5" stroke-width="29" opacity=".16"/>
+<path d="M 628 280 C 736 174 845 350 960 228" fill="none" stroke="#44e4c5" stroke-width="8"/>
+<g fill="#e9a17c"><circle cx="152" cy="250" r="14"/><circle cx="331" cy="301" r="14"/><circle cx="686" cy="249" r="14"/><circle cx="863" cy="301" r="14"/></g>
+<g fill="#ab94e1"><circle cx="239" cy="259" r="16"/><circle cx="410" cy="259" r="11"/><circle cx="771" cy="260" r="16"/><circle cx="936" cy="261" r="11"/></g>
+<path d="M 486 252 L 548 252 L 535 242 M 548 252 L 535 262" fill="none" stroke="#eec089" stroke-width="4"/>
+<text x="486" y="223" fill="#eec089" font-family="DejaVu Sans,sans-serif" font-size="14">memory</text>
+<text x="69" y="345" fill="#c7dce7" font-family="DejaVu Sans,sans-serif" font-size="14">Original divergence-free flow</text>
+<text x="592" y="345" fill="#c7dce7" font-family="DejaVu Sans,sans-serif" font-size="14">Structure-dependent curl correction</text>
+<text x="42" y="406" fill="#abc6d3" font-family="DejaVu Sans,sans-serif" font-size="14">Symbols are not field measurements or particle trajectories. Both arms start with the same numerical seed.</text>
+</svg>

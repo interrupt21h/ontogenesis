@@ -2,7 +2,7 @@
 
 [← Project overview](../README.md) · [Docs](README.md) · [Visual gallery](VISUAL_GALLERY.md) · [Measured history](HISTORY.md)
 
-**Twenty-eight separately initialized experiments** form an investigative chronology—not a continuous simulated organism. Each detailed record explains what was changed, what was measured, and what remains unverified. **CI verified** means the relevant workflow and checks completed; it does not by itself establish scientific validity.
+**Twenty-nine separately initialized experiment implementations** (G0029 results pending CI) form an investigative chronology—not a continuous simulated organism. Each detailed record explains what was changed, what was measured, and what remains unverified. **CI verified** means the relevant workflow and checks completed; it does not by itself establish scientific validity.
 
 ## I — Chemical differentiation
 
@@ -31,6 +31,10 @@ G0026 and G0027 focus on observer invariance and quantitative structure. They ar
 ## VII — Environmental intervention
 
 G0028's **12⁴ pilot** and [full 24⁴, 4,800-step matched-control experiment](https://github.com/interrupt21h/ontogenesis/actions/runs/44840239338) are verified. The larger experiment observes 94.35% attenuation of the local energy deficit and a sign change in the matrix contrast; disturbed high-threshold matrix coverage remains lower (5.00%) than control (10.50%). Both separately rendered 24⁴ artistic masters also passed CI, but their movies are not the two-arm causal measurement.
+
+## VIII — Transport with memory
+
+G0029 adds a memory-driven curl correction to the four-dimensional G0026 circulation. Its new source and tests exist; its paired measurements are not verified yet.
 
 ## Complete experiment index
 
@@ -65,8 +69,10 @@ G0028's **12⁴ pilot** and [full 24⁴, 4,800-step matched-control experiment](
 | 0027 | [Structural statistics](generations/0027.md) | [Python](../structural_statistics.py) | [Runs](../.github/workflows/structural-statistics.yml) · Verified execution; cross-run hashes differ |
 | **0028** | [Localized disturbance and recovery](generations/0028.md) | [Matched science](../disturbance.py) · [Fidelity source](../disturbance_cinematic_fidelity.py) · [Renderer](../disturbance_fidelity_render.py) | [Full paired run](https://github.com/interrupt21h/ontogenesis/actions/runs/44840239338) · [Fidelity film](https://github.com/interrupt21h/ontogenesis/actions/runs/44833423671) |
 
+| **0029** | [Adaptive transport networks](generations/0029.md) | [Source](../adaptive_transport.py) · [Renderer](../adaptive_transport_render.py) | [CI workflow](../.github/workflows/adaptive-transport.yml) · Awaiting verification |
+
 ## Planned, not completed
 
-G0029 adaptive transport, G0030 ecological succession, G0031 functional compartmentalization and G0032 extended-universe dynamics remain **artistic research proposals**. None belongs in the verified-results count or final-render galleries until source and evidence exist.
+G0030 ecological succession, G0031 functional compartmentalization and G0032 extended-universe dynamics remain **artistic research proposals**. G0029 has been implemented but has no verified results yet. None belongs in the verified-results count or final-render galleries until source and evidence exist.
 
 [Visual editions](VISUAL_GALLERY.md) · [Methodology](METHODOLOGY.md) · [Safe execution guide](PIPELINE.md)

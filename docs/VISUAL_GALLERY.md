@@ -4,6 +4,8 @@
 
 **Ontogenesis publishes numerical evidence and moving visual artwork separately.** The linked poster images below are actual retained outputs of their corresponding successful rendering workflows. Conceptual mechanism figures are explicitly labeled; they must never be confused with simulated field images.
 
+**In development:** [G0029 adaptive transport](generations/0029.md) has a matched numerical pilot and separate volumetric renderer. Its new movie is not yet promoted. The featured G0028 master remains unchanged.
+
 ## Featured artwork — G0028 full-resolution cinematic
 
 [![G0028 evolving field structures — actual frame from full-resolution simulation](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-cinematic.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-cinematic.mp4)

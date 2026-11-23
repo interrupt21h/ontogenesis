@@ -33,6 +33,7 @@ Historical GitHub Actions artifacts normally have **30-day retention**; cited lo
 | G0028 full cinematic | [`disturbance-cinematic.yml`](../.github/workflows/disturbance-cinematic.yml) | 24⁴, 60-second moving-field master; selected for cumulative film and report gallery (artifact `14679397104`) |
 | G0028 alternate volumetric film | [`disturbance-fidelity.yml`](../.github/workflows/disturbance-fidelity.yml) | 24⁴ multi-plane ray-integrated edition, archived separately (artifact `14680891214`) |
 | G0028 render-only updates | [`disturbance-fidelity-rerender.yml`](../.github/workflows/disturbance-fidelity-rerender.yml) | Uses existing NPZ source instead of recomputing a universe |
+| G0029 adaptive transport | [Workflow](../.github/workflows/adaptive-transport.yml) | Matched 12⁴ pilot implemented; results pending, full 24⁴ master manual only |
 | PDF / cumulative movie | [`report.yml`](../.github/workflows/report.yml) / [`film.yml`](../.github/workflows/film.yml) | Both have verified publication runs; media selection and evidence inputs must be updated deliberately |
 
 **The full 24⁴ paired experiment has already passed. Do not rerun it simply to refresh a PDF.** The two-arm study is considerably more expensive than a single cinematic universe; archived numerical JSON can be reused when changing the report.
@@ -90,3 +91,14 @@ python scripts/check_docs.py    # static Markdown link validation
 The full monograph build additionally uses Pandoc, LaTeX, latexmk, librsvg2-bin, FFmpeg and numerical plotting dependencies; see [the actual workflow](../.github/workflows/report.yml) for a maintained build recipe.
 
 The art project is isolated from employer hardware: the recorded production processes are GitHub-hosted CPU Actions, not company GPUs, self-hosted runners, or corporate credentials.
+
+
+## G0029: guarded paired experiment
+
+The G0029 code-path change launches a matched 12⁴ pilot on GitHub-hosted CPU runners. The high-resolution, two-arm 24⁴ experiment and 96³ ray-integrated movie are expensive and must be deliberately dispatched:
+
+~~~bash
+gh workflow run adaptive-transport.yml --repo interrupt21h/ontogenesis --ref main -f full_resolution=true
+~~~
+
+Examine the pilot's real numerical contrasts, execution cost, film and native archives first. A successful small-scale test does not authorize replacing the verified G0028 feature film or changing the cumulative media manifest.

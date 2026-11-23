@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Dependency-free validation of repository Markdown, SVG and 28-generation index."""
+"""Dependency-free validation of repository Markdown, SVG and 29-generation index."""
 from __future__ import annotations
 import re
 import sys
@@ -76,14 +76,14 @@ def main() -> int:
         except (ET.ParseError, ValueError) as exc:
             failures.append(f"{path.relative_to(ROOT)}: {exc}")
 
-    expected = [f"{n:04d}" for n in range(1, 29)]
+    expected = [f"{n:04d}" for n in range(1, 30)]
     actual = sorted(p.stem for p in (ROOT / "docs" / "generations").glob("[0-9][0-9][0-9][0-9].md"))
     if actual != expected:
         failures.append(f"Generation records incomplete: {actual}")
     history = (ROOT / "docs" / "HISTORY.md").read_text(encoding="utf-8")
     chronology = re.findall(r"^## Generation (\d{4})", history, re.MULTILINE)
     if chronology != expected:
-        failures.append(f"HISTORY chronology differs from G0001–G0028: {chronology}")
+        failures.append(f"HISTORY chronology differs from G0001–G0029: {chronology}")
     index = (ROOT / "docs" / "EXPERIMENTS.md").read_text(encoding="utf-8")
     catalog = re.findall(r"^\|\s*\**(\d{4})\**\s*\|", index, re.MULTILINE)
     if catalog != expected:
@@ -116,7 +116,7 @@ def main() -> int:
             print("ERROR:", failure, file=sys.stderr)
         return 1
     print(f"PASS: {len(SOURCES)} Markdown pages, {len(SVGS)} SVG assets, "
-          "28 generation records and index/history chapters")
+          "29 generation records and index/history chapters")
     return 0
 
 

@@ -23,4 +23,4 @@ The experiment is as much about orchestrating and maintaining the computational 
 
 There are three different kinds of images here: **measured plots** summarize numerical values, **conceptual diagrams** explain software or model ideas, and **cinematic renders** turn numerical fields into art. Camera motion, projection, color, and interpolation are presentation choices—not extra physics.
 
-G0001–G0028 are recorded experiments, with varying levels of verification. G0029–G0032 are ideas, not completed work. The [generation template](GENERATION_TEMPLATE.md) and [numerical conventions](METHODOLOGY.md) retain the technical details for anyone curious enough to dig deeper.
+G0001–G0028 are verified earlier experiments. G0029 has implemented source and a CI workflow, but its outcome is not yet verified. G0030–G0032 remain proposed. The [generation template](GENERATION_TEMPLATE.md) and [numerical conventions](METHODOLOGY.md) retain the technical details for anyone curious enough to dig deeper.

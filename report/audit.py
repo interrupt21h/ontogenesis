@@ -45,7 +45,7 @@ if any(r["undersized"] for r in rows):
 root=Path(__file__).resolve().parents[1]
 history=(root/"docs/HISTORY.md").read_text()
 generations=[int(x) for x in re.findall(r"^## Generation (\d{4})",history,re.M)]
-if generations!=list(range(1,29)):
+if generations!=list(range(1,30)):
     raise SystemExit(f"Experiment-history record missing, duplicated or unordered: {generations}")
 first_experiment_boundary=next(
     (p.number for p in doc if "PART I" in p.get_text() and
@@ -90,7 +90,7 @@ for g in ("0024","0025","0028"):
     if len(matches)!=1:
         raise SystemExit(f"Expected one explicit final-renders gallery plate for {g}, got {matches}")
     gallery[g]=matches[0]
-if chapter_pages["0028"]>=gallery["0024"]:
+if chapter_pages["0029"]>=gallery["0024"]:
     raise SystemExit("Final gallery must follow all numbered experiments")
 synthesis=next(i+1 for i,t in enumerate(text_pages)
                if i+1>gallery["0028"] and "What we learned" in t)
