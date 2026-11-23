@@ -4,7 +4,17 @@
 
 **Ontogenesis publishes numerical evidence and moving visual artwork separately.** The linked poster images below are actual retained outputs of their corresponding successful rendering workflows. Conceptual mechanism figures are explicitly labeled; they must never be confused with simulated field images.
 
-**New verified alternative:** [G0029 adaptive transport](generations/0029.md) completed a matched full-domain study and 60-second high-resolution cinematic. Its reduced-domain pilot was near-inactive, while the full run retained activity but shifted coverage between species. G0029 is separately accessible, **not automatically selected** for the cumulative film. The featured G0028 master remains unchanged.
+**Two verified G0029 cinematic editions:** [Adaptive transport](generations/0029.md) has a smooth volumetric master and a separate [luminous voxel-style film](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-voxel-cinematic.mp4), both sourced from the same measured full-domain simulation. G0029's small pilot was near-inactive, while the full run retained activity but changed species coverage. The featured G0028 film and cumulative edition remain unchanged.
+
+## G0029 — Additional voxel cinematic edition
+
+[![G0029 luminous voxel cinematic — actual verified full-domain frame](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-voxel-cinematic.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-voxel-cinematic.mp4)
+
+**[Watch the full-resolution G0029 voxel edition (60 seconds)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-voxel-cinematic.mp4)** · [Render metadata](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-voxel-cinematic.render.json) · [Source numerical fields](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0029-full.npz) · [Successful render-only CI](https://github.com/interrupt21h/ontogenesis/actions/runs/45258990108)
+
+This independent **1280 × 720, 24 FPS** rendering adapts G0028's luminous voxel-cloud projection to G0029's measured memory, matrix, energy and competing-species fields. It uses the already archived, verified **24⁴** G0029 simulation, so no new integration was performed. The memory channel occupies a color slot originally used for G0028's pulse; the fields are **not** treated as physically equivalent. Rotation, lighting and fourth-axis interpolation are display processing.
+
+The cinematic edition is a **separately published artistic alternative**, not the selected project-page feature or a new experiment. The featured G0028 film and cumulative film manifest are unchanged.
 
 ## Additional full-domain G0029 study — not featured
 

@@ -28,6 +28,18 @@ A 24⁴ numerical domain, 4,800 simulation steps, and a localized disturbance. T
 
 [**Full-resolution film**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-cinematic.mp4) · [Complete evolution](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-evolution.mp4) · [Gallery](docs/VISUAL_GALLERY.md)
 
+## Additional cinematic edition · G0029 voxel universe
+
+[![G0029 — luminous voxel cinema, actual full-resolution rendered poster](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-voxel-cinematic.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-voxel-cinematic.mp4)
+
+### G0029 · Circulation with memory
+
+The same **24⁴, 4,800-step G0029 simulation** now has a second cinematic interpretation. This edition uses the glowing voxel-cloud aesthetic of G0028's featured film, with memory, matrix, and the two competing populations translated into a rotating field of light. It is a **60-second, 1280 × 720, 24 FPS** render from the already verified G0029 numerical archive, not a new simulation.
+
+[**Watch the voxel cinematic edition**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-voxel-cinematic.mp4) · [Original G0029 volumetric film](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-master.mp4) · [Visual gallery](docs/VISUAL_GALLERY.md) · [Render provenance](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-voxel-cinematic.render.json)
+
+*An additional artistic edition, not a replacement for the featured G0028 film. Camera motion, glow, and fourth-axis interpolation are visualization choices, not new simulation dynamics.*
+
 ## What is actually happening?
 
 | Part | What it does |
