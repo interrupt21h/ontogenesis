@@ -104,3 +104,16 @@ gh workflow run adaptive-transport.yml --repo interrupt21h/ontogenesis --ref mai
 Examine the [full numerical contrasts](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0029-full.json), execution cost, [film](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-master.mp4), and native archives before considering further variations. Passing numerical and video CI still does not authorize automatically replacing the verified G0028 feature film or changing the cumulative media manifest.
 
 The user-requested one-time 24⁴ master was run on commit `6c0022c6` and is now archived. Its temporary commit-message trigger was removed afterward. Ordinary push commits cannot start expensive master jobs; rerunning requires explicit GitHub Actions manual dispatch.
+
+
+## G0030: controlled ecological succession screen
+
+The [G0030 workflow](../.github/workflows/ecological-succession.yml) runs four factorial cross-feeding configurations under an identical deterministic supply-gradient reversal. The automatic pilot is **16⁴ cells × 1,200 steps**, with two seeds (42 and 73), eight sequential runs total, and native numerical measurements every 30 steps and at the environmental event. It creates a JSON record and a plot of actual measured trajectories, **not** an additional film. Regression tests guard the unchanged G0026 baseline and read-only observation.
+
+The expensive one-seed **24⁴ × 4,800-step, four-arm** experiment remains explicitly gated; it is not launched on push. Review the bounded pilot and CPU expense before deciding to run:
+
+~~~bash
+gh workflow run ecological-succession.yml --repo interrupt21h/ontogenesis --ref main -f full_domain=true
+~~~
+
+Population coverage changes are not, by themselves, evidence of mutualism, stable succession or functional organisms.

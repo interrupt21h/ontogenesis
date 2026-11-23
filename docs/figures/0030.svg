@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="420" viewBox="0 0 960 420" role="img" aria-label="Conceptual four arm G0030 experiment with matched environmental inversion">
+<rect width="960" height="420" rx="18" fill="#101e2d"/>
+<text x="35" y="46" fill="#e8f2fa" font-family="sans-serif" font-size="27" font-weight="bold">G0030  /  ECOLOGICAL CONTROLS</text>
+<text x="35" y="75" fill="#b9d0df" font-family="sans-serif" font-size="15">Conceptual experimental design — NOT numerical output</text>
+<g font-family="sans-serif">
+<rect x="35" y="113" width="207" height="194" rx="13" fill="#1b3548" stroke="#628499"/>
+<rect x="262" y="113" width="207" height="194" rx="13" fill="#1b3548" stroke="#628499"/>
+<rect x="489" y="113" width="207" height="194" rx="13" fill="#1b3548" stroke="#628499"/>
+<rect x="716" y="113" width="207" height="194" rx="13" fill="#1b3548" stroke="#628499"/>
+<g font-size="17" font-weight="bold" fill="#e8f2fa" text-anchor="middle">
+<text x="138" y="148">NEITHER</text><text x="365" y="148">W → V ONLY</text>
+<text x="592" y="148">V → W ONLY</text><text x="819" y="148">BOTH DIRECTIONS</text></g>
+<g font-size="22" font-weight="bold" text-anchor="middle">
+<text x="101" y="217" fill="#e2a65d">V</text><text x="174" y="217" fill="#44c6d9">W</text>
+<text x="328" y="217" fill="#e2a65d">V</text><text x="401" y="217" fill="#44c6d9">W</text>
+<text x="555" y="217" fill="#e2a65d">V</text><text x="628" y="217" fill="#44c6d9">W</text>
+<text x="782" y="217" fill="#e2a65d">V</text><text x="855" y="217" fill="#44c6d9">W</text>
+</g>
+<g stroke-width="4" fill="none" stroke-linecap="round">
+<path d="M395 229 Q365 261 334 229" stroke="#44c6d9"/>
+<path d="M562 229 Q592 261 622 229" stroke="#e2a65d"/>
+<path d="M849 229 Q818 261 789 229" stroke="#44c6d9"/>
+<path d="M789 210 Q819 174 849 210" stroke="#e2a65d"/>
+</g>
+<g font-size="13" text-anchor="middle" fill="#b9d0df">
+<text x="138" y="288">No metabolite benefits</text>
+<text x="365" y="288">Xw benefits species V</text>
+<text x="592" y="288">Xv benefits species W</text>
+<text x="819" y="288">Two-way exchange</text>
+</g>
+<rect x="35" y="329" width="888" height="58" rx="10" fill="#25485b" stroke="#3b7c8b"/>
+<text x="479" y="353" text-anchor="middle" fill="#e8f2fa" font-size="16" font-weight="bold">IDENTICAL SEEDS  /  SHARED MID-RUN ENVIRONMENTAL REVERSAL</text>
+<text x="479" y="374" text-anchor="middle" fill="#b9d0df" font-size="13">Compare measured population trajectories, metabolite dependence, structure, energy, and entropy</text>
+</g></svg>

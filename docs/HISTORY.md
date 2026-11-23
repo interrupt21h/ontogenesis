@@ -58,23 +58,6 @@ Five magma-colored snapshots at 100, 500, 1000, 2000 and 4000; final mean 0.0213
 
 A single seed and parameter set do not establish robustness. No video in original generation.
 
-### Verified full-domain study — November 23, 2026
-
-[Successful run 45232504379](https://github.com/interrupt21h/ontogenesis/actions/runs/45232504379), seed 42, 24⁴ lattice, two arms and 4,800 steps, 1,201 matched samples. The first arm uses unchanged G0026 circulation; the second includes the memory-induced curl. Numerical measurements and 1,440-frame 1280×720 MP4 passed their verification steps and were retained under source revision `6c0022c6d37a1b726be79c33dd64f71b6c554d5d`.
-
-| End state (step 4,800) | Unchanged control | Adaptive curl |
-|:--|--:|--:|
-| Mean energy | 0.89372737 | 0.88456454 |
-| Mean matrix | 0.14708946 | 0.14578964 |
-| Matrix coverage > 0.20 | 10.5038% | 4.7303% |
-| Active species V > 0.10 | 3.6121% | 0.2125% |
-| Active species W > 0.10 | 68.2795% | 89.0137% |
-| Activity-weighted energy | 0.17204118 | 0.18505917 |
-
-The adaptive arm has 20.73 more percentage points of active W coverage, 3.40 fewer points of active V coverage and 5.77 fewer points of matrix coverage. This is a measured one-seed shift in field composition, not evidence of net benefit or biological life. The full simulated fields remain archived in the ~506 MB NPZ, and a 4:02 ray-integrated cinematic observes them through a 96³ presentation grid. The simulation took 1:52:18; no second-seed robustness checks were performed. Original G0028 film selection remains intact.
-
-[Full numerical JSON](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0029-full.json) · [Native fields](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0029-full.npz) · [Verified master](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-master.mp4) · [Poster](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-master.png). Artifacts: 14857615863 (movie/metrics) and 14857079202 (native fields).
-
 ### Reproduction and provenance
 
 - [Source](../render.py) · [Workflow](../.github/workflows/render.yml)
@@ -1478,8 +1461,54 @@ The small domain's extinction-like transient and very small differences provide 
 
 [Native numerical metrics](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0029-pilot.json) · [Preview video](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-preview.mp4).
 
+### Verified full-domain study — November 23, 2026
+
+[Successful run 45232504379](https://github.com/interrupt21h/ontogenesis/actions/runs/45232504379), seed 42, 24⁴ lattice, two arms and 4,800 steps, 1,201 matched samples. The first arm uses unchanged G0026 circulation; the second includes the memory-induced curl. Numerical measurements and 1,440-frame 1280×720 MP4 passed their verification steps and were retained under source revision `6c0022c6d37a1b726be79c33dd64f71b6c554d5d`.
+
+| End state (step 4,800) | Unchanged control | Adaptive curl |
+|:--|--:|--:|
+| Mean energy | 0.89372737 | 0.88456454 |
+| Mean matrix | 0.14708946 | 0.14578964 |
+| Matrix coverage > 0.20 | 10.5038% | 4.7303% |
+| Active species V > 0.10 | 3.6121% | 0.2125% |
+| Active species W > 0.10 | 68.2795% | 89.0137% |
+| Activity-weighted energy | 0.17204118 | 0.18505917 |
+
+The adaptive arm has 20.73 more percentage points of active W coverage, 3.40 fewer points of active V coverage and 5.77 fewer points of matrix coverage. This is a measured one-seed shift in field composition, not evidence of net benefit or biological life. The full simulated fields remain archived in the ~506 MB NPZ, and a 4:02 ray-integrated cinematic observes them through a 96³ presentation grid. The simulation took 1:52:18; no second-seed robustness checks were performed. Original G0028 film selection remains intact.
+
+[Full numerical JSON](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0029-full.json) · [Native fields](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0029-full.npz) · [Verified master](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-master.mp4) · [Poster](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-master.png). Artifacts: 14857615863 (movie/metrics) and 14857079202 (native fields).
+
 ### Reproduction and provenance
 
 [Source](../adaptive_transport.py) · [Workflow](../.github/workflows/adaptive-transport.yml) · [Detailed record](generations/0029.md).
 
-G0030 ecological succession is a proposed successor, not a verified result.
+G0030 is implemented as a controlled directional metabolite study; its outcomes are pending CI.
+
+## Generation 0030 — Ecological succession with directional controls
+
+Status: Four factorial arms implemented and pilot running or queued; **no numerical outcomes verified yet**.
+
+Parent: G0026 default integrator, not G0029's circulation feedback. All pre-existing dynamical rules are retained except for the specified directional-benefit switches and an externally imposed environmental challenge shared across arms.
+
+### Question and factorial methodology
+
+G0017's cross-feeding benefit has two directions. G0030 tests each direction separately against a neither condition and the historical both-directions condition. The source follows the same seed, duration, lattice size, and imposed gradient reversal across arms. Disabling a recipient's cross-feed benefit also disables its associated metabolite uptake, but does not suppress secretion by the other species.
+
+At time T/2, the existing spatial supply S changes to 2 mean(S) - S; this preserves domain-mean replenishment and inverts spatial preference. It is imposed, not evolved. The automatic pilot is 16⁴ cells for 1,200 steps, sampled every 30 steps and at the switch, with seeds 42 and 73. A separate 24⁴ single-seed run is manual only.
+
+### Planned measurements
+
+Record direct V/W coverage, population co-occupancy, both metabolite means and minimum-overlap, matrix, energy, and pooled 16-category genotype entropy. Compare each same-seed arm against the neither condition, and summarize before-switch versus late-window observations. Test matched initialization, read-only observers, numerical finiteness, and the unchanged historical baseline.
+
+![Conceptual G0030 factorial design](figures/0030.svg)
+
+*Conceptual design, not simulated results.*
+
+### Results and interpretation
+
+Pending successful pilot CI. Changes in measured field activity may reflect competition or environmental forcing without constituting succession, self-maintaining individual organisms, or mutualism. Two seeds do not establish general statistical reliability.
+
+### Reproduction and provenance
+
+[Experiment driver](../ecological_succession.py) · [Regression tests](../tests/test_ecological_succession.py) · [Workflow](../.github/workflows/ecological-succession.yml) · [Individual record](generations/0030.md).
+

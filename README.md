@@ -44,7 +44,7 @@ The same **24⁴, 4,800-step G0029 simulation** now has a second cinematic inter
 
 | Part | What it does |
 |:--|:--|
-| **29 numbered experiments** | G0001–G0029 have CI-verified numerical results, including G0029's full paired study. They explore patterns, transport, energy, structure, inheritance, measurement, and disturbance |
+| **30 experiment designs** | G0001–G0029 have CI-verified results; G0030 is a controlled ecological screen with outcomes pending |
 | **Numerical worlds** | Local rules update dimensionless fields on periodic grids; some recent experiments use a 24⁴ domain |
 | **Generative visuals** | Field data becomes images, sections, projections, and films |
 | **GitHub Actions** | Runs experiments, builds artifacts, and helps turn the repository into a tiny computational production studio |
@@ -67,12 +67,21 @@ The same **24⁴, 4,800-step G0029 simulation** now has a second cinematic inter
 | [G0026–G0027](docs/EXPERIMENTS.md#vi--measurement-and-instrumentation) | Better ways to observe and measure the mess |
 | [G0028](docs/EXPERIMENTS.md#vii--environmental-intervention) | Disturbing the system and watching its response |
 | [G0029](docs/EXPERIMENTS.md#viii--transport-with-memory) | Persistent circulation memory, with a same-seed matched control |
+| [G0030](docs/EXPERIMENTS.md#ix--ecological-controls) | Which direction of metabolite exchange matters after an environmental change? |
 
-G0029's matched full-resolution numerical study and separate master film passed CI. G0028 remains the selected featured film; G0030–G0032 remain proposals.
+G0029's full-domain experiment and alternative cinematic editions passed CI. G0030 now tests existing ecological exchange with four controlled arms; its numerical results are pending. G0028 remains the featured film; G0031–G0032 remain proposals.
 
 ## G0029 · Giving circulation a memory
 
 The latest implementation adds structure-informed curl feedback to the existing four-dimensional flow. [See the experiment](docs/generations/0029.md) and [its workflow](.github/workflows/adaptive-transport.yml). The 12⁴ pilot becomes nearly inactive, whereas the [verified full 24⁴ paired study](https://github.com/interrupt21h/ontogenesis/actions/runs/45232504379) shows more W activity but reduced V and structural-matrix coverage in the adaptive arm. [Watch the G0029 full-resolution alternative](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-master.mp4). G0028 remains the selected cinematic artwork.
+
+## G0030 · Who benefits when the environment changes?
+
+Instead of introducing another speculative mechanism, the new experiment disables and restores each direction of the existing metabolite exchange. Four matched arms and two seeds receive the same mid-run environmental change. The measurable questions are population turnover, metabolite reliance, structural persistence and changing genetic composition.
+
+[**G0030 experiment design**](docs/generations/0030.md) · [Factorial simulation](ecological_succession.py) · [Automated pilot](.github/workflows/ecological-succession.yml)
+
+*Implementation exists, but numerical results are not yet verified. No cinematic feature has been replaced.*
 
 ## Try it yourself
 
