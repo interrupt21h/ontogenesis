@@ -32,7 +32,7 @@ A 24⁴ numerical domain, 4,800 simulation steps, and a localized disturbance. T
 
 | Part | What it does |
 |:--|:--|
-| **29 numbered experiments** | G0001–G0028 are verified, and the G0029 implementation explores patterns, transport, energy, structure, inheritance, measurement, and disturbance |
+| **29 numbered experiments** | G0001–G0028 and the G0029 reduced-domain pilot are verified. They explore patterns, transport, energy, structure, inheritance, measurement, and disturbance |
 | **Numerical worlds** | Local rules update dimensionless fields on periodic grids; some recent experiments use a 24⁴ domain |
 | **Generative visuals** | Field data becomes images, sections, projections, and films |
 | **GitHub Actions** | Runs experiments, builds artifacts, and helps turn the repository into a tiny computational production studio |
@@ -56,11 +56,11 @@ A 24⁴ numerical domain, 4,800 simulation steps, and a localized disturbance. T
 | [G0028](docs/EXPERIMENTS.md#vii--environmental-intervention) | Disturbing the system and watching its response |
 | [G0029](docs/EXPERIMENTS.md#viii--transport-with-memory) | Persistent circulation memory, with a same-seed matched control |
 
-G0029 is implemented and awaiting CI verification. G0030–G0032 remain proposed experiments.
+G0029's 12⁴ pilot passed CI, but the full-domain result and film have not yet been verified or featured. G0030–G0032 remain proposed.
 
 ## G0029 · Giving circulation a memory
 
-The latest implementation adds structure-informed curl feedback to the existing four-dimensional flow. [See the experiment](docs/generations/0029.md) and [its workflow](.github/workflows/adaptive-transport.yml). Numerical outcomes are awaiting CI, and G0028 remains the selected full-resolution cinematic artwork.
+The latest implementation adds structure-informed curl feedback to the existing four-dimensional flow. [See the experiment](docs/generations/0029.md) and [its workflow](.github/workflows/adaptive-transport.yml). The matched 12⁴ pilot passed CI, but its endpoint populations and thresholded matrix coverage are inactive. [Watch its technical preview](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-preview.mp4). A full 24⁴ master has been requested; G0028 remains the selected cinematic artwork.
 
 ## Try it yourself
 

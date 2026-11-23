@@ -85,7 +85,8 @@ jobs:
           gh release view atlas-media >/dev/null 2>&1 || gh release create atlas-media --title 'Ontogenesis numerical archive' --notes 'Verified numerical and artistic records' --prerelease
           gh release upload atlas-media g0029-pilot.npz g0029-pilot.json ontogenesis-0029-preview.mp4 ontogenesis-0029-preview.png ontogenesis-0029-preview.render.json --clobber
   full:
-    if: github.event_name == 'workflow_dispatch' && inputs.full_resolution
+    # Explicit owner-requested master on push; never launch on ordinary source/docs edits.
+    if: (github.event_name == 'workflow_dispatch' && inputs.full_resolution) || (github.event_name == 'push' && contains(github.event.head_commit.message, '[G0029-MASTER]'))
     needs: pilot
     runs-on: ubuntu-24.04
     timeout-minutes: 350

@@ -33,7 +33,7 @@ Historical GitHub Actions artifacts normally have **30-day retention**; cited lo
 | G0028 full cinematic | [`disturbance-cinematic.yml`](../.github/workflows/disturbance-cinematic.yml) | 24⁴, 60-second moving-field master; selected for cumulative film and report gallery (artifact `14679397104`) |
 | G0028 alternate volumetric film | [`disturbance-fidelity.yml`](../.github/workflows/disturbance-fidelity.yml) | 24⁴ multi-plane ray-integrated edition, archived separately (artifact `14680891214`) |
 | G0028 render-only updates | [`disturbance-fidelity-rerender.yml`](../.github/workflows/disturbance-fidelity-rerender.yml) | Uses existing NPZ source instead of recomputing a universe |
-| G0029 adaptive transport | [Workflow](../.github/workflows/adaptive-transport.yml) | Matched 12⁴ pilot implemented; results pending, full 24⁴ master manual only |
+| G0029 adaptive transport | [Workflow](../.github/workflows/adaptive-transport.yml) | [12⁴ pilot verified](https://github.com/interrupt21h/ontogenesis/actions/runs/45228921856); full 24⁴ master not yet verified |
 | PDF / cumulative movie | [`report.yml`](../.github/workflows/report.yml) / [`film.yml`](../.github/workflows/film.yml) | Both have verified publication runs; media selection and evidence inputs must be updated deliberately |
 
 **The full 24⁴ paired experiment has already passed. Do not rerun it simply to refresh a PDF.** The two-arm study is considerably more expensive than a single cinematic universe; archived numerical JSON can be reused when changing the report.
@@ -95,10 +95,12 @@ The art project is isolated from employer hardware: the recorded production proc
 
 ## G0029: guarded paired experiment
 
-The G0029 code-path change launches a matched 12⁴ pilot on GitHub-hosted CPU runners. The high-resolution, two-arm 24⁴ experiment and 96³ ray-integrated movie are expensive and must be deliberately dispatched:
+The G0029 code-path change launches a matched 12⁴ pilot on GitHub-hosted CPU runners. Its first pilot completed successfully ([run 45228921856](https://github.com/interrupt21h/ontogenesis/actions/runs/45228921856)) with paired native field data and a 288-frame MP4; the endpoint populations have zero thresholded activity. The high-resolution, two-arm 24⁴ experiment and 96³ ray-integrated movie are expensive and must be deliberately dispatched:
 
 ~~~bash
 gh workflow run adaptive-transport.yml --repo interrupt21h/ontogenesis --ref main -f full_resolution=true
 ~~~
 
 Examine the pilot's real numerical contrasts, execution cost, film and native archives first. A successful small-scale test does not authorize replacing the verified G0028 feature film or changing the cumulative media manifest.
+
+An explicitly requested one-time 24⁴ master may also be run using a reviewed push commit containing `[G0029-MASTER]`, with the same `full` job gated behind successful pilot checks. Ordinary commits never trigger expensive master work.

@@ -1420,7 +1420,7 @@ matched-control evidence remain accessible.
 
 ## Generation 0029 — Adaptive transport networks
 
-Status: Implemented code and matched-control workflow; CI evidence pending. The previous G0028 cinematic remains featured.
+Status: 12⁴ matched pilot CI verified at [run 45228921856](https://github.com/interrupt21h/ontogenesis/actions/runs/45228921856), source revision `635c2dbcd55b3cbe78615bea91146ea2251d4d80`. Full-domain run not yet verified; G0028 remains the featured film.
 
 Parent: G0026 numerical integration, with a new optional divergence-free transport callback. This run is separately seeded rather than continuing G0028's shocked four-dimensional state.
 
@@ -1442,7 +1442,24 @@ Matched arms use identical initial seed 42: one unchanged G0026, one with feedba
 
 ### Artistic observation and limitations
 
-Measured memory, matrix, competing populations and energy are separately ray-integrated into a rotating cinematic visualization. Camera movement, exposure and interpolation are display processing. Neither a future passing CI run nor an attractive render proves autonomous transport or improved survival; matched contrasts must be reported directly. G0028's selected high-resolution film remains in place until a completed G0029 film is actually inspected.
+Measured memory, matrix, competing populations and energy are separately ray-integrated into a rotating cinematic visualization. Camera movement, exposure and interpolation are display processing. The verified 12⁴/180-step pilot recorded effectively inactive species and no matrix occupancy above threshold 0.20 at its endpoint, so neither the preview nor the small numerical differences establish improved persistence. G0028's selected high-resolution film remains in place until a completed G0029 film is actually inspected.
+
+### Verified reduced-domain pilot
+
+[Successful CI run 45228921856](https://github.com/interrupt21h/ontogenesis/actions/runs/45228921856), seed 42, 12⁴ lattice and 180 steps, captured 31 matched observation times. Native-field archive and a 12-second, 288-frame 960×540 MP4 passed tests and were retained. The matched simulation finished in 9.79 seconds of wall clock time, and the film in 15.46 seconds. Artifact identifiers: 14847855713 (numerical JSON and film) and 14848040273 (native NPZ).
+
+| Observed metric at step 180 | Control | Adaptive |
+|:--|--:|--:|
+| Mean energy | 0.999538414 | 0.999540337 |
+| Mean matrix | 0.002096888 | 0.002090794 |
+| Matrix coverage > 0.20 | 0 | 0 |
+| V active > 0.10 | 0 | 0 |
+| W active > 0.10 | 0 | 0 |
+| Activity-weighted energy | 6.17181e-9 | 6.12323e-9 |
+
+The small domain's extinction-like transient and very small differences provide no evidence of beneficial transport or organism-like network formation. The full 24⁴ matched run and 96³ cinematic master remain unverified, and the prior verified G0028 featured video remains selected.
+
+[Native numerical metrics](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0029-pilot.json) · [Preview video](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-preview.mp4).
 
 ### Reproduction and provenance
 

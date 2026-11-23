@@ -4,7 +4,7 @@
 
 **Ontogenesis publishes numerical evidence and moving visual artwork separately.** The linked poster images below are actual retained outputs of their corresponding successful rendering workflows. Conceptual mechanism figures are explicitly labeled; they must never be confused with simulated field images.
 
-**In development:** [G0029 adaptive transport](generations/0029.md) has a matched numerical pilot and separate volumetric renderer. Its new movie is not yet promoted. The featured G0028 master remains unchanged.
+**In development:** [G0029 adaptive transport](generations/0029.md) has a matched numerical pilot and separate volumetric renderer. Its [verified reduced-domain preview](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-preview.mp4) is a technical pilot with effectively extinct endpoint chemistry, not a selected cinematic artwork. A full-scale G0029 film is requested but not yet verified. The featured G0028 master remains unchanged.
 
 ## Featured artwork — G0028 full-resolution cinematic
 
