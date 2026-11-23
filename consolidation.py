@@ -33,7 +33,7 @@ def measure(m):
     freq=[np.fft.fftfreq(n)[i] if j<3 else np.fft.rfftfreq(n)[i] for j,(n,i) in enumerate(zip(x.shape,peak))]
     radial=float(np.linalg.norm(freq))
     return dict(matrix_mean=mean,matrix_std=std,matrix_cv=std/max(mean,1e-12),gradient_energy=sum(float(np.mean((np.roll(x,1,axis=j)-x)**2)) for j in range(4)),histogram=hist.tolist(),histogram_edges=edges.tolist(),dominant_mode_wavelength_cells=1/radial if radial and std>0 else None,quantiles=np.quantile(x,[.05,.25,.5,.75,.95]).tolist(),coverage={str(t):float((x>t).mean()) for t in (.1,.15,.2,.25,.3)})
-def run(seed=42,n=24,steps=4800,stride=4,arm="baseline",observe=True,intervention=None,observer=None,cinematic_observer=None,cinematic_steps=None):
+def run(seed=42,n=24,steps=4800,stride=4,arm="baseline",observe=True,intervention=None,observer=None,cinematic_observer=None,cinematic_steps=None,velocity_feedback=None):
     N=n;STEPS=steps
     COST=float(arm in ("cost","combined")); MAINT=float(arm in ("maintenance","combined"))
     rng=np.random.default_rng(seed)
@@ -103,6 +103,16 @@ def run(seed=42,n=24,steps=4800,stride=4,arm="baseline",observe=True,interventio
                 potential=.35*q+.25*np.sin(coordinates[i]+step*.003)*np.cos(coordinates[j]-step*.002)
                 velocities[i]+=d(potential,j)
                 velocities[j]-=d(potential,i)
+        if velocity_feedback is not None:
+            state = {"energy": e.view(), "matrix": m.view(),
+                     "species_v": v.view(), "species_w": w.view()}
+            for field in state.values():
+                field.flags.writeable = False
+            correction = velocity_feedback(step, state)
+            if len(correction) != 4 or any(a.shape != q.shape for a in correction):
+                raise ValueError("Feedback requires four full-dimensional face fields")
+            for axis in range(4):
+                velocities[axis] += correction[axis]
         outgoing=sum(np.maximum(a,0)+np.maximum(-np.roll(a,1,axis=i),0) for i,a in enumerate(velocities))
         scale=min(1.,.8/max(float(outgoing.max()),1e-8))
         velocities=tuple(a*scale for a in velocities)

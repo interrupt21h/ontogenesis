@@ -1,0 +1,126 @@
+name: G0029 adaptive transport networks
+on:
+  push:
+    branches: [main]
+    paths:
+      - adaptive_transport.py
+      - adaptive_transport_render.py
+      - consolidation.py
+      - tests/test_adaptive_transport.py
+      - .github/workflows/adaptive-transport.yml
+  workflow_dispatch:
+    inputs:
+      full_resolution:
+        type: boolean
+        default: false
+        description: 'Opt in to paired 24^4 x 4800 steps and 96^3 ray-rendered film'
+permissions:
+  contents: read
+concurrency:
+  group: g0029-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  pilot:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 110
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install pinned runtime
+        run: |
+          python -m pip install numpy==2.2.6 scipy==1.15.3 pillow==11.2.1
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! test -f /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf; then
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg fonts-dejavu-core
+          fi
+      - name: Python compilation and numerical invariance
+        run: |
+          python -m compileall -q consolidation.py adaptive_transport.py adaptive_transport_render.py
+          python -m unittest discover -s tests -p test_adaptive_transport.py -v
+      - name: Matched 12^4 pilot and native observation archive
+        run: /usr/bin/time -v python -u adaptive_transport.py --n 12 --steps 180 --stride 6 --omega-planes 4 --out g0029-pilot.npz --metadata g0029-pilot.json
+      - name: Ray-render actual field recordings
+        run: /usr/bin/time -v python -u adaptive_transport_render.py --input g0029-pilot.npz --metadata g0029-pilot.json --movie ontogenesis-0029-preview.mp4 --poster ontogenesis-0029-preview.png --seconds 12 --fps 24 --width 960 --height 540 --rays 56
+      - name: Verify recorded numerical and video output
+        run: |
+          ffmpeg -v error -xerror -i ontogenesis-0029-preview.mp4 -f null -
+          ffprobe -v error -count_frames -select_streams v:0 -show_entries stream=nb_read_frames -of json ontogenesis-0029-preview.mp4 > probe.json
+          python - <<'PY'
+          import json
+          m=json.load(open('g0029-pilot.json'))
+          v=json.load(open('ontogenesis-0029-preview.render.json'))
+          p=json.load(open('probe.json'))
+          assert m['generation']=='0029' and m['sample_count']>=30
+          assert len(m['paired'])==m['sample_count']
+          assert m['recording']['dense_dtype']=='float32'
+          assert m['recording']['restart_checkpoint'] is False
+          assert v['unique_motion_hashes']>=6
+          assert int(p['streams'][0]['nb_read_frames'])==288
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0029-pilot-measurements-and-film
+          path: |
+            g0029-pilot.json
+            probe.json
+            ontogenesis-0029-preview.mp4
+            ontogenesis-0029-preview.png
+            ontogenesis-0029-preview.render.json
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0029-pilot-native-fields
+          path: g0029-pilot.npz
+          retention-days: 30
+          if-no-files-found: error
+      - name: Retain independent pilot assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view atlas-media >/dev/null 2>&1 || gh release create atlas-media --title 'Ontogenesis numerical archive' --notes 'Verified numerical and artistic records' --prerelease
+          gh release upload atlas-media g0029-pilot.npz g0029-pilot.json ontogenesis-0029-preview.mp4 ontogenesis-0029-preview.png ontogenesis-0029-preview.render.json --clobber
+  full:
+    if: github.event_name == 'workflow_dispatch' && inputs.full_resolution
+    needs: pilot
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with: {python-version: '3.12'}
+      - run: python -m pip install numpy==2.2.6 scipy==1.15.3 pillow==11.2.1
+      - run: |
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! test -f /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf; then
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg fonts-dejavu-core
+          fi
+      - name: Matched full 4D simulation
+        run: /usr/bin/time -v python -u adaptive_transport.py --n 24 --steps 4800 --stride 4 --omega-planes 4 --out g0029-full.npz --metadata g0029-full.json
+      - name: Full cinematic volumetric rendering
+        run: /usr/bin/time -v python -u adaptive_transport_render.py --input g0029-full.npz --metadata g0029-full.json --movie ontogenesis-0029-master.mp4 --poster ontogenesis-0029-master.png --seconds 60 --fps 24 --width 1280 --height 720 --rays 96
+      - run: ffmpeg -v error -xerror -i ontogenesis-0029-master.mp4 -f null -
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0029-full-cinematic-and-measurements
+          path: |
+            g0029-full.json
+            ontogenesis-0029-master.mp4
+            ontogenesis-0029-master.png
+            ontogenesis-0029-master.render.json
+          retention-days: 30
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0029-full-numerical-fields
+          path: g0029-full.npz
+          retention-days: 30
+      - name: Publish after technical verification; artistic selection stays manual
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload atlas-media g0029-full.npz g0029-full.json ontogenesis-0029-master.mp4 ontogenesis-0029-master.png ontogenesis-0029-master.render.json --clobber
