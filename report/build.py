@@ -173,6 +173,9 @@ for n,title,record in records:
         body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{phase"+roman+r"}\pagecolor{phaseblack}\color{white}\thispagestyle{empty}\refstepcounter{part}\addcontentsline{toc}{part}{\thepart\quad "+groups[int(n)]+r"}\PhaseBand{"+roman+"}{"+(n if phase_end==int(n) else n+"--"+f"{phase_end:04d}")+r"}{\sffamily\large "+subtitles[phase_index]+r"\par}\medskip{"+title_style+groups[int(n)]+r"\par}\bigskip{\raggedright\sffamily\large "+phase_text[int(n)]+r"\par}\bigskip\noindent\includegraphics[width=\linewidth]{phase_art/"+str(8 if phase_index==7 else 10 if phase_index==8 else phase_index+1)+r".png}\par\vfill{\color{phaseaccent}\hrule height 2pt}\medskip{\raggedright\sffamily\small "+r"\quad / \quad ".join(key+" "+name for key,name,_ in records[int(n)-1:phase_end])+r"\par}\clearpage\nopagecolor\color{black}"))
     # Print-ready experiment: remove draft history and technical run trails.
     record = prepare(n,record)
+    # Mechanism SVGs have a separate PDF rendering. Strip their Markdown
+    # image references from the print projection to avoid pdflatex \includesvg.
+    record = re.sub(r"(?m)^!\[[^\]\n]*\]\((?:\.\./)?figures/\d{4}\.svg\)[ \t]*$", "", record)
     # Preserve math and code while normalizing plain-text lattice powers.
     tick=chr(96)
     splitter="("+tick*3+r"[\s\S]*?"+tick*3+r"|\$\$[\s\S]*?\$\$|\$[^$\n]+\$|"+tick+r"[^"+tick+r"\n]+"+tick+")"
@@ -230,6 +233,19 @@ for n,title,record in records:
     if n=="0028":
         body.append(research_plate("0028-full-evidence","Full-resolution matched disturbance","Recorded numerical time series from the verified $24^{4}$, 4,800-step paired experiment, with a single intervention at step 2400 (artifact 14682932255). At the endpoint, the local matrix contrast crosses zero; attenuation of its magnitude is not restoration of the original structural distribution."))
         body.append(research_plate("0028-evidence","Localized disturbance: matched pilot measurements","Recorded numerical time series from the verified $12^{4}$, 240-step paired pilot (artifact 14670709650); the dashed line marks the external event at step 120. Differences are disturbed minus control; this is not full-resolution evidence."))
+    if n=="0030":
+        plate=out/"atlas/0030-pilot.png"
+        if not plate.is_file() or plate.stat().st_size<4096:
+            raise RuntimeError("Missing verified G0030 numerical plate")
+        body.append(raw_latex(
+            r"\clearpage\section{G0030: measured ecological trajectories}"
+            r"\begin{center}\includegraphics[width=\linewidth,height=.60\textheight,"
+            r"keepaspectratio]{atlas/0030-pilot.png}\end{center}"
+            r"\noindent The plotted curves are direct G0030 numerical observations"
+            r" for seed 42; the second seed is retained in the numerical JSON."
+            r" No simulated arm retained V activity above the endpoint threshold."
+            r" Neither coexistence nor succession was demonstrated."
+        ))
     body.append(frame_section(n))
 body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontogreen}"))
 body.append((ROOT/"report/final_renders.md").read_text())
