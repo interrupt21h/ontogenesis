@@ -1,0 +1,110 @@
+name: G0030 ecological succession controls
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'consolidation.py'
+      - 'ecological_succession.py'
+      - 'tests/test_ecological_succession.py'
+      - '.github/workflows/ecological-succession.yml'
+  workflow_dispatch:
+    inputs:
+      full_domain:
+        type: boolean
+        default: false
+        description: 'Opt in to costly 24^4 four-arm simulation, single seed'
+permissions:
+  contents: read
+concurrency:
+  group: g0030-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  pilot:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 85
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install pinned numerical and chart dependencies
+        run: python -m pip install numpy==2.2.6 scipy==1.15.3 matplotlib==3.10.3 pillow==11.2.1
+      - name: Validate source, compatibility and ecological controls
+        run: |
+          python -m compileall -q consolidation.py ecological_succession.py
+          python -m unittest discover -s tests -p test_ecological_succession.py -v
+          python -m unittest discover -s tests -p test_adaptive_transport.py -v
+      - name: Two-seed matched 16^4 factorial ecology simulation
+        run: |
+          /usr/bin/time -v python -u ecological_succession.py \
+            --n 16 --steps 1200 --stride 30 --seeds 42,73 \
+            --out g0030-pilot.json --plate g0030-pilot.png
+      - name: Verify measured data and plate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('g0030-pilot.json').read_text())
+          assert (d['generation'],d['n'],d['steps'],d['seeds'])==('0030',16,1200,[42,73])
+          assert d['times'][0]==0 and d['times'][-1]==1200
+          assert Path('g0030-pilot.png').stat().st_size>4096
+          for seed in ('42','73'):
+              assert len(d['observations'][seed])==4
+              assert len({v['0'] for v in d['state_hashes'][seed].values()})==1
+              assert len(d['within_seed_differences_vs_neither'][seed])==3
+              assert all([r['step'] for r in hist]==d['times'] for hist in d['observations'][seed].values())
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0030-two-seed-factorial-ecology
+          path: |
+            g0030-pilot.json
+            g0030-pilot.png
+          retention-days: 30
+          if-no-files-found: error
+      - name: Preserve verified pilot numerical results
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload atlas-media g0030-pilot.json g0030-pilot.png --clobber
+  full:
+    if: github.event_name == 'workflow_dispatch' && inputs.full_domain
+    needs: pilot
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy==2.2.6 scipy==1.15.3 matplotlib==3.10.3 pillow==11.2.1
+      - name: Manually authorized 24^4 four-arm, single-seed screen
+        run: |
+          /usr/bin/time -v python -u ecological_succession.py \
+            --n 24 --steps 4800 --stride 120 --seeds 42 \
+            --out g0030-full.json --plate g0030-full.png
+      - name: Verify full-domain observations
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('g0030-full.json').read_text())
+          assert (d['generation'],d['n'],d['steps'])==('0030',24,4800)
+          assert len(d['observations']['42'])==4
+          assert Path('g0030-full.png').stat().st_size>4096
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0030-full-four-arm-ecology
+          path: |
+            g0030-full.json
+            g0030-full.png
+          retention-days: 30
+          if-no-files-found: error
+      - name: Preserve verified full-domain numerical results
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload atlas-media g0030-full.json g0030-full.png --clobber

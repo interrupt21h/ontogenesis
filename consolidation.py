@@ -33,7 +33,11 @@ def measure(m):
     freq=[np.fft.fftfreq(n)[i] if j<3 else np.fft.rfftfreq(n)[i] for j,(n,i) in enumerate(zip(x.shape,peak))]
     radial=float(np.linalg.norm(freq))
     return dict(matrix_mean=mean,matrix_std=std,matrix_cv=std/max(mean,1e-12),gradient_energy=sum(float(np.mean((np.roll(x,1,axis=j)-x)**2)) for j in range(4)),histogram=hist.tolist(),histogram_edges=edges.tolist(),dominant_mode_wavelength_cells=1/radial if radial and std>0 else None,quantiles=np.quantile(x,[.05,.25,.5,.75,.95]).tolist(),coverage={str(t):float((x>t).mean()) for t in (.1,.15,.2,.25,.3)})
-def run(seed=42,n=24,steps=4800,stride=4,arm="baseline",observe=True,intervention=None,observer=None,cinematic_observer=None,cinematic_steps=None,velocity_feedback=None):
+def run(seed=42,n=24,steps=4800,stride=4,arm="baseline",observe=True,intervention=None,observer=None,cinematic_observer=None,cinematic_steps=None,velocity_feedback=None,crossfeed=(True,True),season_switch=None,ecology_observer=None,ecology_steps=None):
+    if len(crossfeed)!=2 or any(type(flag) is not bool for flag in crossfeed):
+        raise ValueError("crossfeed must be (W-to-V, V-to-W) booleans")
+    if season_switch is not None and not 1<=season_switch<steps:
+        raise ValueError("season_switch must be strictly within simulation")
     N=n;STEPS=steps
     COST=float(arm in ("cost","combined")); MAINT=float(arm in ("maintenance","combined"))
     rng=np.random.default_rng(seed)
@@ -53,6 +57,8 @@ def run(seed=42,n=24,steps=4800,stride=4,arm="baseline",observe=True,interventio
     xw=np.zeros_like(u)
 
     supply=.012+.008*(h+1)/2
+    # Matched environmental inversion with unchanged domain-mean replenishment.
+    winter_supply=(2*float(supply.mean())-supply).astype(np.float32)
     for i in range(20):
         d,a,b,c=rng.integers(3,N-3,4)
         sl=np.s_[d-2:d+2,a-2:a+2,b-2:b+2,c-2:c+2]
@@ -83,6 +89,14 @@ def run(seed=42,n=24,steps=4800,stride=4,arm="baseline",observe=True,interventio
             for field in fields.values():
                 field.flags.writeable = False
             cinematic_observer(step, fields)
+        if ecology_observer is not None and (ecology_steps is None or step in ecology_steps):
+            ecological_fields={"energy":e.view(),"matrix":m.view(),
+                               "species_v":v.view(),"species_w":w.view(),
+                               "metabolite_v":xv.view(),"metabolite_w":xw.view(),
+                               "genotypes_v":gv.view(),"genotypes_w":gw.view()}
+            for field in ecological_fields.values():
+                field.flags.writeable=False
+            ecology_observer(step,ecological_fields)
         if step%120==0 or step==STEPS:
             hashes[str(step)]=hashlib.sha256(b"".join(np.ascontiguousarray(a).tobytes() for a in (u,v,w,q,e,m,pulse,recovery,trait,xv,xw,gv,gw))).hexdigest()
         if observe and (step%stride==0 or step==STEPS):
@@ -145,7 +159,7 @@ def run(seed=42,n=24,steps=4800,stride=4,arm="baseline",observe=True,interventio
             for g,(c,k,s) in enumerate(bits):
                 fitness=(1+.16*(2*c-1))*(1+.18*(2*k-1)*(1-e))*(1+.20*(2*s-1)*(2*pulse-1))
                 cost=(.085+.035*c-.025*k)
-                bonus=.45*donor/(.12+donor)*(.35+.65*k)
+                bonus=(.45*donor/(.12+donor)*(.35+.65*k) if donor is not None else 0.)
                 rate=base*pop[g]/np.maximum(total,1e-30)*fitness*(1+bonus)*(1-.08*s*COST)
                 uptake.append(rate*bonus/(1+bonus))
                 births.append(rate)
@@ -157,13 +171,15 @@ def run(seed=42,n=24,steps=4800,stride=4,arm="baseline",observe=True,interventio
             consumption=sum(raw[g]*(.085+.035*c-.025*k+.02*s*COST) for g,(c,k,s) in enumerate(bits))
             matrix=sum(raw[g]*(.045+.065*s) for g,(c,k,s) in enumerate(bits))
             return mutated,raw.sum(axis=0),consumption,matrix,sum(uptake)
-        bv,a,cv,mv,uv=reproduce(gv,v,u*v*v*e*(1+.12*pulse+advantage),xw)
-        bw,b,cw,mw,uw=reproduce(gw,w,u*w*w*e*(1-.12*pulse-advantage),xv)
+        bv,a,cv,mv,uv=reproduce(gv,v,u*v*v*e*(1+.12*pulse+advantage),
+                                 xw if crossfeed[0] else None)
+        bw,b,cw,mw,uw=reproduce(gw,w,u*w*w*e*(1-.12*pulse-advantage),
+                                 xv if crossfeed[1] else None)
         # Secreted metabolites diffuse, decay and are consumed by the other species.
         xv=xv+.06*lap(xv)+.18*a-.025*xv-np.minimum(.12*uw,.25*xv)
         xw=xw+.06*lap(xw)+.18*b-.025*xw-np.minimum(.12*uv,.25*xw)
         assert all(np.isfinite(z).all() and z.min()>=-1e-6 for z in (xv,xw))
-        e=e+.075*lap(e)+supply*(1-e)-cv-cw
+        e=e+.075*lap(e)+(winter_supply if season_switch is not None and step>=season_switch else supply)*(1-e)-cv-cw
         assert np.isfinite(e).all() and e.min()>=-1e-6 and e.max()<=1.00001
         # Activity deposits a slowly relaxing structural field; structure impedes diffusion.
         deposit=mv+mw
