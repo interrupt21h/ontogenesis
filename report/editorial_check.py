@@ -8,7 +8,7 @@ text=(root/"docs/HISTORY.md").read_text()
 records=re.findall(
     r"^## Generation (\d{4}) — (.+?)\n(.*?)(?=^## Generation |^## Research priorities|\Z)",
     text,re.M|re.S)
-assert [int(n) for n,_,_ in records]==list(range(1,30)), "29 records required"
+assert [int(n) for n,_,_ in records]==list(range(1,31)), "30 records required"
 for n,title,original in records:
     finished=prepare(n,original)
     assert len(finished)>150,(n,"empty print narrative")
@@ -24,4 +24,4 @@ for n,title,original in records[-3:]:
     for bad in ("verification update","preview run","rerender","now retains",
                 "we updated","I changed","was fixed"):
         assert bad not in clean.lower(),(n,bad)
-print("PASS: 29 experimental narratives, metadata panels, appendix provenance")
+print("PASS: 30 experimental narratives, metadata panels, appendix provenance")
