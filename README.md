@@ -44,7 +44,7 @@ The same **24⁴, 4,800-step G0029 simulation** now has a second cinematic inter
 
 | Part | What it does |
 |:--|:--|
-| **30 experiment designs** | G0001–G0029 have CI-verified results; G0030 is a controlled ecological screen with outcomes pending |
+| **30 experiment designs** | G0001–G0030 have CI-verified results at their tested scope; G0030 has no endpoint co-occupancy |
 | **Numerical worlds** | Local rules update dimensionless fields on periodic grids; some recent experiments use a 24⁴ domain |
 | **Generative visuals** | Field data becomes images, sections, projections, and films |
 | **GitHub Actions** | Runs experiments, builds artifacts, and helps turn the repository into a tiny computational production studio |
@@ -69,7 +69,7 @@ The same **24⁴, 4,800-step G0029 simulation** now has a second cinematic inter
 | [G0029](docs/EXPERIMENTS.md#viii--transport-with-memory) | Persistent circulation memory, with a same-seed matched control |
 | [G0030](docs/EXPERIMENTS.md#ix--ecological-controls) | Which direction of metabolite exchange matters after an environmental change? |
 
-G0029's full-domain experiment and alternative cinematic editions passed CI. G0030 now tests existing ecological exchange with four controlled arms; its numerical results are pending. G0028 remains the featured film; G0031–G0032 remain proposals.
+G0029's full-domain experiment and alternative cinematic editions passed CI. G0030's two-seed factorial pilot passed CI, but V remained below the active threshold in all eight endpoints and no active co-occupancy was measured. G0028 remains the featured film; G0031–G0032 remain proposals.
 
 ## G0029 · Giving circulation a memory
 
@@ -81,7 +81,9 @@ Instead of introducing another speculative mechanism, the new experiment disable
 
 [**G0030 experiment design**](docs/generations/0030.md) · [Factorial simulation](ecological_succession.py) · [Automated pilot](.github/workflows/ecological-succession.yml)
 
-*Implementation exists, but numerical results are not yet verified. No cinematic feature has been replaced.*
+[**Measured G0030 time series**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-pilot.png) · [Numerical archive](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-pilot.json)
+
+*The pilot is verified; stable succession and coexistence were not demonstrated. No cinematic feature has been replaced.*
 
 ## Try it yourself
 

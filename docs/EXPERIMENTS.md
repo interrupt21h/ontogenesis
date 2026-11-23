@@ -2,7 +2,7 @@
 
 [← Project overview](../README.md) · [Docs](README.md) · [Visual gallery](VISUAL_GALLERY.md) · [Measured history](HISTORY.md)
 
-**Thirty separately initialized experiment designs** (G0001–G0029 verified to their documented scope; G0030 outcomes pending) form an investigative chronology—not a continuous simulated organism. Each detailed record explains what was changed, what was measured, and what remains unverified. **CI verified** means the relevant workflow and checks completed; it does not by itself establish scientific validity.
+**Thirty separately initialized experiment designs** (G0001–G0030 have CI-verified results at their documented scopes) form an investigative chronology—not a continuous simulated organism. Each detailed record explains what was changed, what was measured, and what remains unverified. **CI verified** means the relevant workflow and checks completed; it does not by itself establish scientific validity.
 
 ## I — Chemical differentiation
 
@@ -38,7 +38,7 @@ G0029 adds a memory-driven curl correction to the four-dimensional G0026 circula
 
 ## IX — Ecological controls
 
-G0030 introduces a directional cross-feeding factorial screen with two seeds, a shared spatial energy-supply inversion and explicit measured time-series comparison. It tests for a succession-like response; outcomes remain pending until CI succeeds.
+G0030's [two-seed 16⁴ factorial pilot](https://github.com/interrupt21h/ontogenesis/actions/runs/45266523722) passed CI. In all eight endpoints V coverage above the activity threshold was 0%; W remained active with 68.55–87.17% coverage. The four cross-feeding treatments produced measurable differences but no thresholded co-occupancy or demonstrated ecological succession. Larger runs remain gated.
 
 ## Complete experiment index
 
@@ -74,10 +74,10 @@ G0030 introduces a directional cross-feeding factorial screen with two seeds, a 
 | **0028** | [Localized disturbance and recovery](generations/0028.md) | [Matched science](../disturbance.py) · [Fidelity source](../disturbance_cinematic_fidelity.py) · [Renderer](../disturbance_fidelity_render.py) | [Full paired run](https://github.com/interrupt21h/ontogenesis/actions/runs/44840239338) · [Fidelity film](https://github.com/interrupt21h/ontogenesis/actions/runs/44833423671) |
 
 | **0029** | [Adaptive transport networks](generations/0029.md) | [Source](../adaptive_transport.py) · [Renderer](../adaptive_transport_render.py) | [Full paired run + master verified](https://github.com/interrupt21h/ontogenesis/actions/runs/45232504379) · [Workflow](../.github/workflows/adaptive-transport.yml) |
-| **0030** | [Ecological succession controls](generations/0030.md) | [Driver](../ecological_succession.py) | [Factorial pilot workflow](../.github/workflows/ecological-succession.yml) · Results pending |
+| **0030** | [Ecological succession controls](generations/0030.md) | [Driver](../ecological_succession.py) | [Verified factorial pilot](https://github.com/interrupt21h/ontogenesis/actions/runs/45266523722) · [Measured JSON](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-pilot.json) |
 
 ## Planned, not completed
 
-G0030 is implemented but numerical outcomes remain pending. G0031 functional compartmentalization and G0032 extended-universe dynamics remain **artistic research proposals**. The verified G0029 cinematic editions remain distinct from measured numerical evidence.
+G0030 has a verified pilot but did not demonstrate succession. G0031 functional compartmentalization and G0032 extended-universe dynamics remain **artistic research proposals**. The verified G0029 cinematic editions remain distinct from measured numerical evidence.
 
 [Visual editions](VISUAL_GALLERY.md) · [Methodology](METHODOLOGY.md) · [Safe execution guide](PIPELINE.md)

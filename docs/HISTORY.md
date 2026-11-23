@@ -1486,7 +1486,7 @@ G0030 is implemented as a controlled directional metabolite study; its outcomes 
 
 ## Generation 0030 — Ecological succession with directional controls
 
-Status: Four factorial arms implemented and pilot running or queued; **no numerical outcomes verified yet**.
+Status: Verified 16⁴ two-seed [G0030 factorial pilot](https://github.com/interrupt21h/ontogenesis/actions/runs/45266523722). No thresholded active coexistence at endpoints.
 
 Parent: G0026 default integrator, not G0029's circulation feedback. All pre-existing dynamical rules are retained except for the specified directional-benefit switches and an externally imposed environmental challenge shared across arms.
 
@@ -1506,7 +1506,26 @@ Record direct V/W coverage, population co-occupancy, both metabolite means and m
 
 ### Results and interpretation
 
-Pending successful pilot CI. Changes in measured field activity may reflect competition or environmental forcing without constituting succession, self-maintaining individual organisms, or mutualism. Two seeds do not establish general statistical reliability.
+### Verified two-seed factorial pilot — November 23, 2026
+
+The [full G0030 pilot job](https://github.com/interrupt21h/ontogenesis/actions/runs/45266523722) completed successfully at source revision 04f1c6e90a674ed1174877fd27f6b4eaf23c7f34. Eight matched 16⁴ simulations were run for 1,200 steps each, with two seeds (42 and 73) and a common forced supply inversion at step 600. Tests checked finite numerical values, observation times, identical same-seed initial hashes, and both archived outputs.
+
+**Endpoint active coverage**, defined as percentage of lattice cells with concentration above 0.1:
+
+| Cross-feeding treatment | Seed 42: V | Seed 42: W | Seed 73: V | Seed 73: W |
+|:--|--:|--:|--:|--:|
+| Neither enabled | 0.00% | 70.86% | 0.00% | 82.68% |
+| W → V only | 0.00% | 71.07% | 0.00% | 87.17% |
+| V → W only | 0.00% | 69.62% | 0.00% | 68.55% |
+| Both enabled | 0.00% | 69.73% | 0.00% | 69.67% |
+
+**Active co-occupancy was 0% in every arm at the endpoint.** A zero thresholded V fraction does not mean that the V concentration is numerically zero everywhere. W activity varied by seed and treatment, but the pilot did not demonstrate population coexistence, mutualism, or ecological succession. The two-seed sample is too small for a robustness claim, and all four arms experienced the same environmental change, so this design cannot isolate the effect of the seasonal change itself.
+
+The W → V treatment changes the recipient's benefit *and* its metabolite uptake; this can indirectly alter the donor environment. The varied W coverage therefore does not measure a pure genetic or fitness advantage from a fixed metabolite concentration. Larger domains, environmental no-switch controls and stronger survival of both species would be necessary before treating succession as an established phenomenon.
+
+[Recorded numerical JSON](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-pilot.json) · [Measured pilot curves (seed 42)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-pilot.png) · [CI run and artifact](https://github.com/interrupt21h/ontogenesis/actions/runs/45266523722)
+
+The recorded full eight-run pilot required approximately 15 minutes 42 seconds on a GitHub-hosted CPU runner. The larger 24⁴ study remains manually gated and has not been run. These observations are exploratory and do not establish functional self-maintaining individuals or autonomous ecological succession.
 
 ### Reproduction and provenance
 
