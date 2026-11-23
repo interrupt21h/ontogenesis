@@ -31,7 +31,7 @@ jobs:
             -o Acquire::Retries=4 -o Acquire::http::Timeout=60 \
             install -y --no-install-recommends \
             pandoc latexmk texlive-latex-extra texlive-pictures \
-            texlive-fonts-recommended poppler-utils ffmpeg librsvg2-bin
+            texlive-fonts-recommended lmodern poppler-utils ffmpeg librsvg2-bin
           for program in pandoc latexmk pdflatex pdfinfo pdftotext ffmpeg rsvg-convert; do
             command -v "$program"
           done
