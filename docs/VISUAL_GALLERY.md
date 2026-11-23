@@ -4,7 +4,15 @@
 
 **Ontogenesis publishes numerical evidence and moving visual artwork separately.** The linked poster images below are actual retained outputs of their corresponding successful rendering workflows. Conceptual mechanism figures are explicitly labeled; they must never be confused with simulated field images.
 
-**In development:** [G0029 adaptive transport](generations/0029.md) has a matched numerical pilot and separate volumetric renderer. Its [verified reduced-domain preview](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-preview.mp4) is a technical pilot with effectively extinct endpoint chemistry, not a selected cinematic artwork. A full-scale G0029 film is requested but not yet verified. The featured G0028 master remains unchanged.
+**New verified alternative:** [G0029 adaptive transport](generations/0029.md) completed a matched full-domain study and 60-second high-resolution cinematic. Its reduced-domain pilot was near-inactive, while the full run retained activity but shifted coverage between species. G0029 is separately accessible, **not automatically selected** for the cumulative film. The featured G0028 master remains unchanged.
+
+## Additional full-domain G0029 study — not featured
+
+[![G0029 memory-driven adaptive transport, frame from verified full-domain recording](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-master.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-master.mp4)
+
+**[Watch the 60-second G0029 master](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-master.mp4)** · [24⁴ paired numerical comparison](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0029-full.json) · [Source fields](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0029-full.npz)
+
+This full run records 1,201 measured fourth-axis samples and ray-integrates five native fields with a 96³ presentation grid. Its 24⁴ control and feedback arms diverge in species coverage, not in a proven improvement to survival or life-like behavior. The rendered still is an actual archived frame, not a schematic.
 
 ## Featured artwork — G0028 full-resolution cinematic
 

@@ -2,7 +2,7 @@
 
 [← Project overview](../README.md) · [Docs](README.md) · [Visual gallery](VISUAL_GALLERY.md) · [Measured history](HISTORY.md)
 
-**Twenty-nine separately initialized experiments** (G0029's pilot verified; its full-domain master not yet verified) form an investigative chronology—not a continuous simulated organism. Each detailed record explains what was changed, what was measured, and what remains unverified. **CI verified** means the relevant workflow and checks completed; it does not by itself establish scientific validity.
+**Twenty-nine separately initialized experiments** (including G0029's verified full-domain paired study) form an investigative chronology—not a continuous simulated organism. Each detailed record explains what was changed, what was measured, and what remains unverified. **CI verified** means the relevant workflow and checks completed; it does not by itself establish scientific validity.
 
 ## I — Chemical differentiation
 
@@ -34,7 +34,7 @@ G0028's **12⁴ pilot** and [full 24⁴, 4,800-step matched-control experiment](
 
 ## VIII — Transport with memory
 
-G0029 adds a memory-driven curl correction to the four-dimensional G0026 circulation. Its 12⁴ paired pilot, numerical archive, and 288-frame preview have passed CI. At step 180 both thresholded populations and matrix coverage are zero; the pilot does not demonstrate a beneficial transport effect. Its 24⁴ study remains unverified.
+G0029 adds a memory-driven curl correction to the four-dimensional G0026 circulation. Its 12⁴ pilot and [24⁴, 4,800-step matched full run](https://github.com/interrupt21h/ontogenesis/actions/runs/45232504379) both passed CI. Unlike the near-inactive small pilot, the full adaptive arm ends with **89.01% active W versus 68.28% control**, but only **0.21% active V versus 3.61% control**, and lower matrix coverage (4.73% versus 10.50%). These measured redistributions do not imply an ecological improvement.
 
 ## Complete experiment index
 
@@ -69,10 +69,10 @@ G0029 adds a memory-driven curl correction to the four-dimensional G0026 circula
 | 0027 | [Structural statistics](generations/0027.md) | [Python](../structural_statistics.py) | [Runs](../.github/workflows/structural-statistics.yml) · Verified execution; cross-run hashes differ |
 | **0028** | [Localized disturbance and recovery](generations/0028.md) | [Matched science](../disturbance.py) · [Fidelity source](../disturbance_cinematic_fidelity.py) · [Renderer](../disturbance_fidelity_render.py) | [Full paired run](https://github.com/interrupt21h/ontogenesis/actions/runs/44840239338) · [Fidelity film](https://github.com/interrupt21h/ontogenesis/actions/runs/44833423671) |
 
-| **0029** | [Adaptive transport networks](generations/0029.md) | [Source](../adaptive_transport.py) · [Renderer](../adaptive_transport_render.py) | [Pilot verified](https://github.com/interrupt21h/ontogenesis/actions/runs/45228921856) · [Full workflow](../.github/workflows/adaptive-transport.yml) pending |
+| **0029** | [Adaptive transport networks](generations/0029.md) | [Source](../adaptive_transport.py) · [Renderer](../adaptive_transport_render.py) | [Full paired run + master verified](https://github.com/interrupt21h/ontogenesis/actions/runs/45232504379) · [Workflow](../.github/workflows/adaptive-transport.yml) |
 
 ## Planned, not completed
 
-G0030 ecological succession, G0031 functional compartmentalization and G0032 extended-universe dynamics remain **artistic research proposals**. G0029's reduced-domain pilot is verified. The G0029 full-domain master and future G0030–G0032 are not verified and must not enter selected full-resolution film galleries without evidence.
+G0030 ecological succession, G0031 functional compartmentalization and G0032 extended-universe dynamics remain **artistic research proposals**. G0029's pilot and full-domain master are verified technically, but its movie is an unselected alternative. G0030–G0032 have no implemented, verified outcomes and do not belong in the results count.
 
 [Visual editions](VISUAL_GALLERY.md) · [Methodology](METHODOLOGY.md) · [Safe execution guide](PIPELINE.md)

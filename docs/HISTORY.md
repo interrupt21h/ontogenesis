@@ -58,6 +58,23 @@ Five magma-colored snapshots at 100, 500, 1000, 2000 and 4000; final mean 0.0213
 
 A single seed and parameter set do not establish robustness. No video in original generation.
 
+### Verified full-domain study — November 23, 2026
+
+[Successful run 45232504379](https://github.com/interrupt21h/ontogenesis/actions/runs/45232504379), seed 42, 24⁴ lattice, two arms and 4,800 steps, 1,201 matched samples. The first arm uses unchanged G0026 circulation; the second includes the memory-induced curl. Numerical measurements and 1,440-frame 1280×720 MP4 passed their verification steps and were retained under source revision `6c0022c6d37a1b726be79c33dd64f71b6c554d5d`.
+
+| End state (step 4,800) | Unchanged control | Adaptive curl |
+|:--|--:|--:|
+| Mean energy | 0.89372737 | 0.88456454 |
+| Mean matrix | 0.14708946 | 0.14578964 |
+| Matrix coverage > 0.20 | 10.5038% | 4.7303% |
+| Active species V > 0.10 | 3.6121% | 0.2125% |
+| Active species W > 0.10 | 68.2795% | 89.0137% |
+| Activity-weighted energy | 0.17204118 | 0.18505917 |
+
+The adaptive arm has 20.73 more percentage points of active W coverage, 3.40 fewer points of active V coverage and 5.77 fewer points of matrix coverage. This is a measured one-seed shift in field composition, not evidence of net benefit or biological life. The full simulated fields remain archived in the ~506 MB NPZ, and a 4:02 ray-integrated cinematic observes them through a 96³ presentation grid. The simulation took 1:52:18; no second-seed robustness checks were performed. Original G0028 film selection remains intact.
+
+[Full numerical JSON](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0029-full.json) · [Native fields](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0029-full.npz) · [Verified master](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-master.mp4) · [Poster](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-master.png). Artifacts: 14857615863 (movie/metrics) and 14857079202 (native fields).
+
 ### Reproduction and provenance
 
 - [Source](../render.py) · [Workflow](../.github/workflows/render.yml)
@@ -1420,7 +1437,7 @@ matched-control evidence remain accessible.
 
 ## Generation 0029 — Adaptive transport networks
 
-Status: 12⁴ matched pilot CI verified at [run 45228921856](https://github.com/interrupt21h/ontogenesis/actions/runs/45228921856), source revision `635c2dbcd55b3cbe78615bea91146ea2251d4d80`. Full-domain run not yet verified; G0028 remains the featured film.
+Status: 12⁴ paired pilot and [full 24⁴ paired study with verified 60-second render](https://github.com/interrupt21h/ontogenesis/actions/runs/45232504379) both passed CI. G0028 remains the curated featured artwork.
 
 Parent: G0026 numerical integration, with a new optional divergence-free transport callback. This run is separately seeded rather than continuing G0028's shocked four-dimensional state.
 
@@ -1442,7 +1459,7 @@ Matched arms use identical initial seed 42: one unchanged G0026, one with feedba
 
 ### Artistic observation and limitations
 
-Measured memory, matrix, competing populations and energy are separately ray-integrated into a rotating cinematic visualization. Camera movement, exposure and interpolation are display processing. The verified 12⁴/180-step pilot recorded effectively inactive species and no matrix occupancy above threshold 0.20 at its endpoint, so neither the preview nor the small numerical differences establish improved persistence. G0028's selected high-resolution film remains in place until a completed G0029 film is actually inspected.
+Measured memory, matrix, competing populations and energy are separately ray-integrated into a rotating cinematic visualization. Camera movement, exposure and interpolation are display processing. The verified 12⁴/180-step pilot recorded effectively inactive species and no matrix occupancy above threshold 0.20 at its endpoint, so neither the preview nor the small numerical differences establish improved persistence. G0028's selected high-resolution film remains featured; G0029 now has its own CI-verified full master, but no artistic promotion has been made.
 
 ### Verified reduced-domain pilot
 
@@ -1457,7 +1474,7 @@ Measured memory, matrix, competing populations and energy are separately ray-int
 | W active > 0.10 | 0 | 0 |
 | Activity-weighted energy | 6.17181e-9 | 6.12323e-9 |
 
-The small domain's extinction-like transient and very small differences provide no evidence of beneficial transport or organism-like network formation. The full 24⁴ matched run and 96³ cinematic master remain unverified, and the prior verified G0028 featured video remains selected.
+The small domain's extinction-like transient and very small differences provide no evidence of beneficial transport or organism-like network formation. The separately requested 24⁴ matched run and 96³ cinematic master later passed, with different endpoint behavior than the near-inactive 12⁴ pilot. The prior G0028 featured video remains selected.
 
 [Native numerical metrics](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0029-pilot.json) · [Preview video](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-preview.mp4).
 

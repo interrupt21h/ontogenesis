@@ -33,7 +33,7 @@ Historical GitHub Actions artifacts normally have **30-day retention**; cited lo
 | G0028 full cinematic | [`disturbance-cinematic.yml`](../.github/workflows/disturbance-cinematic.yml) | 24⁴, 60-second moving-field master; selected for cumulative film and report gallery (artifact `14679397104`) |
 | G0028 alternate volumetric film | [`disturbance-fidelity.yml`](../.github/workflows/disturbance-fidelity.yml) | 24⁴ multi-plane ray-integrated edition, archived separately (artifact `14680891214`) |
 | G0028 render-only updates | [`disturbance-fidelity-rerender.yml`](../.github/workflows/disturbance-fidelity-rerender.yml) | Uses existing NPZ source instead of recomputing a universe |
-| G0029 adaptive transport | [Workflow](../.github/workflows/adaptive-transport.yml) | [12⁴ pilot verified](https://github.com/interrupt21h/ontogenesis/actions/runs/45228921856); full 24⁴ master not yet verified |
+| G0029 adaptive transport | [Workflow](../.github/workflows/adaptive-transport.yml) | [24⁴ paired run and 60-second master verified](https://github.com/interrupt21h/ontogenesis/actions/runs/45232504379); future full reruns manual only |
 | PDF / cumulative movie | [`report.yml`](../.github/workflows/report.yml) / [`film.yml`](../.github/workflows/film.yml) | Both have verified publication runs; media selection and evidence inputs must be updated deliberately |
 
 **The full 24⁴ paired experiment has already passed. Do not rerun it simply to refresh a PDF.** The two-arm study is considerably more expensive than a single cinematic universe; archived numerical JSON can be reused when changing the report.
@@ -95,12 +95,12 @@ The art project is isolated from employer hardware: the recorded production proc
 
 ## G0029: guarded paired experiment
 
-The G0029 code-path change launches a matched 12⁴ pilot on GitHub-hosted CPU runners. Its first pilot completed successfully ([run 45228921856](https://github.com/interrupt21h/ontogenesis/actions/runs/45228921856)) with paired native field data and a 288-frame MP4; the endpoint populations have zero thresholded activity. The high-resolution, two-arm 24⁴ experiment and 96³ ray-integrated movie are expensive and must be deliberately dispatched:
+The G0029 code-path change launches a matched 12⁴ pilot on GitHub-hosted CPU runners. Its first pilot completed successfully ([run 45228921856](https://github.com/interrupt21h/ontogenesis/actions/runs/45228921856)) with paired native field data and a 288-frame MP4; the endpoint populations have zero thresholded activity. The [high-resolution, two-arm 24⁴ experiment](https://github.com/interrupt21h/ontogenesis/actions/runs/45232504379) and its 96³ ray-integrated movie completed successfully on November 23, 2026: 4,800 simulated steps per arm, 1,201 paired samples, ~1 h 52 min simulation, and a 4 min rendering stage. The endpoint shifts active W coverage upward and V and matrix coverage downward. The ~506 MB native field archive and 1,440-frame master are independently retained. Future expensive reruns remain deliberately gated:
 
 ~~~bash
 gh workflow run adaptive-transport.yml --repo interrupt21h/ontogenesis --ref main -f full_resolution=true
 ~~~
 
-Examine the pilot's real numerical contrasts, execution cost, film and native archives first. A successful small-scale test does not authorize replacing the verified G0028 feature film or changing the cumulative media manifest.
+Examine the [full numerical contrasts](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0029-full.json), execution cost, [film](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-master.mp4), and native archives before considering further variations. Passing numerical and video CI still does not authorize automatically replacing the verified G0028 feature film or changing the cumulative media manifest.
 
-An explicitly requested one-time 24⁴ master may also be run using a reviewed push commit containing `[G0029-MASTER]`, with the same `full` job gated behind successful pilot checks. Ordinary commits never trigger expensive master work.
+The user-requested one-time 24⁴ master was run on commit `6c0022c6` and is now archived. Its temporary commit-message trigger was removed afterward. Ordinary push commits cannot start expensive master jobs; rerunning requires explicit GitHub Actions manual dispatch.
