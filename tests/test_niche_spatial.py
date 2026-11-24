@@ -29,6 +29,24 @@ class G0032NativeFieldTests(unittest.TestCase):
             self.assertTrue(result["featured_G0028_preserved"])
             self.assertGreater((root/"poster.png").stat().st_size,4096)
 
+    def test_discrete_hyperplane_journey(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            p=root/"fields.npz";meta=root/"fields.json"
+            capture(p,meta,n=8,steps=48,stride=12,seed=73)
+            arrays,source,_=load_fields(p,meta)
+            # The new edition travels between native stored omega planes.
+            a=image_at(arrays,source,.1,2,omega_sweep=True)
+            b=image_at(arrays,source,1.8,2,omega_sweep=True)
+            self.assertIsNotNone(ImageChops.difference(a,b).getbbox())
+            result=render(p,meta,root/"journey.mp4",root/"journey.png",
+                          seconds=2,fps=8,omega_sweep=True)
+            self.assertEqual(result["omega_sampling"],"discrete-recorded-hyperplanes")
+            self.assertEqual(result["omega_indices"],list(range(8)))
+            self.assertIsNone(result["fixed_omega_slice"])
+            self.assertFalse(result["interpolated_numerical_states"])
+            self.assertEqual(result["frames"],16)
+
     def test_corrupt_archive_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory)
