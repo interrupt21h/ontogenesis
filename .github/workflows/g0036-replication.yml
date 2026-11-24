@@ -1,0 +1,105 @@
+name: G0036 eight-seed matched structural-feedback replication
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'g0036_replication.py'
+      - 'g0036_replication_aggregate.py'
+      - 'tests/test_g0036_replication.py'
+      - '.github/workflows/g0036-replication.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: g0036-eight-seed-replication-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  repeat:
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        seed: [42,73,101,137,211,307,401,509]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy==2.2.6 matplotlib==3.10.3
+      - name: Test conservative four-dimensional feedback formula
+        run: python -m unittest discover -s tests -p test_g0036_structural_feedback.py -v
+      - name: Independently replicate matched feedback and unchanged control
+        run: |
+          /usr/bin/time -v python -u g0036_replication.py \
+            --seed ${{ matrix.seed }} --out g0036-replicate-${{ matrix.seed }}.json
+      - name: Verify initial state, field completeness and endpoint divergence
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          seed=int('${{ matrix.seed }}')
+          d=json.loads(Path(f'g0036-replicate-{seed}.json').read_text())
+          assert d['seed']==seed and d['generation']=='0036' and d['steps']==120
+          assert d['initial_hash_matches'] and d['endpoint_hashes_differ']
+          assert [r['step'] for r in d['observations']]==[0,60,120]
+          assert all(x==0 for x in d['observations'][0]['mean_absolute_differences'].values())
+          assert any(x>0 for x in d['observations'][-1]['mean_absolute_differences'].values())
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0036-independent-replicate-${{ matrix.seed }}
+          path: g0036-replicate-${{ matrix.seed }}.json
+          retention-days: 30
+          if-no-files-found: error
+  aggregate:
+    needs: repeat
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy==2.2.6 matplotlib==3.10.3
+      - name: Test eight-seed aggregation with synthetic controls
+        run: python -m unittest discover -s tests -p test_g0036_replication.py -v
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: g0036-independent-replicate-*
+          path: evidence
+          merge-multiple: true
+      - name: Require all eight independent finite G0036 results
+        run: |
+          python -u g0036_replication_aggregate.py \
+            --inputs evidence/g0036-replicate-*.json \
+            --out g0036-replication.json --plot g0036-replication.png
+      - name: Validate released numerical scope and original data diagram
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('g0036-replication.json').read_text())
+          assert r['generation']=='0036' and r['seeds']==[42,73,101,137,211,307,401,509]
+          assert r['sample_steps']==[0,60,120] and r['steps']==120 and r['n']==12
+          assert all(r['results'][k]['endpoint_nonzero_seeds']>=1
+                     for k in ('v','w','m','e'))
+          assert Path('g0036-replication.png').stat().st_size>4096
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0036-eight-seed-matched-feedback-replication
+          path: |
+            g0036-replication.json
+            g0036-replication.png
+          retention-days: 30
+          if-no-files-found: error
+      - name: Publish independently replicated numerical effect distribution
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload atlas-media g0036-replication.json g0036-replication.png --clobber
+          echo 'Eight genuine matched native 4D feedback/control trials replicated and published.' >> "$GITHUB_STEP_SUMMARY"
