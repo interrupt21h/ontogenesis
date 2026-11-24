@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#08131e">
+<meta name="description" content="Ontogenesis, an evolving work of computational art: explore 4D numerical worlds, verified films and experiments.">
+<title>Ontogenesis — Cinema & Experiment Atlas</title>
+<style>
+:root{color-scheme:dark;--bg:#08131e;--panel:#102638;--line:#355267;--text:#eaf4fa;--muted:#adc4d2;--teal:#5bdecf;--amber:#ffc182}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 75% -10%,#1b4158,transparent 55%),var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,sans-serif}
+a{color:var(--teal);text-decoration:none}a:hover{text-decoration:underline}a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+.wrap{max-width:1350px;margin:0 auto;padding:0 clamp(20px,4vw,60px)}header{border-bottom:1px solid #38516888}header .wrap{display:flex;justify-content:space-between;align-items:center;gap:22px;padding-top:21px;padding-bottom:21px;flex-wrap:wrap}
+.brand{font-weight:850;letter-spacing:.16em;color:#f2f8fb;font-size:.91rem}.brand span{color:var(--teal)}nav{display:flex;flex-wrap:wrap;gap:20px;font-size:.9rem}
+.hero{padding:clamp(54px,9vw,110px) 0 45px}.eyebrow{text-transform:uppercase;letter-spacing:.21em;font-weight:750;color:var(--teal);font-size:.78rem}
+h1{font-size:clamp(3rem,7vw,6.8rem);letter-spacing:-.065em;line-height:1.02;margin:16px 0 22px;font-weight:850}h1 em{color:var(--teal);font-style:normal}
+.lead{max-width:750px;color:#c3d7e3;font-size:clamp(1.05rem,1.8vw,1.3rem)}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:25px}
+.action{display:inline-block;border:1px solid #58798e;border-radius:999px;padding:11px 19px;color:#f1f8fb;background:#173346;font-weight:650}
+.action.primary{background:var(--teal);color:#0b2530;border-color:var(--teal)}
+.subtle{color:var(--muted);font-size:.87rem}.sectionhead{display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:12px;margin:42px 0 20px}
+h2{font-size:clamp(1.8rem,3vw,2.6rem);letter-spacing:-.04em;margin:0}h3{font-size:1.15rem;line-height:1.3;margin:12px 0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,335px),1fr));gap:18px}
+.card{background:linear-gradient(145deg,#193448,#0c2030);border:1px solid var(--line);border-radius:18px;overflow:hidden;min-width:0}
+.cardbody{padding:21px}.card p{color:var(--muted);margin:6px 0 16px}.kicker{font-size:.76rem;letter-spacing:.14em;color:var(--teal);font-weight:800;text-transform:uppercase}
+.pill{font-size:.73rem;border:1px solid #567386;border-radius:100px;padding:4px 9px;color:#cfe2ee;display:inline-block}
+.poster{width:100%;aspect-ratio:16/9;object-fit:cover;background:#0c1b2a;display:block;border-bottom:1px solid var(--line)}
+.empty{width:100%;aspect-ratio:16/9;background:radial-gradient(circle at 45% 60%,#205f65,#152d46 37%,#0b1726 78%);display:grid;place-items:center;color:#a9d5d0;letter-spacing:.15em;font-size:.82rem}
+.links{display:flex;gap:15px;flex-wrap:wrap;font-size:.88rem;margin-top:14px}.links a{font-weight:700}
+.feature{border:1px solid var(--line);background:#101f2e;border-radius:22px;overflow:hidden}.feature video{width:100%;aspect-ratio:16/9;display:block;background:#050c13}
+.featurebody{padding:18px 22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:15px}
+select,input{background:#193347;color:#eaf4fa;border:1px solid #59798c;border-radius:9px;padding:11px;font:inherit}select{max-width:100%}
+#message{min-height:1.5em}.atlas{display:block;width:100%;height:min(900px,95vh);min-height:510px;border:1px solid #4c6a7c;border-radius:16px;background:#0a1620}
+.notice{border-left:3px solid var(--teal);padding:12px 18px;color:#bbd2dd;background:#122737;border-radius:4px;margin:25px 0}
+footer{margin:65px 0 35px;padding-top:22px;border-top:1px solid var(--line);color:#9cb8ca;font-size:.89rem}
+@media(max-width:600px){.featurebody{align-items:stretch}.featurebody select{width:100%}.atlas{height:650px}.hero{padding-top:55px}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a href="./" class="brand">ONTO<span>GENESIS</span></a>
+<nav aria-label="Main navigation"><a href="#cinema">Cinema</a><a href="#experiments">Experiments</a><a href="#atlas">All generations</a><a href="https://github.com/interrupt21h/ontogenesis">Source code</a></nav></div></header>
+<main class="wrap">
+<section class="hero"><div class="eyebrow">Computational art / numerical worlds / automation</div>
+<h1>A universe<br>in <em>motion.</em></h1>
+<p class="lead">An unnecessarily elaborate experiment in generative art, evolving numerical fields and GitHub Actions endurance. Watch the films, investigate the controls, and explore the story behind each generation.</p>
+<div class="actions"><a class="action primary" href="#cinema">Explore the films</a><a class="action" href="#atlas">Browse the complete atlas</a></div>
+<p class="subtle">Simulation footage is distinguished from measured-data animations. These experiments do not establish artificial organisms or biological discoveries.</p>
+</section>
+<section id="cinema">
+<div class="sectionhead"><div><span class="eyebrow">Selected works</span><h2>The cinema</h2></div><span id="message" class="subtle" aria-live="polite">Loading public release inventory…</span></div>
+<div class="feature"><video id="player" controls playsinline preload="metadata" aria-label="Selected Ontogenesis cinematic"></video>
+<div class="featurebody"><div><strong id="selected-title">Select an available film</strong><div id="selected-detail" class="subtle">Playable assets are discovered from the public GitHub release.</div></div><label for="film-picker">Film <select id="film-picker" aria-label="Select film"><option value="">Loading…</option></select></label></div></div>
+<p class="subtle">Film availability is checked against the <a href="https://github.com/interrupt21h/ontogenesis/releases/tag/atlas-media">atlas-media release</a>. The viewer never labels an unpublished render as available.</p>
+</section>
+<section id="experiments"><div class="sectionhead"><div><span class="eyebrow">Recent generations</span><h2>Experiments & editions</h2></div></div>
+<div id="cards" class="grid" aria-live="polite"></div></section>
+<section id="atlas"><div class="sectionhead"><div><span class="eyebrow">Every generation</span><h2>The complete visual atlas</h2></div><a href="docs/visual-atlas.html">Open atlas separately</a></div>
+<iframe class="atlas" title="Interactive Ontogenesis 32-generation film atlas" src="docs/visual-atlas.html" loading="lazy"></iframe>
+<div class="notice">G0033 is a separate planned/CI-gated continuation. The historical atlas retains G0001–G0032 until reproducible G0033 results and visual assets are verified.</div>
+</section>
+<footer>Ontogenesis by Scott Muller · <a href="https://github.com/interrupt21h/ontogenesis">Open-source project</a> · <a href="https://github.com/interrupt21h/ontogenesis/blob/main/docs/METHODOLOGY.md">Numerical limitations</a> · <a href="https://github.com/interrupt21h/ontogenesis/actions">GitHub Actions</a></footer>
+</main>
+<script>
+"use strict";
+const repo="https://github.com/interrupt21h/ontogenesis";
+const release=repo+"/releases/download/atlas-media/";
+const editions=[
+ {gen:"0028",name:"Environmental disturbance",type:"Spatial cinematic",file:"ontogenesis-0028-cinematic.mp4",poster:"ontogenesis-0028-cinematic.png"},
+ {gen:"0029",name:"Transport with memory",type:"Voxel cinematic",file:"ontogenesis-0029-voxel-cinematic.mp4",poster:"ontogenesis-0029-voxel-cinematic.png"},
+ {gen:"0030",name:"Ecological controls",type:"Native-field cinematic",file:"ontogenesis-0030-native-cinematic.mp4",poster:"ontogenesis-0030-native-cinematic.png"},
+ {gen:"0030",name:"Ecological controls",type:"Measured-data documentary",file:"ontogenesis-0030-diagnostic.mp4",poster:"ontogenesis-0030-diagnostic.png"},
+ {gen:"0031",name:"Viability frontier",type:"Native-field cinematic",file:"ontogenesis-0031-native-cinematic.mp4",poster:"ontogenesis-0031-native-cinematic.png"},
+ {gen:"0031",name:"Viability frontier",type:"Measured-data documentary",file:"ontogenesis-0031-evidence.mp4",poster:"ontogenesis-0031-evidence.png"},
+ {gen:"0032",name:"Complementary spatial niches",type:"Native hyperplane journey",file:"ontogenesis-0032-hyperplane-journey.mp4",poster:"ontogenesis-0032-hyperplane-journey.png"},
+ {gen:"0032",name:"Complementary spatial niches",type:"Original native spatial cinematic",file:"ontogenesis-0032-spatial.mp4",poster:"ontogenesis-0032-spatial.png"},
+ {gen:"0032",name:"Complementary spatial niches",type:"Measured-data documentary",file:"ontogenesis-0032-evidence.mp4",poster:"ontogenesis-0032-evidence.png"},
+ {gen:"0033",name:"Interface robustness",type:"Native seed-comparison cinematic",file:"ontogenesis-0033-native-cinematic.mp4",poster:"ontogenesis-0033-native-cinematic.png"}
+];
+const description={
+ "0028":"A localized disturbance in a four-dimensional numerical environment.",
+ "0029":"An adaptive circulation experiment with memory and matched controls.",
+ "0030":"Externally imposed supply changes; measured and spatial editions are distinct.",
+ "0031":"Sensitivity of simulated population activity to a prescribed loss rate.",
+ "0032":"Externally prescribed complementary niches, with observed spatial partitioning.",
+ "0033":"Eight-seed interface robustness study; numerical results and films require successful CI."
+};
+const cards=document.getElementById("cards"),picker=document.getElementById("film-picker"),player=document.getElementById("player");
+let available=new Map();
+function el(tag,cls,content){const n=document.createElement(tag);if(cls)n.className=cls;if(content!==undefined)n.textContent=content;return n}
+function movieURL(entry){return available.get(entry.file)||null}
+function posterURL(entry){return available.get(entry.poster)||null}
+function selectFilm(file){
+ const entry=editions.find(e=>e.file===file),url=entry&&movieURL(entry);
+ if(!url)return;
+ player.pause();player.src=url;
+ const poster=posterURL(entry);
+ if(poster)player.poster=poster;else player.removeAttribute("poster");
+ player.load();
+ document.getElementById("selected-title").textContent="G"+entry.gen+" · "+entry.name;
+ document.getElementById("selected-detail").textContent=entry.type+" · Verified release asset";
+ picker.value=file;
+}
+function draw(){
+ const confirmed=editions.filter(e=>movieURL(e));
+ picker.replaceChildren();
+ if(!confirmed.length){const opt=el("option",null,"No verified films available");opt.value="";picker.append(opt);picker.disabled=true}
+ else {picker.disabled=false;for(const entry of confirmed){const opt=el("option",null,"G"+entry.gen+" — "+entry.type);opt.value=entry.file;picker.append(opt)}}
+ if(confirmed.length)selectFilm(confirmed[0].file);
+ for(const gen of ["0028","0029","0030","0031","0032","0033"]){
+  const known=editions.filter(e=>e.gen===gen),valid=known.filter(e=>movieURL(e));
+  const selected=valid[0],card=el("article","card");
+  if(selected&&posterURL(selected)){const img=el("img","poster");img.alt="G"+gen+" published cinematic poster";img.loading="lazy";img.src=posterURL(selected);card.append(img)}
+  else card.append(el("div","empty","G"+gen+" / "+(valid.length?"FILM":"AWAITING VERIFIED FILM")));
+  const body=el("div","cardbody");
+  body.append(el("div","kicker","Generation "+gen),el("h3",null,known[0].name),el("p",null,description[gen]));
+  body.append(el("span","pill",valid.length?valid.length+" verified video edition"+(valid.length===1?"":"s"):"No verified release MP4"));
+  const links=el("div","links");
+  for(const entry of valid){
+   const link=el("a",null,entry.type);
+   link.href=movieURL(entry);link.target="_blank";link.rel="noopener noreferrer";links.append(link);
+  }
+  const details=el("a",null,"Experiment record");
+  details.href=repo+"/blob/main/docs/generations/"+gen+".md";links.append(details);
+  body.append(links);card.append(body);cards.append(card);
+ }
+ document.getElementById("message").textContent=confirmed.length+" verified video editions in release";
+}
+picker.addEventListener("change",()=>selectFilm(picker.value));
+(async()=>{
+ try{
+  const response=await fetch("https://api.github.com/repos/interrupt21h/ontogenesis/releases/tags/atlas-media",
+    {headers:{"Accept":"application/vnd.github+json"}});
+  if(!response.ok)throw new Error("HTTP "+response.status);
+  const data=await response.json();
+  available=new Map((data.assets||[]).filter(a=>a.name&&a.browser_download_url)
+    .map(a=>[a.name,a.browser_download_url]));
+  draw();
+ }catch(error){
+  document.getElementById("message").textContent="Release inventory unavailable; open the archive directly";
+  cards.replaceChildren();
+  for(const gen of ["0028","0029","0030","0031","0032","0033"]){
+   const card=el("article","card"),body=el("div","cardbody");
+   body.append(el("div","kicker","G"+gen),el("h3",null,editions.find(e=>e.gen===gen).name),el("p",null,description[gen]));
+   const a=el("a",null,"Open release archive");a.href=repo+"/releases/tag/atlas-media";body.append(a);card.append(body);cards.append(card);
+  }
+  picker.disabled=true;picker.replaceChildren(el("option",null,"Release inventory unavailable"));
+ }
+})();
+</script>
+</body></html>
