@@ -65,6 +65,14 @@ This reduced-domain 12⁴ version is an early rendering study. The selected cumu
 
 The two figures above are **conceptual documentation graphics**, not screenshots. The original films and monograph contain the actual observed images. The 96³ volumetric ray integration in G0025 is the established **minimum visual-quality reference** for later high-fidelity editions.
 
+## G0031 — Measured population viability frontier
+
+[![Measured G0031 numerical V/W population trajectories, not simulated spatial organisms](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0031-pilot.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0031-pilot.png)
+
+[**G0031 measured numerical plot**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0031-pilot.png) · [Complete sampled data](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0031-pilot.json) · [Verified Actions run](https://github.com/interrupt21h/ontogenesis/actions/runs/45332031263)
+
+The graph records actual numerical trajectories for two seeds and five controlled multipliers of the existing V-loss rate. Small changes flip the winner between species V and W, while **none of the measured endpoints maintains both populations active**. This is a scientific diagnostic figure, **not** a spatial cinematic, synthetic organism photograph or simulated frame. The featured G0028 film is unchanged.
+
 ## Scientific evidence: G0028 paired intervention
 
 ![Conceptual design of an untreated control and separate shocked treatment arm](figures/0028.svg)
