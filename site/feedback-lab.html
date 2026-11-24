@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="G0036: genuine four-dimensional structural transport feedback, matched numerical control and independently replicated effects.">
+<title>Ontogenesis · G0036 Feedback Lab</title>
+<style>
+:root{font:16px/1.55 system-ui,sans-serif;color:#eaf5fb;background:#071421;--teal:#66e1d4;--amber:#f4b78a;--line:#35566b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 82% 0,#234a61,transparent 55%),#071421}
+main{max-width:1310px;margin:auto;padding:24px clamp(18px,4vw,54px) 70px}
+nav{display:flex;gap:18px;flex-wrap:wrap;font-size:.9rem}a{color:var(--teal)}
+.eyebrow{color:#92dfda;text-transform:uppercase;font-size:.76rem;font-weight:750;letter-spacing:.17em}
+h1{font-size:clamp(2.7rem,6vw,5.5rem);letter-spacing:-.06em;line-height:1.05;margin:30px 0 15px}h1 span{color:var(--teal)}
+.intro{max-width:870px;color:#c2d8e4}
+.panel{background:linear-gradient(145deg,#142e40,#0b2233);border:1px solid var(--line);padding:20px;border-radius:16px;margin:20px 0}
+.controls{display:flex;flex-wrap:wrap;gap:16px;align-items:end}
+label{display:grid;gap:5px;color:#bcd6e2;font-size:.86rem}
+select{color:#f4fafc;background:#102c3e;border:1px solid #52748a;border-radius:8px;padding:11px;font:inherit}
+select:focus-visible,a:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+canvas{display:block;width:100%;height:auto;background:#081b2b;border-radius:11px}
+.legend{display:flex;gap:20px;flex-wrap:wrap;font-size:.88rem;color:#c9dbe6}
+.legend b{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:7px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.stat{padding:14px;border:1px solid #38586c;border-radius:11px;background:#0d2637}
+.stat strong{display:block;font-size:1.6rem;font-variant-numeric:tabular-nums;margin-top:7px}
+.stat small{color:#a7c2d3}
+h2{font-size:1.45rem;margin:0 0 12px}.muted{color:#a9c2d3;font-size:.88rem}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:18px}
+.gallery img{display:block;max-width:100%;border-radius:10px}
+footer{border-top:1px solid var(--line);color:#a2bdcd;font-size:.87rem;padding-top:20px;margin-top:35px}
+</style></head><body><main>
+<nav><a href="./">← Ontogenesis Cinema</a><a href="lineage-observatory.html">G0034 topology</a><a href="temporal-loom.html">G0033 temporal evidence</a><a href="https://github.com/interrupt21h/ontogenesis/blob/main/docs/generations/0036.md">Experiment details</a></nav>
+<p class="eyebrow">G0036 / Genuine numerical intervention / Native 4D matched controls</p>
+<h1>The Feedback <span>Lab.</span></h1>
+<p class="intro">Does numerical structure affect the future of its own simulated world? This experiment introduces a prescribed divergence-free 4D transport correction computed from the current structural and population fields. Inspect the original matched controls, then examine how the same intervention differs across initialization seeds.</p>
+<p id="status" role="status">Loading verified numerical evidence…</p>
+<section class="panel">
+<div class="controls">
+<label for="seed">Seed <select id="seed"><option value="42">42</option><option value="73">73</option></select></label>
+<label for="metric">Recorded quantity
+<select id="metric">
+<option value="v_active">V-active 4D sites</option>
+<option value="w_active">W-active 4D sites</option>
+<option value="joint_active">Both-population sites</option>
+<option value="exclusive_contacts">Exclusive 4D contact faces</option>
+<option value="matrix_mean">Mean matrix concentration</option>
+<option value="energy_mean">Mean energy concentration</option>
+</select></label>
+</div>
+<h2 style="margin-top:20px">Control versus state-dependent feedback</h2>
+<canvas id="plot" width="1170" height="450" role="img" aria-label="Measured time series for original control and structural feedback at identical seed and sample times"></canvas>
+<div class="legend"><span><b style="background:#f4b78a"></b>Original transport</span><span><b style="background:#66e1d4"></b>Structural feedback</span></div>
+<p class="muted">A 12⁴ lattice, 120 numerical steps, eleven stored samples. Both arms share the same initial solver-state hash; only the feedback callback differs. No graphical frame is used to infer extra simulation steps.</p>
+</section>
+<section class="panel"><h2>Full-field terminal response</h2><div id="effects" class="stats"></div>
+<p class="muted">Mean absolute difference (MAD) between complete original control and feedback 4D arrays, not just the projected video planes. These differences indicate sensitivity to the imposed rule, not proof of beneficial or autonomous behavior.</p></section>
+<section class="panel"><h2>Independent eight-seed replication</h2><p id="replication-status" class="muted">Checking for completed replication evidence…</p>
+<canvas id="replication" width="1170" height="395" role="img" aria-label="Per-seed endpoint response distribution from eight matched numerical trials"></canvas>
+<p class="muted">This distribution is displayed only when the validated numerical replication has been published. Each bar represents one independent matched seed. It is not an artistic rendering or a prediction.</p></section>
+<section class="panel"><h2>Two ways to see the experiment</h2>
+<div class="gallery">
+<div><a href="https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0036-feedback-aurora-art.mp4"><img alt="Authentic G0036 Feedback Aurora art film poster, showing matched control and feedback fields" src="https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0036-feedback-aurora-art.png" loading="lazy"></a><p><a href="https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0036-feedback-aurora-art.mp4">Watch the art film</a></p></div>
+<div><a href="https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0036-feedback-aurora-evidence.mp4"><img alt="Original G0036 native-grid numerical evidence cinematic poster" src="https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0036-feedback-aurora-evidence.png" loading="lazy"></a><p><a href="https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0036-feedback-aurora-evidence.mp4">Watch the exact-grid evidence film</a></p></div>
+</div>
+</section>
+<footer>Numerical evidence: <a href="https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0036-summary.json">two-seed matched fields summary</a> · <a href="https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0036-replication.json">eight-seed replication (when available)</a> · <a href="https://github.com/interrupt21h/ontogenesis/actions/workflows/g0036-structural-feedback.yml">numerical CI</a>. Original simulation data are distinct from artistic display effects.</footer>
+</main>
+<script>
+"use strict";
+const selectSeed=document.getElementById("seed");
+const selectMetric=document.getElementById("metric");
+const plot=document.getElementById("plot");
+let pilot=null,replication=null;
+const fmt=x=>Number(x).toLocaleString(undefined,{maximumFractionDigits:7});
+function drawPlot(){
+ if(!pilot)return;
+ const canvas=plot,ctx=canvas.getContext("2d"),W=canvas.width,H=canvas.height;
+ const seed=selectSeed.value,metric=selectMetric.value;
+ const source=pilot.observations[seed],pairs=["control","feedback"];
+ const times=pilot.sample_steps;
+ const values=pairs.map(arm=>source[arm].map(row=>Number(row[metric])));
+ if(values.some(a=>a.some(x=>!Number.isFinite(x))))return;
+ ctx.fillStyle="#081b2b";ctx.fillRect(0,0,W,H);
+ const left=88,right=W-27,top=30,bottom=H-65;
+ const ymax=Math.max(1e-8,...values.flat())*1.10;
+ ctx.font="14px system-ui";ctx.lineWidth=1;
+ for(let i=0;i<=4;i++){
+  const y=bottom-(bottom-top)*i/4;
+  ctx.strokeStyle="#2b5267";ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(right,y);ctx.stroke();
+  ctx.textAlign="right";ctx.fillStyle="#bed1df";ctx.fillText(fmt(ymax*i/4),left-9,y+5);
+ }
+ times.forEach((t,i)=>{
+  const x=left+(right-left)*i/(times.length-1);
+  ctx.textAlign="center";ctx.fillStyle="#afc7d5";ctx.fillText(String(t),x,bottom+25);
+ });
+ values.forEach((data,k)=>{
+  ctx.strokeStyle=k===0?"#f4b78a":"#66e1d4";ctx.fillStyle=ctx.strokeStyle;
+  ctx.lineWidth=3;ctx.beginPath();
+  data.forEach((v,i)=>{
+   const x=left+(right-left)*i/(data.length-1);
+   const y=bottom-(bottom-top)*v/ymax;
+   i?ctx.lineTo(x,y):ctx.moveTo(x,y);
+  });ctx.stroke();
+  data.forEach((v,i)=>{
+   const x=left+(right-left)*i/(data.length-1),y=bottom-(bottom-top)*v/ymax;
+   ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fill();
+  });
+ });
+ ctx.textAlign="left";ctx.fillStyle="#b5cbda";ctx.fillText("Recorded numerical step",left,bottom+50);
+ const effect=document.getElementById("effects");effect.replaceChildren();
+ const info=pilot.endpoint_mean_absolute_differences[seed];
+ for(const [key,label] of [["v","Species V"],["w","Species W"],["m","Matrix"],["e","Energy"]]){
+  const div=document.createElement("div");div.className="stat";
+  const title=document.createElement("small");title.textContent=label;
+  const strong=document.createElement("strong");strong.textContent=fmt(info[key]);
+  div.append(title,strong);effect.append(div);
+ }
+}
+function drawReplication(){
+ const canvas=document.getElementById("replication"),ctx=canvas.getContext("2d"),W=canvas.width,H=canvas.height;
+ ctx.fillStyle="#081b2b";ctx.fillRect(0,0,W,H);
+ if(!replication)return;
+ const d=replication.results.v,values=replication.seeds.map(s=>d.by_seed[String(s)].at(-1));
+ const max=Math.max(1e-9,...values)*1.12,left=90,right=W-35,top=45,bottom=H-60;
+ ctx.font="15px system-ui";ctx.lineWidth=1;
+ for(let t=0;t<=4;t++){
+  const y=bottom-(bottom-top)*t/4;
+  ctx.strokeStyle="#31566c";ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(right,y);ctx.stroke();
+  ctx.textAlign="right";ctx.fillStyle="#bcd1dd";ctx.fillText(fmt(max*t/4),left-11,y+4);
+ }
+ const step=(right-left)/values.length;
+ values.forEach((v,i)=>{
+  const x=left+(i+.28)*step,bar=.44*step,high=(bottom-top)*v/max;
+  ctx.fillStyle="#6adfce";ctx.fillRect(x,bottom-high,bar,high);
+  ctx.textAlign="center";ctx.font="14px system-ui";ctx.fillStyle="#cce4eb";
+  ctx.fillText(String(replication.seeds[i]),x+bar/2,bottom+24);
+  ctx.fillText(fmt(v),x+bar/2,Math.max(top+3,bottom-high-12));
+ });
+ ctx.textAlign="left";ctx.fillStyle="#b8cfdb";ctx.fillText("Independent matched initialization seed · V-field endpoint MAD",left,H-15);
+}
+selectSeed.addEventListener("change",drawPlot);
+selectMetric.addEventListener("change",drawPlot);
+(async()=>{
+ try{
+  const r=await fetch("data/g0036-summary.json",{cache:"no-store"});
+  if(!r.ok)throw Error("HTTP "+r.status);
+  const d=await r.json();
+  if(d.generation!=="0036"||d.n!==12||d.steps!==120||
+     d.seeds.join(",")!=="42,73"||d.sample_steps.length!==11)
+    throw Error("Unexpected numerical scope");
+  pilot=d;drawPlot();
+  document.getElementById("status").textContent="Verified G0036 two-seed numerical evidence loaded · original 12⁴ native matching";
+ }catch(e){
+  document.getElementById("status").textContent="G0036 source data unavailable ("+e.message+"); access the GitHub numerical release directly.";
+ }
+ try{
+  const r=await fetch("data/g0036-replication.json",{cache:"no-store"});
+  if(!r.ok)throw Error("HTTP "+r.status);
+  const d=await r.json();
+  if(d.generation!=="0036"||d.n!==12||d.steps!==120||d.seeds.length!==8)
+    throw Error("Unexpected replication scope");
+  replication=d;drawReplication();
+  document.getElementById("replication-status").textContent=
+   "Eight independently matched numerical trials; each bar is the measured V concentration difference at step 120.";
+ }catch(e){
+  document.getElementById("replication-status").textContent=
+   "Replication evidence not yet available ("+e.message+"). No values are invented.";
+ }
+})();
+</script></body></html>
