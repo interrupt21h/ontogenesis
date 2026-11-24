@@ -1,0 +1,97 @@
+name: G0032 native 4D hyperplane journey cinematic
+on:
+  workflow_dispatch:
+    inputs:
+      seconds:
+        description: 'Length of separate cinematic edition (12–60 seconds)'
+        type: choice
+        options: ['24', '36', '48']
+        default: '36'
+  push:
+    branches: [main]
+    paths:
+      - 'niche_spatial_render.py'
+      - 'tests/test_niche_spatial.py'
+      - '.github/workflows/niche-hyperplane-journey.yml'
+permissions:
+  contents: read
+concurrency:
+  group: g0032-hyperplane-journey-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  render-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install pinned numerical and video dependencies
+        run: python -m pip install numpy==2.2.6 scipy==1.15.3 matplotlib==3.10.3 pillow==11.2.1 imageio-ffmpeg==0.8.1
+      - name: Test native 4D sampling and FFmpeg smoke output
+        run: |
+          python -m compileall -q niche_spatial_render.py niche_spatial_archive.py
+          python -m unittest discover -s tests -p test_niche_spatial.py -v
+      - name: Download real G0032 archive; do not rerun the numerical model
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p input
+          gh release download atlas-media -p 'g0032-native-fields-seed73.npz' -p 'g0032-native-fields-seed73.json' -D input
+      - name: Render distinct cinematic edition visiting all recorded fourth-axis planes
+        env:
+          SECONDS: ${{ github.event_name == 'workflow_dispatch' && inputs.seconds || '36' }}
+        run: |
+          python -u niche_spatial_render.py \
+            --data input/g0032-native-fields-seed73.npz \
+            --metadata input/g0032-native-fields-seed73.json \
+            --movie ontogenesis-0032-hyperplane-journey.mp4 \
+            --poster ontogenesis-0032-hyperplane-journey.png \
+            --seconds "$SECONDS" --fps 24 --omega-sweep
+      - name: Verify complete video, genuine archive hash and camera provenance
+        env:
+          SECONDS: ${{ github.event_name == 'workflow_dispatch' && inputs.seconds || '36' }}
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,imageio_ffmpeg
+          from pathlib import Path
+          base=Path('ontogenesis-0032-hyperplane-journey')
+          meta=json.loads(base.with_suffix('.render.json').read_text())
+          info=json.loads(Path('input/g0032-native-fields-seed73.json').read_text())
+          archive=Path('input/g0032-native-fields-seed73.npz')
+          assert meta['generation']=='0032' and meta['seed']==73
+          assert meta['omega_indices']==list(range(info['n']))
+          assert meta['omega_sampling']=='discrete-recorded-hyperplanes'
+          assert meta['fixed_omega_slice'] is None
+          assert meta['interpolated_numerical_states'] is False
+          assert meta['source_archive_sha256']==info['archive_sha256']==hashlib.sha256(archive.read_bytes()).hexdigest()
+          movie=base.with_suffix('.mp4')
+          frames,duration=imageio_ffmpeg.count_frames_and_secs(str(movie))
+          assert frames==int(os.environ['SECONDS'])*24==meta['frames']
+          assert abs(duration-int(os.environ['SECONDS']))<0.1
+          reader=imageio_ffmpeg.read_frames(str(movie))
+          head=next(reader);reader.close()
+          assert tuple(head['size'])==(1280,720)
+          assert base.with_suffix('.png').stat().st_size>4096
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0032-native-hyperplane-journey-cinematic
+          path: |
+            ontogenesis-0032-hyperplane-journey.mp4
+            ontogenesis-0032-hyperplane-journey.png
+            ontogenesis-0032-hyperplane-journey.render.json
+          retention-days: 30
+          if-no-files-found: error
+      - name: Publish standalone verified alternate film
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload atlas-media \
+            ontogenesis-0032-hyperplane-journey.mp4 \
+            ontogenesis-0032-hyperplane-journey.png \
+            ontogenesis-0032-hyperplane-journey.render.json --clobber
+          echo 'Published additional G0032 native hyperplane journey (not replacing original).' >> "$GITHUB_STEP_SUMMARY"
