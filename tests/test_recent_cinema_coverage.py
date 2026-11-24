@@ -18,7 +18,7 @@ class CoverageTests(unittest.TestCase):
         report=check(self.fixture())
         self.assertTrue(report["complete"])
         self.assertFalse(report["missing"])
-        self.assertEqual(len(report["generations"]),6)
+        self.assertEqual(len(report["generations"]),7)
 
     def test_reject_missing_or_tiny_video(self):
         release=self.fixture()
