@@ -1,0 +1,64 @@
+name: G0030 pre-season viability screen
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'ecological_viability.py'
+      - 'tests/test_ecological_viability.py'
+      - '.github/workflows/ecological-viability.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: g0030-preseason-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  preflight:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Pin scientific numerical and plotting dependencies
+        run: python -m pip install numpy==2.2.6 scipy==1.15.3 matplotlib==3.10.3 pillow==11.2.1
+      - name: Verify controls and short smoke simulation
+        run: |
+          python -m compileall -q ecological_viability.py
+          python -m unittest discover -s tests -p test_ecological_viability.py -v
+      - name: Compare no inversion with three early environmental inversions
+        run: |
+          /usr/bin/time -v python -u ecological_viability.py \
+            --n 16 --steps 180 --stride 6 --seeds 42,73 \
+            --out g0030-viability.json --plate g0030-viability.png
+      - name: Verify matched seeds, noninvented source metrics and labels
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('g0030-viability.json').read_text())
+          assert (d['generation'],d['n'],d['steps'],d['seeds'])==('0030',16,180,[42,73])
+          assert d['cases']=={'unchanged':None,'invert_12':12,'invert_24':24,'invert_48':48}
+          assert set(d['times'])>= {0,12,24,30,48,60,90,180}
+          for seed in ('42','73'):
+              assert len({r['0'] for r in d['state_hashes'][seed].values()})==1
+              assert set(d['comparisons_vs_unchanged'][seed])=={'invert_12','invert_24','invert_48'}
+              assert all([r['step'] for r in rows]==d['times'] for rows in d['observations'][seed].values())
+          p=Path('g0030-viability.png')
+          assert p.stat().st_size>4096 and p.read_bytes()[:8]==bytes([137,80,78,71,13,10,26,10])
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0030-preseason-viability
+          path: |
+            g0030-viability.json
+            g0030-viability.png
+          retention-days: 30
+          if-no-files-found: error
+      - name: Preserve measured pre-season study on release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload atlas-media g0030-viability.json g0030-viability.png --clobber
