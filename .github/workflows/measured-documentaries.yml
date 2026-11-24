@@ -31,6 +31,24 @@ jobs:
         run: |
           mkdir -p input
           gh release download atlas-media -p 'g0031-pilot.json' -p 'g0032-pilot.json' -D input
+      - name: Authenticate each mutable archive against successful numerical CI
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json,os,subprocess
+          from pathlib import Path
+          runs=json.loads(subprocess.check_output(
+              ['gh','api',f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/runs?per_page=100"],
+              text=True))['workflow_runs']
+          for gen,name in (('0031','G0031 population viability frontier'),
+                           ('0032','G0032 complementary spatial niche screen')):
+              d=json.loads(Path(f'input/g{gen}-pilot.json').read_text())
+              matches=[r for r in runs if r.get('head_sha')==d['source_sha']
+                       and r.get('name')==name and r.get('conclusion')=='success']
+              assert matches, f"No verified numerical workflow for {gen}: {d['source_sha']}"
+              print(f"Verified {gen} source revision {d['source_sha']} from successful CI")
+          PY
       - name: Test and render each measured time-series animation
         run: |
           for gen in 0031 0032; do
