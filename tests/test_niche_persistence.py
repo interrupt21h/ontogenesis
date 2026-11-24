@@ -11,7 +11,7 @@ from niche_persistence import CASES,run_extension,verify_source
 
 def saved_small_source(n=8,checkpoint=60,seeds=(42,)):
     original={"generation":"0032","n":n,"steps":checkpoint,"seeds":list(seeds),
-              "source_sha":"test","arms":{arm:ARMS[arm] for arm in CASES},
+              "source_sha":"test","arms":{arm:dict(ARMS[arm]) for arm in CASES},
               "hashes":{}}
     for seed in seeds:
         original["hashes"][str(seed)]={}
