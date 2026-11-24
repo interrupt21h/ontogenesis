@@ -8,6 +8,12 @@
 
 [**Browse every generation visually — G0001 through G0032**](VISUAL_INDEX.md) · [Filterable HTML player edition](visual-atlas.html)
 
+### G0032 — Native hyperplane journey (alternate cinematic build)
+
+A separate [G0032 native hyperplane-journey workflow](../.github/workflows/niche-hyperplane-journey.yml) is configured to produce a 36-second, 1280 × 720, 24 FPS MP4 from the **existing recorded 16⁴ native field archive**, with discrete traversal through all fourth-axis hyperplanes. It does not regenerate numerical states or replace the [original fixed-hyperplane G0032 film](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0032-spatial.mp4).
+
+**Publication pending verification:** when this workflow successfully passes smoke tests, complete video decoding checks, source SHA-256 validation and upload, it publishes `ontogenesis-0032-hyperplane-journey.mp4`, its poster and render provenance to the `atlas-media` release. Until that is confirmed, this is a configured cinematic pipeline rather than a claimed published film.
+
 ### G0031 and G0032 — New verified measured numerical films
 
 [![G0031 measured viability-frontier animation, verified frame](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0031-evidence.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0031-evidence.mp4)
