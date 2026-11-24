@@ -8,7 +8,7 @@ on:
       - '.github/workflows/pages.yml'
   workflow_dispatch:
   workflow_run:
-    workflows: ['G0034 native 4D component genealogy and lineage cinema', 'G0035 Morphogenic Tide art and evidence cinematics', 'G0036 Feedback Aurora art and evidence cinematics', 'G0036 eight-seed matched structural-feedback replication']
+    workflows: ['G0034 native 4D component genealogy and lineage cinema', 'G0035 Morphogenic Tide art and evidence cinematics', 'G0036 Feedback Aurora art and evidence cinematics', 'G0036 eight-seed matched structural-feedback replication', 'G0037 structural persistence and Memory Strata cinematics']
     types: [completed]
 permissions:
   contents: read
@@ -31,6 +31,7 @@ jobs:
           loom=Path('site/temporal-loom.html').read_text()
           lineage=Path('site/lineage-observatory.html').read_text()
           feedback=Path('site/feedback-lab.html').read_text()
+          persistence=Path('site/persistence-lab.html').read_text()
           atlas=Path('docs/visual-atlas.html').read_text()
           assert '<html lang="en">' in page and '<main class="wrap">' in page
           assert 'id="player"' in page and 'id="cards"' in page
@@ -51,6 +52,7 @@ jobs:
           assert 'component_count' in lineage
           assert 'data/g0036-summary.json' in feedback
           assert 'data/g0036-replication.json' in feedback
+          assert 'data/g0037-persistence.json' in persistence
           class Parser(HTMLParser):
               pass
           Parser().feed(page)
@@ -76,7 +78,7 @@ jobs:
                   if self.in_script:
                       self.inline.append(data)
           pages = ['index', 'interface-lab', 'temporal-loom',
-                   'lineage-observatory', 'feedback-lab']
+                   'lineage-observatory', 'feedback-lab', 'persistence-lab']
           for name in pages:
               parser = ScriptExtractor()
               parser.feed(Path('site', name + '.html').read_text())
@@ -95,6 +97,7 @@ jobs:
           cp site/temporal-loom.html _site/temporal-loom.html
           cp site/lineage-observatory.html _site/lineage-observatory.html
           cp site/feedback-lab.html _site/feedback-lab.html
+          cp site/persistence-lab.html _site/persistence-lab.html
           cp -a docs _site/docs
           touch _site/.nojekyll
           test -s _site/docs/visual-atlas.html
@@ -185,6 +188,22 @@ jobs:
           else
             echo 'G0036 replication not published; viewer shows evidence pending.'
           fi
+      - name: Bundle checked G0037 four-seed native 4D persistence evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p _site/data
+          gh release download atlas-media -p g0037-persistence.json -D _site/data
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('_site/data/g0037-persistence.json').read_text())
+          assert d['generation']=='0037' and d['seeds']==[42,73,101,137]
+          assert d['n']==12 and d['steps']==120
+          assert d['sample_steps']==[0,24,48,72,96,120]
+          assert d['feedback_gains']=={'control':0.,'low':.0175,'high':.07}
+          assert len(d['native_observations'])==4
+          PY
       - uses: actions/upload-pages-artifact@v4
         with:
           path: _site
