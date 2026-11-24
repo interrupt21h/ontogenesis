@@ -88,7 +88,8 @@ def image_at(data,info,t,seconds,base=None,*,omega_sweep=False):
     d.text((40,20),"ONTOGENESIS / G0032 / NATIVE FOUR-DIMENSIONAL DATA",
            font=font(20,True),fill="#5cdec8")
     d.text((39,58),"A PLACE FOR EACH",font=font(45,True),fill="#f0f7fb")
-    d.text((41,120),f"Seed {info['seed']} · Fixed 3D hyperplane omega={omega} · Recorded step {step}/{info['steps']}",
+    plane_label=("Recorded 3D hyperplane" if omega_sweep else "Fixed 3D hyperplane")
+    d.text((41,120),f"Seed {info['seed']} · {plane_label} omega={omega} · Recorded step {step}/{info['steps']}",
            font=font(17),fill="#bdd3e0")
     bg=Image.new("RGBA",im.size,(0,0,0,0))
     pen=ImageDraw.Draw(bg)
