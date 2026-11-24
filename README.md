@@ -117,7 +117,17 @@ The [native 4D interface analysis](https://github.com/interrupt21h/ontogenesis/a
 
 *The film uses real saved four-dimensional fields, unlike the earlier chart animation. It is a fixed-ω hyperplane under display-camera rotation, not an autonomous organism or proof of stable coexistence.*
 
-## Next: G0033 · Testing the spatial interface\n\nThe [G0033 controlled experiment plan](docs/generations/0033.md) defines a bounded, multi-seed follow-up to G0032: replicate the four-dimensional interface across initial conditions, measure its persistence, vary the activity cutoff, and compare against shuffled spatial-mask controls. **This is a proposed experiment, not a completed numerical result or film.**\n\n## Latest cinematic experiment: G0035 Morphogenic Tide
+## Next: G0033 · Testing the spatial interface\n\nThe [G0033 controlled experiment plan](docs/generations/0033.md) defines a bounded, multi-seed follow-up to G0032: replicate the four-dimensional interface across initial conditions, measure its persistence, vary the activity cutoff, and compare against shuffled spatial-mask controls. **This is a proposed experiment, not a completed numerical result or film.**\n\n## G0036 — Feedback Aurora: the simulated world responds
+
+[![Verified G0036 Feedback Aurora, showing a matched causal comparison from original 4D numerical fields](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0036-feedback-aurora-art.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0036-feedback-aurora-art.mp4)
+
+[**Watch the G0036 art film**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0036-feedback-aurora-art.mp4) · [**Watch the exact numerical evidence film**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0036-feedback-aurora-evidence.mp4) · [**Read the G0036 study**](docs/generations/0036.md) · [**Verified numerical CI**](https://github.com/interrupt21h/ontogenesis/actions/runs/45486825879)
+
+G0036 is our newest **actual numerical intervention**, not merely a new artistic treatment of archived fields. A bounded divergence-free four-dimensional velocity correction depends on the solver's *current* structural matrix and V/W population imbalance. The control uses the unmodified integrator with the same starting seed and prescribed habitat. Two independently initialized seeds were tested through 120 steps on a 12⁴ native grid. Both matched-control numerical runs and both Feedback Aurora cinematic editions passed GitHub Actions.
+
+The art film reveals the **measured difference made by feedback** as an aurora-like field of sculptural contour ridges, then stages the original and intervention at identical recorded final states. The evidence film instead displays the actual 12×12 projected cells without smoothing. The effect was genuinely seed-dependent: the full-field mean absolute V concentration difference at step 120 was about **0.00243** in seed 42 and **0.01216** in seed 73. This establishes sensitivity to a prescribed numerical feedback rule, not emergent intelligence or autonomous biological life.
+
+## Latest cinematic experiment: G0035 Morphogenic Tide
 
 [![G0035 Morphogenic Tide — actual released cinematic poster](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0035-morphogenic-tide-art.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0035-morphogenic-tide-art.mp4)
 
