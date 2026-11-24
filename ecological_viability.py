@@ -28,7 +28,7 @@ def run_screen(out,plate,*,n=16,steps=180,stride=6,seeds=(42,73)):
         raise ValueError("Unique nonnegative seeds required")
     if any(event is not None and not 0<event<steps for event in CASES.values()):
         raise ValueError("Event steps must occur within the integration window")
-    times=sorted(set(range(0,steps+1,stride))|{0,steps,30,60,90}|
+    times=sorted(set(range(0,steps+1,stride))|{t for t in (0,steps,30,60,90) if t<=steps}|
                  {x+o for x in CASES.values() if x is not None
                   for o in (-1,0,1) if 0<=x+o<=steps})
     selected=set(times)
