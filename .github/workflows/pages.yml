@@ -24,6 +24,7 @@ jobs:
           from pathlib import Path
           from html.parser import HTMLParser
           page=Path('site/index.html').read_text()
+          lab=Path('site/interface-lab.html').read_text()
           atlas=Path('docs/visual-atlas.html').read_text()
           assert '<html lang="en">' in page and '<main class="wrap">' in page
           assert 'id="player"' in page and 'id="cards"' in page
@@ -33,6 +34,9 @@ jobs:
           assert page.count('gen:"003')>=8
           assert atlas.count('<article class="tile"')==32
           assert 'G0033' in page
+          assert 'interface-lab.html' in page
+          assert 'data/g0033-robustness.json' in lab
+          assert 'four_dimensional_face_contacts' in lab
           class Parser(HTMLParser):
               pass
           Parser().feed(page)
@@ -58,6 +62,7 @@ jobs:
                       self.inline.append(data)
           parser = ScriptExtractor()
           parser.feed(Path('site/index.html').read_text())
+          parser.feed(Path('site/interface-lab.html').read_text())
           assert parser.inline, 'No executable site JavaScript was found'
           Path('/tmp/ontogenesis-pages.js').write_text('\n'.join(parser.inline))
           PY
@@ -66,10 +71,27 @@ jobs:
         run: |
           mkdir -p _site
           cp site/index.html _site/index.html
+          cp site/interface-lab.html _site/interface-lab.html
           cp -a docs _site/docs
           touch _site/.nojekyll
           test -s _site/docs/visual-atlas.html
           test -s _site/index.html
+      - name: Bundle verified G0033 numerical evidence for offline-capable static charts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p _site/data
+          gh release download atlas-media -p g0033-robustness.json -D _site/data
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          path=Path('_site/data/g0033-robustness.json')
+          d=json.loads(path.read_text())
+          assert d["generation"]=="0033" and d["n"]==16 and d["steps"]==240
+          assert d["seeds"]==[42,73,101,137,211,307,401,509]
+          assert len(d["individual_endpoints"])==8
+          assert len(d["source_archive_sha256_by_seed"])==8
+          PY
       - uses: actions/upload-pages-artifact@v4
         with:
           path: _site
