@@ -1,0 +1,117 @@
+name: G0036 state-dependent 4D structural feedback pilot
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'g0036_structural_feedback.py'
+      - 'tests/test_g0036_structural_feedback.py'
+      - '.github/workflows/g0036-structural-feedback.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: g0036-structural-feedback-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  numerical:
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        seed: [42,73]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install pinned numerical dependencies
+        run: python -m pip install numpy==2.2.6 scipy==1.15.3 matplotlib==3.10.3 pillow==11.2.1
+      - name: Verify true divergence-free feedback and unchanged control
+        run: |
+          python -m compileall -q g0036_structural_feedback.py
+          python -m unittest discover -s tests -p 'test_g0036_structural_feedback.py' -v
+      - name: Run matched 12^4, 120-step native numerical experiment
+        run: |
+          /usr/bin/time -v python -u g0036_structural_feedback.py \
+            --seed ${{ matrix.seed }} --n 12 --steps 120 --stride 12 \
+            --archive g0036-seed-${{ matrix.seed }}.npz \
+            --metadata g0036-seed-${{ matrix.seed }}.json
+      - name: Authenticate numerical separation and native field identities
+        run: |
+          python - <<'PY'
+          import json,hashlib
+          import numpy as np
+          from pathlib import Path
+          seed=int('${{ matrix.seed }}')
+          archive=Path(f'g0036-seed-{seed}.npz')
+          info=json.loads(Path(f'g0036-seed-{seed}.json').read_text())
+          assert info['generation']=='0036' and info['seed']==seed
+          assert info['sample_steps']==list(range(0,121,12))
+          assert info['matched_initial_hash']==info['numerical']['feedback']['hashes']['0']
+          assert info['numerical']['control']['hashes']['0']==info['matched_initial_hash']
+          assert any(x>0 for x in info['endpoint_mean_absolute_differences'].values())
+          assert hashlib.sha256(archive.read_bytes()).hexdigest()==info['archive_sha256']
+          with np.load(archive,allow_pickle=False) as data:
+              for arm in ('control','feedback'):
+                  for ch in ('v','w','m','e'):
+                      a=data[f'{arm}_{ch}']
+                      assert a.shape==(11,12,12,12,12) and a.dtype==np.float32
+                      assert np.isfinite(a).all() and a.min()>=-1e-6
+              assert np.array_equal(data['control_v'][0],data['feedback_v'][0])
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0036-seed-${{ matrix.seed }}-native-feedback-evidence
+          path: |
+            g0036-seed-${{ matrix.seed }}.npz
+            g0036-seed-${{ matrix.seed }}.json
+          retention-days: 30
+          if-no-files-found: error
+  summarize:
+    needs: numerical
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: g0036-seed-*-native-feedback-evidence
+          path: input
+          merge-multiple: true
+      - name: Validate identical matched configurations and publish the real numerical study
+        run: |
+          python - <<'PY'
+          import json,hashlib
+          from pathlib import Path
+          reports={}
+          for seed in (42,73):
+              p=Path(f'input/g0036-seed-{seed}.json')
+              d=json.loads(p.read_text())
+              assert hashlib.sha256(Path(f'input/g0036-seed-{seed}.npz').read_bytes()).hexdigest()==d['archive_sha256']
+              reports[str(seed)]=d
+          assert all(d['sample_steps']==list(range(0,121,12)) for d in reports.values())
+          assert all(d['n']==12 and d['steps']==120 and d['feedback_gain']==.035 for d in reports.values())
+          summary={'generation':'0036',
+                   'edition':'genuine-structural-feedback-matched-two-seed-pilot-v1',
+                   'seeds':[42,73], 'arms':['control','feedback'],
+                   'n':12,'steps':120,'sample_steps':list(range(0,121,12)),
+                   'native_archive_sha256_by_seed':{k:v['archive_sha256'] for k,v in reports.items()},
+                   'endpoint_mean_absolute_differences':{k:v['endpoint_mean_absolute_differences'] for k,v in reports.items()},
+                   'observations':{k:{arm:v['numerical'][arm]['observations'] for arm in ('control','feedback')} for k,v in reports.items()},
+                   'limitations':['Two finite-duration seeds do not establish artificial-life adaptation',
+                                  'Feedback is a prescribed conservative transport intervention, not an evolved rule']}
+          Path('g0036-summary.json').write_text(json.dumps(summary,indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0036-matched-structural-feedback-summary
+          path: g0036-summary.json
+          if-no-files-found: error
+      - name: Publish validated two-seed summary and field metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload atlas-media g0036-summary.json input/g0036-seed-42.json input/g0036-seed-73.json --clobber
