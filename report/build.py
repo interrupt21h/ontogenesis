@@ -246,6 +246,20 @@ for n,title,record in records:
             r" No simulated arm retained V activity above the endpoint threshold."
             r" Neither coexistence nor succession was demonstrated."
         ))
+    if n=="0031":
+        plate=out/"atlas/0031-pilot.png"
+        if not plate.is_file() or plate.stat().st_size<4096:
+            raise RuntimeError("Missing verified G0031 numerical plate")
+        body.append(raw_latex(
+            r"\clearpage\section{G0031: measured population viability frontier}"
+            r"\begin{center}\includegraphics[width=\linewidth,height=.60\textheight,"
+            r"keepaspectratio]{atlas/0031-pilot.png}\end{center}"
+            r"\noindent The plotted curves are the actual two-seed numeric observations"
+            r" from five externally specified V-loss rates at 16^4 cells."
+            r" The historical default is preserved. All measured endpoints"
+            r" had zero thresholded co-occupation, and the dominant population"
+            r" changed with the multiplier and seed. This is not spatial footage."
+        ))
     body.append(frame_section(n))
 body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontogreen}"))
 body.append((ROOT/"report/final_renders.md").read_text())

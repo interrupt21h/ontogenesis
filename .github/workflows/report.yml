@@ -141,6 +141,31 @@ jobs:
           assert png.read_bytes()[:8]==bytes([137,80,78,71,13,10,26,10])
           PY
           cp report/build/evidence/0030/g0030-pilot.png report/build/atlas/0030-pilot.png
+      - name: Retrieve and verify G0031 viability frontier evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p report/build/evidence/0031 report/build/atlas
+          gh release download atlas-media -p 'g0031-pilot.json' -p 'g0031-pilot.png' -D report/build/evidence/0031
+          python - <<'PY'
+          import json,math
+          from pathlib import Path
+          folder=Path('report/build/evidence/0031')
+          d=json.loads((folder/'g0031-pilot.json').read_text())
+          assert (d['generation'],d['n'],d['steps'],d['seeds'])==('0031',16,240,[42,73])
+          assert d['source_sha']=='d8991d1393dde4bf9d420501f4badcb99780dcab'
+          assert d['arms']=={'historical':1.0,'v_loss_095':.95,'v_loss_090':.90,'v_loss_085':.85,'v_loss_080':.80}
+          assert not d['any_endpoint_both_active']
+          for seed in ('42','73'):
+              assert len({x['0'] for x in d['hashes'][seed].values()})==1
+              assert len(d['observations'][seed])==5
+              for rows in d['observations'][seed].values():
+                  assert [r['step'] for r in rows]==d['times']
+                  assert all(math.isfinite(r['v_active']) and math.isfinite(r['w_active']) for r in rows)
+          png=folder/'g0031-pilot.png'
+          assert png.stat().st_size>4096 and png.read_bytes()[:8]==bytes([137,80,78,71,13,10,26,10])
+          PY
+          cp report/build/evidence/0031/g0031-pilot.png report/build/atlas/0031-pilot.png
       - name: Validate report generator syntax
         run: python3 -m compileall -q report
       - name: Collect engineering atlas
@@ -160,7 +185,9 @@ jobs:
           test -s report/build/atlas/0028-evidence.pdf
           test -s report/build/atlas/0028-full-evidence.pdf
           test -s report/build/atlas/0030-pilot.png
+          test -s report/build/atlas/0031-pilot.png
           grep -q 'Generation 0030' report/build/verified.txt
+          grep -q 'Generation 0031' report/build/verified.txt
           grep -q 'Generation 0028' report/build/verified.txt
           grep -q 'The moving pictures' report/build/verified.txt
           grep -q 'The late-experiment branch structure' report/build/verified.txt

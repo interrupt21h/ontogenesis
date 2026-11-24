@@ -115,6 +115,12 @@ if "0030" in chapter_pages:
     plate=out/"atlas/0030-pilot.png"
     if not plate.is_file() or plate.stat().st_size<4096:
         raise SystemExit("G0030 actual measured trajectory figure missing")
+if "0031" in chapter_pages:
+    if not (out/"mechanisms/0031.pdf").is_file():
+        raise SystemExit("G0031 conceptual rate-scan figure missing")
+    measured=out/"atlas/0031-pilot.png"
+    if not measured.is_file() or measured.stat().st_size<4096:
+        raise SystemExit("G0031 measured viability plot missing")
 summary={
     "source_revision_chapter_count":len(generations),
     "pages":len(doc),
@@ -128,6 +134,8 @@ summary={
         "0028-evidence":"Native numerical matched-control pilot measurements",
         "0030":"Conceptual cross-feeding controls; not measured organisms",
         "0030-pilot":"Actual sampled ecological trajectories; not cinematic imagery",
+        "0031":"Conceptual mortality-rate controls; not measured organisms",
+        "0031-pilot":"Actual numerical viability scan; not a spatial video",
     },
     "sparse_pages_requiring_visual_review":[r["page"] for r in rows if r["review"]],
     "status":"chapter coverage, gallery ordering, and required diagrams checked",
