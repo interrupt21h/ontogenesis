@@ -1,9 +1,10 @@
-"""G0032 extended persistence check, reusing exact G0032 state at step 240.
+"""G0032 longer-horizon *independent same-seed reruns* of spatial niches.
 
-Run only the no-niche near-transition comparator and the stronger spatial niche.
-For each seed, compare a committed numerical state hash at the original pilot
-endpoint to the published archive BEFORE accepting extension measurements.
-No native 4D spatial movie is inferred from scalar measurements.
+The archived 240-step pilot is a comparison, NOT an imported checkpoint
+because it does not include a complete 4D numerical state. Distinct GitHub
+CPU runners may fail bitwise equality even with the same initialized seed.
+We verify exact initialization, explicitly report step-240 hash agreement,
+and never claim to continue the original archived state.
 """
 from __future__ import annotations
 import argparse
@@ -61,7 +62,7 @@ def measured_figure(payload,filename):
             for spine in ax.spines.values():spine.set_color("#49677E")
     axes[0,0].legend(facecolor="#24425A",labelcolor="#F4F6F8",fontsize=9)
     fig.suptitle("ONTOGENESIS G0032 / SPATIAL PARTITION PERSISTENCE\n"
-                 "Original step-240 states verified against archived SHA-256",
+                 "Same-seed independent runs / step-240 hash agreement reported separately",
                  color="#EEF5FA",fontsize=17)
     filename=Path(filename)
     filename.parent.mkdir(parents=True,exist_ok=True)
@@ -80,16 +81,19 @@ def run_extension(original,out,plot,*,steps=480,stride=12):
     times=sorted(set(range(0,steps+1,stride))|{0,checkpoint,steps,
                                             min(steps,checkpoint+1)})
     payload={
-       "generation":"0032","edition":"longer-niche-persistence-v1",
+       "generation":"0032","edition":"independent-same-seed-longer-horizon-v2",
        "source_sha":os.environ.get("GITHUB_SHA","unversioned"),
        "previous_source_sha":source.get("source_sha"),
        "source_checkpoint_step":checkpoint,
-       "source_checkpoint_verified":False,
+       "original_initialization_verified":False,
+       "archived_checkpoint_bitwise_matches":{},
+       "archived_checkpoint_metric_differences":{},
        "n":n,"steps":steps,"seeds":list(seeds),
        "cases":{arm:ARMS[arm] for arm in CASES},
        "times":times,"observations":{},"hashes":{},"endpoints":{},
        "limitations":[
-          "Matched state hash at step 240 establishes numerical continuity, not biological fitness.",
+          "The 240-step archive contains no restartable full state; this is a separate seeded 480-step run, not a numerical continuation.",
+          "Checkpoint SHA-256 disagreement is reported, not silently treated as exact replay.",
           "A longer 480-step run still does not demonstrate indefinitely stable coexistence.",
           "The niche gradient is externally imposed; no genotype chooses a habitat.",
           "Same-cell co-occupation differs from globally simultaneous population activity.",
@@ -101,6 +105,8 @@ def run_extension(original,out,plot,*,steps=480,stride=12):
         payload["observations"][key]={}
         payload["hashes"][key]={}
         payload["endpoints"][key]={}
+        payload["archived_checkpoint_bitwise_matches"][key]={}
+        payload["archived_checkpoint_metric_differences"][key]={}
         for arm in CASES:
             records=[]
             def record(step,fields):
@@ -111,9 +117,21 @@ def run_extension(original,out,plot,*,steps=480,stride=12):
                 ecology_observer=record,ecology_steps=set(times),**ARMS[arm]
             )
             old_hashes=source["hashes"][key][arm]
-            for point in ("0",str(checkpoint)):
-                if new["hashes"][point]!=old_hashes[point]:
-                    raise AssertionError(f"Reproduction changed at step {point} in seed={seed} arm={arm}")
+            if new["hashes"]["0"]!=old_hashes["0"]:
+                raise AssertionError(f"Different initial numerical state: seed={seed} arm={arm}")
+            same_checkpoint=new["hashes"][str(checkpoint)]==old_hashes[str(checkpoint)]
+            payload["archived_checkpoint_bitwise_matches"][key][arm]=same_checkpoint
+            if not same_checkpoint:
+                print(f"NOTE: nonidentical step-{checkpoint} state SHA-256 for "
+                      f"seed={seed} arm={arm}; this is an independent same-seed rerun, "
+                      "not a restart from the archived state",flush=True)
+            current_checkpoint=next(r for r in records if r["step"]==checkpoint)
+            original_rows=source.get("observations",{}).get(key,{}).get(arm,[])
+            archive_row=next((r for r in original_rows if r["step"]==checkpoint),None)
+            payload["archived_checkpoint_metric_differences"][key][arm]=(
+                {k:current_checkpoint[k]-archive_row[k]
+                 for k in ("v_active","w_active","coexistence","v_mean","w_mean")}
+                if archive_row is not None else None)
             if [r["step"] for r in records]!=times:
                 raise AssertionError("Different observation cadence")
             payload["observations"][key][arm]=records
@@ -126,7 +144,7 @@ def run_extension(original,out,plot,*,steps=480,stride=12):
             print(f"Seed {seed} / {arm}: at {steps} "
                   f"V={row['v_active']:.6f} W={row['w_active']:.6f} "
                   f"same-cell={row['coexistence']:.6f}",flush=True)
-    payload["source_checkpoint_verified"]=True
+    payload["original_initialization_verified"]=True
     payload["both_species_active_at_extended_endpoint"]={
         key:bool(arms["separated_070"]["v_active"]>0 and
                  arms["separated_070"]["w_active"]>0)
@@ -137,7 +155,7 @@ def run_extension(original,out,plot,*,steps=480,stride=12):
     out.write_text(json.dumps(payload,indent=2,allow_nan=False)+"\n")
     measured_figure(payload,plot)
     if plot.stat().st_size<4096:
-        raise RuntimeError("Missing real continuation graph")
+        raise RuntimeError("Missing measured independent longer-horizon graph")
     return payload
 
 

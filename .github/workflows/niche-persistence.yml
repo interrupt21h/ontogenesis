@@ -25,23 +25,23 @@ jobs:
           python-version: '3.12'
       - name: Install pinned numerical renderer and test prerequisites
         run: python -m pip install numpy==2.2.6 scipy==1.15.3 matplotlib==3.10.3 pillow==11.2.1
-      - name: Regression-test checkpoint replay and reject mismatched archives
+      - name: Test initial-state integrity and transparent checkpoint-difference reporting
         run: |
           python -m compileall -q niche_persistence.py
           python -m unittest discover -s tests -p test_niche_persistence.py -v
-      - name: Download original verified G0032 source as replay baseline
+      - name: Download G0032 original archive as independent seeded comparison
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p input
           gh release download atlas-media -p 'g0032-pilot.json' -D input
           test -s input/g0032-pilot.json
-      - name: Extend matched seed trajectories to step 480
+      - name: Rerun matched seeds independently to step 480
         run: |
           /usr/bin/time -v python -u niche_persistence.py \
             --source input/g0032-pilot.json --steps 480 --stride 12 \
             --out g0032-persistence.json --plate g0032-persistence.png
-      - name: Validate original checkpoint hashes and honest outcome labeling
+      - name: Verify initial state and report any different step-240 numerical hashes
         run: |
           python - <<'PY'
           import json,math
@@ -51,11 +51,15 @@ jobs:
           assert (d['generation'],d['n'],d['steps'],d['source_checkpoint_step'])==('0032',16,480,240)
           assert d['seeds']==x['seeds']==[42,73]
           assert d['previous_source_sha']==x['source_sha']=='6f64f3e7eb66c245385d2801306f7f039eef0d66'
-          assert d['source_checkpoint_verified']
+          assert d['original_initialization_verified']
+          assert 'restarting' not in d['edition']
           for seed in ('42','73'):
               assert set(d['hashes'][seed])=={'near_transition','separated_070'}
               for arm in d['hashes'][seed]:
-                  assert d['hashes'][seed][arm]['240']==x['hashes'][seed][arm]['240']
+                  assert d['hashes'][seed][arm]['0']==x['hashes'][seed][arm]['0']
+                  matched=d['hashes'][seed][arm]['240']==x['hashes'][seed][arm]['240']
+                  assert d['archived_checkpoint_bitwise_matches'][seed][arm] is matched
+                  print('G0032',seed,arm,'recomputed step-240 SHA matches archived:',matched)
                   assert [row['step'] for row in d['observations'][seed][arm]]==d['times']
                   assert all(math.isfinite(row['v_active']) and
                              math.isfinite(row['w_active']) for row in d['observations'][seed][arm])
@@ -66,7 +70,7 @@ jobs:
           PY
       - uses: actions/upload-artifact@v7
         with:
-          name: g0032-extended-niche-persistence
+          name: g0032-independent-longer-horizon-screen
           path: |
             g0032-persistence.json
             g0032-persistence.png

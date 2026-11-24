@@ -1,4 +1,4 @@
-"""G0032 persistence: verify replay hashes instead of trusting curve similarity."""
+"""G0032: ensure same initial states, and report rather than hide later hash differences."""
 import json
 import tempfile
 import unittest
@@ -37,7 +37,8 @@ class Continuation(unittest.TestCase):
             source.write_text(json.dumps(saved_small_source()))
             payload=run_extension(source,root/"extended.json",root/"plot.png",
                                   steps=240,stride=12)
-            self.assertTrue(payload["source_checkpoint_verified"])
+            self.assertTrue(payload["original_initialization_verified"])
+            self.assertEqual(set(payload["archived_checkpoint_bitwise_matches"]["42"]),set(CASES))
             self.assertEqual(set(payload["endpoints"]["42"]),set(CASES))
             self.assertIn("42",payload["both_species_active_at_extended_endpoint"])
             self.assertGreater((root/"plot.png").stat().st_size,4096)
