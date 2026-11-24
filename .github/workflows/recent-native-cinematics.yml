@@ -1,0 +1,111 @@
+name: G0030 G0031 authentic native 4D cinematic editions
+on:
+  push:
+    branches: [main]
+    paths:
+      - recent_native_archive.py
+      - recent_native_cinema.py
+      - tests/test_recent_native_cinema.py
+      - .github/workflows/recent-native-cinematics.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: recent-native-cinematics-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  cinematics:
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include:
+          - gen: '0030'
+            reference: 'g0030-viability.json'
+          - gen: '0031'
+            reference: 'g0031-pilot.json'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install pinned numerical and portable cinematic dependencies
+        run: python -m pip install numpy==2.2.6 scipy==1.15.3 pillow==11.2.1 matplotlib==3.10.3 imageio-ffmpeg==0.8.1
+      - name: Compile code and run real 4D field MP4 smoke tests
+        run: |
+          python -m compileall -q recent_native_archive.py recent_native_cinema.py
+          python -m unittest discover -s tests -p test_recent_native_cinema.py -v
+      - name: Obtain published reference numerical study
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p input
+          gh release download atlas-media -p '${{ matrix.reference }}' -D input
+      - name: Recompute only two matched controls and archive actual native fields
+        run: |
+          /usr/bin/time -v python -u recent_native_archive.py \
+            --generation '${{ matrix.gen }}' \
+            --reference 'input/${{ matrix.reference }}' \
+            --n 16 --seed 42 --stride 12 \
+            --out 'g${{ matrix.gen }}-native-cinema.npz' \
+            --metadata 'g${{ matrix.gen }}-native-cinema.json'
+      - name: Render separate 30-second volumetric film from genuine samples
+        run: |
+          /usr/bin/time -v python -u recent_native_cinema.py \
+            --data 'g${{ matrix.gen }}-native-cinema.npz' \
+            --metadata 'g${{ matrix.gen }}-native-cinema.json' \
+            --movie 'ontogenesis-${{ matrix.gen }}-native-cinematic.mp4' \
+            --poster 'ontogenesis-${{ matrix.gen }}-native-cinematic.png' \
+            --seconds 30 --fps 24
+      - name: Verify actual MP4 decodability and matching source SHA-256
+        run: |
+          python - <<'PY'
+          import hashlib,json,imageio_ffmpeg
+          from pathlib import Path
+          gen='${{ matrix.gen }}'
+          root=Path(f'ontogenesis-{gen}-native-cinematic')
+          native=Path(f'g{gen}-native-cinema.npz')
+          info=json.loads(Path(f'g{gen}-native-cinema.json').read_text())
+          film=json.loads(root.with_suffix('.render.json').read_text())
+          assert info['archive_sha256']==film['source_archive_sha256']==hashlib.sha256(native.read_bytes()).hexdigest()
+          assert info['reference_pilot_sha256']
+          assert all(all(arm_checks.values()) for arm_checks in info['reference_checkpoint_comparisons'].values())
+          assert film['temporal_interpolation'] is False
+          assert film['omega_selection']=='discrete-stored-hyperplanes'
+          assert film['camera_motion_presentation_only']
+          assert film['not_organisms']
+          mp4=root.with_suffix('.mp4')
+          n,duration=imageio_ffmpeg.count_frames_and_secs(str(mp4))
+          assert n==film['frames']==720 and abs(duration-30)<0.1
+          reader=imageio_ffmpeg.read_frames(str(mp4))
+          head=next(reader)
+          reader.close()
+          assert tuple(head['size'])==(1280,720)
+          assert root.with_suffix('.png').stat().st_size>4096
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g${{ matrix.gen }}-authentic-native-four-dimensional-cinema
+          path: |
+            g${{ matrix.gen }}-native-cinema.npz
+            g${{ matrix.gen }}-native-cinema.json
+            ontogenesis-${{ matrix.gen }}-native-cinematic.mp4
+            ontogenesis-${{ matrix.gen }}-native-cinematic.png
+            ontogenesis-${{ matrix.gen }}-native-cinematic.render.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Publish independently named native spatial cinematic
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload atlas-media \
+            'g${{ matrix.gen }}-native-cinema.npz' \
+            'g${{ matrix.gen }}-native-cinema.json' \
+            'ontogenesis-${{ matrix.gen }}-native-cinematic.mp4' \
+            'ontogenesis-${{ matrix.gen }}-native-cinematic.png' \
+            'ontogenesis-${{ matrix.gen }}-native-cinematic.render.json' --clobber
+          echo "Published G${{ matrix.gen }} native 4D cinematic and numerical field archive." >> "$GITHUB_STEP_SUMMARY"
