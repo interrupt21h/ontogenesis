@@ -79,6 +79,14 @@ This reduced-domain 12⁴ version is an early rendering study. The selected cumu
 
 The two figures above are **conceptual documentation graphics**, not screenshots. The original films and monograph contain the actual observed images. The 96³ volumetric ray integration in G0025 is the established **minimum visual-quality reference** for later high-fidelity editions.
 
+## G0032 — Verified four-dimensional interpopulation contact graph
+
+[![Actual G0032 4D cell-count, population overlap and interfacial-face measurements](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-spatial-interface.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-spatial-interface.png)
+
+[**View the native 4D interface measurements**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-spatial-interface.png) · [Exact spatial-count JSON](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-spatial-interface.json) · [Validated calculations](https://github.com/interrupt21h/ontogenesis/actions/runs/45410140099)
+
+This plot analyzes the underlying **16⁴ numerical lattice**, not a video projection. At step 480, seed 73's strong-niche arm had **2,806 neighboring faces** between exclusively V-active and exclusively W-active cells and **two active co-occupied cells**. Interfaces are strictly geometric threshold measurements; a face contact does not imply physical membranes, nutrient transfer or functional organisms.
+
 ## G0032 — Native spatial edition from real four-dimensional fields
 
 [![Actual G0032 fixed-omega hyperplane of independently recorded native V/W/matrix state](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0032-spatial.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0032-spatial.mp4)

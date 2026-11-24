@@ -113,6 +113,8 @@ The [**verified longer-horizon comparison**](https://github.com/interrupt21h/ont
 
 [**Watch the authentic G0032 spatial cinematic**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0032-spatial.mp4) · [Recorded native 4D fields](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-native-fields-seed73.npz) · [Verified rendering](https://github.com/interrupt21h/ontogenesis/actions/runs/45407767981)
 
+The [native 4D interface analysis](https://github.com/interrupt21h/ontogenesis/actions/runs/45410140099) measures **2,806 neighboring faces** between V-only and W-only active regions in seed 73's stronger niche treatment at step 480, while only **two cells** exceed both activity thresholds. [View the actual 4D interface graph](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-spatial-interface.png).
+
 *The film uses real saved four-dimensional fields, unlike the earlier chart animation. It is a fixed-ω hyperplane under display-camera rotation, not an autonomous organism or proof of stable coexistence.*
 
 ## Every generation, visualized

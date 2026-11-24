@@ -279,6 +279,35 @@ jobs:
           assert png.stat().st_size>4096 and png.read_bytes()[:8]==bytes([137,80,78,71,13,10,26,10])
           PY
           cp report/build/evidence/0032-spatial/ontogenesis-0032-spatial.png report/build/atlas/0032-spatial.png
+      - name: Validate native G0032 four-dimensional contacts and embed the real plot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p report/build/evidence/0032-interface report/build/atlas
+          gh release download atlas-media \
+            -p 'g0032-spatial-interface.json' \
+            -p 'g0032-spatial-interface.png' \
+            -D report/build/evidence/0032-interface
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          analysis=Path('report/build/evidence/0032-interface')
+          states=Path('report/build/evidence/0032-spatial/g0032-native-fields-seed73.json')
+          info=json.loads(states.read_text())
+          d=json.loads((analysis/'g0032-spatial-interface.json').read_text())
+          assert (d['generation'],d['n'],d['seed'])==('0032',16,73)
+          assert d['source_archive_sha256']==info['archive_sha256']
+          assert d['times']==info['sample_steps']
+          niche=d['endpoints']['separated_070']
+          baseline=d['endpoints']['near_transition']
+          assert niche['four_dimensional_face_contacts']==2806
+          assert niche['both_active_cells']==2
+          assert niche['v_active_cells']==42113 and niche['w_active_cells']==14966
+          assert baseline['v_active_cells']==0 and baseline['four_dimensional_face_contacts']==0
+          png=analysis/'g0032-spatial-interface.png'
+          assert png.stat().st_size>4096 and png.read_bytes()[:8]==bytes([137,80,78,71,13,10,26,10])
+          PY
+          cp report/build/evidence/0032-interface/g0032-spatial-interface.png report/build/atlas/0032-interface.png
       - name: Validate report generator syntax
         run: python3 -m compileall -q report
       - name: Collect engineering atlas
@@ -301,6 +330,7 @@ jobs:
           test -s report/build/atlas/0031-pilot.png
           test -s report/build/atlas/0032-pilot.png
           test -s report/build/atlas/0032-spatial.png
+          test -s report/build/atlas/0032-interface.png
           grep -q 'Generation 0030' report/build/verified.txt
           grep -q 'Generation 0032' report/build/verified.txt
           grep -q 'Generation 0031' report/build/verified.txt

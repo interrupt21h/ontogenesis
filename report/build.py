@@ -287,6 +287,21 @@ for n,title,record in records:
             r" Camera rotation is for display only; the experiment is not"
             r" a life simulation with autonomous organisms."
         ))
+        interface=out/"atlas/0032-interface.png"
+        if not interface.is_file() or interface.stat().st_size<4096:
+            raise RuntimeError("Missing verified G0032 native 4D interface measurements")
+        body.append(raw_latex(
+            r"\clearpage\section{G0032: measured four-dimensional population interfaces}"
+            r"\begin{center}\includegraphics[width=\linewidth,height=.62\textheight,"
+            r"keepaspectratio]{atlas/0032-interface.png}\end{center}"
+            r"\noindent These values are calculated directly from actual"
+            r" numerical concentration arrays, not projected movie pixels."
+            r" Seed 73 at step 480 exhibited 2,806 periodic face contacts"
+            r" between exclusively V-active and W-active neighboring sites"
+            r" and two active co-occupied cells in the strong-niche treatment."
+            r" The contacts are geometric measurements and do not establish"
+            r" functional organism boundaries or metabolite exchange."
+        ))
     body.append(frame_section(n))
 body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontogreen}"))
 body.append((ROOT/"report/final_renders.md").read_text())

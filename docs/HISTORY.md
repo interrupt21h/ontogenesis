@@ -1663,3 +1663,12 @@ A subsequent [verified native-field recording and rendering workflow](https://gi
 This authentic spatial edition is **different** from the original measured-data animation and does not replace G0028's featured cinematic. Both use external static niches; they do not show autonomous organisms or prove long-term coexistence.
 
 
+
+### Observed four-dimensional interfaces: direct native-field analysis
+
+A separate [verified four-dimensional interface calculation](https://github.com/interrupt21h/ontogenesis/actions/runs/45410140099) used **the actual archived float32 4D fields** from the seed-73 native-recording run, not video pixels or a two-dimensional projection. At step 480, the strong spatial-niche treatment had **42,113 V-active cells**, **14,966 W-active cells**, **2 simultaneously active cells** and **2,806 distinct lattice faces** shared by *exclusively V-active* and *exclusively W-active* neighboring cells. Periodic adjacency was measured along all four simulation axes.
+
+The matched no-niche treatment had **0 V-active cells**, **57,309 W-active cells**, zero overlapping active cells and zero exclusive V/W contacts. An edge contact is a property of a concentration-thresholded lattice, **not a biological cell membrane or measured metabolite transfer**. The result is confined to one seed, one model, and a finite 480-step horizon.
+
+[Measured 4D contact and overlap plot](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-spatial-interface.png) · [All 21 sampled numerical measurements](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-spatial-interface.json) · [Verified numerical workflow](https://github.com/interrupt21h/ontogenesis/actions/runs/45410140099).
+
