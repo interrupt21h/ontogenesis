@@ -109,6 +109,10 @@ G0031 showed that slightly reducing V's mortality usually switches which populat
 
 *This is numerical niche partitioning under a fixed environmental bias, not a demonstration of species evolution, stable mutualism or artificial organisms. No spatial film was generated without archived native spatial fields.*
 
+## Every generation, visualized
+
+The [**complete G0001–G0032 visual atlas**](docs/VISUAL_INDEX.md) brings together all 32 generations with actual archived posters, original films, measured diagrams, and source-linked numerical evidence. For a filterable, in-browser player layout, open the [interactive HTML edition](docs/visual-atlas.html). The G0031 and G0032 [measured-data films](docs/VISUAL_GALLERY.md) complement the full-domain G0028/G0029 cinematics without inventing unrecorded spatial states.
+
 ## Try it yourself
 
 ~~~bash

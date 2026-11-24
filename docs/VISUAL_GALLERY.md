@@ -6,6 +6,20 @@
 
 **Two verified G0029 cinematic editions:** [Adaptive transport](generations/0029.md) has a smooth volumetric master and a separate [luminous voxel-style film](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-voxel-cinematic.mp4), both sourced from the same measured full-domain simulation. G0029's small pilot was near-inactive, while the full run retained activity but changed species coverage. The featured G0028 film and cumulative edition remain unchanged.
 
+[**Browse every generation visually — G0001 through G0032**](VISUAL_INDEX.md) · [Filterable HTML player edition](visual-atlas.html)
+
+### G0031 and G0032 — New verified measured numerical films
+
+[![G0031 measured viability-frontier animation, verified frame](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0031-evidence.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0031-evidence.mp4)
+
+[**G0031: Watch the 24-second viability-frontier documentary**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0031-evidence.mp4) · [Real numerical observations](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0031-pilot.json) · [Rendering provenance](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0031-evidence.render.json)
+
+[![G0032 measured spatial-niche activity animation, verified frame](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0032-evidence.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0032-evidence.mp4)
+
+[**G0032: Watch the 24-second complementary-niche documentary**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0032-evidence.mp4) · [Real numerical observations](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-pilot.json) · [Rendering provenance](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0032-evidence.render.json)
+
+Both videos animate actual V/W activity measurements in the original G0031/G0032 16⁴ numerical archives, showing competing treatments and independent seeds. They are **numerical animation**, not spatial field footage or individual organisms. Neither replaces G0028's featured film.
+
 ## G0030 — Animated ecological evidence (not a spatial cinematic)
 
 [![G0030 measured ecological time-series documentary, verified poster](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0030-diagnostic.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0030-diagnostic.mp4)
