@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Ontogenesis · G0033 Temporal Loom</title>
+<style>
+:root{color:#edf7fd;background:#081521;font:16px/1.5 system-ui,-apple-system,sans-serif;--mint:#67edda;--line:#38566c}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% -20%,#28516a,transparent 55%),#081521}
+main{max-width:1310px;margin:auto;padding:24px clamp(16px,4vw,55px) 66px}
+nav{display:flex;flex-wrap:wrap;gap:20px;font-size:.9rem}a{color:#6de9d5}
+h1{font-size:clamp(2.8rem,6vw,5.5rem);letter-spacing:-.055em;line-height:1.03;margin:26px 0 14px}h1 span{color:var(--mint)}
+h2{font-size:1.3rem;margin:0 0 8px}.eyebrow{text-transform:uppercase;letter-spacing:.17em;color:#80e6d7;font-size:.77rem;font-weight:800}
+.lead{max-width:780px;color:#bfd5e3}.controls{display:flex;flex-wrap:wrap;gap:15px;align-items:end;margin:26px 0;border:1px solid var(--line);background:#122b3d;border-radius:14px;padding:18px}
+label{display:grid;gap:6px;color:#c3d7e3;font-size:.85rem}select,input{padding:9px;background:#0d2030;color:#f2fcff;border:1px solid #55768b;border-radius:8px;font:inherit}
+select:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--mint);outline-offset:3px}input[type=range]{padding:3px;width:min(320px,78vw)}
+section.panel{background:linear-gradient(160deg,#183247,#0c2334);border:1px solid var(--line);border-radius:17px;padding:20px;margin:19px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,475px),1fr));gap:18px}.hint{font-size:.86rem;color:#adc6d6}
+.scroll{overflow-x:auto}.heatmap{display:grid;grid-template-columns:50px repeat(11,minmax(23px,1fr));gap:5px;min-width:400px}
+.heatmap .rowlabel{font-variant-numeric:tabular-nums;text-align:right;padding:9px 7px 0 0;font-size:.81rem;color:#c0d3df}
+.heatmap .axis{font-size:.65rem;text-align:center;color:#a5becd;padding-top:7px}
+.cell{min-height:33px;border-radius:4px;border:1px solid #395468;display:block;position:relative;box-shadow:inset 0 0 0 0 #fff;transition:border-color .12s}
+.cell.current{border:2px solid #fff1b5;box-shadow:0 0 7px #d6f1b755}.cell:focus-visible{outline:3px solid #fff}
+.cell[title]{cursor:help}
+.stat{display:flex;flex-wrap:wrap;gap:16px}.stat>div{flex:1;min-width:145px;border:1px solid #304e63;border-radius:10px;background:#0d2335;padding:15px}.stat strong{display:block;font-size:1.65rem;font-variant-numeric:tabular-nums;margin-top:4px}
+#status{color:#bfdbdf}footer{color:#a9c0cf;font-size:.85rem;margin-top:35px;border-top:1px solid var(--line);padding-top:15px}
+</style>
+</head>
+<body><main>
+<nav><a href="./">← Cinema</a><a href="interface-lab.html">Interface Lab</a><a href="https://github.com/interrupt21h/ontogenesis/blob/main/docs/generations/0033.md">G0033 methodology</a><a href="https://github.com/interrupt21h/ontogenesis/releases/tag/atlas-media">Recorded evidence</a></nav>
+<p class="eyebrow">G0033 · Eight-seed numerical replay · 16⁴ lattice</p>
+<h1>The Temporal <span>Loom.</span></h1>
+<p class="lead">Two habitats. Eight independent initializations. Eleven measured timepoints. A matrix that reveals whether, when and where numerical interfaces emerge—without inventing a single simulation state.</p>
+<p id="status" role="status">Loading archived and validated numerical traces…</p>
+<div class="controls">
+<label for="metric">Metric<select id="metric">
+<option value="four_dimensional_face_contacts">Exclusive 4D contact faces</option>
+<option value="v_active_cells">V-active numerical sites</option>
+<option value="w_active_cells">W-active numerical sites</option>
+<option value="both_active_cells">Same-site V and W activity</option>
+<option value="contact_fraction_per_face">Fraction of 4D faces</option>
+<option value="continuous_shared_mass_ratio">Continuous shared mass ratio</option>
+</select></label>
+<label for="threshold">Activity cutoff<select id="threshold">
+<option value="0.05">0.05</option><option value="0.10" selected>0.10 (primary)</option><option value="0.20">0.20</option>
+</select></label>
+<label for="time">Recorded step: <output id="current-time">0</output>
+<input type="range" id="time" min="0" max="10" step="1" value="0"></label>
+</div>
+<div class="grid">
+<section class="panel"><p class="eyebrow">Treatment A</p><h2>Near-transition / no imposed niche</h2><div class="scroll"><div class="heatmap" id="near_transition"></div></div></section>
+<section class="panel"><p class="eyebrow">Treatment B</p><h2>Complementary habitat / strength 0.70</h2><div class="scroll"><div class="heatmap" id="separated_070"></div></div></section>
+</div>
+<section class="panel"><h2>Selected observation across eight independent seeds</h2>
+<div class="stat" id="stats"></div>
+<p class="hint">The vertical highlight marks the selected recorded simulation step. Colors are normalized to the largest observed value of both treatments for this metric and threshold; they do not imply intermediate numerical states. Hover or focus on a cell for its exact numerical measurement.</p></section>
+<section class="panel"><h2>Reading this experiment</h2>
+<p>Every square corresponds to a recorded measurement from one independently initialized numerical simulation. Each grid traverses 11 actual observations: steps 0, 24, 48, …, 240. All four simulation axes are included when calculating periodic exclusive V/W contact faces.</p>
+<p>The two treatments share the same eight initialization seeds. Habitat preferences are prescribed externally. The observations cannot establish organisms, metabolism, biological communication or indefinite ecological stability.</p>
+<p><a href="https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0033-temporal-loom.mp4">Watch the cinematic edition (after verification)</a> · <a href="https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0033-temporal-loom.json">Download the time-series data (after publication)</a></p>
+</section>
+<footer>Original G0033 measurements, verified against archived source SHA-256 and the published eight-seed numerical summary. A static page with client-side visualization, no server-side reconstruction.</footer>
+</main>
+<script>
+"use strict";
+const elements={metric:document.getElementById("metric"),threshold:document.getElementById("threshold"),time:document.getElementById("time")};
+const arms=["near_transition","separated_070"];let evidence=null;
+const shown=x=>Number.isInteger(x)?x.toLocaleString():x.toLocaleString(undefined,{maximumFractionDigits:6});
+function add(tag,text,cls){const el=document.createElement(tag);if(text!==null)el.textContent=text;if(cls)el.className=cls;return el}
+function rgb(value,max,arm){
+ const x=Math.pow(Math.log1p(Math.max(0,value))/Math.log1p(Math.max(1,max)),.72);
+ const cold=[20,39,55],hot=arm==="separated_070"?[91,229,208]:[252,163,104];
+ return "rgb("+cold.map((c,i)=>Math.round(c*(1-x)+hot[i]*x)).join(",")+")";
+}
+function display(){
+ if(!evidence)return;
+ const metric=elements.metric.value,cutoff=elements.threshold.value,at=Number(elements.time.value);
+ document.getElementById("current-time").textContent=evidence.times[at];
+ const data=evidence.values[metric][cutoff],vals=arms.flatMap(arm=>data[arm].flat()),max=Math.max(0,...vals);
+ for(const arm of arms){
+  const host=document.getElementById(arm);host.replaceChildren();
+  host.append(add("div","Seed / step","axis"));
+  for(const step of evidence.times)host.append(add("div",step,"axis"));
+  for(let i=0;i<evidence.seeds.length;i++){
+   host.append(add("div",evidence.seeds[i],"rowlabel"));
+   for(let j=0;j<evidence.times.length;j++){
+    const value=data[arm][i][j],el=add("span",null,"cell"+(j===at?" current":""));
+    el.style.background=rgb(value,max,arm);
+    el.title="Seed "+evidence.seeds[i]+", step "+evidence.times[j]+": "+shown(value);
+    el.setAttribute("aria-label",el.title);
+    el.setAttribute("role","img");el.tabIndex=0;
+    host.append(el);
+   }
+  }
+ }
+ const stats=document.getElementById("stats");stats.replaceChildren();
+ for(const arm of arms){
+  const rows=data[arm].map(row=>row[at]);
+  const card=add("div",null);
+  card.append(add("div",arm==="separated_070"?"Strong niche":"No niche","hint"));
+  card.append(add("strong",shown(rows.reduce((a,b)=>a+b,0))));
+  card.append(add("div","Sum across eight seed measurements · "+rows.filter(v=>v>0).length+"/8 nonzero","hint"));
+  stats.append(card);
+ }
+ document.getElementById("status").textContent=
+  "Recorded numerical study: "+evidence.seeds.length+" seeds, two treatments, "+evidence.times.length+" samples each";
+}
+for(const ctrl of Object.values(elements))ctrl.addEventListener("input",display);
+(async()=>{try{
+ const res=await fetch("data/g0033-temporal-loom.json",{cache:"no-store"});
+ if(!res.ok)throw new Error("HTTP "+res.status);
+ const doc=await res.json();
+ if(doc.edition!=="eight-seed-measured-temporal-loom-v1"||doc.seeds.length!==8||
+    doc.times.length!==11||doc.n!==16||doc.steps!==240)throw Error("unexpected provenance");
+ evidence=doc;display();
+}catch(e){document.getElementById("status").textContent=
+  "Temporal history not published yet ("+e.message+"). Existing Interface Lab remains available."}
+})();
+</script></body></html>
