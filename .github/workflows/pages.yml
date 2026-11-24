@@ -25,6 +25,7 @@ jobs:
           from html.parser import HTMLParser
           page=Path('site/index.html').read_text()
           lab=Path('site/interface-lab.html').read_text()
+          loom=Path('site/temporal-loom.html').read_text()
           atlas=Path('docs/visual-atlas.html').read_text()
           assert '<html lang="en">' in page and '<main class="wrap">' in page
           assert 'id="player"' in page and 'id="cards"' in page
@@ -37,6 +38,8 @@ jobs:
           assert 'interface-lab.html' in page
           assert 'data/g0033-robustness.json' in lab
           assert 'four_dimensional_face_contacts' in lab
+          assert 'data/g0033-temporal-loom.json' in loom
+          assert 'eight-seed-measured-temporal-loom-v1' in loom
           class Parser(HTMLParser):
               pass
           Parser().feed(page)
@@ -63,6 +66,7 @@ jobs:
           parser = ScriptExtractor()
           parser.feed(Path('site/index.html').read_text())
           parser.feed(Path('site/interface-lab.html').read_text())
+          parser.feed(Path('site/temporal-loom.html').read_text())
           assert parser.inline, 'No executable site JavaScript was found'
           Path('/tmp/ontogenesis-pages.js').write_text('\n'.join(parser.inline))
           PY
@@ -72,6 +76,7 @@ jobs:
           mkdir -p _site
           cp site/index.html _site/index.html
           cp site/interface-lab.html _site/interface-lab.html
+          cp site/temporal-loom.html _site/temporal-loom.html
           cp -a docs _site/docs
           touch _site/.nojekyll
           test -s _site/docs/visual-atlas.html
@@ -92,6 +97,24 @@ jobs:
           assert len(d["individual_endpoints"])==8
           assert len(d["source_archive_sha256_by_seed"])==8
           PY
+      - name: Bundle verified temporal traces after cinematic publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p _site/data
+          if gh release download atlas-media -p g0033-temporal-loom.json -D _site/data; then
+            python3 - <<'PY'
+          import json
+          from pathlib import Path
+          data=json.loads(Path('_site/data/g0033-temporal-loom.json').read_text())
+          assert data["edition"]=="eight-seed-measured-temporal-loom-v1"
+          assert data["seeds"]==[42,73,101,137,211,307,401,509]
+          assert data["times"]==list(range(0,241,24))
+          assert len(data["source_analysis_sha256_by_seed"])==8
+          PY
+          else
+            echo "Temporal Loom measurements not published yet; the browser will show pending evidence."
+          fi
       - uses: actions/upload-pages-artifact@v4
         with:
           path: _site
