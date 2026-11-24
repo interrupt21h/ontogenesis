@@ -1,0 +1,184 @@
+name: G0037 structural persistence and Memory Strata cinematics
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'g0037_structural_persistence.py'
+      - 'g0037_memory_strata.py'
+      - 'tests/test_g0037_*.py'
+      - '.github/workflows/g0037-persistence.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: g0037-persistence-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  simulate:
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        seed: [42,73,101,137]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy==2.2.6 scipy==1.15.3 matplotlib==3.10.3 pillow==11.2.1
+      - name: Verify genuine four-dimensional structural persistence statistics
+        run: python -m unittest discover -s tests -p 'test_g0037_structural_persistence.py' -v
+      - name: Integrate three feedback strengths with matched native initialization
+        run: |
+          /usr/bin/time -v python -u g0037_structural_persistence.py \
+            --seed ${{ matrix.seed }} \
+            --archive g0037-seed-${{ matrix.seed }}.npz \
+            --metadata g0037-seed-${{ matrix.seed }}.json
+      - name: Verify all original native 4D arrays and strict sample clock
+        run: |
+          python - <<'PY'
+          import hashlib,json
+          import numpy as np
+          from pathlib import Path
+          seed=int('${{ matrix.seed }}')
+          root=f'g0037-seed-{seed}'
+          archive=Path(root+'.npz')
+          d=json.loads(Path(root+'.json').read_text())
+          assert d['seed']==seed and d['generation']=='0037'
+          assert d['sample_steps']==[0,24,48,72,96,120]
+          assert d['arms']==['control','low','high']
+          assert d['feedback_gains']=={'control':0.,'low':.0175,'high':.07}
+          assert d['archive_sha256']==hashlib.sha256(archive.read_bytes()).hexdigest()
+          assert len({v['solver_hashes']['0'] for v in d['results'].values()})==1
+          with np.load(archive,allow_pickle=False) as f:
+              for arm in d['arms']:
+                  for ch in ('v','w','m'):
+                      a=f[f'{arm}_{ch}']
+                      assert a.shape==(6,12,12,12,12) and a.dtype==np.float32
+                      assert np.isfinite(a).all() and a.min()>=-1e-6
+              for arm in ('low','high'):
+                  for ch in ('v','w','m'):
+                      assert np.array_equal(f[f'control_{ch}'][0],f[f'{arm}_{ch}'][0])
+          for arm,detail in d['results'].items():
+              assert len(detail['observations'])==6
+              assert detail['observations'][0]['matrix_persistence'] is None
+              assert all(row['matrix_persistence'] is None or
+                         row['matrix_persistence']['jaccard'] is None or
+                         0<=row['matrix_persistence']['jaccard']<=1
+                         for row in detail['observations'])
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0037-seed-${{ matrix.seed }}-native-feedback-strength
+          path: |
+            g0037-seed-${{ matrix.seed }}.npz
+            g0037-seed-${{ matrix.seed }}.json
+          retention-days: 30
+          if-no-files-found: error
+  produce:
+    needs: simulate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy==2.2.6 scipy==1.15.3 matplotlib==3.10.3 pillow==11.2.1 imageio-ffmpeg==0.8.1
+      - name: Confirm artistic renderer uses real discrete native states
+        run: python -m unittest discover -s tests -p 'test_g0037_memory_strata.py' -v
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: g0037-seed-*-native-feedback-strength
+          path: evidence
+          merge-multiple: true
+      - name: Aggregate all four matched numerical studies without cherry picking
+        run: |
+          python - <<'PY'
+          import hashlib,json,math
+          from pathlib import Path
+          seeds=[42,73,101,137]
+          reports={}
+          for seed in seeds:
+              root=f'evidence/g0037-seed-{seed}'
+              d=json.loads(Path(root+'.json').read_text())
+              assert d['seed']==seed and d['generation']=='0037'
+              assert d['archive_sha256']==hashlib.sha256(Path(root+'.npz').read_bytes()).hexdigest()
+              assert d['sample_steps']==[0,24,48,72,96,120]
+              reports[str(seed)]=d
+          summary={'generation':'0037','edition':'four-seed-4d-feedback-strength-persistence-pilot-v1',
+                   'seeds':seeds,'n':12,'steps':120,'sample_steps':[0,24,48,72,96,120],
+                   'arms':['control','low','high'],
+                   'feedback_gains':{'control':0.,'low':.0175,'high':.07},
+                   'source_archive_sha256_by_seed':{s:r['archive_sha256'] for s,r in reports.items()},
+                   'native_observations':{s:{arm:r['results'][arm]['observations']
+                                           for arm in ('control','low','high')}
+                                          for s,r in reports.items()},
+                   'endpoint_absolute_field_differences':{
+                       s:r['endpoint_mean_absolute_difference_from_control']
+                       for s,r in reports.items()},
+                   'limitations':['Only four finite matched seeds, not adaptive organism memory',
+                                  'Null matrix Jaccard means both masks empty, not perfect persistence',
+                                  'Strength variants are prescribed, not naturally selected']}
+          Path('g0037-persistence.json').write_text(json.dumps(summary,indent=2,allow_nan=False)+'\n')
+          PY
+      - name: Smoke render both truthful cinematic editions
+        run: |
+          python -u g0037_memory_strata.py \
+            --a evidence/g0037-seed-42.npz --am evidence/g0037-seed-42.json \
+            --b evidence/g0037-seed-73.npz --bm evidence/g0037-seed-73.json \
+            --out /tmp/g0037-smoke --seconds 2 --fps 8
+      - name: Produce art-directed and exact-grid evidence films
+        run: |
+          /usr/bin/time -v python -u g0037_memory_strata.py \
+            --a evidence/g0037-seed-42.npz --am evidence/g0037-seed-42.json \
+            --b evidence/g0037-seed-73.npz --bm evidence/g0037-seed-73.json \
+            --out output --seconds 24 --fps 24
+      - name: Decode and verify both masters and native source fingerprints
+        run: |
+          python - <<'PY'
+          import hashlib,imageio_ffmpeg,json
+          from pathlib import Path
+          posters=[]
+          for edition in ('art','evidence'):
+              stem=Path('output/ontogenesis-0037-memory-strata-'+edition)
+              meta=json.loads(stem.with_suffix('.render.json').read_text())
+              assert meta['generation']=='0037' and meta['edition']==edition
+              assert meta['recorded_times']==[0,24,48,72,96,120]
+              assert meta['numerical_interpolation'] is False
+              assert meta['biological_memory_inferred'] is False
+              assert meta['frames']==576
+              for seed in (42,73):
+                  digest=hashlib.sha256(Path(f'evidence/g0037-seed-{seed}.npz').read_bytes()).hexdigest()
+                  assert meta['source_archive_sha256_by_seed'][str(seed)]==digest
+              frames,seconds=imageio_ffmpeg.count_frames_and_secs(str(stem.with_suffix('.mp4')))
+              assert frames==576 and abs(seconds-24)<.1
+              reader=imageio_ffmpeg.read_frames(str(stem.with_suffix('.mp4')))
+              header=next(reader);reader.close()
+              assert tuple(header['size'])==(1280,720)
+              png=stem.with_suffix('.png')
+              assert png.stat().st_size>4096
+              posters.append(hashlib.sha256(png.read_bytes()).hexdigest())
+          assert posters[0]!=posters[1]
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0037-structural-memory-strata-paired-films
+          path: |
+            g0037-persistence.json
+            output/*.mp4
+            output/*.png
+            output/*.render.json
+          retention-days: 30
+          if-no-files-found: error
+      - name: Publish only after all matched numerical and cinematic checks pass
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload atlas-media g0037-persistence.json output/*.mp4 output/*.png output/*.render.json --clobber
+          echo 'G0037 four-seed matched numerical persistence and paired art/evidence cinema published.' >> "$GITHUB_STEP_SUMMARY"
