@@ -72,12 +72,14 @@ def scatter(draw,fields,step_index,omega,angle,rect):
     return (int((V>.1).sum()),int((W>.1).sum()),
             int(((V>.1)&(W>.1)).sum()))
 
-def image_at(data,info,t,seconds,base=None):
+def image_at(data,info,t,seconds,base=None,*,omega_sweep=False):
     if seconds<=0:raise ValueError("Duration must be positive")
     pct=max(0,min(1,t/seconds))
     times=info["sample_steps"]
     idx=min(len(times)-1,int(pct*(len(times)-1)))
-    omega=info["n"]//2
+    # Sample only authentic stored hyperplanes: no interpolation between 4D slices.
+    omega=(min(info["n"]-1,int(pct*info["n"])) if omega_sweep
+           else info["n"]//2)
     step=times[idx]
     angle=.26+math.pi*2*.76*pct
     im=base.copy() if base is not None else background()
@@ -111,7 +113,7 @@ def image_at(data,info,t,seconds,base=None):
     d.rectangle((0,711,round(1280*pct),720),fill="#53deca")
     return im
 
-def render(archive,source_meta,movie,poster,*,seconds=24,fps=24):
+def render(archive,source_meta,movie,poster,*,seconds=24,fps=24,omega_sweep=False):
     if not 2<=seconds<=60 or fps not in (8,12,24,30):
         raise ValueError("Outside bounded rendering duration")
     data,info,digest=load_fields(archive,source_meta)
@@ -127,7 +129,7 @@ def render(archive,source_meta,movie,poster,*,seconds=24,fps=24):
     count=seconds*fps;base=background();keyframes=[]
     try:
         for i in range(count):
-            frame=image_at(data,info,i/fps,seconds,base)
+            frame=image_at(data,info,i/fps,seconds,base,omega_sweep=omega_sweep)
             if i in (0,count//3,count*2//3,count-1):
                 keyframes.append(hashlib.sha256(frame.tobytes()).hexdigest())
             if i==count*3//4:frame.save(poster)
@@ -139,12 +141,15 @@ def render(archive,source_meta,movie,poster,*,seconds=24,fps=24):
     if not poster.exists() or poster.stat().st_size<4096 or len(set(keyframes))!=4:
         raise RuntimeError("Spatial poster or temporal frames failed")
     provenance={
-        "generation":"0032","edition":"native-4d-omega-slice-cinematic-v1",
+        "generation":"0032","edition":("native-4d-hyperplane-journey-v1" if omega_sweep
+                                         else "native-4d-omega-slice-cinematic-v1"),
         "source_archive_sha256":digest,
         "source_numeric_revision":info["source_sha"],
         "render_commit":os.getenv("GITHUB_SHA","unversioned"),
         "source_dimensions":[info["n"]]*4,
-        "fixed_omega_slice":info["n"]//2,
+        "fixed_omega_slice":None if omega_sweep else info["n"]//2,
+        "omega_sampling":("discrete-recorded-hyperplanes" if omega_sweep else "fixed"),
+        "omega_indices":(list(range(info["n"])) if omega_sweep else [info["n"]//2]),
         "numerical_sample_steps":info["sample_steps"],
         "interpolated_numerical_states":False,"camera_rotation_for_visualization":True,
         "seed":info["seed"],"treatments":list(ARMS),
@@ -163,6 +168,9 @@ if __name__=="__main__":
     p.add_argument("--poster",required=True,type=Path)
     p.add_argument("--seconds",type=int,default=24)
     p.add_argument("--fps",type=int,default=24)
+    p.add_argument("--omega-sweep",action="store_true",
+                   help="Visit stored 4D hyperplanes discretely; never synthesize slices")
     a=p.parse_args()
     print(json.dumps(render(a.data,a.metadata,a.movie,a.poster,
-                            seconds=a.seconds,fps=a.fps),indent=2))
+                            seconds=a.seconds,fps=a.fps,
+                            omega_sweep=a.omega_sweep),indent=2))
