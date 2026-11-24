@@ -94,14 +94,14 @@ def snapshot_visuals(pair):
     return outputs
 
 
-def frame(visuals, index, count, times):
+def frame(visuals, index, count, times, base=None):
     if not 0 <= index < count or count < 2:
         raise ValueError("Invalid film frame")
     pct = index / (count - 1)
     sampled = min(len(times) - 1, int(pct * len(times)))
     # The moving focus visits all fourth-axis planes; actual samples never blend.
     focused = min(15, int(pct * 16))
-    im = background()
+    im = base.copy() if base is not None else background()
     d = ImageDraw.Draw(im)
     d.rectangle((0, 0, 1280, 7), fill="#6DE7D3")
     d.text((40, 21), "ONTOGENESIS / G0033 / FOUR-DIMENSIONAL CONTACT CARTOGRAPHY",
@@ -161,9 +161,10 @@ def render(a, am, b, bm, movie, poster, *, seconds=24, fps=24):
     proc = subprocess.Popen(command, stdin=subprocess.PIPE)
     count = seconds * fps
     fingerprints = []
+    base = background()  # Expensive static gradient calculated once, not 576 times.
     try:
         for i in range(count):
-            im = frame(visuals, i, count, times)
+            im = frame(visuals, i, count, times, base=base)
             if i in (0, count // 3, 2 * count // 3, count - 1):
                 fingerprints.append(hashlib.sha256(im.tobytes()).hexdigest())
             if i == count * 3 // 4:
