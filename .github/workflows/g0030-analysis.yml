@@ -1,0 +1,70 @@
+name: G0030 trajectory qualification (archived data only)
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/analyze_g0030.py'
+      - 'tests/test_g0030_analysis.py'
+      - '.github/workflows/g0030-analysis.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: g0030-analysis-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  analyze:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Test measured-trajectory qualifier
+        run: |
+          python -m compileall -q scripts/analyze_g0030.py
+          python -m unittest discover -s tests -p test_g0030_analysis.py -v
+      - name: Retrieve archived G0030 numeric samples; do not rerun simulation
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p data
+          gh release download atlas-media -p 'g0030-pilot.json' -D data
+          test -s data/g0030-pilot.json
+      - name: Report measured activity loss and treatment contrasts
+        run: |
+          python scripts/analyze_g0030.py \
+            --input data/g0030-pilot.json \
+            --json g0030-analysis.json \
+            --markdown g0030-analysis.md
+          cat g0030-analysis.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Verify provenance and honest interpretation
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          raw=json.loads(Path('data/g0030-pilot.json').read_text())
+          result=json.loads(Path('g0030-analysis.json').read_text())
+          assert result['numerical_source_sha']==raw['source_sha']
+          assert (result['n'],result['steps'],result['seeds'])==(16,1200,[42,73])
+          assert len(result['analysis'])==2
+          assert all(len(cohort)==4 for cohort in result['analysis'].values())
+          assert result['all_endpoints_v_inactive_by_threshold']
+          assert result['all_endpoints_cooccupancy_inactive_by_threshold']
+          assert 'not evidence of sustained reciprocal coexistence' in Path('g0030-analysis.md').read_text()
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0030-posthoc-population-activity
+          path: |
+            g0030-analysis.json
+            g0030-analysis.md
+          retention-days: 30
+          if-no-files-found: error
+      - name: Retain posthoc evidence with the original release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload atlas-media g0030-analysis.json g0030-analysis.md --clobber
