@@ -1,0 +1,107 @@
+name: G0030 measured ecological documentary (render only)
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'ecological_diagnostic_render.py'
+      - 'tests/test_ecological_diagnostic_render.py'
+      - '.github/workflows/ecological-diagnostic.yml'
+  workflow_dispatch:
+    inputs:
+      seconds:
+        type: number
+        default: 30
+        description: 'Length in seconds (2-90); existing verified numerical data only'
+permissions:
+  contents: read
+concurrency:
+  group: g0030-documentary-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  diagnostic:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install pinned image renderer
+        run: |
+          python -m pip install pillow==11.2.1
+          command -v ffmpeg
+          command -v ffprobe
+          test -s /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf
+      - name: Validate renderer without numerical simulation
+        run: |
+          python -m compileall -q ecological_diagnostic_render.py
+          python -m unittest discover -s tests -p test_ecological_diagnostic_render.py -v
+      - name: Download verified numerical evidence for both G0030 screens
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p input
+          gh release download atlas-media -p 'g0030-pilot.json' -p 'g0030-viability.json' -D input
+          test -s input/g0030-pilot.json
+          test -s input/g0030-viability.json
+      - name: Encode short smoke film and verify frame count
+        run: |
+          python ecological_diagnostic_render.py \
+            --factorial input/g0030-pilot.json --viability input/g0030-viability.json \
+            --movie /tmp/g0030-smoke.mp4 --poster /tmp/g0030-smoke.png \
+            --seconds 2 --fps 8
+          ffprobe -v error -count_frames -select_streams v:0 \
+            -show_entries stream=nb_read_frames -of default=noprint_wrappers=1:nokey=1 \
+            /tmp/g0030-smoke.mp4 | grep -qx 16
+      - name: Render actual 1280x720 animated numerical documentary
+        env:
+          SECONDS: ${{ github.event_name == 'workflow_dispatch' && inputs.seconds || 30 }}
+        run: |
+          /usr/bin/time -v python -u ecological_diagnostic_render.py \
+            --factorial input/g0030-pilot.json --viability input/g0030-viability.json \
+            --movie ontogenesis-0030-diagnostic.mp4 \
+            --poster ontogenesis-0030-diagnostic.png \
+            --seconds "$SECONDS" --fps 24
+      - name: Validate decoded MP4, source provenance and measured frame count
+        env:
+          SECONDS: ${{ github.event_name == 'workflow_dispatch' && inputs.seconds || 30 }}
+        run: |
+          ffmpeg -v error -xerror -i ontogenesis-0030-diagnostic.mp4 -f null -
+          ffprobe -v error -count_frames -select_streams v:0 \
+            -show_entries stream=width,height,nb_read_frames -of json \
+            ontogenesis-0030-diagnostic.mp4 > diagnostic-probe.json
+          python - <<'PY'
+          import hashlib,json,os
+          from pathlib import Path
+          meta=json.loads(Path('ontogenesis-0030-diagnostic.render.json').read_text())
+          prob=json.loads(Path('diagnostic-probe.json').read_text())['streams'][0]
+          assert meta['generation']=='0030' and meta['kind'].startswith('time-series')
+          assert meta['selected_featured_film'] is False
+          assert meta['frames']==int(os.environ['SECONDS'])*24==int(prob['nb_read_frames'])
+          assert (int(prob['width']),int(prob['height']))==(1280,720)
+          assert meta['distinct_keyframe_hashes']>=4
+          assert meta['presentation']['camera_or_spatial_voxels'] is False
+          for name,h in meta['source_archive_sha256'].items():
+              assert hashlib.sha256(Path('input',name).read_bytes()).hexdigest()==h
+          assert Path('ontogenesis-0030-diagnostic.png').stat().st_size>4096
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0030-measured-ecology-documentary
+          path: |
+            ontogenesis-0030-diagnostic.mp4
+            ontogenesis-0030-diagnostic.png
+            ontogenesis-0030-diagnostic.render.json
+            diagnostic-probe.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Publish separately named measured-data film to atlas-media
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload atlas-media \
+            ontogenesis-0030-diagnostic.mp4 ontogenesis-0030-diagnostic.png \
+            ontogenesis-0030-diagnostic.render.json --clobber
+          echo '[G0030: measured ecological documentary](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0030-diagnostic.mp4)' >> "$GITHUB_STEP_SUMMARY"
