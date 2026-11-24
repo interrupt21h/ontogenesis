@@ -155,7 +155,10 @@ def render(archive,source_meta,movie,poster,*,seconds=24,fps=24,omega_sweep=Fals
         "seed":info["seed"],"treatments":list(ARMS),
         "frames":count,"seconds":seconds,"fps":fps,"width":1280,"height":720,
         "featured_G0028_preserved":True,
-        "interpretation":"Recorded concentrations on a fixed hyperplane, not individual organisms",
+        "interpretation":("Recorded concentrations from successive discrete fourth-axis hyperplanes; "
+                          "camera motion and plane selection are presentation choices, not organisms"
+                          if omega_sweep else
+                          "Recorded concentrations on a fixed hyperplane, not individual organisms"),
     }
     movie.with_suffix(".render.json").write_text(json.dumps(provenance,indent=2)+"\n")
     return provenance
