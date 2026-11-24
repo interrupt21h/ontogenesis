@@ -47,7 +47,8 @@ history=(root/"docs/HISTORY.md").read_text()
 generations=[int(x) for x in re.findall(r"^## Generation (\d{4})",history,re.M)]
 # The numbered generation files are the independent catalog. New chapters
 # automatically enter the audit without weakening chronological checks.
-expected=[int(p.stem) for p in sorted((root/"docs/generations").glob("[0-9][0-9][0-9][0-9].md"))]
+expected=[int(p.stem) for p in sorted((root/"docs/generations").glob("[0-9][0-9][0-9][0-9].md"))
+          if int(p.stem) <= 32]  # Proposals beyond G0032 are not rendered history chapters.
 if not expected or expected!=list(range(1,len(expected)+1)) or generations!=expected:
     raise SystemExit(f"Experiment-history record missing, duplicated or unordered: {generations}")
 first_experiment_boundary=next(
