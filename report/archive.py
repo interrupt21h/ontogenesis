@@ -43,8 +43,6 @@ def existing_assets():
     # for a heavily used shared media tag.
     release = json.loads(run_gh("api", f"repos/{repository}/releases/tags/atlas-media"))
     release_id = release["id"]
-    output = run_gh("api", "--paginate",
-                    f"repos/{repository}/releases/{release_id}/assets?per_page=100")
     # gh api --paginate may concatenate JSON arrays. Use --jq to return one
     # asset name per line, preserving filenames with spaces if ever present.
     names = run_gh("api", "--paginate",
