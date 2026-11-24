@@ -44,7 +44,7 @@ The same **24⁴, 4,800-step G0029 simulation** now has a second cinematic inter
 
 | Part | What it does |
 |:--|:--|
-| **30 experiment designs** | G0001–G0030 have CI-verified results at their tested scope; G0030 has no endpoint co-occupancy |
+| **31 experiment designs** | G0001–G0030 have measured CI-verified results; G0031 tests controlled two-population viability (numerical pilot pending) |
 | **Numerical worlds** | Local rules update dimensionless fields on periodic grids; some recent experiments use a 24⁴ domain |
 | **Generative visuals** | Field data becomes images, sections, projections, and films |
 | **GitHub Actions** | Runs experiments, builds artifacts, and helps turn the repository into a tiny computational production studio |
@@ -87,7 +87,17 @@ Instead of introducing another speculative mechanism, the new experiment disable
 
 [**Early viability comparison**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-viability.png): neither the unmodified environment nor three early environmental changes preserved active V beyond step 60 under the tested conditions. A viable two-population baseline is now the priority.
 
-*The pilot is verified; stable succession and coexistence were not demonstrated. No cinematic feature has been replaced.*
+[**Watch G0030's animated numerical documentary**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0030-diagnostic.mp4) · [Verified poster](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0030-diagnostic.png)
+
+*The pilot is verified; stable succession and coexistence were not demonstrated. This is data animation, not reconstructed spatial footage. No featured film has been replaced.*
+
+## G0031 · Finding a viable population balance
+
+The experiments now test something more fundamental than adding new complexity: whether modest changes to the existing V loss rate can allow both simulated populations to remain active together. Five matched multipliers, including the historical untouched model, are evaluated across two seeds. Very strong reductions produced invalid or one-sided dynamics and are excluded from the narrower study.
+
+[**G0031 controlled design**](docs/generations/0031.md) · [Numerical implementation](viability_frontier.py) · [GitHub Actions](.github/workflows/viability-frontier.yml)
+
+*G0031's narrowed numerical outcome is pending CI verification. No full-resolution spatial cinematic or unverified result is being claimed.*
 
 ## Try it yourself
 

@@ -6,6 +6,14 @@
 
 **Two verified G0029 cinematic editions:** [Adaptive transport](generations/0029.md) has a smooth volumetric master and a separate [luminous voxel-style film](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-voxel-cinematic.mp4), both sourced from the same measured full-domain simulation. G0029's small pilot was near-inactive, while the full run retained activity but changed species coverage. The featured G0028 film and cumulative edition remain unchanged.
 
+## G0030 — Animated ecological evidence (not a spatial cinematic)
+
+[![G0030 measured ecological time-series documentary, verified poster](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0030-diagnostic.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0030-diagnostic.mp4)
+
+[**Watch the G0030 measured-data documentary (30 seconds)**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0030-diagnostic.mp4) · [Render provenance](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0030-diagnostic.render.json) · [Successful render-only CI](https://github.com/interrupt21h/ontogenesis/actions/runs/45332177291) · [Original factorial observations](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-pilot.json) · [Early-viability controls](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-viability.json)
+
+This **1280 × 720, 24 FPS** edition animates real saved numerical trajectories for both G0030 studies. The first chapter compares unchanged supply with three early inversions; the second compares the original four cross-feeding treatments with a common later inversion. The animation progresses across **recorded samples**, with connecting lines used as a visual aid. It has no spatial state frames and must not be described as footage of simulated organisms. The project-page featured G0028 film and cumulative video selection remain unchanged.
+
 ## G0029 — Additional voxel cinematic edition
 
 [![G0029 luminous voxel cinematic — actual verified full-domain frame](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-voxel-cinematic.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0029-voxel-cinematic.mp4)

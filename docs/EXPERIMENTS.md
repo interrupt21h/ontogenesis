@@ -2,7 +2,7 @@
 
 [← Project overview](../README.md) · [Docs](README.md) · [Visual gallery](VISUAL_GALLERY.md) · [Measured history](HISTORY.md)
 
-**Thirty separately initialized experiment designs** (G0001–G0030 have CI-verified results at their documented scopes) form an investigative chronology—not a continuous simulated organism. Each detailed record explains what was changed, what was measured, and what remains unverified. **CI verified** means the relevant workflow and checks completed; it does not by itself establish scientific validity.
+**Thirty-one separately initialized experiment designs** (G0001–G0030 verified at their recorded scopes; G0031 outcome pending) form an investigative chronology—not a continuous simulated organism. Each detailed record explains what was changed, what was measured, and what remains unverified. **CI verified** means the relevant workflow and checks completed; it does not by itself establish scientific validity.
 
 ## I — Chemical differentiation
 
@@ -40,6 +40,10 @@ G0029 adds a memory-driven curl correction to the four-dimensional G0026 circula
 
 G0030's [two-seed 16⁴ factorial pilot](https://github.com/interrupt21h/ontogenesis/actions/runs/45266523722) passed CI. In all eight endpoints V coverage above the activity threshold was 0%; W remained active with 68.55–87.17% coverage. The four cross-feeding treatments produced measurable differences but no thresholded co-occupancy or demonstrated ecological succession. [Posthoc analysis](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-analysis.md) established V activity last above threshold at observation 30 and continuously below it from 60 onward—long before the event at 600. A [verified shorter viability screen](https://github.com/interrupt21h/ontogenesis/actions/runs/45297793723) found V inactive from step 60 (seed 42) and step 36 (seed 73) under both no forcing and early supply reversals; the tested changes did not restore coexistence. Larger runs remain gated.
 
+## X — Viability frontier
+
+G0031 tests five externally selected V loss-rate multipliers, including the unchanged historical model, with two matched seeds at 16⁴. It examines whether the baseline can support both populations; the measured pilot outcome is pending CI. Functional compartmentalization is deferred until a viable baseline exists.
+
 ## Complete experiment index
 
 | Generation | Study | Source | Workflow / evidence |
@@ -75,9 +79,10 @@ G0030's [two-seed 16⁴ factorial pilot](https://github.com/interrupt21h/ontogen
 
 | **0029** | [Adaptive transport networks](generations/0029.md) | [Source](../adaptive_transport.py) · [Renderer](../adaptive_transport_render.py) | [Full paired run + master verified](https://github.com/interrupt21h/ontogenesis/actions/runs/45232504379) · [Workflow](../.github/workflows/adaptive-transport.yml) |
 | **0030** | [Ecological succession controls](generations/0030.md) | [Driver](../ecological_succession.py) | [Verified factorial pilot](https://github.com/interrupt21h/ontogenesis/actions/runs/45266523722) · [Measured JSON](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-pilot.json) |
+| **0031** | [Population Viability Frontier](generations/0031.md) | [Driver](../viability_frontier.py) | [Pilot workflow](../.github/workflows/viability-frontier.yml) · Outcome pending |
 
 ## Planned, not completed
 
-G0030 has a verified pilot but did not demonstrate succession. G0031 functional compartmentalization and G0032 extended-universe dynamics remain **artistic research proposals**. The verified G0029 cinematic editions remain distinct from measured numerical evidence.
+G0030's verified pilot did not demonstrate succession. G0031 is a controlled numerical viability screen whose outcome is pending; **functional compartmentalization and the extended-universe finale** remain proposed after viable population dynamics are established. The verified G0029 cinematic editions remain distinct from measured numerical evidence.
 
 [Visual editions](VISUAL_GALLERY.md) · [Methodology](METHODOLOGY.md) · [Safe execution guide](PIPELINE.md)

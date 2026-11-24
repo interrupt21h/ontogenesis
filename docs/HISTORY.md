@@ -1545,3 +1545,32 @@ The recorded full eight-run pilot required approximately 15 minutes 42 seconds o
 
 [Experiment driver](../ecological_succession.py) · [Regression tests](../tests/test_ecological_succession.py) · [Workflow](../.github/workflows/ecological-succession.yml) · [Individual record](generations/0030.md).
 
+
+## Generation 0031 — Population Viability Frontier
+
+Status: Five controlled V-loss multipliers implemented with a two-seed numerical pilot; actual result pending CI.
+
+Parent: G0026 numerical baseline with an explicitly opt-in V loss multiplier; the original default at multiplier 1.0 is preserved and regression-tested.
+
+### Research question
+
+G0030's two-seed ecology screens showed V losing thresholded activity before the forced change of resource distribution. Early intervention and no-intervention controls did not alter that collapse. G0031 asks whether modestly reducing the *existing* V decay coefficient, rather than adding more machinery, can produce a viable overlapping population baseline.
+
+### Matched methodology
+
+Five independently initialized treatments use multipliers 1.00, 0.95, 0.90, 0.85 and 0.80 on the historical V loss rate. Both metabolite cross-feeding directions remain enabled; no seasonal inversion is applied. W loss, transport, births, energy exchange, gene rules and matrix dynamics remain unchanged. Two seeds (42 and 73) are run on 16⁴ periodic cells for 240 numerical steps, observing the state every six steps.
+
+An excessively strong preliminary 0.25 loss multiplier violated numerical nonnegativity and was rejected. The narrowed range retains all finite-state and nonnegativity assertions rather than treating a numerically invalid trajectory as a viable organism.
+
+![Conceptual G0031 controlled V mortality scan](figures/0031.svg)
+
+*Illustration of experimental design; not sampled concentration fields.*
+
+### Measured result and limitations
+
+Pending CI. The outcome will be assessed through V and W occupancy, their co-occupied fraction, mean concentrations, genotype entropy and numerical integrity. Preserving both thresholded concentrations would not establish autonomous adaptive life or long-term functional individuals.
+
+### Reproduction and provenance
+
+[Source](../viability_frontier.py) · [Model](../consolidation.py) · [Tests](../tests/test_viability_frontier.py) · [Workflow](../.github/workflows/viability-frontier.yml) · [Individual record](generations/0031.md).
+
