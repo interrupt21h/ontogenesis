@@ -16,7 +16,7 @@ permissions:
   contents: read
 concurrency:
   group: g0030-documentary-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   diagnostic:
     runs-on: ubuntu-24.04
@@ -28,21 +28,19 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
-      - name: Install pinned image renderer
+      - name: Install pinned renderer and portable FFmpeg binary (no apt mirrors)
         run: |
-          python -m pip install pillow==11.2.1
-          if ! command -v ffmpeg >/dev/null 2>&1 || \
-             ! command -v ffprobe >/dev/null 2>&1 || \
-             ! test -s /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf; then
-            sudo apt-get -o Acquire::Retries=4 -o Acquire::http::Timeout=45 update
-            sudo env DEBIAN_FRONTEND=noninteractive apt-get \
-              -o Acquire::Retries=4 -o Acquire::http::Timeout=60 \
-              install -y --no-install-recommends ffmpeg fonts-dejavu-core
-          fi
-          ffmpeg -version | head -n 1
-          ffprobe -version | head -n 1
-          test -s /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf
-          test -s /usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf
+          python -m pip install pillow==11.2.1 matplotlib==3.10.3 imageio-ffmpeg==0.8.1
+          python - <<'PY'
+          import imageio_ffmpeg
+          from pathlib import Path
+          from matplotlib import get_data_path
+          exe=Path(imageio_ffmpeg.get_ffmpeg_exe())
+          assert exe.is_file()
+          assert (Path(get_data_path())/"fonts/ttf/DejaVuSans.ttf").is_file()
+          print("Bundled FFmpeg:",exe)
+          print(imageio_ffmpeg.get_ffmpeg_version())
+          PY
       - name: Validate renderer without numerical simulation
         run: |
           python -m compileall -q ecological_diagnostic_render.py
@@ -61,9 +59,16 @@ jobs:
             --factorial input/g0030-pilot.json --viability input/g0030-viability.json \
             --movie /tmp/g0030-smoke.mp4 --poster /tmp/g0030-smoke.png \
             --seconds 2 --fps 8
-          ffprobe -v error -count_frames -select_streams v:0 \
-            -show_entries stream=nb_read_frames -of default=noprint_wrappers=1:nokey=1 \
-            /tmp/g0030-smoke.mp4 | grep -qx 16
+          python - <<'PY'
+          import imageio_ffmpeg
+          path='/tmp/g0030-smoke.mp4'
+          frames,duration=imageio_ffmpeg.count_frames_and_secs(path)
+          reader=imageio_ffmpeg.read_frames(path)
+          metadata=next(reader)
+          reader.close()
+          assert frames==16 and abs(duration-2)<.05,(frames,duration)
+          assert tuple(metadata['size'])==(1280,720)
+          PY
       - name: Render actual 1280x720 animated numerical documentary
         env:
           SECONDS: ${{ github.event_name == 'workflow_dispatch' && inputs.seconds || 30 }}
@@ -77,24 +82,28 @@ jobs:
         env:
           SECONDS: ${{ github.event_name == 'workflow_dispatch' && inputs.seconds || 30 }}
         run: |
-          ffmpeg -v error -xerror -i ontogenesis-0030-diagnostic.mp4 -f null -
-          ffprobe -v error -count_frames -select_streams v:0 \
-            -show_entries stream=width,height,nb_read_frames -of json \
-            ontogenesis-0030-diagnostic.mp4 > diagnostic-probe.json
           python - <<'PY'
-          import hashlib,json,os
+          import hashlib,imageio_ffmpeg,json,os
           from pathlib import Path
+          path='ontogenesis-0030-diagnostic.mp4'
           meta=json.loads(Path('ontogenesis-0030-diagnostic.render.json').read_text())
-          prob=json.loads(Path('diagnostic-probe.json').read_text())['streams'][0]
+          frames,duration=imageio_ffmpeg.count_frames_and_secs(path)
+          reader=imageio_ffmpeg.read_frames(path)
+          video=next(reader)
+          reader.close()
           assert meta['generation']=='0030' and meta['kind'].startswith('time-series')
           assert meta['selected_featured_film'] is False
-          assert meta['frames']==int(os.environ['SECONDS'])*24==int(prob['nb_read_frames'])
-          assert (int(prob['width']),int(prob['height']))==(1280,720)
+          assert meta['frames']==int(os.environ['SECONDS'])*24==frames
+          assert abs(duration-int(os.environ['SECONDS'])) < .1
+          assert tuple(video['size'])==(1280,720)
           assert meta['distinct_keyframe_hashes']>=4
           assert meta['presentation']['camera_or_spatial_voxels'] is False
           for name,h in meta['source_archive_sha256'].items():
               assert hashlib.sha256(Path('input',name).read_bytes()).hexdigest()==h
           assert Path('ontogenesis-0030-diagnostic.png').stat().st_size>4096
+          Path('diagnostic-probe.json').write_text(json.dumps({
+              'frames':frames,'seconds':duration,'size':list(video['size']),
+              'ffmpeg_version':video['ffmpeg_version']},indent=2)+'\\n')
           PY
       - uses: actions/upload-artifact@v7
         with:

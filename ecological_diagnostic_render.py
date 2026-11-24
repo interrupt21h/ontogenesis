@@ -61,7 +61,13 @@ def validate(pilot, viability):
 
 
 def font(size, bold=False):
-    return ImageFont.truetype(FONT_BOLD if bold else FONT, size)
+    file=FONT_BOLD if bold else FONT
+    if not Path(file).is_file():
+        # Pinned matplotlib includes verified DejaVu fonts on minimal runners.
+        from matplotlib import get_data_path
+        file=str(Path(get_data_path())/"fonts"/"ttf"/
+                 ("DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf"))
+    return ImageFont.truetype(file, size)
 
 
 def background():
@@ -182,7 +188,8 @@ def render(pilot_path,viability_path,movie,poster,*,seconds=30,fps=24):
     poster.parent.mkdir(parents=True,exist_ok=True)
     n=int(seconds*fps)
     base=background()
-    command=["ffmpeg","-hide_banner","-loglevel","error","-y",
+    import imageio_ffmpeg
+    command=[imageio_ffmpeg.get_ffmpeg_exe(),"-hide_banner","-loglevel","error","-y",
              "-f","rawvideo","-pix_fmt","rgb24","-s","1280x720",
              "-r",str(fps),"-i","-","-an","-c:v","libx264",
              "-preset","fast","-crf","20","-pix_fmt","yuv420p",
