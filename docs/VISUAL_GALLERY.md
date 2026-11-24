@@ -8,6 +8,16 @@
 
 [**Browse every generation visually — G0001 through G0032**](VISUAL_INDEX.md) · [Filterable HTML player edition](visual-atlas.html)
 
+### G0033 — The Temporal Loom: eight independent numerical histories
+
+[![G0033 Temporal Loom: real eleven-timepoint heatmaps of eight independent simulation seeds](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0033-temporal-loom.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0033-temporal-loom.mp4)
+
+[**Watch the 24-second Temporal Loom cinematic**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0033-temporal-loom.mp4) · [Interact with the complete numerical time series](https://interrupt21h.github.io/ontogenesis/temporal-loom.html) · [Verified numerical JSON](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0033-temporal-loom.json) · [Rendering workflow](../.github/workflows/g0033-temporal-loom.yml)
+
+A new visual language for **algorithmic trajectories**, complementary to the native spatial field films. Two synchronized matrices encode each of **eight independent 16⁴ simulations**, against **11 genuinely recorded 24-step observations** from 0 to 240. Every colored cell is the measured count of 4D periodic exclusive V/W interface faces; columns correspond to numerical times, rows to seeds. The traveling frame marker selects only stored observations, while the rest of the grid shows the measured time history. The browser permits changing between both prescribed treatments, three tested activity thresholds, and six numerical readouts without recomputing chemistry.
+
+The original simulation analyzed two externally specified habitat conditions, not an evolved preference. Color shading and time cursor movement are presentation choices. They do **not** add intermediate simulation states, demonstrate indefinitely stable coexistence, or imply independently behaving organisms.
+
 ### G0033 — Contact Cartography: where two numerical populations meet
 
 [![G0033 Contact Cartography — verified poster showing 16 omega planes per seed](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0033-contact-cartography.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0033-contact-cartography.mp4)
