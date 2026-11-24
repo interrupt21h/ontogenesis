@@ -6,7 +6,7 @@
 
 *Part generative art, part evolving simulation, part GitHub Actions endurance test.*
 
-[**Interactive cinema & experiment portal**](https://interrupt21h.github.io/ontogenesis/) · [**Watch G0033 Contact Cartography**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0033-contact-cartography.mp4) · [**Explore the interactive Interface Lab**](https://interrupt21h.github.io/ontogenesis/interface-lab.html) · [**Featured G0028 film**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-cinematic.mp4) · [**Complete evolution**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-evolution.mp4) · [**Visual gallery**](docs/VISUAL_GALLERY.md) · [**Illustrated field journal (PDF)**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis.pdf) · [**Experiment index**](docs/EXPERIMENTS.md)
+[**Interactive cinema & experiment portal**](https://interrupt21h.github.io/ontogenesis/) · [**Newest: G0034 Lineage Ribbons**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0034-lineage-ribbons.mp4) · [**Interactive Lineage Observatory**](https://interrupt21h.github.io/ontogenesis/lineage-observatory.html) · [**Watch G0033 Contact Cartography**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0033-contact-cartography.mp4) · [**Explore the interactive Interface Lab**](https://interrupt21h.github.io/ontogenesis/interface-lab.html) · [**Featured G0028 film**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0028-cinematic.mp4) · [**Complete evolution**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-evolution.mp4) · [**Visual gallery**](docs/VISUAL_GALLERY.md) · [**Illustrated field journal (PDF)**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis.pdf) · [**Experiment index**](docs/EXPERIMENTS.md)
 
 ## Things got out of hand
 
@@ -117,7 +117,15 @@ The [native 4D interface analysis](https://github.com/interrupt21h/ontogenesis/a
 
 *The film uses real saved four-dimensional fields, unlike the earlier chart animation. It is a fixed-ω hyperplane under display-camera rotation, not an autonomous organism or proof of stable coexistence.*
 
-## Next: G0033 · Testing the spatial interface\n\nThe [G0033 controlled experiment plan](docs/generations/0033.md) defines a bounded, multi-seed follow-up to G0032: replicate the four-dimensional interface across initial conditions, measure its persistence, vary the activity cutoff, and compare against shuffled spatial-mask controls. **This is a proposed experiment, not a completed numerical result or film.**\n\n## New visual edition: G0033 Temporal Loom
+## Next: G0033 · Testing the spatial interface\n\nThe [G0033 controlled experiment plan](docs/generations/0033.md) defines a bounded, multi-seed follow-up to G0032: replicate the four-dimensional interface across initial conditions, measure its persistence, vary the activity cutoff, and compare against shuffled spatial-mask controls. **This is a proposed experiment, not a completed numerical result or film.**\n\n## Newest visual experiment: G0034 Lineage Ribbons
+
+[**Watch the 24-second Lineage Ribbons film**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0034-lineage-ribbons.mp4) · [**Explore G0034 native topology interactively**](https://interrupt21h.github.io/ontogenesis/lineage-observatory.html) · [**Read the full algorithm and measured evidence**](docs/generations/0034.md)
+
+G0034 turns the project’s recorded **four-dimensional connected components** into a branching diagram of directly observed numerical continuity. Instead of more particle clouds, every node is a face-connected region in a true periodic 4D lattice and every connecting ribbon records actual overlapping sites between consecutive sampled states. The film depicts the real seed-dependent changes in V-only and W-only structures. The companion site exposes both controls, both seeds, exact sample times and graph-event counts.
+
+This is **a new observational algorithm applied to archived G0033 states**, not a newly evolved organism or an independent numerical run. Graph splitting, merging and disappearing mean thresholded overlap events, not biological reproduction or death. The whole source dataset and rendering workflow are published independently of the artwork.
+
+## New visual edition: G0033 Temporal Loom
 
 [**Watch the verified eight-seed Temporal Loom film**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0033-temporal-loom.mp4) · [**Explore measured histories on GitHub Pages**](https://interrupt21h.github.io/ontogenesis/temporal-loom.html) · [**Review the exact numerical JSON**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0033-temporal-loom.json)
 
