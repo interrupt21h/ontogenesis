@@ -8,6 +8,9 @@ on:
       - 'docs/assets/**'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
+  workflow_run:
+    workflows: ['G0034 native 4D component genealogy and lineage cinema']
+    types: [completed]
 permissions:
   contents: read
 concurrency:
@@ -15,6 +18,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   build:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v5
@@ -26,6 +30,7 @@ jobs:
           page=Path('site/index.html').read_text()
           lab=Path('site/interface-lab.html').read_text()
           loom=Path('site/temporal-loom.html').read_text()
+          lineage=Path('site/lineage-observatory.html').read_text()
           atlas=Path('docs/visual-atlas.html').read_text()
           assert '<html lang="en">' in page and '<main class="wrap">' in page
           assert 'id="player"' in page and 'id="cards"' in page
@@ -40,6 +45,8 @@ jobs:
           assert 'four_dimensional_face_contacts' in lab
           assert 'data/g0033-temporal-loom.json' in loom
           assert 'eight-seed-measured-temporal-loom-v1' in loom
+          assert 'data/g0034-genealogy.json' in lineage
+          assert 'component_count' in lineage
           class Parser(HTMLParser):
               pass
           Parser().feed(page)
@@ -67,6 +74,7 @@ jobs:
           parser.feed(Path('site/index.html').read_text())
           parser.feed(Path('site/interface-lab.html').read_text())
           parser.feed(Path('site/temporal-loom.html').read_text())
+          parser.feed(Path('site/lineage-observatory.html').read_text())
           assert parser.inline, 'No executable site JavaScript was found'
           Path('/tmp/ontogenesis-pages.js').write_text('\n'.join(parser.inline))
           PY
@@ -77,6 +85,7 @@ jobs:
           cp site/index.html _site/index.html
           cp site/interface-lab.html _site/interface-lab.html
           cp site/temporal-loom.html _site/temporal-loom.html
+          cp site/lineage-observatory.html _site/lineage-observatory.html
           cp -a docs _site/docs
           touch _site/.nojekyll
           test -s _site/docs/visual-atlas.html
@@ -114,6 +123,26 @@ jobs:
           PY
           else
             echo "Temporal Loom measurements not published yet; the browser will show pending evidence."
+          fi
+      - name: Bundle CI-verified G0034 genealogy evidence when available
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p _site/data
+          if gh release download atlas-media -p g0034-genealogy.json -D _site/data; then
+            python3 - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('_site/data/g0034-genealogy.json').read_text())
+          assert d['generation']=='0034' and d['n']==16 and d['steps']==240
+          assert d['seeds']==[42,73] and d['times']==list(range(0,241,24))
+          assert len(d['source'])==2
+          PY
+          elif [ "${{ github.event_name }}" = workflow_run ]; then
+            echo 'G0034 workflow completed but genealogy release asset is unavailable.' >&2
+            exit 1
+          else
+            echo 'G0034 numeric release pending; viewer will explicitly show pending state.'
           fi
       - uses: actions/upload-pages-artifact@v4
         with:
