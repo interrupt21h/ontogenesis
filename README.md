@@ -117,7 +117,7 @@ The [native 4D interface analysis](https://github.com/interrupt21h/ontogenesis/a
 
 *The film uses real saved four-dimensional fields, unlike the earlier chart animation. It is a fixed-ω hyperplane under display-camera rotation, not an autonomous organism or proof of stable coexistence.*
 
-## Every generation, visualized
+## Next: G0033 · Testing the spatial interface\n\nThe [G0033 controlled experiment plan](docs/generations/0033.md) defines a bounded, multi-seed follow-up to G0032: replicate the four-dimensional interface across initial conditions, measure its persistence, vary the activity cutoff, and compare against shuffled spatial-mask controls. **This is a proposed experiment, not a completed numerical result or film.**\n\n## Every generation, visualized
 
 The [**complete G0001–G0032 visual atlas**](docs/VISUAL_INDEX.md) brings together all 32 generations with actual archived posters, original films, measured diagrams, and source-linked numerical evidence. For a filterable, in-browser player layout, open the [interactive HTML edition](docs/visual-atlas.html). The G0031 and G0032 [measured-data films](docs/VISUAL_GALLERY.md) complement the full-domain G0028/G0029 cinematics without inventing unrecorded spatial states.
 
