@@ -85,6 +85,8 @@ Instead of introducing another speculative mechanism, the new experiment disable
 
 [**Measured activity-loss analysis**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-analysis.md): V last exceeded the activity threshold at step 30 and stayed below it from step 60, long before the environmental change at step 600.
 
+[**Early viability comparison**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-viability.png): neither the unmodified environment nor three early environmental changes preserved active V beyond step 60 under the tested conditions. A viable two-population baseline is now the priority.
+
 *The pilot is verified; stable succession and coexistence were not demonstrated. No cinematic feature has been replaced.*
 
 ## Try it yourself

@@ -1533,6 +1533,12 @@ The [verified posthoc CI analysis](https://github.com/interrupt21h/ontogenesis/a
 
 The study cannot attribute early V loss to the step-600 event and does not establish ecological succession. The logical next experiment is to establish a baseline where both populations remain active, with an additional no-reversal environmental control, before investing in any new 24⁴ factorial run.
 
+### Follow-up: short controlled viability study
+
+A second [verified numerical screen](https://github.com/interrupt21h/ontogenesis/actions/runs/45297793723) compared an unchanged environment with supply inversions at steps 12, 24, and 48. Two matched seeds, a 16⁴ domain, 180 steps and a six-step observation cadence were used; no biological mechanism was changed. **Seed 42** last showed thresholded V activity at step **54** and first remained inactive at **60**. **Seed 73** last showed V activity at **30** and remained inactive from **36**. All four conditions had the same loss windows for the corresponding seed, while W persisted at approximately 49.5–49.6% (seed 42) and 62.9–63.1% (seed 73) active coverage by step 180.
+
+This does not establish literal extinction, causal seasonal adaptation or functional mutualism. None of these early supply changes rescued an actively coexisting V population. [Measured JSON](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-viability.json) · [Numeric graph](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-viability.png).
+
 The recorded full eight-run pilot required approximately 15 minutes 42 seconds on a GitHub-hosted CPU runner. The larger 24⁴ study remains manually gated and has not been run. These observations are exploratory and do not establish functional self-maintaining individuals or autonomous ecological succession.
 
 ### Reproduction and provenance
