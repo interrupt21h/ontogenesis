@@ -96,6 +96,8 @@ def diagram(report, *, arm):
         d.rounded_rectangle((34,upper,1242,bottom),radius=13,
                             fill="#10283A",outline="#416176",width=2)
         d.text((45,upper+9),f"SEED {seed}",font=font(13,True),fill="#E8F2F9")
+        d.text((940,upper+10),"TEAL / V-ONLY     AMBER / W-ONLY",
+               font=font(11,True),fill="#C1D7DF")
         for species in SPECIES:
             records = report["source"][seed]["arms"][arm][species]
             color = PALETTE[species]
@@ -120,10 +122,6 @@ def diagram(report, *, arm):
                 radius=2+min(8,round(2*math.log1p(size)/math.log(10)))
                 d.ellipse((x-radius,y-radius,x+radius,y+radius),
                           fill=color,outline="#EFFAFF",width=1)
-            species_label="V-ONLY 4D COMPONENTS" if species=="v_only" else "W-ONLY 4D COMPONENTS"
-            y0,_=PLOT_Y[seed][species]
-            d.text((47,y0-4),species_label,font=font(10,True),
-                   fill=color)
     for i,step in enumerate(report["times"]):
         x=PLOT_X0+(PLOT_X1-PLOT_X0)*i/10
         if i%2==0:
@@ -138,15 +136,49 @@ def frame(report, plate, index, count, *, arm):
         raise ValueError("Invalid render frame")
     pct=index/(count-1)
     ti=min(10,int(pct*11))
-    im=plate.copy()
-    d=ImageDraw.Draw(im)
+    im=plate.copy().convert("RGBA")
     x=PLOT_X0+(PLOT_X1-PLOT_X0)*ti/10
-    d.line((x,180,x,658),fill="#FCECB7",width=3)
-    d.rounded_rectangle((520,135,850,179),radius=10,fill="#29495B")
-    d.text((533,143),f"RECORDED STEP {report['times'][ti]:03d} / 240",
+    # Future ribbons are already archived, but remain shaded until the
+    # display cursor reaches their actual recorded time.
+    shade=Image.new("RGBA",im.size,(0,0,0,0))
+    sh=ImageDraw.Draw(shade)
+    if x+2<PLOT_X1:
+        for top,bottom in ((185,416),(434,658)):
+            sh.rectangle((int(x)+3,top+2,PLOT_X1,bottom-2),
+                         fill=(7,20,31,170))
+    im=Image.alpha_composite(im,shade)
+    d=ImageDraw.Draw(im)
+    d.line((x,182,x,659),fill="#FCECB7",width=3)
+    d.rounded_rectangle((510,136,865,178),radius=10,fill="#29495B")
+    d.text((523,144),f"RECORDED STEP {report['times'][ti]:03d} / 240",
            font=font(18,True),fill="#FAF8E5")
+    # Highlight actual components in the current sampled state; pulse size is
+    # an editorial signal only, never a numerical growth interpolation.
+    pulse=1.5+1.4*(.5+.5*math.sin(pct*math.tau*6))
+    for seed in SEEDS:
+        for species in SPECIES:
+            records=report["source"][seed]["arms"][arm][species]
+            points=layout(records,seed,species)
+            color=PALETTE[species]
+            for node in records[ti]["featured"][:12]:
+                pos=points.get((ti,node["id"]))
+                if pos is None:
+                    continue
+                cx,cy,_=pos
+                rad=4+pulse
+                d.ellipse((cx-rad,cy-rad,cx+rad,cy+rad),
+                          outline=(*color,215),width=2)
+    # Semantic counters tied to the current discrete snapshot.
+    for seed,y in (("42",395),("73",637)):
+        a=report["source"][seed]["arms"][arm]
+        v=a["v_only"][ti]["component_count"]
+        w=a["w_only"][ti]["component_count"]
+        d.rounded_rectangle((885,y-28,1197,y-5),radius=6,
+                            fill=(24,52,67,225))
+        d.text((897,y-25),f"STEP {report['times'][ti]}  ·  V {v:,} regions  /  W {w:,} regions",
+               font=font(11,True),fill="#E6F3F9")
     d.rectangle((0,712,round(pct*1280),720),fill="#67E5CF")
-    return im
+    return im.convert("RGB")
 
 
 def render(report, movie, poster, *, arm="separated_070", seconds=24, fps=24):
