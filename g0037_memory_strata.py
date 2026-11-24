@@ -146,8 +146,8 @@ def strata(d,glow,source,arm,step,omega,x0,x1,upper,lower):
 
 def art_frame(sources,index,count,base):
     fraction,act,step,omega=read_clock(index,count)
-    image=base.copy()
-    d=ImageDraw.Draw(image)
+    image=base.copy().convert("RGBA")
+    d=ImageDraw.Draw(image,"RGBA")
     gimg=Image.new("RGBA",(640,360),(0,0,0,0))
     g=ImageDraw.Draw(gimg,"RGBA")
     if act<2:
