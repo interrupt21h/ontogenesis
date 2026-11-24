@@ -33,7 +33,7 @@ def measure(m):
     freq=[np.fft.fftfreq(n)[i] if j<3 else np.fft.rfftfreq(n)[i] for j,(n,i) in enumerate(zip(x.shape,peak))]
     radial=float(np.linalg.norm(freq))
     return dict(matrix_mean=mean,matrix_std=std,matrix_cv=std/max(mean,1e-12),gradient_energy=sum(float(np.mean((np.roll(x,1,axis=j)-x)**2)) for j in range(4)),histogram=hist.tolist(),histogram_edges=edges.tolist(),dominant_mode_wavelength_cells=1/radial if radial and std>0 else None,quantiles=np.quantile(x,[.05,.25,.5,.75,.95]).tolist(),coverage={str(t):float((x>t).mean()) for t in (.1,.15,.2,.25,.3)})
-def run(seed=42,n=24,steps=4800,stride=4,arm="baseline",observe=True,intervention=None,observer=None,cinematic_observer=None,cinematic_steps=None,velocity_feedback=None,crossfeed=(True,True),season_switch=None,ecology_observer=None,ecology_steps=None,v_decay_multiplier=1.0):
+def run(seed=42,n=24,steps=4800,stride=4,arm="baseline",observe=True,intervention=None,observer=None,cinematic_observer=None,cinematic_steps=None,velocity_feedback=None,crossfeed=(True,True),season_switch=None,ecology_observer=None,ecology_steps=None,v_decay_multiplier=1.0,niche_strength=0.0):
     if len(crossfeed)!=2 or any(type(flag) is not bool for flag in crossfeed):
         raise ValueError("crossfeed must be (W-to-V, V-to-W) booleans")
     if season_switch is not None and not 1<=season_switch<steps:
@@ -42,6 +42,9 @@ def run(seed=42,n=24,steps=4800,stride=4,arm="baseline",observe=True,interventio
     # exactly the historical G0026/G0028/G0030 numerical update.
     if not 0.05 <= float(v_decay_multiplier) <= 1.5:
         raise ValueError("v_decay_multiplier must be in [0.05, 1.5]")
+    # G0032 opt-in spatial preference; zero is exactly the historical update.
+    if not 0.0 <= float(niche_strength) <= 0.75:
+        raise ValueError("niche_strength must be finite and in [0.0, 0.75]")
     N=n;STEPS=steps
     COST=float(arm in ("cost","combined")); MAINT=float(arm in ("maintenance","combined"))
     rng=np.random.default_rng(seed)
@@ -97,7 +100,8 @@ def run(seed=42,n=24,steps=4800,stride=4,arm="baseline",observe=True,interventio
             ecological_fields={"energy":e.view(),"matrix":m.view(),
                                "species_v":v.view(),"species_w":w.view(),
                                "metabolite_v":xv.view(),"metabolite_w":xw.view(),
-                               "genotypes_v":gv.view(),"genotypes_w":gw.view()}
+                               "genotypes_v":gv.view(),"genotypes_w":gw.view(),
+                               "habitat_bias":h.view()}
             for field in ecological_fields.values():
                 field.flags.writeable=False
             ecology_observer(step,ecological_fields)
@@ -175,9 +179,17 @@ def run(seed=42,n=24,steps=4800,stride=4,arm="baseline",observe=True,interventio
             consumption=sum(raw[g]*(.085+.035*c-.025*k+.02*s*COST) for g,(c,k,s) in enumerate(bits))
             matrix=sum(raw[g]*(.045+.065*s) for g,(c,k,s) in enumerate(bits))
             return mutated,raw.sum(axis=0),consumption,matrix,sum(uptake)
-        bv,a,cv,mv,uv=reproduce(gv,v,u*v*v*e*(1+.12*pulse+advantage),
+        base_v=u*v*v*e*(1+.12*pulse+advantage)
+        base_w=u*w*w*e*(1-.12*pulse-advantage)
+        # Matched static environmental niches.  At zero strength no extra
+        # multiplication is performed, preserving historic floating-point
+        # ordering and baseline state hashes exactly.
+        if niche_strength:
+            base_v=base_v*(1+niche_strength*h)
+            base_w=base_w*(1-niche_strength*h)
+        bv,a,cv,mv,uv=reproduce(gv,v,base_v,
                                  xw if crossfeed[0] else None)
-        bw,b,cw,mw,uw=reproduce(gw,w,u*w*w*e*(1-.12*pulse-advantage),
+        bw,b,cw,mw,uw=reproduce(gw,w,base_w,
                                  xv if crossfeed[1] else None)
         # Secreted metabolites diffuse, decay and are consumed by the other species.
         xv=xv+.06*lap(xv)+.18*a-.025*xv-np.minimum(.12*uw,.25*xv)
