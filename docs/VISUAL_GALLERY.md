@@ -8,6 +8,16 @@
 
 [**Browse every generation visually — G0001 through G0032**](VISUAL_INDEX.md) · [Filterable HTML player edition](visual-atlas.html)
 
+### G0034 — Lineage Ribbons: tracking four-dimensional component topology
+
+[![G0034 Lineage Ribbons verified film poster](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0034-lineage-ribbons.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0034-lineage-ribbons.mp4)
+
+[**Watch the G0034 24-second Lineage Ribbons film**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0034-lineage-ribbons.mp4) · [**Explore native component genealogies interactively**](https://interrupt21h.github.io/ontogenesis/lineage-observatory.html) · [Full source data](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0034-genealogy.json) · [Verified Actions run](https://github.com/interrupt21h/ontogenesis/actions/runs/45459564925)
+
+The first dedicated **four-dimensional structural genealogy visual** in the series. Unlike rotating volume portraits, hyperplane mosaics or scalar heatmaps, this film shows exact **periodic face-connected regions** as nodes and observed **native voxel-overlap relationships** as connecting ribbons. It covers the separately archived seeds **42 and 73**, both V-only and W-only activity masks, all eleven recorded steps from 0 through 240, and the stronger externally prescribed complementary niche treatment. The video progressively reveals graph segments while highlighting authentic sampled component counts. The interactive Observatory includes the second near-transition control.
+
+The source numerical masks and their SHA-256 checks are preserved, and the published G0034 JSON includes counts of threshold appearances, disappearances, discrete splits and merges. These descriptions concern components *crossing thresholds* and *sharing coordinates between sampled states*; they do **not** establish biological birth, organism identity or metabolic cooperation.
+
 ### G0033 — The Temporal Loom: eight independent numerical histories
 
 [![G0033 Temporal Loom: real eleven-timepoint heatmaps of eight independent simulation seeds](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0033-temporal-loom.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0033-temporal-loom.mp4)
