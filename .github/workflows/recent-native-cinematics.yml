@@ -45,6 +45,23 @@ jobs:
         run: |
           mkdir -p input
           gh release download atlas-media -p '${{ matrix.reference }}' -D input
+      - name: Restore the exact G0031 solver from its verified pilot revision
+        if: matrix.gen == '0031'
+        run: |
+          python - <<'PY'
+          import json,re,subprocess
+          from pathlib import Path
+          data=json.loads(Path('input/g0031-pilot.json').read_text())
+          revision=data['source_sha']
+          assert re.fullmatch(r'[0-9a-f]{40}',revision)
+          # G0031's published pilot predates the G0032 solver refactor.
+          # Restore only the historical solver for faithful numerical replay.
+          subprocess.run(['git','fetch','--no-tags','--depth=1','origin',revision],check=True)
+          source=subprocess.check_output(['git','show',f'{revision}:consolidation.py'])
+          assert b'def run(' in source and b'v_decay_multiplier' in source
+          Path('consolidation.py').write_bytes(source)
+          print('Using original G0031 solver revision',revision)
+          PY
       - name: Recompute only two matched controls and archive actual native fields
         run: |
           /usr/bin/time -v python -u recent_native_archive.py \
