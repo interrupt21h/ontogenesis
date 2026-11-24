@@ -5,7 +5,8 @@ on:
     paths:
       - 'g0034_genealogy.py'
       - 'g0034_lineage_cinema.py'
-      - 'tests/test_g0034_*.py'
+      - 'tests/test_g0034_genealogy.py'
+      - 'tests/test_g0034_lineage_cinema.py'
       - '.github/workflows/g0034-genealogy.yml'
   workflow_dispatch:
     inputs:
