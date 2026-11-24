@@ -108,7 +108,10 @@ function draw(){
  picker.replaceChildren();
  if(!confirmed.length){const opt=el("option",null,"No verified films available");opt.value="";picker.append(opt);picker.disabled=true}
  else {picker.disabled=false;for(const entry of confirmed){const opt=el("option",null,"G"+entry.gen+" — "+entry.type);opt.value=entry.file;picker.append(opt)}}
- if(confirmed.length)selectFilm(confirmed[0].file);
+ if(confirmed.length){
+  const premiere=confirmed.find(e=>e.file==="ontogenesis-0034-luminous-habitat.mp4");
+  selectFilm((premiere||confirmed[0]).file);
+ }
  for(const gen of ["0028","0029","0030","0031","0032","0033","0034"]){
   const known=editions.filter(e=>e.gen===gen),valid=known.filter(e=>movieURL(e));
   const selected=valid[0],card=el("article","card");
