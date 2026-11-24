@@ -11,6 +11,7 @@ The experiment is as much about orchestrating and maintaining the computational 
 | Looking for… | Start here |
 |:--|:--|
 | The moving pictures | [Visual gallery](VISUAL_GALLERY.md) |
+| The latest actual structural-feedback numerical experiment | [G0036 study](generations/0036.md) · [Art film](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0036-feedback-aurora-art.mp4) · [Evidence film](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0036-feedback-aurora-evidence.mp4) |
 | The latest paired cinematic art/evidence experiment | [G0035 Morphogenic Tide](generations/0035.md) · [Art film](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0035-morphogenic-tide-art.mp4) · [Evidence film](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0035-morphogenic-tide-evidence.mp4) |
 | The artistic vision and rendering standards | [Visual art direction](ART_DIRECTION.md) |
 | The latest 4D component genealogies | [G0034 Lineage Ribbons](generations/0034.md) · [Interactive observatory](https://interrupt21h.github.io/ontogenesis/lineage-observatory.html) |
