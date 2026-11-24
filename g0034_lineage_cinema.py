@@ -96,8 +96,7 @@ def diagram(report, *, arm):
         d.rounded_rectangle((34,upper,1242,bottom),radius=13,
                             fill="#10283A",outline="#416176",width=2)
         d.text((45,upper+9),f"SEED {seed}",font=font(13,True),fill="#E8F2F9")
-        d.text((940,upper+10),"TEAL / V-ONLY     AMBER / W-ONLY",
-               font=font(11,True),fill="#C1D7DF")
+
         for species in SPECIES:
             records = report["source"][seed]["arms"][arm][species]
             color = PALETTE[species]
@@ -168,15 +167,17 @@ def frame(report, plate, index, count, *, arm):
                 rad=4+pulse
                 d.ellipse((cx-rad,cy-rad,cx+rad,cy+rad),
                           outline=(*color,215),width=2)
-    # Semantic counters tied to the current discrete snapshot.
-    for seed,y in (("42",395),("73",637)):
+    # Semantic counters and visual legend sit in panel headers, not over
+    # graph connections; render after the future-state shading.
+    for seed,top in (("42",185),("73",434)):
         a=report["source"][seed]["arms"][arm]
         v=a["v_only"][ti]["component_count"]
         w=a["w_only"][ti]["component_count"]
-        d.rounded_rectangle((885,y-28,1197,y-5),radius=6,
-                            fill=(24,52,67,225))
-        d.text((897,y-25),f"STEP {report['times'][ti]}  ·  V {v:,} regions  /  W {w:,} regions",
-               font=font(11,True),fill="#E6F3F9")
+        d.text((475,top+9),
+               f"RECORDED {report['times'][ti]:03d}  ·  V {v:,} regions  /  W {w:,} regions",
+               font=font(12,True),fill="#E6F3F9")
+        d.text((935,top+10),"TEAL = V-ONLY   /   AMBER = W-ONLY",
+               font=font(11,True),fill="#C8E3EB")
     d.rectangle((0,712,round(pct*1280),720),fill="#67E5CF")
     return im.convert("RGB")
 
