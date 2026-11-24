@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="G0037 measured four-dimensional matrix persistence and matched feedback strength experiments.">
+<title>Ontogenesis · G0037 Persistence Lab</title>
+<style>
+:root{background:#081521;color:#ebf7fb;font:16px/1.5 system-ui,sans-serif;--mint:#6de6d3;--line:#3a586d}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 82% -25%,#224b65,transparent 57%),#081521}
+main{max-width:1300px;margin:auto;padding:26px clamp(18px,4vw,55px) 65px}a{color:var(--mint)}
+nav{display:flex;gap:18px;flex-wrap:wrap;font-size:.9rem}
+.eyebrow{text-transform:uppercase;letter-spacing:.18em;color:var(--mint);font-weight:800;font-size:.77rem}
+h1{font-size:clamp(2.6rem,6vw,5.3rem);letter-spacing:-.06em;line-height:1.06;margin:27px 0 16px}
+h1 span{color:var(--mint)}h2{font-size:1.4rem;margin:0 0 12px}
+.lead{max-width:850px;color:#bad2e1}
+.panel{background:linear-gradient(130deg,#152f43,#0c2234);border:1px solid var(--line);border-radius:15px;padding:19px;margin:17px 0}
+.controls{display:flex;flex-wrap:wrap;gap:15px;align-items:center}
+label{display:grid;gap:5px;font-size:.85rem;color:#bbd3df}
+select{border:1px solid #54778a;border-radius:8px;padding:11px;background:#0c2637;color:#f4fbfd;font:inherit}
+select:focus-visible,a:focus-visible{outline:3px solid var(--mint);outline-offset:3px}
+canvas{display:block;width:100%;height:auto;background:#0a2031;border-radius:10px}
+.legend{display:flex;flex-wrap:wrap;gap:16px;color:#b5cbd8;font-size:.85rem}
+.legend b{width:12px;height:12px;display:inline-block;margin-right:6px;border-radius:3px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.stat{border:1px solid var(--line);padding:13px;border-radius:10px;background:#10293b}
+.stat strong{display:block;font-size:1.5rem;font-variant-numeric:tabular-nums;margin-top:5px}
+.stat small{color:#afc7d5}
+.scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th,td{text-align:right;padding:10px;border-bottom:1px solid #2d4b60;white-space:nowrap;font-size:.85rem}
+th:first-child,td:first-child{text-align:left}
+.muted{color:#abc5d3;font-size:.89rem}
+footer{border-top:1px solid var(--line);padding-top:18px;margin-top:35px;color:#a9c2d0;font-size:.85rem}
+</style></head><body><main>
+<nav><a href="./">← Cinema</a><a href="feedback-lab.html">G0036 Feedback Lab</a><a href="https://github.com/interrupt21h/ontogenesis/blob/main/docs/generations/0037.md">Methodology</a><a href="https://github.com/interrupt21h/ontogenesis/actions/workflows/g0037-persistence.yml">Verify CI</a></nav>
+<p class="eyebrow">G0037 / genuine feedback-strength perturbations / finite 4D structural persistence</p>
+<h1>The Persistence <span>Lab.</span></h1>
+<p class="lead">Does greater state-dependent transport feedback preserve more numerical structure? Four independently initialized worlds, three prescribed gains and six real sampled steps let us inspect that question without assuming what the answer should be.</p>
+<p id="status" role="status">Loading authenticated four-seed numerical evidence…</p>
+<section class="panel">
+<div class="controls">
+<label for="seed">Independent initialization seed<select id="seed"><option>42</option><option>73</option><option>101</option><option>137</option></select></label>
+<label for="metric">Numerical readout<select id="metric">
+<option value="jaccard">Matrix persistence (4D Jaccard)</option>
+<option value="exclusive_contacts">Exclusive 4D V/W contact faces</option>
+<option value="matrix_mean">Mean matrix density</option>
+<option value="v_active">V-active sites</option>
+<option value="w_active">W-active sites</option>
+<option value="energy_mean">Mean energy concentration</option>
+</select></label>
+</div>
+<h2 style="margin-top:20px">Matched trajectories</h2>
+<canvas id="plot" width="1150" height="430" role="img" aria-label="Exact observed numerical trajectories of three feedback strengths"></canvas>
+<div class="legend">
+<span><b style="background:#b5c5d7"></b>Control · 0.0000</span>
+<span><b style="background:#69e4cf"></b>Low · 0.0175</span>
+<span><b style="background:#f5ac7a"></b>High · 0.0700</span>
+</div>
+<p class="muted">Gaps indicate that Jaccard was undefined because both thresholded matrix sets were empty, or that no previous snapshot existed. Missing observations are never plotted as zero.</p>
+</section>
+<section class="panel"><h2>Original terminal measurements</h2><div class="stats" id="summary"></div>
+<p class="muted">Comparison values are absolute numerical differences from the unchanged control, not a score for beneficial adaptation.</p></section>
+<section class="panel"><h2>Complete four-seed evidence at the final interval (96–120)</h2><div class="scroll"><table><thead><tr><th>Seed</th><th>Control Jaccard</th><th>Low Jaccard</th><th>High Jaccard</th><th>Control contacts</th><th>Low contacts</th><th>High contacts</th></tr></thead><tbody id="table"></tbody></table></div>
+<p class="muted">Contact counts use actual periodic four-dimensional exclusive V/W faces. Matrix Jaccard uses the full 4D matrix threshold mask at 0.15—not an inferred organism track or a projected image.</p></section>
+<section class="panel"><h2>Original cinematic and evidence editions</h2>
+<p><a href="https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0037-memory-strata-art.mp4">Watch Memory Strata — artistic 4D contour terrain</a></p>
+<p><a href="https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0037-memory-strata-evidence.mp4">Watch the exact numerical-grid evidence companion</a></p>
+<p class="muted">Artistic presentation maps authentic sampled fields into luminous layers. It does not add simulation timesteps, memory, adaptation, or new biological entities.</p></section>
+<footer><a href="https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0037-persistence.json">Download the exact four-seed numerical report</a> · <a href="https://github.com/interrupt21h/ontogenesis/blob/main/g0037_structural_persistence.py">Numerical algorithm</a> · <a href="https://github.com/interrupt21h/ontogenesis/blob/main/g0037_memory_strata.py">Cinema renderer</a></footer>
+</main><script>
+"use strict";
+const seed=document.getElementById("seed"),metric=document.getElementById("metric");
+const cv=document.getElementById("plot"),ctx=cv.getContext("2d");
+const arms=["control","low","high"],colors=["#b5c5d7","#69e4cf","#f5ac7a"];
+const fmt=x=>x==null?"undefined":Number(x).toLocaleString(undefined,{maximumFractionDigits:6});
+let data=null;
+const value=(row,key)=>key==="jaccard"?(row.matrix_persistence?.jaccard??null):row[key];
+function render(){
+ if(!data)return;
+ const id=seed.value,field=metric.value;
+ const records=data.native_observations[id],times=data.sample_steps;
+ const lines=arms.map(arm=>records[arm].map(row=>value(row,field)));
+ const finite=lines.flat().filter(Number.isFinite);
+ const upper=Math.max(0.000001,...finite)*1.12;
+ const W=cv.width,H=cv.height,left=90,right=W-35,top=32,bottom=H-66;
+ ctx.fillStyle="#0a2031";ctx.fillRect(0,0,W,H);ctx.font="14px system-ui";ctx.lineWidth=1;
+ for(let i=0;i<=4;i++){
+  const y=bottom-(bottom-top)*i/4;
+  ctx.strokeStyle="#34586b";ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(right,y);ctx.stroke();
+  ctx.fillStyle="#b9cfdc";ctx.textAlign="right";ctx.fillText(fmt(upper*i/4),left-9,y+4);
+ }
+ times.forEach((t,i)=>{const x=left+(right-left)*i/(times.length-1);ctx.textAlign="center";ctx.fillStyle="#b4d0de";ctx.fillText(t,x,bottom+24)});
+ lines.forEach((series,k)=>{
+  ctx.strokeStyle=colors[k];ctx.fillStyle=colors[k];ctx.lineWidth=3;ctx.beginPath();
+  let open=false;
+  series.forEach((v,i)=>{
+   if(!Number.isFinite(v)){open=false;return}
+   const x=left+(right-left)*i/(times.length-1),y=bottom-(bottom-top)*v/upper;
+   if(open)ctx.lineTo(x,y);else ctx.moveTo(x,y);
+   open=true;
+  });ctx.stroke();
+  series.forEach((v,i)=>{
+   if(!Number.isFinite(v))return;
+   const x=left+(right-left)*i/(times.length-1),y=bottom-(bottom-top)*v/upper;
+   ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fill();
+  });
+ });
+ ctx.fillStyle="#b7cbd8";ctx.textAlign="left";ctx.fillText("Actual recorded numerical step",left,H-12);
+ const host=document.getElementById("summary");host.replaceChildren();
+ for(const arm of ["low","high"]){
+  for(const channel of ["v","w","m"]){
+   const n=data.endpoint_absolute_field_differences[id][arm][channel];
+   const item=document.createElement("div");item.className="stat";
+   const label=document.createElement("small");label.textContent=arm+" feedback · "+channel.toUpperCase()+"-field difference";
+   const strong=document.createElement("strong");strong.textContent=fmt(n);
+   item.append(label,strong);host.append(item);
+  }
+ }
+}
+function populate(){
+ const table=document.getElementById("table");table.replaceChildren();
+ data.seeds.forEach(s=>{
+  const records=data.native_observations[String(s)];
+  const row=document.createElement("tr");
+  const values=[s,...arms.map(arm=>value(records[arm].at(-1),"jaccard")),
+   ...arms.map(arm=>records[arm].at(-1).exclusive_contacts)];
+  values.forEach(v=>{const td=document.createElement("td");td.textContent=fmt(v);row.append(td)});
+  table.append(row);
+ });
+}
+seed.addEventListener("change",render);metric.addEventListener("change",render);
+(async()=>{try{
+ const r=await fetch("data/g0037-persistence.json",{cache:"no-store"});
+ if(!r.ok)throw Error("HTTP "+r.status);
+ const d=await r.json();
+ if(d.generation!=="0037"||d.n!==12||d.steps!==120||
+    d.seeds.join(",")!=="42,73,101,137"||
+    d.sample_steps.join(",")!=="0,24,48,72,96,120")
+   throw Error("unexpected verified numerical scope");
+ data=d;populate();render();
+ document.getElementById("status").textContent="Verified four-seed matched native 4D persistence study loaded.";
+}catch(e){document.getElementById("status").textContent="G0037 numerical evidence unavailable ("+e.message+"). No data are fabricated."}
+})();
+</script></body></html>
