@@ -33,7 +33,7 @@ def graph(info,out):
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     fig,axes=plt.subplots(2,2,figsize=(14,8.5),constrained_layout=True)
-    colors=("#B8CBDF","#51D2C4","#F5A874","#D48BDD")
+    colors=("#B8CBDF","#51D2C4","#F5A874","#D48BDD","#67A9FC")
     fig.patch.set_facecolor("#101D2C")
     plots=(("v_active","V active coverage > 0.1 (%)",100),
            ("w_active","W active coverage > 0.1 (%)",100),
