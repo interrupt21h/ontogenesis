@@ -1,0 +1,73 @@
+name: G0032 native 4D interface evidence
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'niche_spatial_interface.py'
+      - 'tests/test_niche_spatial_interface.py'
+      - '.github/workflows/niche-interface.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  contact:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install only required numerical/plotting packages
+        run: python -m pip install numpy==2.2.6 matplotlib==3.10.3 pillow==11.2.1
+      - name: Verify exact four-dimensional topology formulas
+        run: |
+          python -m compileall -q niche_spatial_interface.py
+          python -m unittest discover -s tests -p test_niche_spatial_interface.py -v
+      - name: Retrieve actual G0032 native float32 fields
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p input
+          gh release download atlas-media -p g0032-native-fields-seed73.npz -p g0032-native-fields-seed73.json -D input
+      - name: Measure exclusive four-dimensional faces and continuous shared mass
+        run: |
+          python niche_spatial_interface.py \
+            --data input/g0032-native-fields-seed73.npz \
+            --metadata input/g0032-native-fields-seed73.json \
+            --out g0032-spatial-interface.json \
+            --plate g0032-spatial-interface.png
+      - name: Validate physical-grid scope and real numerical source hashes
+        run: |
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          root=Path('input')
+          info=json.loads((root/'g0032-native-fields-seed73.json').read_text())
+          d=json.loads(Path('g0032-spatial-interface.json').read_text())
+          assert d['generation']=='0032' and d['seed']==73 and d['n']==16
+          assert len(d['times'])==21 and d['times'][-1]==480
+          assert d['source_archive_sha256']==info['archive_sha256']
+          assert info['archive_sha256']==hashlib.sha256((root/'g0032-native-fields-seed73.npz').read_bytes()).hexdigest()
+          for arm in ('near_transition','separated_070'):
+              assert len(d['observations'][arm])==len(d['times'])
+              for r in d['observations'][arm]:
+                  assert sum(r[k] for k in ('v_only_cells','w_only_cells','both_active_cells','neither_active_cells'))==16**4
+                  assert 0<=r['four_dimensional_face_contacts']<=4*16**4
+          png=Path('g0032-spatial-interface.png')
+          assert png.stat().st_size>4096 and png.read_bytes()[:8]==bytes([137,80,78,71,13,10,26,10])
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0032-four-dimensional-native-interface-measurements
+          path: |
+            g0032-spatial-interface.json
+            g0032-spatial-interface.png
+          retention-days: 30
+          if-no-files-found: error
+      - name: Publish measured spatial interface graph and native diagnostics
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload atlas-media g0032-spatial-interface.json g0032-spatial-interface.png --clobber
