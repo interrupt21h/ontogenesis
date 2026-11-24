@@ -78,16 +78,21 @@ def main() -> int:
 
     expected = [f"{n:04d}" for n in range(1, 33)]
     actual = sorted(p.stem for p in (ROOT / "docs" / "generations").glob("[0-9][0-9][0-9][0-9].md"))
-    if actual != expected:
-        failures.append(f"Generation records incomplete: {actual}")
+    if actual[:len(expected)] != expected or any(int(x) <= 32 for x in actual[len(expected):]):
+        failures.append(f"Verified generation records incomplete or out of order: {actual}")
+    # G0033+ may be documented before results are accepted into the
+    # historical 32-generation monograph. Preserve the verified chronology.
     history = (ROOT / "docs" / "HISTORY.md").read_text(encoding="utf-8")
     chronology = re.findall(r"^## Generation (\d{4})", history, re.MULTILINE)
     if chronology != expected:
         failures.append(f"HISTORY chronology differs from G0001–G0032: {chronology}")
     index = (ROOT / "docs" / "EXPERIMENTS.md").read_text(encoding="utf-8")
     catalog = re.findall(r"^\|\s*\**(\d{4})\**\s*\|", index, re.MULTILINE)
-    if catalog != expected:
-        failures.append(f"EXPERIMENTS index differs from G0001–G0030: {catalog}")
+    if catalog[:len(expected)] != expected:
+        failures.append(f"EXPERIMENTS verified index differs from G0001–G0032: {catalog}")
+    for additional in catalog[len(expected):]:
+        if additional not in actual[len(expected):]:
+            failures.append(f"Indexed extra generation has no record: {additional}")
     homepage = (ROOT / "README.md").read_text(encoding="utf-8")
     if any(name not in homepage for name in (
         "docs/EXPERIMENTS.md", "docs/VISUAL_GALLERY.md", "docs/PIPELINE.md"
