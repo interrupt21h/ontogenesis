@@ -20,6 +20,8 @@ EDITION_PAIRS = {
              "ontogenesis-0035-morphogenic-tide-evidence"),
     "0036": ("ontogenesis-0036-feedback-aurora-art",
              "ontogenesis-0036-feedback-aurora-evidence"),
+    "0037": ("ontogenesis-0037-memory-strata-art",
+             "ontogenesis-0037-memory-strata-evidence"),
 }
 
 
@@ -62,7 +64,7 @@ def check(release, *, require_all=True):
         "generations": generations,
         "missing": missing,
         "complete": not missing,
-        "scope": "G0030-G0036 two published editions and posters per generation",
+        "scope": "G0030-G0037 two published editions and posters per generation",
         "qualifier": "Completeness of release assets, not numerical or artistic validation"
     }
     if require_all and missing:
