@@ -74,43 +74,47 @@ def artistic_field(field, size):
 
 
 def make_plate(projected, size=(480,480), *, light_phase=0.0):
-    """A luminous isoband plate derived solely from a recorded 2D projection."""
-    w,h=size
-    y,x=np.mgrid[0:h,0:w].astype(np.float32)
-    v=artistic_field(projected["v"],size)
-    wfield=artistic_field(projected["w"],size)
-    matrix=artistic_field(projected["m"],size)
-    # Contour bands are of a visual resampling of the original 16x16 grid.
-    # They are aesthetic geometry and MUST NOT be used as numerical measurements.
-    base=np.empty((h,w,3),np.float32)
-    base[:]=[8,18,28]
-    centers=(w*.47,h*.54)
-    radial=np.exp(-((x-centers[0])**2/(w*.55)**2 +
-                    (y-centers[1])**2/(h*.55)**2))
-    base+=radial[...,None]*np.array([6,13,24],np.float32)
-    for kind, field in (("m",matrix),("v",v),("w",wfield)):
+    """Art-directed *visual isocontours* anchored to the measured z-max plane.
+
+    The broad fields, thin luminous ridges and optical halo are presentation
+    transforms; unlike the evidence edition these are not native cells.
+    """
+    from scipy.ndimage import gaussian_filter
+
+    width,height=size
+    y,x=np.mgrid[0:height,0:width].astype(np.float32)
+    background=np.zeros((height,width,3),np.float32)
+    background[:]=[3,12,22]
+    halo=np.exp(-((x-width*.52)**2/(width*.80)**2+
+                   (y-height*.53)**2/(height*.80)**2))
+    background+=halo[...,None]*[7,12,21]
+    luminous=np.zeros_like(background)
+    levels=(.10,.145,.19,.235,.28,.325,.37,.415)
+    for kind in ("m","v","w"):
+        field=artistic_field(projected[kind],size)
+        field=gaussian_filter(field,1.2)
         color=np.asarray(COLORS[kind],np.float32)
         if kind=="m":
-            level=.20
-            occupancy=np.clip((field-level)*2.4,0,1)*.14
+            ridges=sum(np.exp(-((field-level)/.003)**2)
+                       for level in (.12,.16,.20,.24))
+            region=np.clip((field-.06)*.7,0,.18)
+            edges=np.clip(ridges*.17,0,.8)
         else:
-            # Distinct sculptural *visual* isobands. The displayed values
-            # derive from the native per-plane maxima, not invented states.
-            bins=np.stack([np.clip((field-t)*18,0,1) for t in LEVELS])
-            occupancy=(bins[0]*.13+bins[1]*.15+
-                       bins[2]*.19+bins[3]*.24)
-        gy,gx=np.gradient(field)
-        edge=np.clip(np.hypot(gx,gy)*5,0,1)
-        bright=occupancy+edge*(.20 if kind!="m" else .06)
-        base+=bright[...,None]*color
-    # Warm/cool light is purely presentation and doesn't shift geometry.
-    wash=(.035+.012*math.cos(light_phase))*radial
-    base+=wash[...,None]*[30,25,50]
-    base=np.uint8(np.clip(base,0,255))
-    plate=Image.fromarray(base,"RGB")
-    glow=plate.filter(ImageFilter.GaussianBlur(9))
-    return Image.blend(plate,glow,.26)
-
+            # Genuine numerical contour levels, presented as glowing bands.
+            # Each concentration is from a real, recorded z-max plane.
+            ridges=sum(np.exp(-((field-level)/.0044)**2)
+                       for level in levels)
+            region=np.clip((field-.08)*.44,0,.22)
+            edges=np.clip(ridges*.95,0,1.4)
+        background+=(region+edges)[...,None]*color
+        luminous+=np.clip(edges*.38,0,1)[...,None]*color
+    # Ambient flicker is display-only and must never move numerical contours.
+    background+=halo[...,None]*(.5+.5*math.cos(light_phase))*[.8,1.,1.4]
+    plate=Image.fromarray(np.uint8(np.clip(background,0,255)),"RGB")
+    bloom=Image.fromarray(np.uint8(np.clip(luminous,0,255)),"RGB")
+    bloom=bloom.filter(ImageFilter.GaussianBlur(12))
+    from PIL import ImageChops
+    return ImageChops.add(plate,bloom)
 
 def scene_state(data, arm, t, omega):
     if arm not in ARMS or not 0<=t<11 or not 0<=omega<16:
