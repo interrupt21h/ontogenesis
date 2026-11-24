@@ -3,7 +3,6 @@ on:
   workflow_run:
     workflows: ["G0033 eight-seed native 4D interface robustness pilot"]
     types: [completed]
-  workflow_dispatch:
 permissions:
   contents: read
   actions: read
@@ -12,7 +11,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   cinema:
-    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     permissions:
@@ -30,13 +29,8 @@ jobs:
           UPSTREAM_RUN: ${{ github.event.workflow_run.id }}
         run: |
           mkdir -p input
-          if [ "${{ github.event_name }}" = "workflow_run" ]; then
-            gh run download "$UPSTREAM_RUN" -R "$GITHUB_REPOSITORY" -n g0033-seed-42-native-evidence -D input
-            gh run download "$UPSTREAM_RUN" -R "$GITHUB_REPOSITORY" -n g0033-seed-73-native-evidence -D input
-          else
-            echo 'Manual rendering requires a successful upstream robustness run. Dispatch that first.' >&2
-            exit 1
-          fi
+          gh run download "$UPSTREAM_RUN" -R "$GITHUB_REPOSITORY" -n g0033-seed-42-native-evidence -D input
+          gh run download "$UPSTREAM_RUN" -R "$GITHUB_REPOSITORY" -n g0033-seed-73-native-evidence -D input
       - name: Render real 4D matched-seed field comparison
         run: |
           python -u g0033_native_cinema.py \
