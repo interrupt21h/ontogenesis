@@ -1,0 +1,134 @@
+name: G0035 Morphogenic Tide art and evidence cinematics
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'g0035_morphogenic_tide.py'
+      - 'tests/test_g0035_morphogenic_tide.py'
+      - '.github/workflows/g0035-morphogenic-tide.yml'
+  workflow_dispatch:
+    inputs:
+      evidence_run_id:
+        description: Successful source G0033 eight-seed numerical workflow
+        type: string
+        default: '45437009050'
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: g0035-morphogenic-tide-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install pinned native-field and cinematic dependencies
+        run: python -m pip install numpy==2.2.6 scipy==1.15.3 matplotlib==3.10.3 pillow==11.2.1 imageio-ffmpeg==0.8.1
+      - name: Verify numerical projection and artistic / evidence separation
+        run: |
+          python -m compileall -q g0035_morphogenic_tide.py
+          python -m unittest discover -s tests -p 'test_g0035_morphogenic_tide.py' -v
+      - name: Fetch verified original native field archive
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_RUN: ${{ inputs.evidence_run_id || '45437009050' }}
+        run: |
+          set -euo pipefail
+          gh run view "$SOURCE_RUN" -R "$GITHUB_REPOSITORY" --json conclusion,name \
+            --jq 'if .conclusion=="success" and .name=="G0033 eight-seed native 4D interface robustness pilot" then .name else error("Unverified source") end'
+          mkdir -p input
+          gh run download "$SOURCE_RUN" -R "$GITHUB_REPOSITORY" -n g0033-seed-73-native-evidence -D input
+          gh release download atlas-media -p g0033-robustness.json -D input
+      - name: Authenticate archived numerical data and recorded sample clock
+        run: |
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          import numpy as np
+          archive=Path("input/g0033-seed-73.npz")
+          metadata=json.loads(Path("input/g0033-seed-73.native.json").read_text())
+          pilot=json.loads(Path("input/g0033-robustness.json").read_text())
+          digest=hashlib.sha256(archive.read_bytes()).hexdigest()
+          assert pilot["generation"]=="0033" and pilot["seeds"]==[42,73,101,137,211,307,401,509]
+          assert digest==metadata["archive_sha256"]==pilot["source_archive_sha256_by_seed"]["73"]
+          assert metadata["sample_steps"]==list(range(0,241,24))
+          assert metadata["n"]==16 and metadata["steps"]==240 and metadata["seed"]==73
+          with np.load(archive,allow_pickle=False) as data:
+              for arm in ("separated_070","near_transition"):
+                  for kind in ("v","w","m"):
+                      arr=data[f"{arm}_{kind}"]
+                      assert arr.shape==(11,16,16,16,16) and arr.dtype==np.float32
+                      assert np.isfinite(arr).all() and arr.min()>=0
+          PY
+      - name: Encode short art and evidence films before full render
+        run: |
+          python -u g0035_morphogenic_tide.py \
+            --archive input/g0033-seed-73.npz \
+            --metadata input/g0033-seed-73.native.json \
+            --out /tmp/g0035-smoke --seconds 2 --fps 8
+          python - <<'PY'
+          import imageio_ffmpeg,json
+          from pathlib import Path
+          for edition in ("art","evidence"):
+              base=Path(f"/tmp/g0035-smoke/ontogenesis-0035-morphogenic-tide-{edition}")
+              frames,duration=imageio_ffmpeg.count_frames_and_secs(str(base.with_suffix(".mp4")))
+              assert frames==16 and abs(duration-2)<.1
+              meta=json.loads(base.with_suffix(".render.json").read_text())
+              assert meta["edition"]==edition and not meta["numerical_interpolation"]
+          PY
+      - name: Render complete two-film 24-second cinematic edition
+        run: |
+          mkdir -p output
+          /usr/bin/time -v python -u g0035_morphogenic_tide.py \
+            --archive input/g0033-seed-73.npz \
+            --metadata input/g0033-seed-73.native.json \
+            --out output --seconds 24 --fps 24
+      - name: Validate full H264 decode, artistic distinction and exact provenance
+        run: |
+          python - <<'PY'
+          import hashlib,imageio_ffmpeg,json
+          from pathlib import Path
+          digest=hashlib.sha256(Path("input/g0033-seed-73.npz").read_bytes()).hexdigest()
+          posters=[]
+          for edition in ("art","evidence"):
+              base=Path(f"output/ontogenesis-0035-morphogenic-tide-{edition}")
+              meta=json.loads(base.with_suffix(".render.json").read_text())
+              assert meta["generation"]=="0035" and meta["source_generation"]=="0033"
+              assert meta["source_archive_sha256"]==digest
+              assert meta["original_sample_steps"]==list(range(0,241,24))
+              assert meta["numerical_interpolation"] is False
+              assert meta["seed"]==73 and meta["frames"]==576
+              assert [s["act"] for s in meta["review_samples"]]==[0,1,2,2] if edition=="art" else True
+              count,duration=imageio_ffmpeg.count_frames_and_secs(str(base.with_suffix(".mp4")))
+              assert count==576 and abs(duration-24)<.1
+              reader=imageio_ffmpeg.read_frames(str(base.with_suffix(".mp4")))
+              header=next(reader);reader.close()
+              assert tuple(header["size"])==(1280,720)
+              poster=base.with_suffix(".png")
+              assert poster.stat().st_size>4096
+              posters.append(hashlib.sha256(poster.read_bytes()).hexdigest())
+          assert posters[0]!=posters[1],"Art film and evidence film are visually identical"
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0035-morphogenic-tide-both-cinematic-editions
+          path: |
+            output/*.mp4
+            output/*.png
+            output/*.render.json
+          retention-days: 30
+          if-no-files-found: error
+      - name: Publish both complete cinematic editions only after validation
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload atlas-media output/*.mp4 output/*.png output/*.render.json --clobber
+          echo "G0035 complete: distinctive Morphogenic Tide art film plus native-grid evidence companion, both authenticated and decoded." >> "$GITHUB_STEP_SUMMARY"
