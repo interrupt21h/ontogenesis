@@ -1548,7 +1548,7 @@ The recorded full eight-run pilot required approximately 15 minutes 42 seconds o
 
 ## Generation 0031 — Population Viability Frontier
 
-Status: Five controlled V-loss multipliers implemented with a two-seed numerical pilot; actual result pending CI.
+Status: Verified five-treatment, two-seed G0031 numerical pilot; no thresholded active coexistence at any endpoint.
 
 Parent: G0026 numerical baseline with an explicitly opt-in V loss multiplier; the original default at multiplier 1.0 is preserved and regression-tested.
 
@@ -1568,7 +1568,25 @@ An excessively strong preliminary 0.25 loss multiplier violated numerical nonneg
 
 ### Measured result and limitations
 
-Pending CI. The outcome will be assessed through V and W occupancy, their co-occupied fraction, mean concentrations, genotype entropy and numerical integrity. Preserving both thresholded concentrations would not establish autonomous adaptive life or long-term functional individuals.
+### Verified numerical outcome — November 24, 2026
+
+The [G0031 five-treatment, two-seed pilot](https://github.com/interrupt21h/ontogenesis/actions/runs/45332031263) **passed**, at source revision `d8991d1393dde4bf9d420501f4badcb99780dcab`. Each treatment ran for **240 steps on a 16⁴ lattice**, with independently reset seeds 42 and 73. The baseline was tested for historical consistency and same-seed initial hashes matched.
+
+**Final active coverage** (percentage of cells with population concentration above 0.1):
+
+| V loss multiplier | Seed 42: V | Seed 42: W | Seed 73: V | Seed 73: W |
+|:--|--:|--:|--:|--:|
+| 1.00 | 0.00% | 90.51% | 0.00% | 89.58% |
+| 0.95 | 100.00% | 0.00% | 0.00% | 90.80% |
+| 0.90 | 100.00% | 0.00% | 99.998% | 0.00% |
+| 0.85 | 100.00% | 0.00% | 100.00% | 0.00% |
+| 0.80 | 100.00% | 0.00% | 100.00% | 0.00% |
+
+**None of these endpoints maintained active coexistence.** A small reduction in V loss produced a **seed-dependent switch in competitive dominance**: between 1.00 and 0.95 for seed 42, and between 0.95 and 0.90 for seed 73. This is an endpoint result under two seeds and one finite numerical model, not proof of a biological phase transition or robust long-term stability. A zero thresholded coverage does not necessarily mean the losing concentration is numerically zero.
+
+[Measured G0031 plot](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0031-pilot.png) · [Complete numerical data](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0031-pilot.json) · [Successful CI](https://github.com/interrupt21h/ontogenesis/actions/runs/45332031263).
+
+These measured competitive-exclusion dynamics do not establish functional individuals, evolutionary adaptation or a viable shared ecosystem.
 
 ### Reproduction and provenance
 

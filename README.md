@@ -44,7 +44,7 @@ The same **24⁴, 4,800-step G0029 simulation** now has a second cinematic inter
 
 | Part | What it does |
 |:--|:--|
-| **31 experiment designs** | G0001–G0030 have measured CI-verified results; G0031 tests controlled two-population viability (numerical pilot pending) |
+| **31 experiment designs** | G0001–G0031 have CI-verified numerical results; G0031 found seed-sensitive competitive exclusion, not coexistence |
 | **Numerical worlds** | Local rules update dimensionless fields on periodic grids; some recent experiments use a 24⁴ domain |
 | **Generative visuals** | Field data becomes images, sections, projections, and films |
 | **GitHub Actions** | Runs experiments, builds artifacts, and helps turn the repository into a tiny computational production studio |
@@ -97,7 +97,9 @@ The experiments now test something more fundamental than adding new complexity: 
 
 [**G0031 controlled design**](docs/generations/0031.md) · [Numerical implementation](viability_frontier.py) · [GitHub Actions](.github/workflows/viability-frontier.yml)
 
-*G0031's narrowed numerical outcome is pending CI verification. No full-resolution spatial cinematic or unverified result is being claimed.*
+[**G0031 measured plot**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0031-pilot.png) · [Raw numerical observations](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0031-pilot.json) · [Successful pilot CI](https://github.com/interrupt21h/ontogenesis/actions/runs/45332031263)
+
+*The verified pilot showed that small loss-rate changes can switch the dominant population. None of the tested endpoints maintained active co-occupation. No spatial film has been fabricated from time-series data.*
 
 ## Try it yourself
 
