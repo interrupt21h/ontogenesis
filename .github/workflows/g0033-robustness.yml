@@ -1,0 +1,130 @@
+name: G0033 eight-seed native 4D interface robustness pilot
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'g0033_robustness.py'
+      - 'g0033_aggregate.py'
+      - 'tests/test_g0033_robustness.py'
+      - '.github/workflows/g0033-robustness.yml'
+permissions:
+  contents: read
+concurrency:
+  group: g0033-robustness-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  native-evidence:
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        seed: [42, 73, 101, 137, 211, 307, 401, 509]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install pinned numerical dependencies
+        run: python -m pip install numpy==2.2.6 scipy==1.15.3 matplotlib==3.10.3 pillow==11.2.1
+      - name: Check four-dimensional periodic topology and statistical controls
+        run: |
+          python -m compileall -q g0033_robustness.py g0033_aggregate.py niche_spatial_archive.py
+          python -m unittest discover -s tests -p test_g0033_robustness.py -v
+          python -m unittest discover -s tests -p test_niche_spatial_interface.py -v
+      - name: Record two matched 16^4 treatment arms through step 240
+        run: |
+          /usr/bin/time -v python -u niche_spatial_archive.py \
+            --seed '${{ matrix.seed }}' --n 16 --steps 240 --stride 24 \
+            --out 'g0033-seed-${{ matrix.seed }}.npz' \
+            --metadata 'g0033-seed-${{ matrix.seed }}.native.json'
+      - name: Compute observed interface and shuffled-control diagnostics
+        run: |
+          python -u g0033_robustness.py \
+            --data 'g0033-seed-${{ matrix.seed }}.npz' \
+            --metadata 'g0033-seed-${{ matrix.seed }}.native.json' \
+            --out 'g0033-seed-${{ matrix.seed }}.analysis.json'
+      - name: Validate native numerical provenance and endpoint completeness
+        run: |
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          seed=int('${{ matrix.seed }}')
+          root=f'g0033-seed-{seed}'
+          archive=Path(root+'.npz')
+          native=json.loads(Path(root+'.native.json').read_text())
+          report=json.loads(Path(root+'.analysis.json').read_text())
+          assert native['seed']==report['seed']==seed
+          assert native['n']==report['n']==16
+          assert native['steps']==report['steps']==240
+          assert native['archive_sha256']==report['source_archive_sha256']==hashlib.sha256(archive.read_bytes()).hexdigest()
+          assert len(native['sample_steps'])==11 and native['sample_steps'][-1]==240
+          assert len({h['0'] for h in native['solver_hashes'].values()})==1
+          assert set(report['treatments'])=={'near_transition','separated_070'}
+          for arm in report['treatments']:
+              assert len(report['observations'][arm])==11
+              for cutoff in ('0.05','0.10','0.20'):
+                  endpoint=report['endpoints'][arm][cutoff]
+                  assert sum(endpoint[k] for k in
+                      ('v_only_cells','w_only_cells','both_active_cells','neither_active_cells'))==16**4
+                  assert endpoint['shuffled_spatial_reference']['permutations']==16
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0033-seed-${{ matrix.seed }}-native-evidence
+          path: |
+            g0033-seed-${{ matrix.seed }}.npz
+            g0033-seed-${{ matrix.seed }}.native.json
+            g0033-seed-${{ matrix.seed }}.analysis.json
+          retention-days: 30
+          if-no-files-found: error
+  summarize:
+    needs: native-evidence
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy==2.2.6 matplotlib==3.10.3
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: g0033-seed-*-native-evidence
+          path: evidence
+          merge-multiple: true
+      - name: Aggregate only a complete cohort of eight distinct seed reports
+        run: |
+          python -u g0033_aggregate.py \
+            --inputs evidence/g0033-seed-*.analysis.json \
+            --out g0033-robustness.json \
+            --plate g0033-robustness.png
+      - name: Verify no partial or fabricated report
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('g0033-robustness.json').read_text())
+          assert r['seeds']==[42,73,101,137,211,307,401,509]
+          assert len(r['individual_endpoints'])==8
+          assert len(r['source_archive_sha256_by_seed'])==8
+          assert Path('g0033-robustness.png').stat().st_size>4096
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0033-eight-seed-native-robustness-summary
+          path: |
+            g0033-robustness.json
+            g0033-robustness.png
+          retention-days: 30
+          if-no-files-found: error
+      - name: Publish complete numerical evidence only on successful validation
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload atlas-media g0033-robustness.json g0033-robustness.png --clobber
+          echo "Verified eight-seed G0033 numerical pilot and interface results published." >> "$GITHUB_STEP_SUMMARY"
