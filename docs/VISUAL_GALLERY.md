@@ -8,6 +8,16 @@
 
 [**Browse every generation visually — G0001 through G0032**](VISUAL_INDEX.md) · [Filterable HTML player edition](visual-atlas.html)
 
+### G0035 — Morphogenic Tide: sculptural isobands from genuine four-dimensional fields
+
+[![G0035 Morphogenic Tide cinematic poster: luminous numerical contour structures for the niche and control treatments](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0035-morphogenic-tide-art.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0035-morphogenic-tide-art.mp4)
+
+[**Watch the art film (24 seconds)**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0035-morphogenic-tide-art.mp4) · [**Watch the evidence companion (24 seconds)**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0035-morphogenic-tide-evidence.mp4) · [Verified cinematic CI](https://github.com/interrupt21h/ontogenesis/actions/runs/45480155128) · [Experiment record](generations/0035.md)
+
+A deliberately different visual composition: rather than glassy point clouds or connected-component diagrams, the film creates a **luminous landscape of nested isocontours** from real sampled 4D concentration fields. The original seed-73 V/W/matrix arrays are projected from each selected 16³ omega hyperplane onto a 16×16 y/x plane using a precise z-axis maximum. Eight narrow V/W concentration contour levels and separate matrix contours are then drawn on a bicubically resampled *visual* grid. Strong cyan and amber ridgelines trace concentration morphology through three editorial acts: the complementary-niche habitat, the no-niche control, and the final matched comparison.
+
+The companion film is deliberately not another glamour rendering. It displays the same numerical projections as **unsmoothed native-grid cells**, reports their actual thresholded column counts, and makes the distinction between recorded data and artistic contour interpolation inspectable. Both files were source-verified, H.264-decoded and published together. Morphogenic Tide does **not** simulate fluid flow or discover organisms; it is a new art-directed interpretation of authenticated G0033 fields.
+
 ### G0034 — Luminous Habitat: a cinematic world, not a diagnostics panel
 
 [![G0034 art-directed Luminous Habitat cinematic poster, made from authentic four-dimensional recorded fields](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0034-luminous-habitat.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0034-luminous-habitat.mp4)
