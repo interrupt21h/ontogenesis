@@ -9,7 +9,7 @@ from niche_screen import ARMS
 from niche_persistence import CASES,run_extension,verify_source
 
 
-def saved_small_source(n=8,checkpoint=60,seeds=(42,)):
+def saved_small_source(n=8,checkpoint=120,seeds=(42,)):
     original={"generation":"0032","n":n,"steps":checkpoint,"seeds":list(seeds),
               "source_sha":"test","arms":{arm:dict(ARMS[arm]) for arm in CASES},
               "hashes":{}}
@@ -25,10 +25,10 @@ def saved_small_source(n=8,checkpoint=60,seeds=(42,)):
 class Continuation(unittest.TestCase):
     def test_reject_mismatched_archives(self):
         source=saved_small_source()
-        verify_source(source,8,60,(42,))
+        verify_source(source,8,120,(42,))
         source["arms"]["separated_070"]["niche_strength"]=0
         with self.assertRaises(ValueError):
-            verify_source(source,8,60,(42,))
+            verify_source(source,8,120,(42,))
 
     def test_checkpoint_replay_and_measured_plot(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -36,7 +36,7 @@ class Continuation(unittest.TestCase):
             source=root/"source.json"
             source.write_text(json.dumps(saved_small_source()))
             payload=run_extension(source,root/"extended.json",root/"plot.png",
-                                  steps=120,stride=12)
+                                  steps=240,stride=12)
             self.assertTrue(payload["source_checkpoint_verified"])
             self.assertEqual(set(payload["endpoints"]["42"]),set(CASES))
             self.assertIn("42",payload["both_species_active_at_extended_endpoint"])
@@ -51,7 +51,7 @@ class Continuation(unittest.TestCase):
             source.write_text(json.dumps(original))
             with self.assertRaises(AssertionError):
                 run_extension(source,root/"extended.json",root/"plot.png",
-                              steps=120,stride=12)
+                              steps=240,stride=12)
 
 
 if __name__=="__main__":
