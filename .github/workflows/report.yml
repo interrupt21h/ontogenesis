@@ -137,7 +137,7 @@ jobs:
           base=Path('report/build/evidence/0030')
           data=json.loads((base/'g0030-pilot.json').read_text())
           assert (data['generation'],data['n'],data['steps'],data['seeds'])==('0030',16,1200,[42,73])
-          assert data['source_sha']=='04f1c6e90a674ed1174877fd27f6b4eaf23c7f34'
+          assert isinstance(data['source_sha'],str) and len(data['source_sha'])==40
           arms={'neither','w_to_v_only','v_to_w_only','both'}
           for seed in ('42','73'):
               assert set(data['observations'][seed])==arms
@@ -162,7 +162,7 @@ jobs:
           folder=Path('report/build/evidence/0031')
           d=json.loads((folder/'g0031-pilot.json').read_text())
           assert (d['generation'],d['n'],d['steps'],d['seeds'])==('0031',16,240,[42,73])
-          assert d['source_sha']=='d8991d1393dde4bf9d420501f4badcb99780dcab'
+          assert isinstance(d['source_sha'],str) and len(d['source_sha'])==40
           assert d['arms']=={'historical':1.0,'v_loss_095':.95,'v_loss_090':.90,'v_loss_085':.85,'v_loss_080':.80}
           assert not d['any_endpoint_both_active']
           for seed in ('42','73'):
@@ -187,7 +187,7 @@ jobs:
           folder=Path("report/build/evidence/0032")
           d=json.loads((folder/"g0032-pilot.json").read_text())
           assert (d["generation"],d["n"],d["steps"],d["seeds"])==("0032",16,240,[42,73])
-          assert d["source_sha"]=="6f64f3e7eb66c245385d2801306f7f039eef0d66"
+          assert isinstance(d["source_sha"],str) and len(d["source_sha"])==40
           assert set(d["arms"])=={"historical","near_transition","separated_035","separated_070"}
           assert d["any_endpoint_cooccupancy"] is False
           for seed in ("42","73"):
@@ -204,6 +204,32 @@ jobs:
           assert p.stat().st_size>4096 and p.read_bytes()[:8]==bytes([137,80,78,71,13,10,26,10])
           PY
           cp report/build/evidence/0032/g0032-pilot.png report/build/atlas/0032-pilot.png
+      - name: Authenticate numerical source revisions against successful experiment workflows
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json,os,subprocess
+          from pathlib import Path
+          runs=json.loads(subprocess.check_output(
+              ['gh','api',f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/runs?per_page=100"],
+              text=True))['workflow_runs']
+          sources={
+              '0030':('G0030 ecological succession controls','g0030-pilot.json'),
+              '0031':('G0031 population viability frontier','g0031-pilot.json'),
+              '0032':('G0032 complementary spatial niche screen','g0032-pilot.json'),
+          }
+          matched={}
+          for generation,(workflow,filename) in sources.items():
+              d=json.loads((Path('report/build/evidence')/generation/filename).read_text())
+              hits=[r for r in runs if r.get('head_sha')==d['source_sha']
+                    and r.get('name')==workflow and r.get('conclusion')=='success']
+              assert hits,f"No completed, successful CI source for G{generation}: {d['source_sha']}"
+              matched[generation]={'source_sha':d['source_sha'],'workflow_run_id':hits[0]['id']}
+              print(f"G{generation} verified against successful Actions run {hits[0]['id']}")
+          Path('report/build/evidence/verified-source-runs.json').write_text(
+              json.dumps(matched,indent=2)+'\\n')
+          PY
       - name: Validate report generator syntax
         run: python3 -m compileall -q report
       - name: Collect engineering atlas
