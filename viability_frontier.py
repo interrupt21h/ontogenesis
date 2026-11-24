@@ -19,9 +19,10 @@ from scripts.analyze_g0030 import loss_window, time_average
 
 ARMS = {
     "historical": 1.0,
-    "less_v_loss_075": 0.75,
-    "less_v_loss_050": 0.50,
-    "less_v_loss_025": 0.25,
+    "v_loss_095": 0.95,
+    "v_loss_090": 0.90,
+    "v_loss_085": 0.85,
+    "v_loss_080": 0.80,
 }
 FIELDS=("v_active","w_active","coexistence","v_mean","w_mean",
         "matrix_mean","matrix_coverage","energy_mean","genotype_entropy_bits")
@@ -87,6 +88,7 @@ def run_screen(out,plate,*,n=16,steps=240,stride=6,seeds=(42,73)):
             "Thresholded coverage is not direct proof of biological individuals.",
             "Co-occupancy does not establish mutualism, spatial enclosure or reproduction.",
             "Rates and thresholds are specific to this model; 24^4 validation is gated.",
+            "The initial 0.25 V-loss-multiplier screen triggered a nonnegative-state assertion; the finer 0.80-1.0 study intentionally avoids that unstable perturbation and does not suppress assertions.",
         ],
     }
     for seed in seeds:

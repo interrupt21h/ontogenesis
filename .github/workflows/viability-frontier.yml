@@ -43,12 +43,12 @@ jobs:
           from pathlib import Path
           data=json.loads(Path('g0031-pilot.json').read_text())
           assert (data['generation'],data['n'],data['steps'],data['seeds'])==('0031',16,240,[42,73])
-          assert data['arms']=={'historical':1.,'less_v_loss_075':.75,'less_v_loss_050':.50,'less_v_loss_025':.25}
+          assert data['arms']=={'historical':1.,'v_loss_095':.95,'v_loss_090':.90,'v_loss_085':.85,'v_loss_080':.80}
           assert data['times'][0]==0 and data['times'][-1]==240 and len(data['times'])>=40
           for seed in ('42','73'):
               assert len({x['0'] for x in data['hashes'][seed].values()})==1
               assert all([x['step'] for x in rows]==data['times'] for rows in data['observations'][seed].values())
-              assert len(data['diagnostics'][seed])==4
+              assert len(data['diagnostics'][seed])==5
           png=Path('g0031-pilot.png')
           assert png.stat().st_size>4096
           assert png.read_bytes()[:8]==bytes([137,80,78,71,13,10,26,10])
