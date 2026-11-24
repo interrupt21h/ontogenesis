@@ -69,7 +69,7 @@ The same **24⁴, 4,800-step G0029 simulation** now has a second cinematic inter
 | [G0029](docs/EXPERIMENTS.md#viii--transport-with-memory) | Persistent circulation memory, with a same-seed matched control |
 | [G0030](docs/EXPERIMENTS.md#ix--ecological-controls) | Which direction of metabolite exchange matters after an environmental change? |
 
-G0029's full-domain experiment and alternative cinematic editions passed CI. G0030's two-seed factorial pilot passed CI, but V remained below the active threshold in all eight endpoints and no active co-occupancy was measured. G0028 remains the featured film; G0031–G0032 remain proposals.
+G0029's full-domain experiment and alternative cinematic editions passed CI. G0030's two-seed factorial pilot passed CI, but V remained below the active threshold in all eight endpoints and no active co-occupancy was measured. G0028 remains the featured cinematic. G0031's viability frontier and G0032's niche-partition experiment have since been executed and archived; neither establishes robust stable coexistence.
 
 ## G0029 · Giving circulation a memory
 
