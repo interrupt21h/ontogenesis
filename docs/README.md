@@ -11,6 +11,7 @@ The experiment is as much about orchestrating and maintaining the computational 
 | Looking for… | Start here |
 |:--|:--|
 | The moving pictures | [Visual gallery](VISUAL_GALLERY.md) |
+| The artistic vision and rendering standards | [Visual art direction](ART_DIRECTION.md) |
 | The latest 4D component genealogies | [G0034 Lineage Ribbons](generations/0034.md) · [Interactive observatory](https://interrupt21h.github.io/ontogenesis/lineage-observatory.html) |
 | What each generation tried | [Experiment atlas](EXPERIMENTS.md) |
 | What changed and what actually happened | [Experiment history](HISTORY.md) |
