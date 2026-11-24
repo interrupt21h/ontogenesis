@@ -1,0 +1,40 @@
+name: Complete 32-generation visual atlas integrity
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'visual_atlas_integrity.py'
+      - 'tests/test_visual_atlas_integrity.py'
+      - '.github/workflows/visual-atlas-integrity.yml'
+      - 'docs/visual-atlas.html'
+      - 'report/videos.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Test every visual and its claimed evidence type
+        run: |
+          python -m compileall -q visual_atlas_integrity.py
+          python -m unittest discover -s tests -p test_visual_atlas_integrity.py -v
+      - name: Load current GitHub release assets, not guessed links
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view atlas-media --json assets > /tmp/ontogenesis-atlas-assets.json
+          python visual_atlas_integrity.py \
+            --asset-list /tmp/ontogenesis-atlas-assets.json \
+            --out visual-atlas-integrity.json
+      - uses: actions/upload-artifact@v7
+        with:
+          name: verified-32-generation-visual-atlas
+          path: visual-atlas-integrity.json
+          retention-days: 30
+          if-no-files-found: error
