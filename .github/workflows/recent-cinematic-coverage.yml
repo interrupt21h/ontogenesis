@@ -8,7 +8,7 @@ on:
       - '.github/workflows/recent-cinematic-coverage.yml'
   workflow_dispatch:
   workflow_run:
-    workflows: ['G0035 Morphogenic Tide art and evidence cinematics', 'G0036 Feedback Aurora art and evidence cinematics']
+    workflows: ['G0035 Morphogenic Tide art and evidence cinematics', 'G0036 Feedback Aurora art and evidence cinematics', 'G0037 structural persistence and Memory Strata cinematics']
     types: [completed]
 permissions:
   contents: read
@@ -35,10 +35,10 @@ jobs:
           gh api "repos/$GITHUB_REPOSITORY/releases/tags/atlas-media" > dist/release.json
           python scripts/check_recent_cinema.py \
             --release dist/release.json --out dist/recent-cinematic-coverage.json
-          echo "Every generation G0030–G0036 has two published MP4/poster editions." >> "$GITHUB_STEP_SUMMARY"
+          echo "Every generation G0030–G0037 has two published MP4/poster editions." >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v7
         with:
-          name: recent-g0030-g0036-cinematic-coverage
+          name: recent-g0030-g0037-cinematic-coverage
           path: dist/recent-cinematic-coverage.json
           retention-days: 30
           if-no-files-found: error
