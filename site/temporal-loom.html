@@ -16,7 +16,7 @@ label{display:grid;gap:6px;color:#c3d7e3;font-size:.85rem}select,input{padding:9
 select:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--mint);outline-offset:3px}input[type=range]{padding:3px;width:min(320px,78vw)}
 section.panel{background:linear-gradient(160deg,#183247,#0c2334);border:1px solid var(--line);border-radius:17px;padding:20px;margin:19px 0}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,475px),1fr));gap:18px}.hint{font-size:.86rem;color:#adc6d6}
-.scroll{overflow-x:auto}.heatmap{display:grid;grid-template-columns:50px repeat(11,minmax(23px,1fr));gap:5px;min-width:400px}
+.scroll{overflow-x:auto}.polar{display:block;width:100%;max-width:100%;height:auto;background:#0b2233;border-radius:11px}.heatmap{display:grid;grid-template-columns:50px repeat(11,minmax(23px,1fr));gap:5px;min-width:400px}
 .heatmap .rowlabel{font-variant-numeric:tabular-nums;text-align:right;padding:9px 7px 0 0;font-size:.81rem;color:#c0d3df}
 .heatmap .axis{font-size:.65rem;text-align:center;color:#a5becd;padding-top:7px}
 .cell{min-height:33px;border-radius:4px;border:1px solid #395468;display:block;position:relative;box-shadow:inset 0 0 0 0 #fff;transition:border-color .12s}
@@ -51,6 +51,10 @@ section.panel{background:linear-gradient(160deg,#183247,#0c2334);border:1px soli
 <section class="panel"><p class="eyebrow">Treatment A</p><h2>Near-transition / no imposed niche</h2><div class="scroll"><div class="heatmap" id="near_transition"></div></div></section>
 <section class="panel"><p class="eyebrow">Treatment B</p><h2>Complementary habitat / strength 0.70</h2><div class="scroll"><div class="heatmap" id="separated_070"></div></div></section>
 </div>
+<section class="panel"><p class="eyebrow">Another view of the same measured step</p><h2>The Interface Constellations</h2>
+<canvas class="polar" id="constellation" width="1150" height="470" aria-label="Radial chart of all eight seeds for the two treatments at the selected recorded step" role="img"></canvas>
+<p class="hint">Each spoke is one independent seed. The radial distance encodes its exact observed value for the currently selected numerical timestep. Axis guides and the joined lines are purely a graphical aid; seed order is not spatial adjacency in the 4D simulation.</p>
+</section>
 <section class="panel"><h2>Selected observation across eight independent seeds</h2>
 <div class="stat" id="stats"></div>
 <p class="hint">The vertical highlight marks the selected recorded simulation step. Colors are normalized to the largest observed value of both treatments for this metric and threshold; they do not imply intermediate numerical states. Hover or focus on a cell for its exact numerical measurement.</p></section>
@@ -71,6 +75,46 @@ function rgb(value,max,arm){
  const x=Math.pow(Math.log1p(Math.max(0,value))/Math.log1p(Math.max(1,max)),.72);
  const cold=[20,39,55],hot=arm==="separated_070"?[91,229,208]:[252,163,104];
  return "rgb("+cold.map((c,i)=>Math.round(c*(1-x)+hot[i]*x)).join(",")+")";
+}
+function constellation(data,metric,cutoff,at,max){
+ const cv=document.getElementById("constellation"),cx=cv.getContext("2d");
+ const W=cv.width,H=cv.height;
+ cx.clearRect(0,0,W,H);
+ cx.fillStyle="#0b2233";cx.fillRect(0,0,W,H);
+ const centers=[{x:285,y:230,arm:"near_transition",color:"#f7a66e",name:"NO NICHE"},
+                {x:865,y:230,arm:"separated_070",color:"#64e5d5",name:"NICHE 0.70"}];
+ for(const {x,y,arm,color,name} of centers){
+  const rows=data[arm].map(row=>row[at]);
+  cx.lineWidth=1;cx.strokeStyle="#32516a";
+  for(const radius of [40,78,116,155]){
+   cx.beginPath();cx.arc(x,y,radius,0,Math.PI*2);cx.stroke();
+  }
+  cx.textAlign="center";cx.font="bold 19px system-ui";
+  cx.fillStyle=color;cx.fillText(name,x,34);
+  let coords=[];
+  for(let i=0;i<8;i++){
+   const angle=-Math.PI/2+i*Math.PI/4;
+   const radius=42+112*(max>0?rows[i]/max:0);
+   const px=x+Math.cos(angle)*radius,py=y+Math.sin(angle)*radius;
+   const tx=x+Math.cos(angle)*175,ty=y+Math.sin(angle)*175;
+   cx.beginPath();cx.moveTo(x+Math.cos(angle)*38,y+Math.sin(angle)*38);
+   cx.lineTo(x+Math.cos(angle)*156,y+Math.sin(angle)*156);
+   cx.strokeStyle="#345b70";cx.stroke();
+   cx.fillStyle="#bbd1df";cx.font="14px system-ui";
+   cx.fillText(evidence.seeds[i],tx,ty+5);
+   coords.push([px,py]);
+  }
+  cx.beginPath();coords.forEach(([px,py],i)=>i?cx.lineTo(px,py):cx.moveTo(px,py));
+  cx.closePath();cx.fillStyle=arm==="separated_070"?"#64e5d522":"#f7a66e22";
+  cx.strokeStyle=color;cx.lineWidth=3;cx.fill();cx.stroke();
+  coords.forEach(([px,py],i)=>{
+   cx.beginPath();cx.arc(px,py,6,0,Math.PI*2);
+   cx.fillStyle=color;cx.fill();
+   cx.strokeStyle="#ecfdff";cx.lineWidth=1;cx.stroke();
+  });
+  cx.font="14px system-ui";cx.fillStyle="#bcd4df";
+  cx.fillText("Each seed: 0 at center · maximum at outer ring",x,438);
+ }
 }
 function display(){
  if(!evidence)return;
@@ -93,6 +137,7 @@ function display(){
    }
   }
  }
+ constellation(data,metric,cutoff,at,max);
  const stats=document.getElementById("stats");stats.replaceChildren();
  for(const arm of arms){
   const rows=data[arm].map(row=>row[at]);
