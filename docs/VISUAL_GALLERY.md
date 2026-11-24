@@ -8,6 +8,16 @@
 
 [**Browse every generation visually — G0001 through G0032**](VISUAL_INDEX.md) · [Filterable HTML player edition](visual-atlas.html)
 
+### G0034 — Luminous Habitat: a cinematic world, not a diagnostics panel
+
+[![G0034 art-directed Luminous Habitat cinematic poster, made from authentic four-dimensional recorded fields](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0034-luminous-habitat.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0034-luminous-habitat.mp4)
+
+[**Watch the 24-second Luminous Habitat cinematic**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0034-luminous-habitat.mp4) · [Original render manifest](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0034-luminous-habitat.render.json) · [Verified CI](https://github.com/interrupt21h/ontogenesis/actions/runs/45461974208) · [Art direction](ART_DIRECTION.md)
+
+This is a deliberately authored **artificial-life-inspired cinematic interpretation** of authentic numerical world states, rather than a flying dashboard or another chart. Three successive acts stage the recorded seed-73 4D concentration fields as luminous glass-like habitats: complementary spatial niches, the corresponding no-niche control, and a matched final-state diptych. Cyan and amber are exclusive V and W activity; violet represents matrix. The suspended filaments are **real nearest-neighbor active voxel connections within the selected recorded 3D hyperplane** of the original 4D numerical lattice. Studio lighting, atmospheric bloom, camera orbit, depth perspective and the final composition are artistic choices, not new simulated behavior.
+
+No creatures, synthetic organisms, biological transport, or interpolated solver states have been added. This edition is meant to *feel* like an unfamiliar computational ecology while preserving the recorded data. It intentionally complements the evidence-oriented **Lineage Ribbons** film and [Lineage Observatory](https://interrupt21h.github.io/ontogenesis/lineage-observatory.html); neither visualization claims actual artificial life has emerged.
+
 ### G0034 — Lineage Ribbons: tracking four-dimensional component topology
 
 [![G0034 Lineage Ribbons verified film poster](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0034-lineage-ribbons.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0034-lineage-ribbons.mp4)
