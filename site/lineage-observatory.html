@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Explore authentic four-dimensional component genealogy and observed snapshot overlap in Ontogenesis G0034.">
+<title>Ontogenesis · G0034 Lineage Observatory</title>
+<style>
+:root{color-scheme:dark;background:#081521;color:#ebf7fb;font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;--line:#39556b;--mint:#62e7d3;--amber:#f5b47e}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 85% -30%,#22435b,transparent 58%),#081521}
+main{max-width:1330px;margin:auto;padding:22px clamp(18px,4vw,54px) 60px}
+a{color:var(--mint)}nav{display:flex;flex-wrap:wrap;gap:20px;font-size:.9rem}
+.eyebrow{font-size:.76rem;text-transform:uppercase;letter-spacing:.18em;color:var(--mint);font-weight:750}
+h1{font-size:clamp(2.6rem,6vw,5.4rem);line-height:1.02;letter-spacing:-.055em;margin:29px 0 18px}
+h1 em{font-style:normal;color:var(--mint)}
+h2{font-size:1.3rem;margin:0 0 10px}.intro{color:#c5d9e5;max-width:910px}
+.controls{display:flex;gap:16px;flex-wrap:wrap;margin:22px 0;border:1px solid var(--line);background:#102a3b;padding:18px;border-radius:14px;align-items:end}
+label{display:grid;gap:5px;font-size:.84rem;color:#cee2eb}select,input{background:#091e2d;border:1px solid #56788c;border-radius:8px;color:#f0fafc;padding:9px;font:inherit;max-width:100%}
+input[type=range]{width:min(325px,75vw);padding:4px}
+select:focus-visible,input:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--mint);outline-offset:3px}
+.panel{background:linear-gradient(140deg,#142e40,#0c2030);border:1px solid var(--line);border-radius:16px;padding:18px;margin:17px 0}
+.canvas{display:block;width:100%;height:auto;background:#0b1e2e;border-radius:10px;cursor:crosshair}
+.note{color:#abc4d2;font-size:.86rem}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px}
+.stat{padding:14px;border:1px solid #37566c;background:#112839;border-radius:12px}
+.stat strong{display:block;font-variant-numeric:tabular-nums;font-size:1.7rem;margin-top:5px}
+.stat span{color:#bcd3df;font-size:.8rem}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:15px}
+.details{min-height:80px;font-size:.9rem;color:#c6dde8}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{padding:10px;text-align:right;border-bottom:1px solid #304b61;font-size:.88rem}th:first-child,td:first-child{text-align:left}
+.scroll{overflow-x:auto}
+#status{color:#b5d8d7}footer{border-top:1px solid var(--line);margin-top:40px;padding-top:18px;color:#a6bece;font-size:.88rem}
+</style></head><body><main>
+<nav><a href="./">← Cinema</a><a href="interface-lab.html">Eight-seed lab</a><a href="temporal-loom.html">Temporal Loom</a><a href="https://github.com/interrupt21h/ontogenesis/blob/main/g0034_genealogy.py">Numerical algorithm</a></nav>
+<p class="eyebrow">G0034 / 4D periodic topology / recorded numerical overlap</p>
+<h1>Lineage <em>Observatory.</em></h1>
+<p class="intro">Follow thresholded structures across real four-dimensional snapshots. Each node represents a face-connected component; each strand represents actual shared lattice sites in consecutive recorded states. Branches reveal observed splits and merges, not biological reproduction.</p>
+<p id="status" role="status">Loading verified numerical genealogy…</p>
+<div class="controls">
+<label for="seed">Initialization seed<select id="seed"><option value="42">42</option><option value="73">73</option></select></label>
+<label for="arm">Treatment<select id="arm"><option value="separated_070">Complementary niche 0.70</option><option value="near_transition">Near-transition / no niche</option></select></label>
+<label for="species">Thresholded activity<select id="species"><option value="v_only">V-only components</option><option value="w_only">W-only components</option></select></label>
+<label for="time">Recorded numerical step: <output id="step">240</output><input id="time" type="range" min="0" max="10" step="1" value="10"></label>
+</div>
+<section class="panel"><h2>Four-dimensional component graph</h2>
+<canvas id="graph" class="canvas" width="1180" height="535" role="img" aria-label="Recorded connected component nodes linked by exact measured voxel overlap across sampled numerical times"></canvas>
+<p id="hover" class="note">Move across a node for its exact component size and snapshot index. A highlighted column marks the selected recorded time.</p>
+<p class="note">Only the largest components containing at least 16 lattice sites appear as nodes (maximum 24 per snapshot). All components, including smaller ones, remain included in the numerical totals and split/merge counts. Horizontal spacing is recorded time, not physical position.</p></section>
+<section class="panel"><h2>Selected snapshot measurements</h2><div id="stats" class="stats"></div></section>
+<div class="two">
+<section class="panel"><h2>Recorded transitions</h2>
+<div class="scroll"><table><thead><tr><th>Step</th><th>Components</th><th>New at threshold</th><th>Lost at threshold</th><th>Splits</th><th>Merges</th></tr></thead><tbody id="rows"></tbody></table></div></section>
+<section class="panel"><h2>Interpretation</h2><div class="details">
+<p>Components use nearest-neighbor connectivity across all four periodic lattice dimensions. Adjacent sampled components are linked only when they contain the same native lattice sites. Split and merge events are defined by the degrees of this discrete overlap graph.</p>
+<p>These are numerical threshold crossings and changes in recorded connectivity. A feature can disappear between samples, migrate, or temporarily fall below threshold without a unique persistent identity. Such ambiguities must not be interpreted as organism lineage.</p>
+<p><a href="https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0034-genealogy.json">Download G0034 numerical genealogy</a> · <a href="https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0034-lineage-ribbons.mp4">Watch Lineage Ribbons cinematic</a> · <a href="https://github.com/interrupt21h/ontogenesis/actions/workflows/g0034-genealogy.yml">Verify the workflow</a></p></div></section>
+</div>
+<footer>G0034 uses archived G0033 native float32 fields (seeds 42 and 73, 16⁴, steps 0–240, recorded every 24). No interpolated chemistry or inferred biological identity. The numerical dataset is staged only after successful CI validation.</footer>
+</main><script>
+"use strict";
+const controls={seed:document.getElementById("seed"),arm:document.getElementById("arm"),
+ species:document.getElementById("species"),time:document.getElementById("time")};
+const canvas=document.getElementById("graph"),ctx=canvas.getContext("2d");
+let source=null,nodesOnScreen=[];
+const num=n=>Number(n).toLocaleString();
+function series(){return source.source[controls.seed.value].arms[controls.arm.value][controls.species.value]}
+function make(tag,content,cls){const v=document.createElement(tag);if(content!==null)v.textContent=content;if(cls)v.className=cls;return v}
+function layout(records){
+ const out=new Map(),x0=100,x1=1132,top=60,bottom=480;
+ for(let time=0;time<records.length;time++){
+  const featured=records[time].featured.slice(0,24);
+  const full=featured.reduce((a,node)=>a+Math.sqrt(node.sites),0);
+  let cursor=top+10;
+  for(const node of featured){
+   const height=Math.max(5,(bottom-top-20)*Math.sqrt(node.sites)/Math.max(1,full));
+   out.set(time+":"+node.id,{x:x0+(x1-x0)*time/10,y:cursor+height/2,
+                            size:node.sites,step:time,id:node.id});
+   cursor+=height;
+  }
+ }
+ return out;
+}
+function drawGraph(records,idx){
+ ctx.clearRect(0,0,1180,535);
+ ctx.fillStyle="#0b1e2e";ctx.fillRect(0,0,1180,535);
+ const points=layout(records),xs=100+(1132-100)*idx/10;
+ ctx.fillStyle="#244355";ctx.fillRect(xs-23,42,46,460);
+ ctx.font="14px system-ui";ctx.textAlign="center";
+ for(let t=0;t<11;t++){
+  let x=100+(1132-100)*t/10;
+  ctx.strokeStyle="#26495c";ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x,42);ctx.lineTo(x,492);ctx.stroke();
+  ctx.fillStyle="#b5cbda";ctx.fillText(String(source.times[t]),x,519);
+ }
+ const color=controls.species.value==="v_only"?"#6de6d5":"#ffc08b";
+ ctx.strokeStyle="#668c96";
+ for(let t=1;t<records.length;t++)for(const edge of records[t].featured_edges_from_previous){
+  const a=points.get((t-1)+":"+edge.from),b=points.get(t+":"+edge.to);
+  if(!a||!b)continue;
+  ctx.globalAlpha=Math.min(.9,.2+Math.sqrt(edge.sites)/100);
+  ctx.lineWidth=Math.min(5,1+Math.sqrt(edge.sites)/25);
+  ctx.beginPath();ctx.moveTo(a.x,a.y);
+  ctx.bezierCurveTo((a.x+b.x)/2,a.y,(a.x+b.x)/2,b.y,b.x,b.y);
+  ctx.strokeStyle=color;ctx.stroke();
+ }
+ ctx.globalAlpha=1;nodesOnScreen=[];
+ for(const [key,node] of points){
+  const radius=Math.min(12,3+2*Math.log10(node.size+1));
+  ctx.fillStyle=color;ctx.beginPath();ctx.arc(node.x,node.y,radius,0,Math.PI*2);ctx.fill();
+  ctx.lineWidth=node.step===idx?2:1;
+  ctx.strokeStyle="#f5f9e6";ctx.stroke();
+  nodesOnScreen.push({...node,r:Math.max(10,radius)});
+ }
+}
+function draw(){
+ if(!source)return;
+ const list=series(),idx=Number(controls.time.value),r=list[idx];
+ document.getElementById("step").textContent=source.times[idx];
+ drawGraph(list,idx);
+ const stats=document.getElementById("stats");stats.replaceChildren();
+ for(const [label,value] of [
+  ["Active exclusive lattice sites",r.active_sites],["4D components",r.component_count],
+  ["Largest connected region",r.largest_component],["New overlap-graph nodes",r.births],
+  ["Disappeared graph nodes",r.deaths],["Observed split nodes",r.splits],
+  ["Observed merge nodes",r.merges],["Components below visual cutoff",r.small_components]
+ ]){
+  const card=make("div",null,"stat");card.append(make("span",label),make("strong",num(value)));stats.append(card);
+ }
+ const body=document.getElementById("rows");body.replaceChildren();
+ list.forEach((row,i)=>{
+  const tr=make("tr",null);
+  [source.times[i],row.component_count,row.births,row.deaths,row.splits,row.merges].forEach(v=>tr.append(make("td",num(v))));
+  body.append(tr);
+ });
+ document.getElementById("status").textContent="Verified native-field genealogy loaded · 2 seeds · 2 treatments · 11 recorded steps";
+}
+for(const c of Object.values(controls))c.addEventListener("input",draw);
+canvas.addEventListener("pointermove",e=>{
+ const box=canvas.getBoundingClientRect();
+ const x=(e.clientX-box.left)*canvas.width/box.width,y=(e.clientY-box.top)*canvas.height/box.height;
+ const match=nodesOnScreen.find(n=>Math.hypot(n.x-x,n.y-y)<=n.r);
+ document.getElementById("hover").textContent=match?
+  "Recorded step "+source.times[match.step]+" · component "+match.id+" · "+num(match.size)+" lattice sites":
+  "Move across a component node to inspect its measured size; link thickness encodes shared voxel count.";
+});
+(async()=>{try{
+ const res=await fetch("data/g0034-genealogy.json",{cache:"no-store"});
+ if(!res.ok)throw new Error("HTTP "+res.status);
+ const data=await res.json();
+ if(data.generation!=="0034"||data.n!==16||data.steps!==240||
+    data.times.length!==11||data.seeds.join(",")!=="42,73")
+   throw new Error("Unexpected or incomplete G0034 evidence");
+ source=data;draw();
+}catch(err){document.getElementById("status").textContent=
+ "G0034 genealogy publication pending ("+err.message+"). The verified G0033 visualizations remain available."}
+})();
+</script></body></html>
