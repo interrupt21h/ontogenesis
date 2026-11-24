@@ -8,7 +8,7 @@ on:
       - '.github/workflows/pages.yml'
   workflow_dispatch:
   workflow_run:
-    workflows: ['G0034 native 4D component genealogy and lineage cinema', 'G0035 Morphogenic Tide art and evidence cinematics']
+    workflows: ['G0034 native 4D component genealogy and lineage cinema', 'G0035 Morphogenic Tide art and evidence cinematics', 'G0036 Feedback Aurora art and evidence cinematics', 'G0036 eight-seed matched structural-feedback replication']
     types: [completed]
 permissions:
   contents: read
@@ -30,6 +30,7 @@ jobs:
           lab=Path('site/interface-lab.html').read_text()
           loom=Path('site/temporal-loom.html').read_text()
           lineage=Path('site/lineage-observatory.html').read_text()
+          feedback=Path('site/feedback-lab.html').read_text()
           atlas=Path('docs/visual-atlas.html').read_text()
           assert '<html lang="en">' in page and '<main class="wrap">' in page
           assert 'id="player"' in page and 'id="cards"' in page
@@ -48,6 +49,8 @@ jobs:
           assert 'eight-seed-measured-temporal-loom-v1' in loom
           assert 'data/g0034-genealogy.json' in lineage
           assert 'component_count' in lineage
+          assert 'data/g0036-summary.json' in feedback
+          assert 'data/g0036-replication.json' in feedback
           class Parser(HTMLParser):
               pass
           Parser().feed(page)
@@ -73,7 +76,7 @@ jobs:
                   if self.in_script:
                       self.inline.append(data)
           pages = ['index', 'interface-lab', 'temporal-loom',
-                   'lineage-observatory']
+                   'lineage-observatory', 'feedback-lab']
           for name in pages:
               parser = ScriptExtractor()
               parser.feed(Path('site', name + '.html').read_text())
@@ -91,6 +94,7 @@ jobs:
           cp site/interface-lab.html _site/interface-lab.html
           cp site/temporal-loom.html _site/temporal-loom.html
           cp site/lineage-observatory.html _site/lineage-observatory.html
+          cp site/feedback-lab.html _site/feedback-lab.html
           cp -a docs _site/docs
           touch _site/.nojekyll
           test -s _site/docs/visual-atlas.html
@@ -148,6 +152,38 @@ jobs:
             exit 1
           else
             echo 'G0034 numeric release pending; viewer will explicitly show pending state.'
+          fi
+      - name: Bundle validated G0036 matched numerical trajectories
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p _site/data
+          gh release download atlas-media -p g0036-summary.json -D _site/data
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('_site/data/g0036-summary.json').read_text())
+          assert d['generation']=='0036' and d['seeds']==[42,73]
+          assert d['n']==12 and d['steps']==120
+          assert d['sample_steps']==list(range(0,121,12))
+          assert set(d['observations'])=={'42','73'}
+          PY
+      - name: Bundle G0036 eight-seed replication after successful publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p _site/data
+          if gh release download atlas-media -p g0036-replication.json -D _site/data; then
+            python3 - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('_site/data/g0036-replication.json').read_text())
+          assert d['generation']=='0036' and d['seeds']==[42,73,101,137,211,307,401,509]
+          assert d['n']==12 and d['steps']==120
+          assert d['sample_steps']==[0,60,120]
+          PY
+          else
+            echo 'G0036 replication not published; viewer shows evidence pending.'
           fi
       - uses: actions/upload-pages-artifact@v4
         with:
