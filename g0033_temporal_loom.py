@@ -158,7 +158,6 @@ def image_at(report, index, count, base=None):
             if col % 2 == 0:
                 d.text((heat_x + col * cell_w + 5, y1 - 31), str(t),
                        font=font(11), fill="#9CBBC9")
-        d.text((x0+17, y1-48), "seed", font=font(11), fill="#92ADBF")
         d.text((x1-103, y1-19), "recorded step", font=font(10), fill="#92ADBF")
     d.rounded_rectangle((38, 599, 1242, 675), radius=11, fill="#19384C")
     d.text((55, 607), f"REPLAYED NUMERICAL SNAPSHOT  {TIMES[ti]:03d} / 240",
