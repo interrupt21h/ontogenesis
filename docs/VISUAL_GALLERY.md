@@ -8,6 +8,16 @@
 
 [**Browse every generation visually — G0001 through G0032**](VISUAL_INDEX.md) · [Filterable HTML player edition](visual-atlas.html)
 
+### G0033 — Contact Cartography: where two numerical populations meet
+
+[![G0033 Contact Cartography — verified poster showing 16 omega planes per seed](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0033-contact-cartography.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0033-contact-cartography.mp4)
+
+[**Watch the 24-second four-axis Contact Cartography film**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0033-contact-cartography.mp4) · [Explore all eight seeds interactively](https://interrupt21h.github.io/ontogenesis/interface-lab.html) · [Verified run](https://github.com/interrupt21h/ontogenesis/actions/runs/45443538576) · [Renderer and mathematical provenance](../g0033_contact_cartography.py) · [Numerical evidence](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0033-robustness.json)
+
+A **distinct visual grammar** for the most recent experiment: two parallel 4×4 mosaics expose every recorded fourth-axis hyperplane. Each tile projects a native three-dimensional concentration slice over z, colored by actual V/W activity and structure; pale-gold pixels highlight exact endpoints of periodic **four-dimensional V-only/W-only contact faces**, not artistic guesses. The highlighted plane and progress bar move as presentation; the chemistry changes only when a stored numerical snapshot is selected. Seed 42 and seed 73 genuinely diverge within the same externally imposed niche model.
+
+The [earlier G0033 native spatial film](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0033-native-cinematic.mp4) remains available as a complementary rotating-field view. Neither film demonstrates organism boundaries, adaptive niche choice or stable ecological mutualism. The monograph and historical 32-generation atlas remain separate curated editions.
+
 ### G0032 — Native hyperplane journey (alternate cinematic build)
 
 A separate [G0032 native hyperplane-journey workflow](../.github/workflows/niche-hyperplane-journey.yml) is configured to produce a 36-second, 1280 × 720, 24 FPS MP4 from the **existing recorded 16⁴ native field archive**, with discrete traversal through all fourth-axis hyperplanes. It does not regenerate numerical states or replace the [original fixed-hyperplane G0032 film](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0032-spatial.mp4).
