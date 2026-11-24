@@ -127,6 +127,9 @@ if "0032" in chapter_pages:
     plate=out/"atlas/0032-pilot.png"
     if not plate.is_file() or plate.stat().st_size<4096:
         raise SystemExit("G0032 measured niche plate missing")
+    spatial=out/"atlas/0032-spatial.png"
+    if not spatial.is_file() or spatial.stat().st_size<4096:
+        raise SystemExit("G0032 verified native 4D spatial plate missing")
 summary={
     "source_revision_chapter_count":len(generations),
     "pages":len(doc),

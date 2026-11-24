@@ -107,7 +107,13 @@ G0031 showed that slightly reducing V's mortality usually switches which populat
 
 [**Measured population trajectories**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-pilot.png) · [Numerical archive](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-pilot.json) · [Experiment methods](docs/generations/0032.md)
 
-*This is numerical niche partitioning under a fixed environmental bias, not a demonstration of species evolution, stable mutualism or artificial organisms. No spatial film was generated without archived native spatial fields.*
+The [**verified longer-horizon comparison**](https://github.com/interrupt21h/ontogenesis/actions/runs/45338017117) found that seed 73 still retained both populations globally at step 480 under strong spatial separation (64.26% V and 22.84% W active coverage); seed 42 did not reproduce the outcome.
+
+[![Real four-dimensional G0032 field slice](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0032-spatial.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0032-spatial.mp4)
+
+[**Watch the authentic G0032 spatial cinematic**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0032-spatial.mp4) · [Recorded native 4D fields](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-native-fields-seed73.npz) · [Verified rendering](https://github.com/interrupt21h/ontogenesis/actions/runs/45407767981)
+
+*The film uses real saved four-dimensional fields, unlike the earlier chart animation. It is a fixed-ω hyperplane under display-camera rotation, not an autonomous organism or proof of stable coexistence.*
 
 ## Every generation, visualized
 

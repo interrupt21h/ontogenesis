@@ -79,6 +79,14 @@ This reduced-domain 12⁴ version is an early rendering study. The selected cumu
 
 The two figures above are **conceptual documentation graphics**, not screenshots. The original films and monograph contain the actual observed images. The 96³ volumetric ray integration in G0025 is the established **minimum visual-quality reference** for later high-fidelity editions.
 
+## G0032 — Native spatial edition from real four-dimensional fields
+
+[![Actual G0032 fixed-omega hyperplane of independently recorded native V/W/matrix state](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0032-spatial.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0032-spatial.mp4)
+
+[**Watch the 24-second actual spatial cinematic**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0032-spatial.mp4) · [Float32 source arrays](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-native-fields-seed73.npz) · [Source verification](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-native-fields-seed73.json) · [Render metadata](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0032-spatial.render.json) · [Successful CI](https://github.com/interrupt21h/ontogenesis/actions/runs/45407767981)
+
+This is an independently recorded **seed-73, 16⁴**, 480-step run with two matched spatial-niche treatments. Each panel visualizes actual native 3D concentration cells in the **fixed ω=8 hyperplane** of the 4D system. The camera rotates, but no intermediate physical states are generated. Do not confuse this with G0032's earlier *measured time-series documentary*, with artificial organisms, or with a full-domain 24⁴ cinematic. G0028 is still featured.
+
 ## G0032 — Measured spatial-niche activity
 
 [![G0032 measured time-series of two seed populations under matched spatial preferences](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-pilot.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-pilot.png)

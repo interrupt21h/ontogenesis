@@ -245,6 +245,40 @@ jobs:
           Path('report/build/evidence/verified-source-runs.json').write_text(
               json.dumps(matched,indent=2)+'\\n')
           PY
+      - name: Verify published G0032 genuine spatial field poster and provenance
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p report/build/evidence/0032-spatial report/build/atlas
+          gh release download atlas-media \
+            -p 'ontogenesis-0032-spatial.png' \
+            -p 'ontogenesis-0032-spatial.render.json' \
+            -p 'g0032-native-fields-seed73.json' \
+            -D report/build/evidence/0032-spatial
+          python - <<'PY'
+          import json,os,subprocess
+          from pathlib import Path
+          folder=Path('report/build/evidence/0032-spatial')
+          film=json.loads((folder/'ontogenesis-0032-spatial.render.json').read_text())
+          state=json.loads((folder/'g0032-native-fields-seed73.json').read_text())
+          assert film['generation']=='0032' and state['generation']=='0032'
+          assert film['source_archive_sha256']==state['archive_sha256']
+          assert film['source_numeric_revision']==state['source_sha']
+          assert state['seed']==73 and state['n']==16 and state['steps']==480
+          assert len(state['sample_steps'])==21
+          assert film['fixed_omega_slice']==8 and not film['interpolated_numerical_states']
+          assert film['frames']==576 and film['featured_G0028_preserved']
+          assert all(state['same_seed_initial_state_matches'].values())
+          runs=json.loads(subprocess.check_output(
+              ['gh','api',f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/runs?per_page=100"],
+              text=True))['workflow_runs']
+          assert any(r.get('head_sha')==film['render_commit'] and
+                     r.get('conclusion')=='success' and
+                     r.get('name')=='G0032 genuine 4D spatial cinematic' for r in runs)
+          png=folder/'ontogenesis-0032-spatial.png'
+          assert png.stat().st_size>4096 and png.read_bytes()[:8]==bytes([137,80,78,71,13,10,26,10])
+          PY
+          cp report/build/evidence/0032-spatial/ontogenesis-0032-spatial.png report/build/atlas/0032-spatial.png
       - name: Validate report generator syntax
         run: python3 -m compileall -q report
       - name: Collect engineering atlas
@@ -266,6 +300,7 @@ jobs:
           test -s report/build/atlas/0030-pilot.png
           test -s report/build/atlas/0031-pilot.png
           test -s report/build/atlas/0032-pilot.png
+          test -s report/build/atlas/0032-spatial.png
           grep -q 'Generation 0030' report/build/verified.txt
           grep -q 'Generation 0032' report/build/verified.txt
           grep -q 'Generation 0031' report/build/verified.txt

@@ -1640,3 +1640,26 @@ The result does not establish durable or autonomous artificial life: additional 
 ### Reproduction and provenance
 
 [Driver](../niche_screen.py) · [Tests](../tests/test_niche_screen.py) · [Workflow](../.github/workflows/niche-screen.yml) · [Individual record](generations/0032.md).
+
+### Longer-horizon result: independently rerun to step 480
+
+A separate [successful G0032 longer-horizon workflow](https://github.com/interrupt21h/ontogenesis/actions/runs/45338017117) independently recomputed the same seeded treatments to **step 480** at **16⁴**, checking numerical initialization against the archived pilot. The previous 240-step experiment did not preserve a complete restartable field state: this is an **independent same-seed rerun**, not a claimed checkpoint restart.
+
+| Step-480 treatment | Seed 42: V active | Seed 42: W active | Seed 73: V active | Seed 73: W active |
+|:--|--:|--:|--:|--:|
+| Near-transition, no niche | 54.02% | 0.00% | 0.00% | 87.45% |
+| Complementary niche strength 0.70 | 0.00% | 62.06% | **64.26%** | **22.84%** |
+
+Only the **seed-73 spatially biased arm** retained both species globally at step 480. In that arm, simultaneous above-threshold activity in the same cell increased from zero at step 240 to approximately **2 out of 65,536 cells** at step 480 (roughly 0.003% of the four-dimensional lattice). This tiny overlap is not evidence of functional mutualism.
+
+[Recorded continuation plot](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-persistence.png) · [Complete measured JSON](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-persistence.json) · [Successful workflow](https://github.com/interrupt21h/ontogenesis/actions/runs/45338017117).
+
+### Native four-dimensional field visualization
+
+A subsequent [verified native-field recording and rendering workflow](https://github.com/interrupt21h/ontogenesis/actions/runs/45407767981) independently reran **seed 73** for two treatments (near-transition without spatial bias, and the complementary 0.70 niche). It archived actual float32 four-dimensional arrays of **V, W, and matrix** at **21 numerical samples spanning steps 0–480**. Its cinematic presents the genuine **fixed ω=8 three-dimensional hyperplane**, rotated solely by the display camera. The renderer does **not** interpolate physical timesteps or infer organisms from aggregate metrics.
+
+[Watch the actual G0032 spatial edition](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0032-spatial.mp4) · [Verified source frame](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0032-spatial.png) · [Native 4D field archive](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-native-fields-seed73.npz) · [Field provenance](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-native-fields-seed73.json) · [Rendering provenance](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0032-spatial.render.json).
+
+This authentic spatial edition is **different** from the original measured-data animation and does not replace G0028's featured cinematic. Both use external static niches; they do not show autonomous organisms or prove long-term coexistence.
+
+

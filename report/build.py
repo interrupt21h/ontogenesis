@@ -274,6 +274,19 @@ for n,title,record in records:
             r" cells, with zero active same-cell co-occupation at step 240."
             r" Seed 42 did not reproduce the outcome. No spatial footage was inferred."
         ))
+        native=out/"atlas/0032-spatial.png"
+        if not native.is_file() or native.stat().st_size<4096:
+            raise RuntimeError("Missing verified G0032 native-4D spatial still")
+        body.append(raw_latex(
+            r"\clearpage\section{G0032: genuine recorded four-dimensional field}"
+            r"\begin{center}\includegraphics[width=\linewidth,height=.66\textheight,"
+            r"keepaspectratio]{atlas/0032-spatial.png}\end{center}"
+            r"\noindent Authentic float32 four-dimensional concentrations were"
+            r" independently recorded for seed 73 over 480 steps with two"
+            r" matched treatments. This frame is a fixed omega=8 hyperplane."
+            r" Camera rotation is for display only; the experiment is not"
+            r" a life simulation with autonomous organisms."
+        ))
     body.append(frame_section(n))
 body.append(raw_latex(r"\clearpage\colorlet{phaseaccent}{ontogreen}"))
 body.append((ROOT/"report/final_renders.md").read_text())
