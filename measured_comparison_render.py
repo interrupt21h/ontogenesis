@@ -16,8 +16,15 @@ COLORS=("#b8cbdf","#51d6c4","#f3a36d","#d28ade","#70a7fa")
 
 def validate(d,gen):
     arms,title,subtitle,sha=SPECS[gen]
-    if (d.get("generation"),d.get("n"),d.get("steps"),d.get("seeds"),d.get("source_sha"))!=(gen,16,240,[42,73],sha):
-        raise ValueError("Archive generation, scope or source hash mismatch")
+    if (d.get("generation"),d.get("n"),d.get("steps"),d.get("seeds"))!=(gen,16,240,[42,73]):
+        raise ValueError("Archive generation or numerical scope mismatch")
+    # Mutable canonical release names are re-published by successful regression
+    # runs. The workflow checks this SHA against a successful Actions run.
+    # Keep the true source revision in film metadata instead of pinning an
+    # older numerical commit here.
+    revision=d.get("source_sha")
+    if not isinstance(revision,str) or len(revision)!=40 or any(c not in "0123456789abcdef" for c in revision):
+        raise ValueError("Missing full numerical source revision")
     times=d["times"]
     if len(times)<35 or times[0]!=0 or times[-1]!=240 or times!=sorted(set(times)):
         raise ValueError("Invalid measured sampling timeline")
