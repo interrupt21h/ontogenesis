@@ -80,35 +80,68 @@ def backdrop():
 
 
 def strata(d,glow,source,arm,step,omega,x0,x1,upper,lower):
-    """Draw six genuine time strata: snapshots not solver-interpolated lines."""
-    # Each row is the native mean of one 12x12 z-max array. Curved placement
-    # is an artistic spatial mapping; the individual values remain real.
-    records=[]
-    for t in range(step+1):
+    """Native 2D concentration sheets as sculptural time-layered mesh terrain.
+
+    Each surface comes from one actual 12x12 z-max projected 4D omega plane,
+    at one authentic recorded numerical time. The arrangement in perspective,
+    vertical exaggeration, translucent fill and optical bloom are artistic.
+    No additional sampled field, velocity or agent is simulated.
+    """
+    layers=step+1
+    is_wide=(x1-x0)>600
+    amplitude=260 if is_wide else 118
+    spacing=2.4 if is_wide else 1.35
+    row_ids=(0,2,4,6,8,10,11)
+    for t in range(layers):
+        level=upper+(lower-upper)*(t+.75)/(layers+1)
+        age=.27+.73*(t+1)/layers
         planes=projected(source,arm,t,omega)
-        z={}
-        for k in ("v","w","m"):
-            z[k]=np.asarray(planes[k].mean(axis=0),np.float64)
-        records.append((t,z))
-    count=max(1,len(records))
-    for layer,(t,profiles) in enumerate(records):
-        ybase=upper+(lower-upper)*(layer+.75)/(count+1)
-        scale=39 if x1-x0>600 else 25
-        for kind in ("m","v","w"):
-            series=np.clip(profiles[kind],0,1)
-            pts=[(x0+(x1-x0)*i/11,
-                  ybase-scale*float(v)-(8 if kind=="v" else -8 if kind=="w" else 0))
-                 for i,v in enumerate(series)]
-            rgb=PALETTE[kind]
-            strength=.3+.7*(layer+1)/count
-            c=tuple(int(a*strength) for a in rgb)
-            d.line(pts,fill=c,width=2 if kind=="m" else 3,joint="curve")
-            for px,py in pts[::2]:
-                r=1.6+(layer/count)*1.7
-                d.ellipse((px-r,py-r,px+r,py+r),fill=rgb)
-                glow.ellipse((px/2-r*2,py/2-r*2,px/2+r*2,py/2+r*2),
-                             fill=tuple(int(v*.7) for v in rgb)+(140,))
-    return len(records)
+        for kind,offset in (("m",8),("w",18),("v",-13)):
+            grid=np.asarray(planes[kind],dtype=np.float64)
+            if float(grid.max())<=.0001:
+                continue
+            color=PALETTE[kind]
+            rows=[]
+            for yidx in row_ids:
+                row=[]
+                for col in range(12):
+                    # The height is directly proportional to authentic
+                    # concentration. Global gain is a *display* exaggeration.
+                    px=x0+(x1-x0)*col/11+(yidx-5.5)*(1.2 if is_wide else .6)
+                    py=level+(yidx-5.5)*spacing+offset-amplitude*float(grid[yidx,col])
+                    row.append((px,py))
+                rows.append(row)
+            # A sequence of actual 4D numerical lattice samples defines
+            # each small mesh quadrilateral. Polygon opacity is art only.
+            if kind!="m":
+                for i in range(len(rows)-1):
+                    for j in range(11):
+                        quad=(rows[i][j],rows[i][j+1],
+                              rows[i+1][j+1],rows[i+1][j])
+                        d.polygon(quad,fill=(*color,int(7+10*age)))
+            alpha=int((105 if kind=="m" else 135)*age)
+            for i,row in enumerate(rows):
+                if kind=="m" and i not in (0,2,4,6):
+                    continue
+                d.line(row,fill=(*color,alpha),width=2 if is_wide else 1,
+                       joint="curve")
+                if i in (0,3,6) and kind!="m":
+                    glow.line([(px/2,py/2) for px,py in row],
+                              fill=(*color,int(100*age)),width=2)
+            for j in (0,3,6,9,11):
+                d.line([row[j] for row in rows],
+                       fill=(*color,int(42*age)),width=1)
+            # Every spark is located at a native active projected cell.
+            if kind!="m":
+                for yidx in (2,6,10):
+                    i=row_ids.index(yidx)
+                    for j in (0,3,6,9,11):
+                        if grid[yidx,j]>.1:
+                            px,py=rows[i][j]
+                            radius=1.5+1.3*age
+                            d.ellipse((px-radius,py-radius,px+radius,py+radius),
+                                      fill=(*color,int(245*age)))
+    return layers
 
 
 def art_frame(sources,index,count,base):
