@@ -14,6 +14,16 @@ A separate [G0032 native hyperplane-journey workflow](../.github/workflows/niche
 
 **Publication pending verification:** when this workflow successfully passes smoke tests, complete video decoding checks, source SHA-256 validation and upload, it publishes `ontogenesis-0032-hyperplane-journey.mp4`, its poster and render provenance to the `atlas-media` release. Until that is confirmed, this is a configured cinematic pipeline rather than a claimed published film.
 
+### G0030 and G0031 — Native-field cinematic alternatives (verification pending)
+
+A new [bounded cinematic workflow](../.github/workflows/recent-native-cinematics.yml) independently reruns two matched, documented arms from each recent experiment and records actual float32 four-dimensional V/W/matrix fields before rendering. Each planned edition is a standalone 30-second 1280 × 720 film, with a poster, numerical archive and checksummed provenance. These additions do **not** replace the existing measured-data documentaries.
+
+- **G0030** captures the published *early-viability* study, seed 42: unchanged seasonal supply versus inversion at step 24, recorded through step 180. This is not footage from the full 1,200-step four-arm factorial experiment.
+- **G0031** captures the published viability-frontier study, seed 42: historical V-loss versus the 0.95 multiplier, recorded through step 240. The remaining loss-rate treatments and second seed are not represented by this cinematic.
+- The renderer selects **real stored omega hyperplanes and numerical snapshots**, without interpolating physical states. Its rotating camera is artistic presentation.
+
+**Pending CI verification:** after the numerical state hashes match the original successful pilots and the films pass encoding/decoding validation, the workflow publishes `ontogenesis-0030-native-cinematic.mp4` and `ontogenesis-0031-native-cinematic.mp4` to the `atlas-media` release. The proposed filenames are not evidence that the release assets already exist.
+
 ### G0031 and G0032 — New verified measured numerical films
 
 [![G0031 measured viability-frontier animation, verified frame](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0031-evidence.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0031-evidence.mp4)
