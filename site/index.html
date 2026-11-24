@@ -36,12 +36,12 @@ footer{margin:65px 0 35px;padding-top:22px;border-top:1px solid var(--line);colo
 </head>
 <body>
 <header><div class="wrap"><a href="./" class="brand">ONTO<span>GENESIS</span></a>
-<nav aria-label="Main navigation"><a href="#cinema">Cinema</a><a href="#experiments">Experiments</a><a href="interface-lab.html">Interface Lab</a><a href="temporal-loom.html">Temporal Loom</a><a href="lineage-observatory.html">Genealogy</a><a href="feedback-lab.html">Feedback Lab</a><a href="https://github.com/interrupt21h/ontogenesis/blob/main/docs/ART_DIRECTION.md">Art direction</a><a href="#atlas">All generations</a><a href="https://github.com/interrupt21h/ontogenesis">Source code</a></nav></div></header>
+<nav aria-label="Main navigation"><a href="#cinema">Cinema</a><a href="#experiments">Experiments</a><a href="interface-lab.html">Interface Lab</a><a href="temporal-loom.html">Temporal Loom</a><a href="lineage-observatory.html">Genealogy</a><a href="feedback-lab.html">Feedback Lab</a><a href="persistence-lab.html">Persistence Lab</a><a href="https://github.com/interrupt21h/ontogenesis/blob/main/docs/ART_DIRECTION.md">Art direction</a><a href="#atlas">All generations</a><a href="https://github.com/interrupt21h/ontogenesis">Source code</a></nav></div></header>
 <main class="wrap">
 <section class="hero"><div class="eyebrow">Computational art / numerical worlds / automation</div>
 <h1>A universe<br>in <em>motion.</em></h1>
 <p class="lead">An unnecessarily elaborate experiment in generative art, evolving numerical fields and GitHub Actions endurance. Watch the films, investigate the controls, and explore the story behind each generation.</p>
-<div class="actions"><a class="action primary" href="#cinema">Explore the films</a><a class="action" href="#atlas">Browse the complete atlas</a><a class="action" href="interface-lab.html">Explore G0033 data</a><a class="action" href="temporal-loom.html">Explore the temporal atlas</a> <a class="action" href="lineage-observatory.html">Explore G0034 lineages</a> <a class="action" href="feedback-lab.html">Explore G0036 feedback</a></div>
+<div class="actions"><a class="action primary" href="#cinema">Explore the films</a><a class="action" href="#atlas">Browse the complete atlas</a><a class="action" href="interface-lab.html">Explore G0033 data</a><a class="action" href="temporal-loom.html">Explore the temporal atlas</a> <a class="action" href="lineage-observatory.html">Explore G0034 lineages</a> <a class="action" href="feedback-lab.html">Explore G0036 feedback</a> <a class="action" href="persistence-lab.html">Explore G0037 persistence</a></div>
 <p class="subtle">Simulation footage is distinguished from measured-data animations. These experiments do not establish artificial organisms or biological discoveries.</p>
 </section>
 <section id="cinema">
@@ -74,6 +74,8 @@ const editions=[
  {gen:"0032",name:"Complementary spatial niches",type:"Measured-data documentary",file:"ontogenesis-0032-evidence.mp4",poster:"ontogenesis-0032-evidence.png"},
  {gen:"0033",name:"Interface robustness",type:"Contact Cartography · real 4D interfaces",file:"ontogenesis-0033-contact-cartography.mp4",poster:"ontogenesis-0033-contact-cartography.png"},
  {gen:"0033",name:"Interface robustness",type:"Temporal Loom · eight numerical histories",file:"ontogenesis-0033-temporal-loom.mp4",poster:"ontogenesis-0033-temporal-loom.png"},
+ {gen:"0037",name:"Memory Strata",type:"Art film · authentic layered 4D concentration terrain",file:"ontogenesis-0037-memory-strata-art.mp4",poster:"ontogenesis-0037-memory-strata-art.png"},
+ {gen:"0037",name:"Memory Strata",type:"Evidence film · exact 4D matrix persistence comparison",file:"ontogenesis-0037-memory-strata-evidence.mp4",poster:"ontogenesis-0037-memory-strata-evidence.png"},
  {gen:"0036",name:"Feedback Aurora",type:"Art film · measured causal divergence and structure-coupled transport",file:"ontogenesis-0036-feedback-aurora-art.mp4",poster:"ontogenesis-0036-feedback-aurora-art.png"},
  {gen:"0036",name:"Feedback Aurora",type:"Evidence film · exact matched numerical 4D comparisons",file:"ontogenesis-0036-feedback-aurora-evidence.mp4",poster:"ontogenesis-0036-feedback-aurora-evidence.png"},
  {gen:"0035",name:"Morphogenic Tide",type:"Art film · sculptural native isobands and luminous morphology",file:"ontogenesis-0035-morphogenic-tide-art.mp4",poster:"ontogenesis-0035-morphogenic-tide-art.png"},
@@ -91,7 +93,8 @@ const description={
  "0033":"Eight-seed interface robustness study with published native films and independent endpoint measurements.",
  "0034":"Art-directed luminous worlds reveal authentic native 4D concentrations; separate lineage films trace real connected-component geometry.",
  "0035":"Sculptural isoband cinema and a paired original-grid evidence film, both from authentic stored 4D numerical fields.",
- "0036":"True state-dependent 4D conservative structural feedback changes the solver itself; paired films show its measured causal differences."
+ "0036":"True state-dependent 4D conservative structural feedback changes the solver itself; paired films show its measured causal differences.",
+ "0037":"Matched feedback-strength study of recorded 4D matrix persistence, with luminous native-field mesh cinema and an exact evidence edition."
 };
 const cards=document.getElementById("cards"),picker=document.getElementById("film-picker"),player=document.getElementById("player");
 let available=new Map();
@@ -115,12 +118,13 @@ function draw(){
  if(!confirmed.length){const opt=el("option",null,"No verified films available");opt.value="";picker.append(opt);picker.disabled=true}
  else {picker.disabled=false;for(const entry of confirmed){const opt=el("option",null,"G"+entry.gen+" — "+entry.type);opt.value=entry.file;picker.append(opt)}}
  if(confirmed.length){
-  const premiere=confirmed.find(e=>e.file==="ontogenesis-0036-feedback-aurora-art.mp4") ||
+  const premiere=confirmed.find(e=>e.file==="ontogenesis-0037-memory-strata-art.mp4") ||
+                 confirmed.find(e=>e.file==="ontogenesis-0036-feedback-aurora-art.mp4") ||
                  confirmed.find(e=>e.file==="ontogenesis-0035-morphogenic-tide-art.mp4") ||
                  confirmed.find(e=>e.file==="ontogenesis-0034-luminous-habitat.mp4");
   selectFilm((premiere||confirmed[0]).file);
  }
- for(const gen of ["0028","0029","0030","0031","0032","0033","0034","0035","0036"]){
+ for(const gen of ["0028","0029","0030","0031","0032","0033","0034","0035","0036","0037"]){
   const known=editions.filter(e=>e.gen===gen),valid=known.filter(e=>movieURL(e));
   const selected=valid[0],card=el("article","card");
   if(selected&&posterURL(selected)){const img=el("img","poster");img.alt="G"+gen+" published cinematic poster";img.loading="lazy";img.src=posterURL(selected);card.append(img)}
