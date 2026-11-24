@@ -45,7 +45,10 @@ if any(r["undersized"] for r in rows):
 root=Path(__file__).resolve().parents[1]
 history=(root/"docs/HISTORY.md").read_text()
 generations=[int(x) for x in re.findall(r"^## Generation (\d{4})",history,re.M)]
-if generations!=list(range(1,30)):
+# The numbered generation files are the independent catalog. New chapters
+# automatically enter the audit without weakening chronological checks.
+expected=[int(p.stem) for p in sorted((root/"docs/generations").glob("[0-9][0-9][0-9][0-9].md"))]
+if not expected or expected!=list(range(1,len(expected)+1)) or generations!=expected:
     raise SystemExit(f"Experiment-history record missing, duplicated or unordered: {generations}")
 first_experiment_boundary=next(
     (p.number for p in doc if "PART I" in p.get_text() and
@@ -90,7 +93,7 @@ for g in ("0024","0025","0028"):
     if len(matches)!=1:
         raise SystemExit(f"Expected one explicit final-renders gallery plate for {g}, got {matches}")
     gallery[g]=matches[0]
-if chapter_pages["0029"]>=gallery["0024"]:
+if chapter_pages[f"{generations[-1]:04d}"]>=gallery["0024"]:
     raise SystemExit("Final gallery must follow all numbered experiments")
 synthesis=next(i+1 for i,t in enumerate(text_pages)
                if i+1>gallery["0028"] and "What we learned" in t)
@@ -106,6 +109,12 @@ for fig in ("research-finale.pdf","0028-evidence.pdf","0028-full-evidence.pdf"):
         raise SystemExit("Required evidence/model-ancestry figure missing: "+fig)
 if not (out/"mechanisms/0028.pdf").is_file():
     raise SystemExit("G0028 paired-treatment schematic not included")
+if "0030" in chapter_pages:
+    if not (out/"mechanisms/0030.pdf").is_file():
+        raise SystemExit("G0030 conceptual controls figure not included")
+    plate=out/"atlas/0030-pilot.png"
+    if not plate.is_file() or plate.stat().st_size<4096:
+        raise SystemExit("G0030 actual measured trajectory figure missing")
 summary={
     "source_revision_chapter_count":len(generations),
     "pages":len(doc),
@@ -117,6 +126,8 @@ summary={
         "research-finale":"Software/model ancestry, not a single linear model chain",
         "0028":"Conceptual paired control vs treated arm; no simulated pixels",
         "0028-evidence":"Native numerical matched-control pilot measurements",
+        "0030":"Conceptual cross-feeding controls; not measured organisms",
+        "0030-pilot":"Actual sampled ecological trajectories; not cinematic imagery",
     },
     "sparse_pages_requiring_visual_review":[r["page"] for r in rows if r["review"]],
     "status":"chapter coverage, gallery ordering, and required diagrams checked",

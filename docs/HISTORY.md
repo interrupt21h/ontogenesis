@@ -1482,7 +1482,7 @@ The adaptive arm has 20.73 more percentage points of active W coverage, 3.40 few
 
 [Source](../adaptive_transport.py) · [Workflow](../.github/workflows/adaptive-transport.yml) · [Detailed record](generations/0029.md).
 
-G0030 is implemented as a controlled directional metabolite study; its outcomes are pending CI.
+G0030 is a verified two-seed factorial pilot with no endpoint coexistence; its early activity-loss window has now been measured.
 
 ## Generation 0030 — Ecological succession with directional controls
 
@@ -1496,7 +1496,7 @@ G0017's cross-feeding benefit has two directions. G0030 tests each direction sep
 
 At time T/2, the existing spatial supply S changes to 2 mean(S) - S; this preserves domain-mean replenishment and inverts spatial preference. It is imposed, not evolved. The automatic pilot is 16⁴ cells for 1,200 steps, sampled every 30 steps and at the switch, with seeds 42 and 73. A separate 24⁴ single-seed run is manual only.
 
-### Planned measurements
+### Recorded measurements
 
 Record direct V/W coverage, population co-occupancy, both metabolite means and minimum-overlap, matrix, energy, and pooled 16-category genotype entropy. Compare each same-seed arm against the neither condition, and summarize before-switch versus late-window observations. Test matched initialization, read-only observers, numerical finiteness, and the unchanged historical baseline.
 
@@ -1524,6 +1524,14 @@ The [full G0030 pilot job](https://github.com/interrupt21h/ontogenesis/actions/r
 The W → V treatment changes the recipient's benefit *and* its metabolite uptake; this can indirectly alter the donor environment. The varied W coverage therefore does not measure a pure genetic or fitness advantage from a fixed metabolite concentration. Larger domains, environmental no-switch controls and stronger survival of both species would be necessary before treating succession as an established phenomenon.
 
 [Recorded numerical JSON](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-pilot.json) · [Measured pilot curves (seed 42)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-pilot.png) · [CI run and artifact](https://github.com/interrupt21h/ontogenesis/actions/runs/45266523722)
+
+### Retrospective activity-window analysis — November 23, 2026
+
+The [verified posthoc CI analysis](https://github.com/interrupt21h/ontogenesis/actions/runs/45296881667) examined the *already recorded* G0030 time series without rerunning the integrator. Its independently published [Markdown report](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-analysis.md) and [JSON](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-analysis.json) preserve the observed activity-loss windows and descriptive contrasts.
+
+**All eight arms, across both seeds, last showed V activity above the threshold at observed step 30; from observed step 60 through the end, that activity remained zero.** The imposed energy-supply reversal occurred at **step 600**, long after this early loss. The underlying loss instant is bounded between observations; absence of cells above 0.1 is not proof of zero V concentration. Time-integrated co-occupancy was extremely small (about 0.0071% for seed 42 and 0.0158% for seed 73).
+
+The study cannot attribute early V loss to the step-600 event and does not establish ecological succession. The logical next experiment is to establish a baseline where both populations remain active, with an additional no-reversal environmental control, before investing in any new 24⁴ factorial run.
 
 The recorded full eight-run pilot required approximately 15 minutes 42 seconds on a GitHub-hosted CPU runner. The larger 24⁴ study remains manually gated and has not been run. These observations are exploratory and do not establish functional self-maintaining individuals or autonomous ecological succession.
 

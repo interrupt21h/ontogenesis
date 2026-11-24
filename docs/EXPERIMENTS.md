@@ -38,7 +38,7 @@ G0029 adds a memory-driven curl correction to the four-dimensional G0026 circula
 
 ## IX — Ecological controls
 
-G0030's [two-seed 16⁴ factorial pilot](https://github.com/interrupt21h/ontogenesis/actions/runs/45266523722) passed CI. In all eight endpoints V coverage above the activity threshold was 0%; W remained active with 68.55–87.17% coverage. The four cross-feeding treatments produced measurable differences but no thresholded co-occupancy or demonstrated ecological succession. Larger runs remain gated.
+G0030's [two-seed 16⁴ factorial pilot](https://github.com/interrupt21h/ontogenesis/actions/runs/45266523722) passed CI. In all eight endpoints V coverage above the activity threshold was 0%; W remained active with 68.55–87.17% coverage. The four cross-feeding treatments produced measurable differences but no thresholded co-occupancy or demonstrated ecological succession. [Posthoc analysis](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-analysis.md) established V activity last above threshold at observation 30 and continuously below it from 60 onward—long before the event at 600. Larger runs remain gated.
 
 ## Complete experiment index
 

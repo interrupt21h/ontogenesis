@@ -83,6 +83,8 @@ Instead of introducing another speculative mechanism, the new experiment disable
 
 [**Measured G0030 time series**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-pilot.png) · [Numerical archive](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-pilot.json)
 
+[**Measured activity-loss analysis**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-analysis.md): V last exceeded the activity threshold at step 30 and stayed below it from step 60, long before the environmental change at step 600.
+
 *The pilot is verified; stable succession and coexistence were not demonstrated. No cinematic feature has been replaced.*
 
 ## Try it yourself

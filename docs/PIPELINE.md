@@ -116,4 +116,6 @@ The expensive one-seed **24⁴ × 4,800-step, four-arm** experiment remains expl
 gh workflow run ecological-succession.yml --repo interrupt21h/ontogenesis --ref main -f full_domain=true
 ~~~
 
+The [successful archived-data-only posthoc workflow](../.github/workflows/g0030-analysis.yml) measures observed activity-loss intervals, W endpoint differences, and time-integrated co-occupancy using the original saved data. Its [published result](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-analysis.md) found V below the threshold from sample 60 onward, before the step-600 event. No simulation is rerun. A persistent two-population baseline and a no-supply-reversal control are prerequisites for interpreting future succession claims.
+
 Population coverage changes are not, by themselves, evidence of mutualism, stable succession or functional organisms.
