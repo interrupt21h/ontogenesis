@@ -40,7 +40,7 @@ jobs:
                   continue
               content=path.read_text()
               fixed=re.sub(
-                  r"https?://(?:[a-z0-9-]+\\.)*(?:ec2\\.archive|azure\\.archive|archive)\\.ubuntu\\.com/ubuntu/?",
+                  r"https?://(?:[a-z0-9-]+\.)*(?:ec2\.archive|azure\.archive|archive)\.ubuntu\.com/ubuntu/?",
                   "http://archive.ubuntu.com/ubuntu/",
                   content,flags=re.I)
               if fixed!=content:
