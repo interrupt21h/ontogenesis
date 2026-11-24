@@ -116,8 +116,6 @@ jobs:
           PY
           python report/disturbance_atlas.py report/build/evidence/0028-full/result.json report/build/atlas/0028-full-evidence.pdf
           test -s report/build/atlas/0028-full-evidence.pdf
-          test -s report/build/atlas/0030-pilot.png
-          grep -q 'Generation 0030' report/build/verified.txt
       - name: Retrieve G0030 verified numerical observations
         env:
           GH_TOKEN: ${{ github.token }}
@@ -161,6 +159,8 @@ jobs:
           test -s report/build/atlas/0027-evidence.pdf
           test -s report/build/atlas/0028-evidence.pdf
           test -s report/build/atlas/0028-full-evidence.pdf
+          test -s report/build/atlas/0030-pilot.png
+          grep -q 'Generation 0030' report/build/verified.txt
           grep -q 'Generation 0028' report/build/verified.txt
           grep -q 'The moving pictures' report/build/verified.txt
           grep -q 'The late-experiment branch structure' report/build/verified.txt
