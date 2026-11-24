@@ -17,7 +17,7 @@ permissions:
   actions: read
 concurrency:
   group: g0033-contact-cartography-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   contact-atlas:
     runs-on: ubuntu-24.04
