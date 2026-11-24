@@ -226,9 +226,9 @@ jobs:
           python - <<'PY'
           import json,os,subprocess
           from pathlib import Path
-          runs=json.loads(subprocess.check_output(
-              ['gh','api',f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/runs?per_page=100"],
-              text=True))['workflow_runs']
+          # Query historical runs by the *exact* recorded source commit.
+          # Reading only the newest 100 Actions runs drops original pilot runs
+          # as subsequent cinematic/documentation CI grows the repository.
           sources={
               '0030':('G0030 ecological succession controls','g0030-pilot.json'),
               '0031':('G0031 population viability frontier','g0031-pilot.json'),
@@ -237,7 +237,11 @@ jobs:
           matched={}
           for generation,(workflow,filename) in sources.items():
               d=json.loads((Path('report/build/evidence')/generation/filename).read_text())
-              hits=[r for r in runs if r.get('head_sha')==d['source_sha']
+              sha=d['source_sha']
+              runs=json.loads(subprocess.check_output(
+                  ['gh','api',f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/runs?head_sha={sha}&per_page=100"],
+                  text=True))['workflow_runs']
+              hits=[r for r in runs if r.get('head_sha')==sha
                     and r.get('name')==workflow and r.get('conclusion')=='success']
               assert hits,f"No completed, successful CI source for G{generation}: {d['source_sha']}"
               matched[generation]={'source_sha':d['source_sha'],'workflow_run_id':hits[0]['id']}
