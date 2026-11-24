@@ -26,9 +26,18 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          sudo apt-get -o Acquire::Retries=4 -o Acquire::http::Timeout=45 update
-          sudo env DEBIAN_FRONTEND=noninteractive apt-get \
-            -o Acquire::Retries=4 -o Acquire::http::Timeout=60 \
+          # The default Azure apt mirror can stall for tens of minutes on
+          # GitHub-hosted runners. Use Ubuntu's official archive and enforce
+          # bounded attempts rather than tying up a runner indefinitely.
+          if test -f /etc/apt/sources.list.d/ubuntu.sources; then
+            sudo sed -i 's#http://azure.archive.ubuntu.com/ubuntu/#http://archive.ubuntu.com/ubuntu/#g' \
+              /etc/apt/sources.list.d/ubuntu.sources
+          fi
+          sudo timeout 420 apt-get -o Acquire::Retries=2 \
+            -o Acquire::http::Timeout=25 -o Acquire::https::Timeout=25 update
+          sudo env DEBIAN_FRONTEND=noninteractive timeout 1080 apt-get \
+            -o Acquire::Retries=2 -o Acquire::http::Timeout=30 \
+            -o Acquire::https::Timeout=30 \
             install -y --no-install-recommends \
             pandoc latexmk texlive-latex-extra texlive-pictures \
             texlive-fonts-recommended lmodern poppler-utils ffmpeg librsvg2-bin
@@ -166,6 +175,35 @@ jobs:
           assert png.stat().st_size>4096 and png.read_bytes()[:8]==bytes([137,80,78,71,13,10,26,10])
           PY
           cp report/build/evidence/0031/g0031-pilot.png report/build/atlas/0031-pilot.png
+      - name: Retrieve and validate G0032 niche measurements
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p report/build/evidence/0032 report/build/atlas
+          gh release download atlas-media -p 'g0032-pilot.json' -p 'g0032-pilot.png' -D report/build/evidence/0032
+          python - <<'PY'
+          import json,math
+          from pathlib import Path
+          folder=Path("report/build/evidence/0032")
+          d=json.loads((folder/"g0032-pilot.json").read_text())
+          assert (d["generation"],d["n"],d["steps"],d["seeds"])==("0032",16,240,[42,73])
+          assert d["source_sha"]=="6f64f3e7eb66c245385d2801306f7f039eef0d66"
+          assert set(d["arms"])=={"historical","near_transition","separated_035","separated_070"}
+          assert d["any_endpoint_cooccupancy"] is False
+          for seed in ("42","73"):
+              assert len({v["0"] for v in d["hashes"][seed].values()})==1
+              for rows in d["observations"][seed].values():
+                  assert [r["step"] for r in rows]==d["times"]
+                  assert all(math.isfinite(r["v_active"]) and math.isfinite(r["w_active"]) and
+                             math.isfinite(r["habitat_separation"]) for r in rows)
+          for arm in ("separated_035","separated_070"):
+              assert d["endpoints"]["73"][arm]["v_active"]>0
+              assert d["endpoints"]["73"][arm]["w_active"]>0
+              assert d["endpoints"]["73"][arm]["coexistence"]==0
+          p=folder/"g0032-pilot.png"
+          assert p.stat().st_size>4096 and p.read_bytes()[:8]==bytes([137,80,78,71,13,10,26,10])
+          PY
+          cp report/build/evidence/0032/g0032-pilot.png report/build/atlas/0032-pilot.png
       - name: Validate report generator syntax
         run: python3 -m compileall -q report
       - name: Collect engineering atlas
@@ -186,7 +224,9 @@ jobs:
           test -s report/build/atlas/0028-full-evidence.pdf
           test -s report/build/atlas/0030-pilot.png
           test -s report/build/atlas/0031-pilot.png
+          test -s report/build/atlas/0032-pilot.png
           grep -q 'Generation 0030' report/build/verified.txt
+          grep -q 'Generation 0032' report/build/verified.txt
           grep -q 'Generation 0031' report/build/verified.txt
           grep -q 'Generation 0028' report/build/verified.txt
           grep -q 'The moving pictures' report/build/verified.txt

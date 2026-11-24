@@ -44,7 +44,7 @@ The same **24⁴, 4,800-step G0029 simulation** now has a second cinematic inter
 
 | Part | What it does |
 |:--|:--|
-| **31 experiment designs** | G0001–G0031 have CI-verified numerical results; G0031 found seed-sensitive competitive exclusion, not coexistence |
+| **32 experiment designs** | G0001–G0032 have verified evidence; G0032 produced a seed-dependent spatial-partition result, not proven stable coexistence |
 | **Numerical worlds** | Local rules update dimensionless fields on periodic grids; some recent experiments use a 24⁴ domain |
 | **Generative visuals** | Field data becomes images, sections, projections, and films |
 | **GitHub Actions** | Runs experiments, builds artifacts, and helps turn the repository into a tiny computational production studio |
@@ -100,6 +100,14 @@ The experiments now test something more fundamental than adding new complexity: 
 [**G0031 measured plot**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0031-pilot.png) · [Raw numerical observations](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0031-pilot.json) · [Successful pilot CI](https://github.com/interrupt21h/ontogenesis/actions/runs/45332031263)
 
 *The verified pilot showed that small loss-rate changes can switch the dominant population. None of the tested endpoints maintained active co-occupation. No spatial film has been fabricated from time-series data.*
+
+## G0032 · Can separate habitats keep both populations active?
+
+G0031 showed that slightly reducing V's mortality usually switches which population wins. G0032 tests whether an **externally specified complementary spatial preference** can change that outcome. In the successful [two-seed G0032 numerical study](https://github.com/interrupt21h/ontogenesis/actions/runs/45335396705), seed 73 retained both V and W globally at step 240 for two spatial-niche treatments. Their active cells did not overlap. Seed 42 did **not** reproduce the result.
+
+[**Measured population trajectories**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-pilot.png) · [Numerical archive](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-pilot.json) · [Experiment methods](docs/generations/0032.md)
+
+*This is numerical niche partitioning under a fixed environmental bias, not a demonstration of species evolution, stable mutualism or artificial organisms. No spatial film was generated without archived native spatial fields.*
 
 ## Try it yourself
 

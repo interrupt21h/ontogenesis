@@ -65,6 +65,14 @@ This reduced-domain 12⁴ version is an early rendering study. The selected cumu
 
 The two figures above are **conceptual documentation graphics**, not screenshots. The original films and monograph contain the actual observed images. The 96³ volumetric ray integration in G0025 is the established **minimum visual-quality reference** for later high-fidelity editions.
 
+## G0032 — Measured spatial-niche activity
+
+[![G0032 measured time-series of two seed populations under matched spatial preferences](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-pilot.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-pilot.png)
+
+[**View the verified G0032 numerical plate**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-pilot.png) · [Measured source JSON](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-pilot.json) · [Successful numerical CI](https://github.com/interrupt21h/ontogenesis/actions/runs/45335396705) · [Experimental design](generations/0032.md)
+
+The observed values come from actual **16⁴ numerical simulations**, four treatments for each of two seeds. Two externally imposed complementary habitat strengths retained **globally active V and W in seed 73**, but **zero active same-cell co-occupation** at step 240. Seed 42 remained single-population active. This is a **measured numerical plot**, not four-dimensional spatial footage or a simulated organism image.
+
 ## G0031 — Measured population viability frontier
 
 [![Measured G0031 numerical V/W population trajectories, not simulated spatial organisms](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0031-pilot.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0031-pilot.png)

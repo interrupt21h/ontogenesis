@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="452" viewBox="0 0 960 452" role="img" aria-label="Conceptual G0032 static habitat gradient: opposite species reproductive preferences in positive and negative habitats with matched numerical controls">
+<rect width="960" height="452" rx="17" fill="#101d2c"/>
+<g font-family="DejaVu Sans,sans-serif">
+<text x="38" y="48" font-size="27" font-weight="bold" fill="#ecf3fa">G0032  /  COMPLEMENTARY SPATIAL NICHES</text>
+<text x="39" y="76" font-size="15" fill="#b3cbdc">Conceptual experimental design — NOT a rendered simulation snapshot</text>
+<rect x="38" y="106" width="884" height="226" rx="14" fill="#172c40" stroke="#4a6c82"/>
+<rect x="65" y="144" width="415" height="125" rx="13" fill="#265f64"/>
+<rect x="480" y="144" width="415" height="125" rx="13" fill="#684565"/>
+<path d="M480 147 V267" stroke="#c7e7e6" stroke-dasharray="6 6" opacity=".7" stroke-width="2"/>
+<g fill="#eff7fa" font-size="24" font-weight="bold" text-anchor="middle">
+<text x="269" y="190">h &gt; 0</text><text x="687" y="190">h &lt; 0</text>
+<text x="269" y="227" font-size="18">V receives higher birth multiplier</text>
+<text x="687" y="227" font-size="18">W receives higher birth multiplier</text>
+</g>
+<g fill="#c3d8e5" font-size="14" text-anchor="middle">
+<text x="269" y="251">1 + s·h</text><text x="687" y="251">1 − s·h</text>
+<text x="480" y="303">Both populations share the same evolving chemical fields and periodic 4D domain</text>
+</g>
+<rect x="38" y="348" width="884" height="75" rx="11" fill="#223e52" stroke="#476983"/>
+<g fill="#e7f2f9" font-size="14" text-anchor="middle">
+<text x="480" y="372" font-weight="bold">MATCHED CONTROLS:  historical / near-transition / spatial bias 0.35 / spatial bias 0.70</text>
+<text x="480" y="395">Seeds 42 and 73 · 16⁴ cells · 240 steps · six-step observation cadence</text>
+<text x="480" y="414" fill="#9dc9d9">One seed showed global simultaneous activity, but no active same-cell co-occupation</text>
+</g>
+</g>
+</svg>

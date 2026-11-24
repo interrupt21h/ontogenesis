@@ -2,7 +2,7 @@
 
 [← Project overview](../README.md) · [Docs](README.md) · [Visual gallery](VISUAL_GALLERY.md) · [Measured history](HISTORY.md)
 
-**Thirty-one separately initialized experiment designs** (G0001–G0031 verified at their recorded numerical scopes) form an investigative chronology—not a continuous simulated organism. Each detailed record explains what was changed, what was measured, and what remains unverified. **CI verified** means the relevant workflow and checks completed; it does not by itself establish scientific validity.
+**Thirty-two separately initialized experiment designs** (G0001–G0032 have CI-verified outcomes at their documented numerical scopes) form an investigative chronology—not a continuous simulated organism. Each detailed record explains what was changed, what was measured, and what remains unverified. **CI verified** means the relevant workflow and checks completed; it does not by itself establish scientific validity.
 
 ## I — Chemical differentiation
 
@@ -44,6 +44,10 @@ G0030's [two-seed 16⁴ factorial pilot](https://github.com/interrupt21h/ontogen
 
 G0031's [verified matched 16⁴ pilot](https://github.com/interrupt21h/ontogenesis/actions/runs/45332031263) tested five externally selected V loss-rate multipliers. **No treatment maintained endpoint active co-occupancy.** Seed 42 switched from W dominance to V dominance between 1.00 and 0.95, while seed 73 switched between 0.95 and 0.90. The model's numerical sensitivity points to competitive exclusion, not a demonstrated functional ecosystem; compartments remain a later possibility.
 
+## XI — Complementary spatial niche controls
+
+G0032's [verified 16⁴ pilot](https://github.com/interrupt21h/ontogenesis/actions/runs/45335396705) found **both V and W active globally for seed 73** when static complementary habitat preferences were enabled, even though active same-cell co-occupation remained zero. Seed 42 did not replicate that outcome. Its measured habitat-centroid separation supports spatial differentiation under the externally imposed preference, **not** durable coexistence or adaptation. Longer controls are needed.
+
 ## Complete experiment index
 
 | Generation | Study | Source | Workflow / evidence |
@@ -80,9 +84,10 @@ G0031's [verified matched 16⁴ pilot](https://github.com/interrupt21h/ontogenes
 | **0029** | [Adaptive transport networks](generations/0029.md) | [Source](../adaptive_transport.py) · [Renderer](../adaptive_transport_render.py) | [Full paired run + master verified](https://github.com/interrupt21h/ontogenesis/actions/runs/45232504379) · [Workflow](../.github/workflows/adaptive-transport.yml) |
 | **0030** | [Ecological succession controls](generations/0030.md) | [Driver](../ecological_succession.py) | [Verified factorial pilot](https://github.com/interrupt21h/ontogenesis/actions/runs/45266523722) · [Measured JSON](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0030-pilot.json) |
 | **0031** | [Population Viability Frontier](generations/0031.md) | [Driver](../viability_frontier.py) | [Verified pilot](https://github.com/interrupt21h/ontogenesis/actions/runs/45332031263) · [Actual numerical plot](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0031-pilot.png) |
+| **0032** | [Complementary Spatial Niches](generations/0032.md) | [Source](../niche_screen.py) | [Verified pilot](https://github.com/interrupt21h/ontogenesis/actions/runs/45335396705) · [Measured plot](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-pilot.png) |
 
 ## Planned, not completed
 
-G0030's verified pilot did not demonstrate succession. G0031's verified numerical screen found sharp competitive dominance without coexistence; **functional compartmentalization and the extended-universe finale** remain proposed after viable population dynamics are established. The verified G0029 cinematic editions remain distinct from measured numerical evidence.
+G0030's verified pilot did not demonstrate succession. G0031's verified screen found a sharp competitive-dominance switch; G0032 showed that seed 73 can retain globally active but spatially separate populations under externally imposed complementary niches. **Longer niche persistence, functional compartmentalization and the extended-universe finale** remain proposed. Nothing yet demonstrates stable autonomous life. The verified G0029 cinematic editions remain distinct from measured numerical evidence.
 
 [Visual editions](VISUAL_GALLERY.md) · [Methodology](METHODOLOGY.md) · [Safe execution guide](PIPELINE.md)

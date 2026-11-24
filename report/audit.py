@@ -121,6 +121,12 @@ if "0031" in chapter_pages:
     measured=out/"atlas/0031-pilot.png"
     if not measured.is_file() or measured.stat().st_size<4096:
         raise SystemExit("G0031 measured viability plot missing")
+if "0032" in chapter_pages:
+    if not (out/"mechanisms/0032.pdf").is_file():
+        raise SystemExit("G0032 conceptual niche figure missing")
+    plate=out/"atlas/0032-pilot.png"
+    if not plate.is_file() or plate.stat().st_size<4096:
+        raise SystemExit("G0032 measured niche plate missing")
 summary={
     "source_revision_chapter_count":len(generations),
     "pages":len(doc),
@@ -136,6 +142,8 @@ summary={
         "0030-pilot":"Actual sampled ecological trajectories; not cinematic imagery",
         "0031":"Conceptual mortality-rate controls; not measured organisms",
         "0031-pilot":"Actual numerical viability scan; not a spatial video",
+        "0032":"Conceptual static spatial habitat preference; no simulated organisms",
+        "0032-pilot":"Actual numerical 4D lattice activity samples; not spatial footage",
     },
     "sparse_pages_requiring_visual_review":[r["page"] for r in rows if r["review"]],
     "status":"chapter coverage, gallery ordering, and required diagrams checked",

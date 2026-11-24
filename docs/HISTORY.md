@@ -1592,3 +1592,51 @@ These measured competitive-exclusion dynamics do not establish functional indivi
 
 [Source](../viability_frontier.py) · [Model](../consolidation.py) · [Tests](../tests/test_viability_frontier.py) · [Workflow](../.github/workflows/viability-frontier.yml) · [Individual record](generations/0031.md).
 
+
+## Generation 0032 — Complementary Spatial Niches
+
+Status: Verified 16⁴ four-treatment numerical pilot across two independent seeds, with numerical source and native chart published separately.
+
+Parent: G0026 and G0031's controlled V viability frontier. This study adds a fully optional, externally imposed spatial preference to the existing reproductive reaction rates; the historical default remains unchanged.
+
+### The question
+
+The preceding mortality-rate frontier flipped which population won without maintaining active co-occupation. Could a complementary preference for different spatial habitats retain both populations globally, even if they never occupy the same cells above the activity threshold?
+
+### Design and measurement
+
+Two 240-step, 16⁴ seeded experiments each compare the historical model, a near-transition mortality control, and spatial-preference strengths 0.35 and 0.70 with the near-transition mortality held constant. The existing periodic four-dimensional terrain h is used to bias V birth flux by (1+s h) and W birth flux by (1-s h). Metabolite exchange, transport, existing mutation, matrix construction and other dynamics are unchanged by this new opt-in parameter.
+
+Measurements every six steps include population occupancy and mean concentration, same-cell co-occupation, structural matrix, genotype entropy and the weighted mean habitat coordinate for each population.
+
+![Conceptual spatial-niche intervention design, not simulated organism footage](figures/0032.svg)
+
+*External niche preference design, not native spatial simulation imagery.*
+
+### Verified results
+
+### Verified numerical result: spatial partition without same-cell co-occupation
+
+The [matched G0032 pilot](https://github.com/interrupt21h/ontogenesis/actions/runs/45335396705) passed CI at source revision \`6f64f3e7eb66c245385d2801306f7f039eef0d66\`. It ran four treatments for each of two independently reset seeds, **16⁴ cells** and **240 steps**, with a six-step observation cadence. Same-seed initial state hashes matched. The historical model's default was regression-checked and its numerical invariants remained enforced.
+
+**Endpoint activity** — percentage of cells in which each population exceeds the 0.1 concentration threshold:
+
+| Matched treatment | Seed 42 V | Seed 42 W | Seed 73 V | Seed 73 W |
+|:--|--:|--:|--:|--:|
+| Historical decay, no niche | 0.00% | 90.51% | 0.00% | 89.58% |
+| V loss ×0.97, no niche | 94.91% | 0.00% | 0.00% | 90.36% |
+| V loss ×0.97, niche strength 0.35 | 0.00% | 78.09% | **67.17%** | **1.83%** |
+| V loss ×0.97, niche strength 0.70 | 0.00% | 39.60% | **67.67%** | **6.40%** |
+
+**No treatment exhibited active same-cell co-occupation at the endpoint.** However, both populations were globally active in **seed 73's two niche-separated arms**, unlike its no-niche reference. This is *global simultaneous persistence with spatial partitioning*, not same-cell coexistence. Their concentration-weighted mean habitat coordinates were distinct (V minus W: **0.537** for strength 0.35 and **0.500** for strength 0.70), consistent with differing use of the imposed spatial preference. Population concentration remaining beneath a threshold in one region does not prove literal absence.
+
+The result did **not** generalize to seed 42, and nothing here establishes long-term stable coexistence, autonomous adaptation, species differentiation, or functional interdependence. Habitat preferences are *externally prescribed*, not encoded in evolving genotypes. The promising next control is a longer-horizon, matched run focused on whether seed 73's partition survives, replicated across additional seeds before any full-domain cinematics.
+
+[Measured G0032 time-series figure](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-pilot.png) · [Full numerical archive](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0032-pilot.json) · [Successful numerical workflow](https://github.com/interrupt21h/ontogenesis/actions/runs/45335396705).
+
+
+The result does not establish durable or autonomous artificial life: additional seeds, longer horizons, and preserved spatial field snapshots are the next tests before any spatial cinematic reinterpretation.
+
+### Reproduction and provenance
+
+[Driver](../niche_screen.py) · [Tests](../tests/test_niche_screen.py) · [Workflow](../.github/workflows/niche-screen.yml) · [Individual record](generations/0032.md).
