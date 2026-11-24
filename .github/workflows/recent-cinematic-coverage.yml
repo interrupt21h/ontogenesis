@@ -1,0 +1,44 @@
+name: Recent generations cinematic coverage audit
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/check_recent_cinema.py'
+      - 'tests/test_recent_cinema_coverage.py'
+      - '.github/workflows/recent-cinematic-coverage.yml'
+  workflow_dispatch:
+  workflow_run:
+    workflows: ['G0035 Morphogenic Tide art and evidence cinematics']
+    types: [completed]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: recent-cinematic-coverage-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  audit:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Validate coverage invariants
+        run: python -m unittest discover -s tests -p test_recent_cinema_coverage.py -v
+      - name: Fetch release asset inventory and check all cinematic editions
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p dist
+          gh api "repos/$GITHUB_REPOSITORY/releases/tags/atlas-media" > dist/release.json
+          python scripts/check_recent_cinema.py \
+            --release dist/release.json --out dist/recent-cinematic-coverage.json
+          echo "Every generation G0030–G0035 has two published MP4/poster editions." >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: recent-g0030-g0035-cinematic-coverage
+          path: dist/recent-cinematic-coverage.json
+          retention-days: 30
+          if-no-files-found: error
