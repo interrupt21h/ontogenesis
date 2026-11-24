@@ -31,6 +31,23 @@ jobs:
           mkdir -p input
           gh run download "$UPSTREAM_RUN" -R "$GITHUB_REPOSITORY" -n g0033-seed-42-native-evidence -D input
           gh run download "$UPSTREAM_RUN" -R "$GITHUB_REPOSITORY" -n g0033-seed-73-native-evidence -D input
+      - name: Smoke-test genuine two-seed MP4 before committing full encoding budget
+        run: |
+          python -m compileall -q g0033_native_cinema.py
+          python -u g0033_native_cinema.py \
+            --a input/g0033-seed-42.npz --am input/g0033-seed-42.native.json \
+            --b input/g0033-seed-73.npz --bm input/g0033-seed-73.native.json \
+            --movie /tmp/g0033-smoke.mp4 --poster /tmp/g0033-smoke.png \
+            --seconds 2 --fps 8
+          python - <<'PY'
+          import imageio_ffmpeg
+          frames, duration = imageio_ffmpeg.count_frames_and_secs('/tmp/g0033-smoke.mp4')
+          assert frames == 16 and abs(duration - 2) < .1
+          reader = imageio_ffmpeg.read_frames('/tmp/g0033-smoke.mp4')
+          meta = next(reader)
+          reader.close()
+          assert tuple(meta['size']) == (1280, 720)
+          PY
       - name: Render real 4D matched-seed field comparison
         run: |
           python -u g0033_native_cinema.py \
