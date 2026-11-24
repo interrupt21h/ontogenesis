@@ -8,6 +8,16 @@
 
 [**Browse every generation visually — G0001 through G0032**](VISUAL_INDEX.md) · [Filterable HTML player edition](visual-atlas.html)
 
+### G0037 — Memory Strata: sculptural time layers from actual four-dimensional worlds
+
+[![G0037 original Memory Strata cinematic artwork, exact retained numerical fields shown as luminous 3D time-layered meshes](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0037-memory-strata-art.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0037-memory-strata-art.mp4)
+
+[**Watch the 24-second Memory Strata art film**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0037-memory-strata-art.mp4) · [**Watch the matched evidence edition**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0037-memory-strata-evidence.mp4) · [Explore all four seeds and three controls](https://interrupt21h.github.io/ontogenesis/persistence-lab.html) · [Verified numerical/film CI](https://github.com/interrupt21h/ontogenesis/actions/runs/45505186121)
+
+Unlike flat trend charts, G0037's final art film draws authentic native four-dimensional concentration projections as layered, translucent **sculptural mesh landscapes**. Six independent recorded numerical snapshots are arranged as visible time strata. The camera and glowing materials are art; vertex elevations derive from the observed concentration arrays. The project retained an exact-grid evidence film for interpreting what is numeric versus visual presentation. The visual review specifically rejected the first technically valid but overly flat line rendition, prompting a successful fully rerendered master.
+
+The source is a genuine **four-seed, three-gain numerical intervention** (feedback 0, 0.0175 and 0.07), not new biology or an inferred organism-memory mechanism. Persistence uses a strict 4D threshold-mask Jaccard definition with undefined empty-union samples retained as null. High gain sometimes improves and sometimes sharply reduces this persistence statistic across seeds, and a finite 120-step pilot cannot demonstrate stable autonomy.
+
 ### G0036 — Feedback Aurora: a world changed by its own structure
 
 [![G0036 Feedback Aurora: an authentic matched control and structural-feedback numerical comparison](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0036-feedback-aurora-art.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0036-feedback-aurora-art.mp4)
