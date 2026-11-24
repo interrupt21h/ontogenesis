@@ -1,0 +1,110 @@
+name: G0032 genuine 4D spatial cinematic
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'niche_spatial_archive.py'
+      - 'niche_spatial_render.py'
+      - 'tests/test_niche_spatial.py'
+      - '.github/workflows/niche-spatial.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: g0032-spatial-cinematic-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  real-spatial:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install pinned numerical and portable media dependencies
+        run: python -m pip install numpy==2.2.6 scipy==1.15.3 matplotlib==3.10.3 pillow==11.2.1 imageio-ffmpeg==0.8.1
+      - name: Test native-state recording and short genuine spatial video
+        run: |
+          python -m compileall -q niche_spatial_archive.py niche_spatial_render.py
+          python -m unittest discover -s tests -p test_niche_spatial.py -v
+      - name: Download G0032 original measured baseline
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p input
+          gh release download atlas-media -p 'g0032-pilot.json' -D input
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('input/g0032-pilot.json').read_text())
+          assert (d['generation'],d['n'],d['steps'],d['seeds'])==('0032',16,240,[42,73])
+          assert d['arms']['near_transition']=={'v_decay_multiplier':.97,'niche_strength':0.0}
+          assert d['arms']['separated_070']=={'v_decay_multiplier':.97,'niche_strength':.70}
+          PY
+      - name: Recompute two matched 480-step arms and store genuine native 4D volumes
+        run: |
+          /usr/bin/time -v python -u niche_spatial_archive.py \
+            --source input/g0032-pilot.json --n 16 --seed 73 \
+            --steps 480 --stride 24 \
+            --out g0032-native-fields-seed73.npz \
+            --metadata g0032-native-fields-seed73.json
+      - name: Render rotating 3D hyperplane of actual four-dimensional numerical fields
+        run: |
+          /usr/bin/time -v python -u niche_spatial_render.py \
+            --data g0032-native-fields-seed73.npz \
+            --metadata g0032-native-fields-seed73.json \
+            --movie ontogenesis-0032-spatial.mp4 \
+            --poster ontogenesis-0032-spatial.png \
+            --seconds 24 --fps 24
+      - name: Verify archived multidimensional data, frame count and provenance
+        run: |
+          python - <<'PY'
+          import hashlib,imageio_ffmpeg,json,numpy as np
+          from pathlib import Path
+          src=Path('g0032-native-fields-seed73.npz')
+          info=json.loads(Path('g0032-native-fields-seed73.json').read_text())
+          movie=json.loads(Path('ontogenesis-0032-spatial.render.json').read_text())
+          assert info['archive_sha256']==hashlib.sha256(src.read_bytes()).hexdigest()
+          assert info['reference_pilot_revision'] is not None
+          assert all(info['same_seed_initial_state_matches'].values())
+          assert len(info['sample_steps'])==21 and info['sample_steps'][-1]==480
+          with np.load(src,allow_pickle=False) as fields:
+              for arm in ('near_transition','separated_070'):
+                  for ch in ('v','w','m'):
+                      field=fields[f'{arm}_{ch}']
+                      assert field.shape==(21,16,16,16,16)
+                      assert np.isfinite(field).all()
+          assert movie['source_archive_sha256']==info['archive_sha256']
+          assert movie['fixed_omega_slice']==8
+          assert movie['interpolated_numerical_states'] is False
+          assert movie['featured_G0028_preserved']
+          frames,seconds=imageio_ffmpeg.count_frames_and_secs('ontogenesis-0032-spatial.mp4')
+          assert frames==movie['frames']==576 and abs(seconds-24)<.1
+          reader=imageio_ffmpeg.read_frames('ontogenesis-0032-spatial.mp4')
+          head=next(reader)
+          reader.close()
+          assert tuple(head['size'])==(1280,720)
+          assert Path('ontogenesis-0032-spatial.png').stat().st_size>4096
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0032-genuine-4d-spatial-recording
+          path: |
+            g0032-native-fields-seed73.npz
+            g0032-native-fields-seed73.json
+            ontogenesis-0032-spatial.mp4
+            ontogenesis-0032-spatial.png
+            ontogenesis-0032-spatial.render.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Publish separate spatial edition with recorded native source fields
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload atlas-media \
+            g0032-native-fields-seed73.npz g0032-native-fields-seed73.json \
+            ontogenesis-0032-spatial.mp4 ontogenesis-0032-spatial.png \
+            ontogenesis-0032-spatial.render.json --clobber
