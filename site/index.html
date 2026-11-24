@@ -74,6 +74,8 @@ const editions=[
  {gen:"0032",name:"Complementary spatial niches",type:"Measured-data documentary",file:"ontogenesis-0032-evidence.mp4",poster:"ontogenesis-0032-evidence.png"},
  {gen:"0033",name:"Interface robustness",type:"Contact Cartography · real 4D interfaces",file:"ontogenesis-0033-contact-cartography.mp4",poster:"ontogenesis-0033-contact-cartography.png"},
  {gen:"0033",name:"Interface robustness",type:"Temporal Loom · eight numerical histories",file:"ontogenesis-0033-temporal-loom.mp4",poster:"ontogenesis-0033-temporal-loom.png"},
+ {gen:"0036",name:"Feedback Aurora",type:"Art film · measured causal divergence and structure-coupled transport",file:"ontogenesis-0036-feedback-aurora-art.mp4",poster:"ontogenesis-0036-feedback-aurora-art.png"},
+ {gen:"0036",name:"Feedback Aurora",type:"Evidence film · exact matched numerical 4D comparisons",file:"ontogenesis-0036-feedback-aurora-evidence.mp4",poster:"ontogenesis-0036-feedback-aurora-evidence.png"},
  {gen:"0035",name:"Morphogenic Tide",type:"Art film · sculptural native isobands and luminous morphology",file:"ontogenesis-0035-morphogenic-tide-art.mp4",poster:"ontogenesis-0035-morphogenic-tide-art.png"},
  {gen:"0035",name:"Morphogenic Tide",type:"Evidence film · original 16×16 sampled lattice",file:"ontogenesis-0035-morphogenic-tide-evidence.mp4",poster:"ontogenesis-0035-morphogenic-tide-evidence.png"},
  {gen:"0034",name:"Luminous Habitat",type:"Art-directed cinematic · native 4D bioluminescent field",file:"ontogenesis-0034-luminous-habitat.mp4",poster:"ontogenesis-0034-luminous-habitat.png"},
@@ -88,7 +90,8 @@ const description={
  "0032":"Externally prescribed complementary niches, with observed spatial partitioning.",
  "0033":"Eight-seed interface robustness study with published native films and independent endpoint measurements.",
  "0034":"Art-directed luminous worlds reveal authentic native 4D concentrations; separate lineage films trace real connected-component geometry.",
- "0035":"Sculptural isoband cinema and a paired original-grid evidence film, both from authentic stored 4D numerical fields."
+ "0035":"Sculptural isoband cinema and a paired original-grid evidence film, both from authentic stored 4D numerical fields.",
+ "0036":"True state-dependent 4D conservative structural feedback changes the solver itself; paired films show its measured causal differences."
 };
 const cards=document.getElementById("cards"),picker=document.getElementById("film-picker"),player=document.getElementById("player");
 let available=new Map();
@@ -112,11 +115,12 @@ function draw(){
  if(!confirmed.length){const opt=el("option",null,"No verified films available");opt.value="";picker.append(opt);picker.disabled=true}
  else {picker.disabled=false;for(const entry of confirmed){const opt=el("option",null,"G"+entry.gen+" — "+entry.type);opt.value=entry.file;picker.append(opt)}}
  if(confirmed.length){
-  const premiere=confirmed.find(e=>e.file==="ontogenesis-0035-morphogenic-tide-art.mp4") ||
+  const premiere=confirmed.find(e=>e.file==="ontogenesis-0036-feedback-aurora-art.mp4") ||
+                 confirmed.find(e=>e.file==="ontogenesis-0035-morphogenic-tide-art.mp4") ||
                  confirmed.find(e=>e.file==="ontogenesis-0034-luminous-habitat.mp4");
   selectFilm((premiere||confirmed[0]).file);
  }
- for(const gen of ["0028","0029","0030","0031","0032","0033","0034","0035"]){
+ for(const gen of ["0028","0029","0030","0031","0032","0033","0034","0035","0036"]){
   const known=editions.filter(e=>e.gen===gen),valid=known.filter(e=>movieURL(e));
   const selected=valid[0],card=el("article","card");
   if(selected&&posterURL(selected)){const img=el("img","poster");img.alt="G"+gen+" published cinematic poster";img.loading="lazy";img.src=posterURL(selected);card.append(img)}
@@ -148,7 +152,7 @@ picker.addEventListener("change",()=>selectFilm(picker.value));
  }catch(error){
   document.getElementById("message").textContent="Release inventory unavailable; open the archive directly";
   cards.replaceChildren();
-  for(const gen of ["0028","0029","0030","0031","0032","0033","0034","0035"]){
+  for(const gen of ["0028","0029","0030","0031","0032","0033","0034","0035","0036"]){
    const card=el("article","card"),body=el("div","cardbody");
    body.append(el("div","kicker","G"+gen),el("h3",null,editions.find(e=>e.gen===gen).name),el("p",null,description[gen]));
    const a=el("a",null,"Open release archive");a.href=repo+"/releases/tag/atlas-media";body.append(a);card.append(body);cards.append(card);
