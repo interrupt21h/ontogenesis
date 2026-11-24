@@ -4,12 +4,11 @@ on:
     branches: [main]
     paths:
       - 'site/**'
-      - 'docs/visual-atlas.html'
-      - 'docs/assets/**'
+      - 'docs/**'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
   workflow_run:
-    workflows: ['G0034 native 4D component genealogy and lineage cinema']
+    workflows: ['G0034 native 4D component genealogy and lineage cinema', 'G0035 Morphogenic Tide art and evidence cinematics']
     types: [completed]
 permissions:
   contents: read
@@ -38,6 +37,8 @@ jobs:
           assert 'api.github.com/repos/interrupt21h/ontogenesis/releases/tags/atlas-media' in page
           assert 'available.get(entry.file)' in page
           assert page.count('gen:"003')>=8
+          assert 'ontogenesis-0035-morphogenic-tide-art.mp4' in page
+          assert 'ontogenesis-0035-morphogenic-tide-evidence.mp4' in page
           assert atlas.count('<article class="tile"')==32
           assert 'G0033' in page
           assert 'interface-lab.html' in page
