@@ -1,0 +1,74 @@
+name: G0031 G0032 measured animated evidence
+on:
+  push:
+    branches: [main]
+    paths: [measured_comparison_render.py, tests/test_measured_comparison_render.py, .github/workflows/measured-documentaries.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: measured-documentaries-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Pinned portable video tools and pure measured-curve unit tests
+        run: |
+          python -m pip install pillow==11.2.1 matplotlib==3.10.3 imageio-ffmpeg==0.8.1
+          python -m compileall -q measured_comparison_render.py
+          python -m unittest discover -s tests -p test_measured_comparison_render.py -v
+      - name: Retrieve verified numerical archives, no solver rerun
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p input
+          gh release download atlas-media -p 'g0031-pilot.json' -p 'g0032-pilot.json' -D input
+      - name: Test and render each measured time-series animation
+        run: |
+          for gen in 0031 0032; do
+            python measured_comparison_render.py --generation "$gen" --data "input/g$gen-pilot.json" --movie "/tmp/g$gen.mp4" --poster "/tmp/g$gen.png" --seconds 2 --fps 8
+            python measured_comparison_render.py --generation "$gen" --data "input/g$gen-pilot.json" --movie "ontogenesis-$gen-evidence.mp4" --poster "ontogenesis-$gen-evidence.png" --seconds 24 --fps 24
+          done
+      - name: Verify decoded frames and original source provenance
+        run: |
+          python - <<'PY'
+          import json,hashlib,imageio_ffmpeg
+          from pathlib import Path
+          for gen in ('0031','0032'):
+              source=Path('input/g'+gen+'-pilot.json')
+              root='ontogenesis-'+gen+'-evidence'
+              data=json.loads(Path(root+'.render.json').read_text())
+              n,t=imageio_ffmpeg.count_frames_and_secs(root+'.mp4')
+              assert data['source_sha256']==hashlib.sha256(source.read_bytes()).hexdigest()
+              assert n==data['frames']==576 and abs(t-24)<.1
+              assert data['not_spatial_footage'] and data['featured_G0028_preserved']
+              reader=imageio_ffmpeg.read_frames(root+'.mp4')
+              info=next(reader)
+              reader.close()
+              assert tuple(info['size'])==(1280,720)
+              assert Path(root+'.png').stat().st_size>4096
+              print(gen, 'verified',n,'frames')
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0031-g0032-measured-visual-editions
+          path: |
+            ontogenesis-0031-evidence.*
+            ontogenesis-0032-evidence.*
+          if-no-files-found: error
+          retention-days: 30
+      - name: Publish two separate numerical films
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for gen in 0031 0032; do
+            gh release upload atlas-media "ontogenesis-$gen-evidence.mp4" "ontogenesis-$gen-evidence.png" "ontogenesis-$gen-evidence.render.json" --clobber
+          done
