@@ -49,7 +49,8 @@ def contact_masks(v, w, threshold=0.1):
         count = int(np.count_nonzero(pair))
         faces += count
         by_axis.append(count)
-        visible |= pair | np.roll(pair, -1, axis=axis)
+        # A face stored at i connects i to i+1 on this periodic axis.
+        visible |= pair | np.roll(pair, 1, axis=axis)
     return visible, faces, by_axis
 
 
