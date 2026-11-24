@@ -38,6 +38,30 @@ jobs:
           Parser().feed(page)
           Parser().feed(atlas)
           PY
+      - name: Parse inline JavaScript with Node before Pages deployment
+        run: |
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          class ScriptExtractor(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.inline = []
+                  self.in_script = False
+              def handle_starttag(self, tag, attrs):
+                  self.in_script = tag == "script" and not dict(attrs).get("src")
+              def handle_endtag(self, tag):
+                  if tag == "script":
+                      self.in_script = False
+              def handle_data(self, data):
+                  if self.in_script:
+                      self.inline.append(data)
+          parser = ScriptExtractor()
+          parser.feed(Path('site/index.html').read_text())
+          assert parser.inline, 'No executable site JavaScript was found'
+          Path('/tmp/ontogenesis-pages.js').write_text('\n'.join(parser.inline))
+          PY
+          node --check /tmp/ontogenesis-pages.js
       - name: Assemble project-relative static site
         run: |
           mkdir -p _site
