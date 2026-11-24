@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Ontogenesis — G0033 Interface Lab</title>
+<style>
+:root{font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;color:#e4f4fa;background:#091521;--line:#35536b;--muted:#a8c2d1;--teal:#65e2d2}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 85% 0%,#1e465a,transparent 50%),#091521}
+main{max-width:1290px;margin:0 auto;padding:25px clamp(18px,4vw,58px) 65px}a{color:var(--teal)}nav{display:flex;gap:22px;flex-wrap:wrap;font-size:.9rem}
+h1{font-size:clamp(2.3rem,5vw,4.8rem);line-height:1.06;letter-spacing:-.045em;margin:30px 0 13px}
+h1 span{color:var(--teal)}.intro{max-width:800px;color:#c4d6e1}.eyebrow{letter-spacing:.17em;text-transform:uppercase;color:#80d7d3;font-size:.77rem;font-weight:800}
+.controls{display:flex;flex-wrap:wrap;gap:17px;align-items:end;padding:19px;border:1px solid var(--line);border-radius:16px;background:#122c3e;margin:27px 0}
+label{display:grid;gap:6px;font-size:.85rem;color:#bdcede}select{background:#0a1e2c;color:white;font:inherit;border:1px solid #597789;border-radius:8px;padding:10px;min-width:185px}
+select:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+.card{background:#12293b;border:1px solid var(--line);border-radius:15px;padding:19px;margin:18px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:15px}
+.kicker{color:#9abaca;font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;font-weight:700}
+.big{font-size:2.25rem;font-weight:800;letter-spacing:-.05em;margin:7px 0}.subtle{color:var(--muted);font-size:.85rem}
+canvas{width:100%;height:430px;display:block;max-width:100%}
+.tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.92rem}th,td{padding:12px 9px;border-bottom:1px solid #2d4960;text-align:right}th:first-child,td:first-child{text-align:left}th{color:#b8d5df;font-weight:600}td{font-variant-numeric:tabular-nums}
+#status{color:#b9d2dc}footer{padding-top:18px;margin-top:35px;border-top:1px solid var(--line);color:var(--muted);font-size:.88rem}
+</style>
+</head>
+<body><main>
+<nav><a href="./">← Ontogenesis Cinema</a><a href="docs/generations/0033.md">Experiment methodology</a><a href="https://github.com/interrupt21h/ontogenesis/actions/workflows/g0033-robustness.yml">Numerical CI</a></nav>
+<p class="eyebrow">G0033 / Verified numerical evidence / interactive presentation</p>
+<h1>Interface <span>Lab.</span></h1>
+<p class="intro">Eight independent numerical initializations. Two prescribed habitat conditions. Three population-activity thresholds. Explore the measured **four-dimensional interface** without confusing animated graphics with additional simulated timesteps.</p>
+<p id="status" role="status">Loading verified numerical measurements…</p>
+<div class="controls">
+<label for="arm">Treatment
+<select id="arm"><option value="near_transition">Near-transition / no niche</option><option value="separated_070">Complementary spatial niche 0.70</option></select></label>
+<label for="threshold">Activity threshold
+<select id="threshold"><option value="0.05">0.05</option><option value="0.10" selected>0.10 (primary)</option><option value="0.20">0.20</option></select></label>
+<label for="metric">Measured quantity
+<select id="metric">
+<option value="four_dimensional_face_contacts">4D exclusive contact faces</option>
+<option value="v_active_cells">V-active lattice sites</option>
+<option value="w_active_cells">W-active lattice sites</option>
+<option value="both_active_cells">Both-active lattice sites</option>
+<option value="continuous_shared_mass_ratio">Continuous shared mass ratio</option>
+<option value="contact_fraction_per_face">Fraction of all 4D faces in exclusive contact</option>
+</select></label>
+</div>
+<div class="cards" id="numbers"><div class="card"><div class="kicker">Loading</div><p>Numerical report pending</p></div></div>
+<section class="card">
+<p class="eyebrow">Eight seeds / recorded endpoint step 240</p>
+<canvas id="plot" width="1160" height="430" role="img" aria-label="Measured values for each seed"></canvas>
+<p class="subtle">Graph transitions animate only the display. No chemistry is evolved or interpolated in the browser. All values are measured at step 240 on a 16⁴ lattice.</p>
+</section>
+<section class="card"><h2>Individual recorded outcomes</h2><div class="tablewrap"><table><thead><tr><th>Seed</th><th>Active V sites</th><th>Active W sites</th><th>Same-cell sites</th><th>4D contact faces</th><th>Shuffled faces (mean)</th></tr></thead><tbody id="rows"></tbody></table></div></section>
+<section class="card"><h2>What these measurements mean</h2>
+<p>Contact faces count periodic neighbor pairs joining <strong>exclusively V-active</strong> and <strong>exclusively W-active</strong> lattice sites. The denominator is four faces per lattice site, counted once in the positive direction along each of the four axes.</p>
+<p>Shuffled controls preserve the exact counts of the four activity classes while destroying their spatial arrangement. The comparison describes spatial organization; it does not establish causal metabolism or an organism boundary.</p>
+<p><a href="https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0033-robustness.json">Download original measured JSON</a> · <a href="https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0033-contact-cartography.mp4">Contact Cartography cinematic (when published)</a></p>
+</section>
+<footer>G0033 · 16⁴ numerical grid · 240 recorded integration steps · numerical artifacts published by GitHub Actions after successful tests. The report is loaded locally from this GitHub Pages deployment.</footer>
+</main>
+<script>
+"use strict";
+const inputs=["arm","threshold","metric"].map(x=>document.getElementById(x));
+const canvas=document.getElementById("plot"),ctx=canvas.getContext("2d");
+let source=null;
+function format(value){return Number.isInteger(value)?value.toLocaleString():value.toLocaleString(undefined,{maximumFractionDigits:6})}
+function textNode(el,text){el.textContent=text}
+function draw(data){
+ const [arm,cutoff,metric]=inputs.map(x=>x.value);
+ const seeds=data.seeds;
+ const metrics=seeds.map(seed=>data.individual_endpoints[String(seed)][arm][cutoff]);
+ const values=metrics.map(m=>m[metric]);
+ const maxValue=Math.max(1e-10,...values)*1.12;
+ const W=canvas.width,H=canvas.height;
+ ctx.clearRect(0,0,W,H);
+ ctx.fillStyle="#0b1c2a";ctx.fillRect(0,0,W,H);
+ const left=83,right=W-26,top=43,bottom=H-66;
+ ctx.lineWidth=1;ctx.font="15px system-ui";
+ for(let tick=0;tick<=4;tick++){
+   const y=bottom-(bottom-top)*tick/4;
+   ctx.strokeStyle="#2d5063";ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(right,y);ctx.stroke();
+   ctx.fillStyle="#b1cad8";ctx.textAlign="right";ctx.fillText(format(maxValue*tick/4),left-11,y+5);
+ }
+ const width=(right-left)/seeds.length;
+ values.forEach((v,i)=>{
+   const barWidth=width*.48, x=left+width*(i+.26);
+   const height=(bottom-top)*v/maxValue, y=bottom-height;
+   ctx.fillStyle=arm==="separated_070"?"#60decb":"#e7ab76";
+   ctx.fillRect(x,y,barWidth,Math.max(height,0));
+   ctx.fillStyle="#e9f4fa";ctx.textAlign="center";
+   ctx.fillText(format(v),x+barWidth/2,Math.max(top+6,y-10));
+   ctx.fillStyle="#b8d0dc";ctx.fillText(String(seeds[i]),x+barWidth/2,bottom+24);
+ });
+ ctx.textAlign="left";ctx.fillStyle="#c7d9e5";
+ ctx.fillText("Seed",left,bottom+52);
+ textNode(document.getElementById("status"),"Verified G0033 numerical report loaded · "+seeds.length+" independent seeds · endpoint step 240");
+ const positives=metrics.filter(m=>m.v_active_cells>0&&m.w_active_cells>0).length;
+ const contacts=metrics.filter(m=>m.four_dimensional_face_contacts>0).length;
+ const cards=[
+  ["Both populations globally active",positives+" / "+seeds.length,"Separate global activity; not same-cell coexistence"],
+  ["Seeds with exclusive contact",contacts+" / "+seeds.length,"At least one native 4D V-only/W-only face"],
+  ["Total 4D contact faces",format(metrics.reduce((a,m)=>a+m.four_dimensional_face_contacts,0)),"Sum across separately initialized seed endpoints"],
+  ["Activity cutoff",cutoff,"Strict > cutoff; applied to recorded fields"]
+ ];
+ const dest=document.getElementById("numbers");dest.replaceChildren();
+ cards.forEach(([label,value,subtitle])=>{
+  const card=document.createElement("div");card.className="card";
+  const title=document.createElement("div");title.className="kicker";title.textContent=label;
+  const big=document.createElement("div");big.className="big";big.textContent=value;
+  const small=document.createElement("div");small.className="subtle";small.textContent=subtitle;
+  card.append(title,big,small);dest.append(card);
+ });
+ const rows=document.getElementById("rows");rows.replaceChildren();
+ seeds.forEach((seed,i)=>{
+  const m=metrics[i],tr=document.createElement("tr");
+  [seed,m.v_active_cells,m.w_active_cells,m.both_active_cells,
+   m.four_dimensional_face_contacts,m.shuffled_spatial_reference.mean_contact_faces]
+   .forEach(x=>{const td=document.createElement("td");td.textContent=format(x);tr.append(td)});
+  rows.append(tr);
+ });
+}
+inputs.forEach(el=>el.addEventListener("change",()=>{if(source)draw(source)}));
+(async()=>{
+ try{
+   const res=await fetch("data/g0033-robustness.json",{cache:"no-store"});
+   if(!res.ok)throw Error("HTTP "+res.status);
+   const data=await res.json();
+   if(data.generation!=="0033"||data.seeds.length!==8||
+      data.n!==16||data.steps!==240||Object.keys(data.individual_endpoints).length!==8){
+     throw Error("Unexpected numerical report shape");
+   }
+   source=data;draw(data);
+ }catch(error){
+   textNode(document.getElementById("status"),
+     "Evidence data unavailable ("+error.message+"). Open the numerical release JSON directly.");
+ }
+})();
+</script></body></html>
