@@ -8,6 +8,16 @@
 
 [**Browse every generation visually — G0001 through G0032**](VISUAL_INDEX.md) · [Filterable HTML player edition](visual-atlas.html)
 
+### G0036 — Feedback Aurora: a world changed by its own structure
+
+[![G0036 Feedback Aurora: an authentic matched control and structural-feedback numerical comparison](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0036-feedback-aurora-art.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0036-feedback-aurora-art.mp4)
+
+[**Watch Feedback Aurora — art film**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0036-feedback-aurora-art.mp4) · [**Watch the exact-grid evidence film**](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0036-feedback-aurora-evidence.mp4) · [Numerical data](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/g0036-summary.json) · [Study](generations/0036.md) · [Verified film CI](https://github.com/interrupt21h/ontogenesis/actions/runs/45487062433)
+
+This edition differs from the purely observational G0033–G0035 worlds: **G0036 actually changes the solver**. Its bounded conservative transport correction is recomputed from instantaneous 4D matrix and V/W concentrations, while a matched control retains the original update. Two separately initialized 12⁴ numerical worlds provide complete, authenticated fields through 120 steps. The art film visualizes **the real treatment-control difference** with image-space resampled luminous contours, then reveals matching control and feedback scenes. The companion evidence film shows both original 12×12 z-max projected hyperplane grids with nearest-neighbor rendering and true measured activity counts.
+
+The first two cinematic acts deliberately include sparse regions where the intervention caused little visible difference in the selected hyperplane; this is not an error to camouflage with fabricated organisms. The final comparison displays striking but modestly sized real divergence. Lighting and contour resampling are artistic, not additional simulated chemistry. Finite seed-dependent response is not autonomous adaptation.
+
 ### G0035 — Morphogenic Tide: sculptural isobands from genuine four-dimensional fields
 
 [![G0035 Morphogenic Tide cinematic poster: luminous numerical contour structures for the niche and control treatments](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0035-morphogenic-tide-art.png)](https://github.com/interrupt21h/ontogenesis/releases/download/atlas-media/ontogenesis-0035-morphogenic-tide-art.mp4)
