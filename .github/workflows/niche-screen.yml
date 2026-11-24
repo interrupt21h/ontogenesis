@@ -1,0 +1,74 @@
+name: G0032 complementary spatial niche screen
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'niche_screen.py'
+      - 'tests/test_niche_screen.py'
+      - '.github/workflows/niche-screen.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: g0032-niche-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  pilot:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Pin numerical and plotting libraries
+        run: python -m pip install numpy==2.2.6 scipy==1.15.3 matplotlib==3.10.3 pillow==11.2.1
+      - name: Verify unchanged model and short four-arm controls
+        run: |
+          python -m compileall -q consolidation.py niche_screen.py
+          python -m unittest discover -s tests -p test_niche_screen.py -v
+          python -m unittest discover -s tests -p test_viability_frontier.py -v
+      - name: Matched 16^4 environment-specific population screen
+        run: |
+          /usr/bin/time -v python -u niche_screen.py \
+            --n 16 --steps 240 --stride 6 --seeds 42,73 \
+            --out g0032-pilot.json --plate g0032-pilot.png
+      - name: Validate measured spatial-niche evidence, do not assume outcome
+        run: |
+          python - <<'PY'
+          import json,math
+          from pathlib import Path
+          d=json.loads(Path('g0032-pilot.json').read_text())
+          assert (d['generation'],d['n'],d['steps'],d['seeds'])==('0032',16,240,[42,73])
+          assert d['arms']=={
+              'historical':{'v_decay_multiplier':1.0,'niche_strength':0.0},
+              'near_transition':{'v_decay_multiplier':.97,'niche_strength':0.0},
+              'separated_035':{'v_decay_multiplier':.97,'niche_strength':.35},
+              'separated_070':{'v_decay_multiplier':.97,'niche_strength':.70}}
+          assert len(d['times'])>=40 and d['times'][0]==0 and d['times'][-1]==240
+          for seed in ('42','73'):
+              assert len({v['0'] for v in d['hashes'][seed].values()})==1
+              assert set(d['observations'][seed])==set(d['arms'])
+              for rows in d['observations'][seed].values():
+                  assert [r['step'] for r in rows]==d['times']
+                  assert all(math.isfinite(r['v_mean']) and math.isfinite(r['w_mean']) for r in rows)
+              assert set(d['contrasts'][seed])=={'separated_035','separated_070'}
+          png=Path('g0032-pilot.png')
+          assert png.stat().st_size>4096
+          assert png.read_bytes()[:8]==bytes([137,80,78,71,13,10,26,10])
+          assert isinstance(d['any_endpoint_cooccupancy'],bool)
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: g0032-matched-spatial-niche-study
+          path: |
+            g0032-pilot.json
+            g0032-pilot.png
+          retention-days: 30
+          if-no-files-found: error
+      - name: Publish measured niche results separately from artistic films
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload atlas-media g0032-pilot.json g0032-pilot.png --clobber
