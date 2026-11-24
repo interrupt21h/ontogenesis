@@ -118,10 +118,11 @@ def summarize(fields, *, min_display_sites=MIN_DISPLAY_SITES):
                        for j in featured if sizes[j] >= min_display_sites]
             indegree = np.bincount(
                 [e["to"] for e in edges], minlength=n+1) if edges else np.zeros(n+1, int)
+            prior_count = int(previous.max()) if previous is not None else 0
             outdegree = np.bincount(
                 [e["from"] for e in edges],
-                minlength=(int(previous.max())+1 if previous is not None else 1)
-            ) if edges else np.zeros(1, int)
+                minlength=prior_count + 1
+            ) if edges else np.zeros(prior_count + 1, int)
             # These refer to the complete voxel-overlap graph, including
             # small components; not just the displayed features.
             births = int(np.count_nonzero(indegree[1:] == 0)) if previous is not None else n
