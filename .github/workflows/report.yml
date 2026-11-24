@@ -274,7 +274,7 @@ jobs:
           assert film['frames']==576 and film['featured_G0028_preserved']
           assert all(state['same_seed_initial_state_matches'].values())
           runs=json.loads(subprocess.check_output(
-              ['gh','api',f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/runs?per_page=100"],
+              ['gh','api',f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/runs?head_sha={film['render_commit']}&per_page=100"],
               text=True))['workflow_runs']
           assert any(r.get('head_sha')==film['render_commit'] and
                      r.get('conclusion')=='success' and
