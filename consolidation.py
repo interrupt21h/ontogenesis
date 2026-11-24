@@ -33,11 +33,15 @@ def measure(m):
     freq=[np.fft.fftfreq(n)[i] if j<3 else np.fft.rfftfreq(n)[i] for j,(n,i) in enumerate(zip(x.shape,peak))]
     radial=float(np.linalg.norm(freq))
     return dict(matrix_mean=mean,matrix_std=std,matrix_cv=std/max(mean,1e-12),gradient_energy=sum(float(np.mean((np.roll(x,1,axis=j)-x)**2)) for j in range(4)),histogram=hist.tolist(),histogram_edges=edges.tolist(),dominant_mode_wavelength_cells=1/radial if radial and std>0 else None,quantiles=np.quantile(x,[.05,.25,.5,.75,.95]).tolist(),coverage={str(t):float((x>t).mean()) for t in (.1,.15,.2,.25,.3)})
-def run(seed=42,n=24,steps=4800,stride=4,arm="baseline",observe=True,intervention=None,observer=None,cinematic_observer=None,cinematic_steps=None,velocity_feedback=None,crossfeed=(True,True),season_switch=None,ecology_observer=None,ecology_steps=None):
+def run(seed=42,n=24,steps=4800,stride=4,arm="baseline",observe=True,intervention=None,observer=None,cinematic_observer=None,cinematic_steps=None,velocity_feedback=None,crossfeed=(True,True),season_switch=None,ecology_observer=None,ecology_steps=None,v_decay_multiplier=1.0):
     if len(crossfeed)!=2 or any(type(flag) is not bool for flag in crossfeed):
         raise ValueError("crossfeed must be (W-to-V, V-to-W) booleans")
     if season_switch is not None and not 1<=season_switch<steps:
         raise ValueError("season_switch must be strictly within simulation")
+    # Explicit G0031 controlled mortality-rate perturbation; default is
+    # exactly the historical G0026/G0028/G0030 numerical update.
+    if not 0.05 <= float(v_decay_multiplier) <= 1.5:
+        raise ValueError("v_decay_multiplier must be in [0.05, 1.5]")
     N=n;STEPS=steps
     COST=float(arm in ("cost","combined")); MAINT=float(arm in ("maintenance","combined"))
     rng=np.random.default_rng(seed)
@@ -188,7 +192,7 @@ def run(seed=42,n=24,steps=4800,stride=4,arm="baseline",observe=True,interventio
         m=m+.025*lap(m)+deposit*(1-m)-(.005+.006*pulse)*(1-.65*maintenance*MAINT)*m
         assert np.isfinite(m).all() and m.min()>=-1e-6 and m.max()<=1.00001
         mobility=1/(1+5*m)
-        gv=np.stack([g+diffuse(g,.045*mobility,(4.,m))+born-(.097+.009*h)*g for g,born in zip(gv,bv)])
+        gv=np.stack([g+diffuse(g,.045*mobility,(4.,m))+born-(.097*v_decay_multiplier+.009*h)*g for g,born in zip(gv,bv)])
         gw=np.stack([g+diffuse(g,.0375*mobility,(4.,m))+born-(.094-.009*h)*g for g,born in zip(gw,bw)])
         u=u+diffuse(u,.085*mobility,(1.,m))-a-b+.035*(1-u)
         v,w=gv.sum(axis=0),gw.sum(axis=0)
